@@ -1,0 +1,56 @@
+[
+    {
+        "test_case": "proxy_channel",
+        "req_method": "post",
+        "req_url": "/v1/proxy/channel",
+        "test_item": [
+            {"scenario":"新增代理渠道＿不存在的名稱","json": {"channel": "不重複名稱"},"params": {},"code_status": 200,"keyWord": "success"},
+            {"scenario":"新增代理渠道＿已存在的名稱","json": {"channel": "測試新增渠道2"},"params": {},"code_status" : 500,"keyWord" : "该渠道名称已存在"},
+            {"scenario":"新增代理渠道＿null","json": {"channel": null},"params": {},"code_status" : 400,"keyWord" : "无效的请求参数"}
+        ]
+    },
+    {
+        "test_case": "proxy_channel",
+        "req_method": "put",
+        "test_item": [
+            {"req_url": "/v1/proxy/channel/1","scenario":"編輯代理渠道＿不存在的名稱","json": {"channel": "不重複名稱"},"params": {},"code_status": 200,"keyWord": "success"},
+            {"req_url": "/v1/proxy/channel/1","scenario":"編輯代理渠道＿已存在的名稱","json": {"channel": "測試新增渠道2"},"params": {},"code_status" : 500,"keyWord" : "该渠道名称已存在"},
+            {"req_url": "/v1/proxy/channel/","scenario":"編輯代理渠道＿null","json": {"channel": null},"params": {},"code_status" : 405,"keyWord" : "不允许使用的HTTP方法"},
+            {"req_url": "/v1/proxy/channel/98765","scenario":"編輯代理渠道＿不存在的渠道id","json": {"channel": "不重複名稱"},"params": {},"code_status" : 400,"keyWord" : "資料不存在"}
+        ]
+    },
+    {
+        "test_case": "proxy_channel",
+        "req_method": "delete",
+        "test_item": [
+            {"req_url": "/v1/proxy/channel/19","scenario":"刪除代理渠道＿存在id","json": {},"params": {},"code_status": 200,"keyWord": "success"},
+            {"req_url": "/v1/proxy/channel/19","scenario":"刪除代理渠道＿已刪除id","json": {},"params": {},"code_status" : 400,"keyWord" : "資料不存在"},
+            {"req_url": "/v1/proxy/channel/","scenario":"刪除代理渠道＿null","json": {},"params": {},"code_status" : 405,"keyWord" : "不允许使用的HTTP方法"},
+            {"req_url": "/v1/proxy/channel/98765","scenario":"刪除代理渠道＿不存在的渠道id","json": {},"params": {},"code_status" : 400,"keyWord" : "資料不存在"}
+        ]
+    },
+    {
+        "test_case": "proxy_channel",
+        "req_method": "get",
+        "req_url": "/v1/proxy/channel/all",
+        "test_item": [
+            {"scenario":"獲取所有渠道","json": {},"params": {},"code_status": 200,"keyWord": "data"}
+        ]
+    },
+    {
+        "test_case": "proxy_channel",
+        "req_method": "get",
+        "req_url": "/v1/proxy/channel/available",
+        "test_item": [
+            {"scenario":"獲取所有未綁定渠道","json": {},"params": {},"code_status": 200,"keyWord": "data"}
+        ]
+    },
+    {
+        "test_case": "proxy_channel",
+        "req_method": "get",
+        "req_url": "/v1/proxy/channel",
+        "test_item": [
+            {"scenario":"獲取渠道","json": {},"params": {},"code_status": 200,"keyWord": "data"}
+        ]
+    }
+]

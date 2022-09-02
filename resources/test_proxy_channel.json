@@ -1,0 +1,23 @@
+{
+    "新增團隊渠道＿不存在的名稱" : {
+        "reqMethod" : "post",
+        "reqUrl" : "/v1/proxy/channel",
+        "json" : {
+            "channel" : "不重複名稱"
+        },
+        "params" : {},
+        "code_status" : 200,
+        "keyWord" : "success"
+        
+    },
+    "新增團隊渠道＿已存在的名稱" : {
+        "reqMethod" : "post",
+        "reqUrl" : "/v1/proxy/channel",
+        "json" : {
+            "channel" : "測試新增渠道2"
+        },
+        "params" : {},
+        "code_status" : 500,
+        "keyWord" : "该渠道名称已存在"
+    }
+}
