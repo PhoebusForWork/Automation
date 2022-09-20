@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import json,jsonpath,random,string
-from bs4 import PageElement
+import jsonpath,random,string
 
-from itsdangerous import NoneAlgorithm
 from ..platform.platApiBase import PLAT_API #執行RF時使用
 import configparser
 

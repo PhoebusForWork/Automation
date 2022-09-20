@@ -1,19 +1,11 @@
-from cgi import test
-from concurrent.futures import thread
-from pyexpat import model
-from webbrowser import get
-from numpy import append
 import pytest
 import allure
-import json,json5,jsonpath
 import random
-from pylib.platform.accountAdmin import accountAdmin
 from pylib.platform.userManage import userManage
 from pylib.platform.proxy import proxyChannel,proxyGroup,proxyManage
 from testcase.conftest import  getPltLoginToken
 from utils.dataUtils import Utils
 from utils.APIControler import API_Conttoler
-import logging
 
 td = Utils()
 testData = td.read_json5('test_proxy.json5')
