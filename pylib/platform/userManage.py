@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import json
+import json,jsonpath
 from bs4 import PageElement
 
 from itsdangerous import NoneAlgorithm
@@ -144,3 +144,17 @@ class userManage(PLAT_API):
         )
         self._printresponse(response)
         return response.json()
+
+    def cleanApproval(self,     #編輯會員聯絡資料
+                    platToken = None,optType = None
+                    ):
+        if platToken != None:
+            self.ps.headers.update({"token":str(platToken)})
+        jsdata = self.getUserManageList(optType=optType,size=100,status=0)
+        ret = jsonpath.jsonpath(jsdata,"$..id")
+        if ret == False:
+            pass
+        else:
+            for i in ret:
+                self.firstApproval(id = i,status=2,remark="auto_rej")
+        
