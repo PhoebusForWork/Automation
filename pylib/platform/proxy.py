@@ -10,7 +10,7 @@ import configparser
 config = configparser.ConfigParser()
 config.read('config/config.ini')  # 在rf_api_test層執行時使用
 web_host = config['host']['web_host']
-platfrom_host = config['host']['platfrom_host']
+platfrom_host = config['host']['platform_host']
 
 
 class proxyChannel(PLAT_API):
@@ -19,8 +19,7 @@ class proxyChannel(PLAT_API):
                    platUid=None, platToken=None,
                    channel=None,
                    ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.post(platfrom_host+"/v1/proxy/channel",
                                 json={
@@ -35,8 +34,7 @@ class proxyChannel(PLAT_API):
                     platUid=None, platToken=None,
                     channel=None, channelId=None,
                     ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.put(platfrom_host+"/v1/proxy/channel/{}".format(channelId),
                                json={
@@ -51,8 +49,7 @@ class proxyChannel(PLAT_API):
                       platUid=None, platToken=None,
                       channelId=None,
                       ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.delete(platfrom_host+"/v1/proxy/channel/{}".format(channelId),
                                   json={},
@@ -65,8 +62,7 @@ class proxyChannel(PLAT_API):
                    platUid=None, platToken=None,
                    page=None, size=None,
                    ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/channel",
                                json={},
@@ -81,8 +77,7 @@ class proxyChannel(PLAT_API):
     def getChannelAll(self,  # 顯示所有代理渠道
                       platUid=None, platToken=None,
                       ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/channel/all",
                                json={},
@@ -94,8 +89,7 @@ class proxyChannel(PLAT_API):
     def getChannelAvailable(self,  # 獲取未綁定代理渠道
                             platUid=None, platToken=None,
                             ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/channel/available",
                                json={},
@@ -107,8 +101,7 @@ class proxyChannel(PLAT_API):
     def getAvailableChannel_auto(self,  # 獲取未綁定代理渠道
                                  platUid=None, platToken=None,
                                  ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/channel/available",
                                json={},
@@ -116,11 +109,11 @@ class proxyChannel(PLAT_API):
                                )
         ret = jsonpath.jsonpath(response.json(), "$..data[0].id")
         print(ret)
-        if ret != False:
+        if ret is not False:
             return ret[0]
         else:
             self.addChannel(platToken, channel=''.join(
-                random.choice(string.ascii_letters) for x in range(10)))
+                random.choice(string.ascii_letters) for _ in range(10)))
             response = self.ps.get(
                 platfrom_host+"/v1/proxy/channel/available", json={}, params={})
             ret = jsonpath.jsonpath(response.json(), "$..data[0].id")
@@ -134,8 +127,7 @@ class proxyGroup(PLAT_API):
                  platUid=None, platToken=None,
                  groupName=None, channelIds=[],
                  ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.post(platfrom_host+"/v1/proxy/group",
                                 json={
@@ -152,8 +144,7 @@ class proxyGroup(PLAT_API):
                   groupName=None, channelIds=[],
                   groupId=None,
                   ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.put(platfrom_host+"/v1/proxy/group/{}".format(groupId),
                                json={
@@ -169,8 +160,7 @@ class proxyGroup(PLAT_API):
                     platUid=None, platToken=None,
                     groupId=None,
                     ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.delete(platfrom_host+"/v1/proxy/group/{}".format(groupId),
                                   json={},
@@ -183,8 +173,7 @@ class proxyGroup(PLAT_API):
                      platUid=None, platToken=None,
                      page=None, size=None,
                      ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/group/groupsAndChannels",
                                json={},
@@ -200,8 +189,7 @@ class proxyGroup(PLAT_API):
                            platUid=None, platToken=None,
                            page=None, size=1000,
                            ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
 
         response = self.ps.get(platfrom_host+"/v1/proxy/group/groupsAndChannels",
@@ -223,8 +211,7 @@ class proxyCommission(PLAT_API):
                     name=None, isEnabled=None,
                     isNeedToVerify=None
                     ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.post(platfrom_host+"/v1/proxy/commission/template",
                                 json={
@@ -243,8 +230,7 @@ class proxyCommission(PLAT_API):
                      name=None, isEnabled=None,
                      isNeedToVerify=None
                      ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.put(platfrom_host+"/v1/proxy/commission/template/{}".format(id),
                                json={
@@ -260,8 +246,7 @@ class proxyCommission(PLAT_API):
     def getTemplate(self,     # 獲取佣金模板
                     platToken=None
                     ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/commission/template",
                                json={},
@@ -273,8 +258,7 @@ class proxyCommission(PLAT_API):
     def getTemplateList(self,     # 獲取佣金模板選單
                         platToken=None
                         ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/commission/template/mapList",
                                json={},
@@ -287,8 +271,7 @@ class proxyCommission(PLAT_API):
                      platToken=None,
                      id=None,
                      ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/commission/template/{}/subCommissionConfig".format(id),
                                json={},
@@ -303,8 +286,7 @@ class proxyCommission(PLAT_API):
                       subCommissionConfigList=None,
                       subSubCommissionConfigList=None,
                       ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.put(platfrom_host+"/v1/proxy/commission/template/{}/subCommissionConfig".format(id),
                                json={
@@ -320,8 +302,7 @@ class proxyCommission(PLAT_API):
                             platToken=None,
                             id=None,
                             ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/commission/template/{}/settlementShares".format(id),
                                json={},
@@ -336,8 +317,7 @@ class proxyCommission(PLAT_API):
                              activityLimit=None, rebate=None,
                              rebateLimit=None, bet=None, betCount=None,
                              ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.put(platfrom_host+"/v1/proxy/commission/template/{}/settlementShares".format(id),
                                json={
@@ -357,8 +337,7 @@ class proxyCommission(PLAT_API):
                                 platToken=None,
                                 id=None,
                                 ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/commission/template/{}/platformFeeShares".format(id),
                                json={},
@@ -373,8 +352,7 @@ class proxyCommission(PLAT_API):
                                  gameType=None, fee=None,
                                  platformFeeLimit=None,
                                  ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.put(platfrom_host+"/v1/proxy/commission/template/{}/platformFeeShares".format(id),
                                json=[
@@ -396,8 +374,7 @@ class proxyCommission(PLAT_API):
                             platToken=None,
                             id=None,
                             ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/commission/template/{}/commissionConfig".format(id),
                                json={},
@@ -412,8 +389,7 @@ class proxyCommission(PLAT_API):
                              commissionLimit=None, commission=None,
                              validUserCount=None,
                              ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.put(platfrom_host+"/v1/proxy/commission/template/{}/commissionConfig".format(id),
                                json=[
@@ -440,8 +416,7 @@ class proxy(PLAT_API):
                  input=None, groupName=None,
                  channel=None, page=None, size=None,
                  ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy",
                                json={},
@@ -466,8 +441,7 @@ class proxy(PLAT_API):
                         platToken=None,
                         accounts=[]
                         ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.post(platfrom_host+"/v1/proxy/account/validate",
                                 json={
@@ -485,8 +459,7 @@ class proxy(PLAT_API):
                  telephone=None, proxyChannelId=None,
                  commissionId=None, registerIp=None,
                  ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.post(platfrom_host+"/v1/proxy",
                                 json={
@@ -508,8 +481,7 @@ class proxy(PLAT_API):
                      proxyId=None,
                      subCount=None,
                      ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.put(platfrom_host+"/v1/proxy/{}/subCount".format(proxyId),
                                json={
@@ -525,8 +497,7 @@ class proxy(PLAT_API):
                           proxyId=None,
                           commissionId=None,
                           ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.put(platfrom_host+"/v1/proxy/{}/commission".format(proxyId),
                                json={
@@ -542,8 +513,7 @@ class proxy(PLAT_API):
                     proxyId=None,
                     channelId=None,
                     ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.put(platfrom_host+"/v1/proxy/{}/channel".format(proxyId),
                                json={
@@ -558,8 +528,7 @@ class proxy(PLAT_API):
                       platToken=None,
                       userId=None,
                       ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/{}/detail/edit".format(userId),
                                json={},
@@ -572,8 +541,7 @@ class proxy(PLAT_API):
                          platToken=None,
                          userId=None,
                          ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/{}/detail/display".format(userId),
                                json={},
@@ -586,8 +554,7 @@ class proxy(PLAT_API):
                          platToken=None,
                          proxyId=None,
                          ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/{}/commission/avg".format(proxyId),
                                json={},
@@ -604,8 +571,7 @@ class proxy(PLAT_API):
                      From=None, to=None,
                      page=None, size=None,
                      ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/tradeInfo",
                                json={},
@@ -624,8 +590,7 @@ class proxy(PLAT_API):
                        type=None, accountOrName=None,
                        commissionId=None, page=None, size=None,
                        ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/domain/query",
                                json={},
@@ -651,8 +616,7 @@ class proxyManage(PLAT_API):
                       approver=None, proxyManageStatus=None,
                       page=None, size=None,
                       ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/user/manage/list",
                                json={},
@@ -673,8 +637,7 @@ class proxyManage(PLAT_API):
     def getManageApprover(self,     # 獲取代理審批人列表
                           platToken=None,
                           ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/user/manage/list/approver",
                                json={},
@@ -687,8 +650,7 @@ class proxyManage(PLAT_API):
                       platToken=None,
                       id=None, isApprove=None, remark=None
                       ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.put(platfrom_host+"/v1/proxy/user/manage/{}/first/approval".format(id),
                                json={
@@ -704,8 +666,7 @@ class proxyManage(PLAT_API):
                        platToken=None,
                        id=None, isApprove=None, remark=None
                        ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.put(platfrom_host+"/v1/proxy/user/manage/{}/second/approval".format(id),
                                json={
@@ -797,8 +758,7 @@ class proxyCredit(PLAT_API):
                         minAmount=None, maxAmount=None,
                         page=None, size=None,
                         ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/credit/detail",
                                json={},
@@ -823,8 +783,7 @@ class proxyCredit(PLAT_API):
                    userId=None, amount=None,
                    changeType=None, status=None,
                    ):
-        if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
+        if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.put(platfrom_host+"/v1/proxy/credit",
                                json={

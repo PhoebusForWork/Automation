@@ -64,7 +64,8 @@ class Utils:
 
         return test_data
 
-    def get_test_case(self, data, target):
+    @staticmethod
+    def get_test_case(data, target):
         testdata = []
         for i in data:
             if target in i:

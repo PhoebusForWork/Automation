@@ -10,14 +10,14 @@ import configparser
 config = configparser.ConfigParser()
 config.read('config/config.ini')  # 在rf_api_test層執行時使用
 # config.read('../../config/config.ini') #在website路徑執行時使用
-platfrom_host = config['host']['platfrom_host']
+platfrom_host = config['host']['platform_host']
 
 
-class API_Conttoler:
+class API_Controller:
 
     def __init__(self):
 
-        self.timestemp = str(int(datetime.datetime.now().timestamp()))
+        self.timestamp = str(int(datetime.datetime.now().timestamp()))
         self.ps = requests.Session()
         self.ps.headers = {
             "Connection": "keep-alive",
@@ -61,6 +61,8 @@ class API_Conttoler:
         elif reqMethod == 'delete':
             response = self.ps.delete(
                 platfrom_host+reqUrl, json=json, params=params)
+        else:
+            response = "沒有符合的請求模式"
         self._printresponse(response)
         return response
 
