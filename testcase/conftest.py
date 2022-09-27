@@ -16,12 +16,13 @@ scope参数为class，那么每一个测试文件中的测试类执行前都会�
 scope参数为function，那么所有文件的测试用例执行前都会执行一次conftest文件中的fixture
 """
 
+
 @pytest.fixture(scope="session")
-def getPltLoginToken(username='superAdmin',password='abc123456'):
+def getPltLoginToken(username='superAdmin', password='abc123456'):
     api = PLAT_API()
     code = api.ImgCode()
-    resp = api.Login(username='superAdmin',password='abc123456',imgCode=code)
-    try :
+    resp = api.Login(username='superAdmin', password='abc123456', imgCode=code)
+    try:
         token = resp.json()['data']['token']
     except Exception as ex:
         logging.error('登錄失敗！接口返回:{}'.format(resp.text))
