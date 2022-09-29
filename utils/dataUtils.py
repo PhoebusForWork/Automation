@@ -76,8 +76,8 @@ class Utils:
     @staticmethod
     def replace_json(json, target):
         json_copy = copy.deepcopy(json)  # 避免淺層複製導致case讀取有誤
-        for i in list(target.keys()):
-            key = i
+        for key in list(target.keys()):
+
             value = target.get(key, "不存在")
             try:
                 json_copy[key] = value
