@@ -1,6 +1,7 @@
 import os
 import json
 import json5
+import copy
 
 
 class Utils:
@@ -69,9 +70,20 @@ class Utils:
         testdata = []
         for i in data:
             if target in i:
-                # print(i)
                 testdata.append(i)
         return testdata
+
+    @staticmethod
+    def replace_json(json, target):
+        json_copy = copy.deepcopy(json)  # 避免淺層複製導致case讀取有誤
+        for key in list(target.keys()):
+
+            value = target.get(key, "不存在")
+            try:
+                json_copy[key] = value
+            except:
+                json_copy[0][key] = value
+        return json_copy
 
 
 if __name__ == '__main__':
