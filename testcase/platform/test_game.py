@@ -2,7 +2,7 @@ import pytest
 import allure
 import random
 from pylib.platform.game import Game, Rebate_template
-from testcase.conftest import getPltLoginToken
+from testcase.platform.conftest import getPltLoginToken
 from utils.dataUtils import Utils
 from utils.APIController import API_Controller
 
