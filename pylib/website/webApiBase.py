@@ -67,7 +67,7 @@ class WEB_API:
                 {"token": str(response.json()['data']['token'])})
         except:
             print("登錄失敗")
-        return response.json()
+        return response
 
     def logout(self):  # 登出
 

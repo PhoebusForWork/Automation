@@ -10,6 +10,8 @@ class Utils:
 
         self.file_path = os.path.join(os.path.dirname(
             os.path.dirname(__file__)), 'resources')
+        self.cs_file_path = os.path.join(os.path.dirname(
+            os.path.dirname(__file__)), 'resources/client_side')
 
     def read_json(self, json_file):
         test_data = []
@@ -39,10 +41,13 @@ class Utils:
 
         return test_data
 
-    def read_json5(self, json_file):
+    def read_json5(self, json_file, file_side='plt'):
         test_data = []
         key_data = []
-        data_path = os.path.join(self.file_path, json_file)
+        if file_side == 'cs':
+            data_path = os.path.join(self.cs_file_path, json_file)
+        else:
+            data_path = os.path.join(self.file_path, json_file)
 
         with open(data_path, mode='r', encoding='utf8') as f:
             json_data = json5.load(f)
