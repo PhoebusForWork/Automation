@@ -1,0 +1,50 @@
+[
+    {
+        "test_case": "get_wallet_user_info",
+        "req_method": "get",
+        "req_url": "/v1/wallet/game/transfer/user/29/info",
+        "test_item": [
+            {"scenario":"[gameType]null","json": {},"params": {},"code_status": 200,"keyWord": 'data'},
+            ]
+    },
+    {
+        "test_case": "wallet_game_transfer_deposit",
+        "req_method": "post",
+        "req_url": "/v1/wallet/game/transfer/user/29/deposit",
+        "test_item": [
+            {"scenario":"[amount]null","json": {"channelCode":"AWC","amount":null},"params": {},"code_status": 400,"keyWord": '无效的请求参数'},
+            {"scenario":"[amount]超出額度","json": {"channelCode":"AWC","amount":200},"params": {},"code_status": 500,"keyWord": '中心钱包余额不足'},
+            {"scenario":"[amount]100","json": {"channelCode":"AWC","amount":100},"params": {},"code_status": 200,"keyWord": 'success'},
+            {"scenario":"[channelCode]不存在code","json": {"channelCode":"AWCC","amount":100},"params": {},"code_status": 400,"keyWord": '資料不存在'},
+            ]
+    },
+    {
+        "test_case": "wallet_game_transfer_withdraw",
+        "req_method": "post",
+        "req_url": "/v1/wallet/game/transfer/user/29/withdraw",
+        "test_item": [
+            {"scenario":"[amount]null","json": {"channelCode":"AWC","amount":null},"params": {},"code_status": 400,"keyWord": '无效的请求参数'},
+            {"scenario":"[amount]超出額度","json": {"channelCode":"AWC","amount":5000},"params": {},"code_status": 400,"keyWord": '子钱包余额不足'},
+            {"scenario":"[amount]100","json": {"channelCode":"AWC","amount":100},"params": {},"code_status": 200,"keyWord": 'success'},
+            {"scenario":"[channelCode]不存在code","json": {"channelCode":"AWCC","amount":100},"params": {},"code_status": 400,"keyWord": '資料不存在'},
+            ]
+    },
+    {
+        "test_case": "wallet_game_transfer_withdraw_all",
+        "req_method": "post",
+        "req_url": "/v1/wallet/game/transfer/user/29/withdraw/all",
+        "test_item": [
+            {"scenario":"[amount]還有餘額","json": {},"params": {},"code_status": 200,"keyWord": 'success'},
+            {"scenario":"[amount]沒有餘額","json": {},"params": {},"code_status": 400,"keyWord": '子钱包余额不足'},
+            ]
+    },
+    { //功能無法正常操作(待補)
+        "test_case": "get_wallet_front_user_fund",
+        "req_method": "get",
+        "req_url": "/v1/wallet/front/user/29/fund",
+        "params" : {"userId":29,"from":"2022-01-01T00:00:00Z","to":"2023-01-01T00:00:00Z"}, //"transactionType":7,"transactionStatus":null,"page":null,"size":null},
+        "test_item": [
+            {"scenario":"[userId]不存在","target":{"userId":29},"json": {},"code_status": 400,"keyWord": "无效的请求参数"},
+            ]
+    }
+]

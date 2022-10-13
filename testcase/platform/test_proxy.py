@@ -3,7 +3,7 @@ import allure
 import random
 from pylib.platform.userManage import userManage
 from pylib.platform.proxy import proxyChannel, proxyGroup, proxyManage
-from testcase.conftest import getPltLoginToken
+from testcase.platform.conftest import getPltLoginToken
 from utils.dataUtils import Utils
 from utils.APIController import API_Controller
 
