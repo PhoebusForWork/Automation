@@ -1,0 +1,59 @@
+[
+    {
+        "test_case": "add_config_avatar",
+        "req_method": "post",
+        "req_url": "/v1/config/avatar",
+        "json" : {"title":"autoTest","url":"autoTest"},
+        "test_item": [
+            {"scenario":"[title]不存在","target":{"title":null},"params": {},"code_status": 400,"keyWord": "无效的请求参数"},
+            {"scenario":"[title]31字","target":{"title":'1234567890123456789012345678901'},"params": {},"code_status": 400,"keyWord": "无效的请求参数"},
+            {"scenario":"[url]null","target":{"url":null},"params": {},"code_status": 400,"keyWord": "无效的请求参数"},
+            {"scenario":"[url]300字","target":{"url":"123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"},"params": {},"code_status": 400,"keyWord": "无效的请求参数"},
+            {"scenario":"正常新增","target":{"null":null},"params": {},"code_status": 200,"keyWord": "success"},
+            ]
+    },
+    {
+        "test_case": "edit_config_avatar",
+        "req_method": "put",
+        "json" : {"title":"修改頭像1","url":"autoTest","id":4},
+        "req_url": "/v1/config/avatar",
+        "test_item": [
+            {"scenario":"[id]不存在","target":{"id":9827394287424},"params": {},"code_status": 400,"keyWord": "資料不存在"},
+            {"scenario":"[title]不存在","target":{"title":null},"params": {},"code_status": 400,"keyWord": "无效的请求参数"},
+            {"scenario":"[title]31字","target":{"title":'1234567890123456789012345678901'},"params": {},"code_status": 400,"keyWord": "无效的请求参数"},
+            {"scenario":"[url]null","target":{"url":null},"params": {},"code_status": 400,"keyWord": "无效的请求参数"},
+            {"scenario":"[url]300字","target":{"url":"123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"},"params": {},"code_status": 400,"keyWord": "无效的请求参数"},
+            {"scenario":"正常新增","target":{"null":null},"params": {},"code_status": 200,"keyWord": "success"},
+            ]
+    },
+    {
+        "test_case": "delete_config_avatar",
+        "req_method": "delete",
+        "json" : {},
+        "test_item": [
+            {"req_url": "/v1/config/avatar/9945385938","scenario":"[id]不存在","target":{"null":null},"params": {},"code_status": 400,"keyWord": "資料不存在"},
+            {"req_url": "/v1/config/avatar/存在id","scenario":"正常移除","target":{"null":null},"params": {},"code_status": 200,"keyWord": "success"},
+            ]
+    },
+    {
+        "test_case": "get_config_avatars",
+        "req_method": "get",
+        "params" : {"title":"頭像1"},
+        "req_url": "/v1/config/avatars",
+        "test_item": [
+            {"scenario":"[title]null","target":{"title":null},"json": {},"code_status": 200,"keyWord": "頭像1"}, //應查詢所有資料
+            {"scenario":"[title]存在標題","target":{"title":"頭像1"},"json": {},"code_status": 200,"keyWord": "頭像1"},
+            {"scenario":"[title]31字","target":{"title":"1234567890123456789012345678901"},"json": {},"code_status": 400,"keyWord": "无效的请求参数"},
+            {"scenario":"[title]不存在","target":{"title":"unnone"},"json": {},"code_status": 200,"keyWord": "[]"},
+            ]
+    },
+    {
+        "test_case": "get_config_avatar_one",
+        "req_method": "get",
+        "json" : {},
+        "test_item": [
+            {"req_url": "/v1/config/avatar/9945385938","scenario":"[id]不存在","target":{"null":null},"params": {},"code_status": 400,"keyWord": "資料不存在"},
+            {"req_url": "/v1/config/avatar/存在id","scenario":"正常移除","target":{"null":null},"params": {},"code_status": 200,"keyWord": "待刪除頭像"},
+            ]
+    }
+]
