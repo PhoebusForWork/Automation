@@ -3,23 +3,21 @@ import time
 import string
 
 
-class make():
+class Make():
 
     def name(namelen=8):
-        name = ''.join(random.choice(string.ascii_letters + string.digits)
+        return ''.join(random.choice(string.ascii_letters + string.digits)
                        for _ in range(namelen))
-        return name
 
     def mobile():
-        mobile = "1{}{}".format(random.choice('589'), ''.join(
+        return "1{}{}".format(random.choice('589'), ''.join(
             random.choice(string.digits) for x in range(9)))
-        return mobile
 
-    def date(date='now'):
-        if date == 'start':
+    def date(status):
+        if status == 'start':
             return time.strftime('%Y-%m-%d ', time.localtime()) + '00:00:00'
 
-        elif date == 'end':
+        elif status == 'end':
             return time.strftime('%Y-%m-%d ', time.localtime()) + '23:59:59'
 
         else:
