@@ -4,7 +4,7 @@
         "req_method": "get",
         "req_url": "/v1/wallet/game/transfer/user/29/info",
         "test_item": [
-            {"scenario":"[gameType]null","json": {},"params": {},"code_status": 200,"keyWord": 'data'},
+            {"scenario":"正常查詢","json": {},"params": {},"code_status": 200,"keyWord": 'data'},
             ]
     },
     {
