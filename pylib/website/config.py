@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import configparser
 from ..website.webApiBase import WEB_API  # 執行RF時使用
-from utils.generator import Make
+from utils.generate_utils import Make
 
 
 config = configparser.ConfigParser()

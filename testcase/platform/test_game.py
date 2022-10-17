@@ -3,8 +3,8 @@ import allure
 import random
 from pylib.platform.game import Game, Rebate_template
 from testcase.platform.conftest import getPltLoginToken
-from utils.dataUtils import Utils
-from utils.APIController import API_Controller
+from utils.data_utils import Utils
+from utils.api_utils import API_Controller
 
 td = Utils()
 testData = td.read_json5('test_game.json5')

@@ -1,8 +1,8 @@
 import pytest
 import allure
 from testcase.platform.conftest import getPltLoginToken
-from utils.dataUtils import Utils
-from utils.APIController import API_Controller
+from utils.data_utils import Utils
+from utils.api_utils import API_Controller
 from pylib.platform.config import Avatar
 
 td = Utils()

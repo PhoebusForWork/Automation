@@ -1,7 +1,7 @@
 import pytest
 import allure
-from utils.dataUtils import Utils
-from utils.APIController import Cs_API_Controller
+from utils.data_utils import Utils
+from utils.api_utils import Cs_API_Controller
 from pylib.website.user import Address
 
 td = Utils()

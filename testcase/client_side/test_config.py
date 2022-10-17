@@ -1,8 +1,8 @@
 import pytest
 import allure
-from utils.dataUtils import Utils
-from utils.APIController import Cs_API_Controller
-from utils.postgres_util import User_wallet
+from utils.data_utils import Utils
+from utils.api_utils import Cs_API_Controller
+from utils.postgres_utils import User_wallet
 from pylib.website.wallet import Wallet
 
 td = Utils()
