@@ -5,7 +5,7 @@
         "req_url": "/v1/config/avatar/urls",
         "json" : {},
         "test_item": [
-            {"scenario":"正常查詢","target":{},"params": {},"code_status": 200,"keyWord": "/static/img/avatar/a5e93a9a29/125669346c3c5bc8.png"},
+            {"scenario":"正常查詢","target":{},"params": {},"code_status": 200,"keyword": "/static/img/avatar/a5e93a9a29/125669346c3c5bc8.png"},
             ]
     }
 ]
