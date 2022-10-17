@@ -2,7 +2,7 @@
 import configparser
 import jsonpath
 from ..website.webApiBase import WEB_API  # 執行RF時使用
-from utils.generator import make
+from utils.generate_utils import make
 
 
 config = configparser.ConfigParser()

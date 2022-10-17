@@ -1,4 +1,4 @@
-from .data_base_handler import Postgresql
+from .database_utils import Postgresql
 
 
 class User_wallet:
