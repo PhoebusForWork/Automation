@@ -4,7 +4,7 @@ import json5
 import copy
 
 
-class Utils:
+class JsonReader:
 
     def __init__(self):
 
@@ -92,7 +92,7 @@ class Utils:
 
 
 if __name__ == '__main__':
-    ut = Utils()
+    ut = JsonReader()
     r = ut.read_json5('test_proxy.json5')
 
     td = ut.get_test_case(r, 'proxy_test')

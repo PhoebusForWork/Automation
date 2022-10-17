@@ -4,10 +4,10 @@ import random
 from pylib.platform.userManage import userManage
 from pylib.platform.proxy import proxyChannel, proxyGroup, proxyManage
 from testcase.platform.conftest import getPltLoginToken
-from utils.data_utils import Utils
+from utils.data_utils import JsonReader
 from utils.api_utils import API_Controller
 
-td = Utils()
+td = JsonReader()
 testData = td.read_json5('test_proxy.json5')
 
 
