@@ -18,7 +18,7 @@ class WEB_API:
         self.ws = requests.Session()
         self.ws.headers = {
             "timestamp": self.timestemp,
-            "os_type": "0",
+            "os-type": "WEB",
             "appType": "0",
             "uid": "",
             "device_id": "3263782594",

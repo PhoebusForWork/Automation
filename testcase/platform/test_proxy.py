@@ -2,7 +2,7 @@ import pytest
 import allure
 import random
 from pylib.platform.userManage import userManage
-from pylib.platform.proxy import proxyChannel, proxyGroup, proxyManage
+from pylib.platform.proxy import ProxyChannel, ProxyGroup, ProxyManage
 from testcase.platform.conftest import getPltLoginToken
 from utils.data_utils import JsonReader
 from utils.api_utils import API_Controller
@@ -18,8 +18,8 @@ testData = td.read_json5('test_proxy.json5')
 @pytest.fixture(scope="session", autouse=True)  # 清除代理審核列表
 def clean(getPltLoginToken):
     yield
-    clean = proxyManage()
-    clean.cleanProxyApproval(token=getPltLoginToken)
+    clean = ProxyManage()
+    clean.clean_proxy_approval(token=getPltLoginToken)
 
 
 #############
@@ -116,9 +116,9 @@ def test_proxy_add_group(test_case, req_method, req_url, scenario, json, params,
     if json['groupName'] == "不重複名稱":
         json['groupName'] = json['groupName']+str(random.randrange(99999))
     if json['channelIds'] == "未綁定channel":
-        req = proxyChannel()
+        req = ProxyChannel()
         json['channelIds'] = [
-            req.getAvailableChannel_auto(platToken=getPltLoginToken)]
+            req.get_available_channel_auto(platToken=getPltLoginToken)]
 
     api = API_Controller()
     resp = api.HttpsClient(req_method, req_url, json,
@@ -136,9 +136,9 @@ def test_proxy_edit_group(test_case, req_method, req_url, scenario, json, params
     if json['groupName'] == "不重複名稱":
         json['groupName'] = json['groupName']+str(random.randrange(99999))
     if json['channelIds'] == "未綁定channel":
-        req = proxyChannel()
+        req = ProxyChannel()
         json['channelIds'] = [
-            req.getAvailableChannel_auto(platToken=getPltLoginToken)]
+            req.get_available_channel_auto(platToken=getPltLoginToken)]
 
     api = API_Controller()
     resp = api.HttpsClient(req_method, req_url, json,
@@ -153,9 +153,9 @@ def test_proxy_edit_group(test_case, req_method, req_url, scenario, json, params
 @pytest.mark.parametrize("test_case, req_method, req_url, scenario, json, params, code_status, keyword", td.get_test_case(testData, 'proxy_delete_group'))
 def test_proxy_delete_group(test_case, req_method, req_url, scenario, json, params, code_status, keyword, getPltLoginToken):
     if "存在groupId" in req_url:
-        groupId = proxyGroup()
+        groupId = ProxyGroup()
         req_url = req_url.replace("存在groupId", str(
-            groupId.getExistGroup_auto(platToken=getPltLoginToken)))
+            groupId.get_exist_group_auto(platToken=getPltLoginToken)))
 
     api = API_Controller()
     resp = api.HttpsClient(req_method, req_url, json,
@@ -465,17 +465,17 @@ def test_proxy_get_manage_approver_list(test_case, req_method, req_url, scenario
 @pytest.mark.parametrize("test_case, req_method, req_url, scenario, json, params, code_status, keyword", td.get_test_case(testData, 'proxy_manage_approver_first'))
 def test_proxy_manage_approver_first(test_case, req_method, req_url, scenario, json, params, code_status, keyword, getPltLoginToken):
     if "待審核訂單" in req_url:
-        orderid = proxyManage()
+        orderid = ProxyManage()
         req_url = req_url.replace(
-            "待審核訂單", orderid.getFirstApprovalId(token=getPltLoginToken))
+            "待審核訂單", orderid.get_first_approval_id(token=getPltLoginToken))
     if "一審完成訂單" in req_url:
-        orderid = proxyManage()
+        orderid = ProxyManage()
         req_url = req_url.replace(
-            "一審完成訂單", orderid.getSecondApprovalId(token=getPltLoginToken))
+            "一審完成訂單", orderid.get_second_approval_id(token=getPltLoginToken))
     if "二審完成訂單" in req_url:
-        orderid = proxyManage()
+        orderid = ProxyManage()
         req_url = req_url.replace(
-            "二審完成訂單", orderid.getSecondApprovalSuccessId(token=getPltLoginToken))
+            "二審完成訂單", orderid.get_second_approval_success_id(token=getPltLoginToken))
 
     api = API_Controller()
     resp = api.HttpsClient(req_method, req_url, json,
@@ -490,13 +490,13 @@ def test_proxy_manage_approver_first(test_case, req_method, req_url, scenario, j
 @pytest.mark.parametrize("test_case, req_method, req_url, scenario, json, params, code_status, keyword", td.get_test_case(testData, 'proxy_manage_approver_second'))
 def test_proxy_manage_approver_second(test_case, req_method, req_url, scenario, json, params, code_status, keyword, getPltLoginToken):
     if "待審核訂單" in req_url:
-        orderid = proxyManage()
+        orderid = ProxyManage()
         req_url = req_url.replace(
-            "待審核訂單", orderid.getSecondApprovalId(token=getPltLoginToken))
+            "待審核訂單", orderid.get_second_approval_id(token=getPltLoginToken))
     if "二審完成訂單" in req_url:
-        orderid = proxyManage()
+        orderid = ProxyManage()
         req_url = req_url.replace(
-            "二審完成訂單", orderid.getSecondApprovalSuccessId(token=getPltLoginToken))
+            "二審完成訂單", orderid.get_second_approval_success_id(token=getPltLoginToken))
 
     api = API_Controller()
     resp = api.HttpsClient(req_method, req_url, json,

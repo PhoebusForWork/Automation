@@ -14,7 +14,7 @@ class User_wallet:
         game_transfer = f"select type,amount from wallet.vs_game_transfer where user_id = {user_id} order by create_time desc limit 1;"
         data = check.select_sql(game_transfer)
         Type, amount = data[0][0], data[0][1]
-        game_wallet = f"select channel_code,balance,freeze_balance from wallet.vs_game_wallet where user_id = {user_id};"
+        game_wallet = f"select channel_code,balance,freeze_balance from wallet.vs_game_wallet where user_id = {user_id} and channel_code = '{channel}';"
         data = check.select_sql(game_wallet)
         channel_code, balance, freeze_balance = data[0][0], data[0][1], data[0][2]
         try:

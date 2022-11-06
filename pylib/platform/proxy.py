@@ -13,12 +13,12 @@ web_host = config['host']['web_host']
 platfrom_host = config['host']['platform_host']
 
 
-class proxyChannel(PLAT_API):
+class ProxyChannel(PLAT_API):
 
-    def addChannel(self,  # 新增代理渠道
-                   platUid=None, platToken=None,
-                   channel=None,
-                   ):
+    def add_channel(self,  # 新增代理渠道
+                    platUid=None, platToken=None,
+                    channel=None,
+                    ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.post(platfrom_host+"/v1/proxy/channel",
@@ -30,10 +30,10 @@ class proxyChannel(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def editChannel(self,  # 編輯代理渠道
-                    platUid=None, platToken=None,
-                    channel=None, channelId=None,
-                    ):
+    def edit_channel(self,  # 編輯代理渠道
+                     platUid=None, platToken=None,
+                     channel=None, channelId=None,
+                     ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.put(platfrom_host+"/v1/proxy/channel/{}".format(channelId),
@@ -45,10 +45,10 @@ class proxyChannel(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def deleteChannel(self,  # 移除代理渠道
-                      platUid=None, platToken=None,
-                      channelId=None,
-                      ):
+    def delete_channel(self,  # 移除代理渠道
+                       platUid=None, platToken=None,
+                       channelId=None,
+                       ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.delete(platfrom_host+"/v1/proxy/channel/{}".format(channelId),
@@ -58,10 +58,10 @@ class proxyChannel(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def getChannel(self,  # 顯示代理渠道
-                   platUid=None, platToken=None,
-                   page=None, size=None,
-                   ):
+    def get_channel(self,  # 顯示代理渠道
+                    platUid=None, platToken=None,
+                    page=None, size=None,
+                    ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/channel",
@@ -74,9 +74,9 @@ class proxyChannel(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def getChannelAll(self,  # 顯示所有代理渠道
-                      platUid=None, platToken=None,
-                      ):
+    def get_channel_all(self,  # 顯示所有代理渠道
+                        platUid=None, platToken=None,
+                        ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/channel/all",
@@ -86,9 +86,9 @@ class proxyChannel(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def getChannelAvailable(self,  # 獲取未綁定代理渠道
-                            platUid=None, platToken=None,
-                            ):
+    def get_channel_available(self,  # 獲取未綁定代理渠道
+                              platUid=None, platToken=None,
+                              ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/channel/available",
@@ -98,9 +98,9 @@ class proxyChannel(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def getAvailableChannel_auto(self,  # 獲取未綁定代理渠道
-                                 platUid=None, platToken=None,
-                                 ):
+    def get_available_channel_auto(self,  # 獲取未綁定代理渠道
+                                   platUid=None, platToken=None,
+                                   ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/channel/available",
@@ -112,7 +112,7 @@ class proxyChannel(PLAT_API):
         if ret is not False:
             return ret[0]
         else:
-            self.addChannel(platToken, channel=''.join(
+            self.add_channel(platToken, channel=''.join(
                 random.choice(string.ascii_letters) for _ in range(10)))
             response = self.ps.get(
                 platfrom_host+"/v1/proxy/channel/available", json={}, params={})
@@ -121,12 +121,12 @@ class proxyChannel(PLAT_API):
             return ret[0]
 
 
-class proxyGroup(PLAT_API):
+class ProxyGroup(PLAT_API):
 
-    def addGroup(self,  # 新增代理團隊
-                 platUid=None, platToken=None,
-                 groupName=None, channelIds=[],
-                 ):
+    def add_group(self,  # 新增代理團隊
+                  platUid=None, platToken=None,
+                  groupName=None, channelIds=[],
+                  ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.post(platfrom_host+"/v1/proxy/group",
@@ -139,11 +139,11 @@ class proxyGroup(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def editGroup(self,  # 編輯代理團隊
-                  platUid=None, platToken=None,
-                  groupName=None, channelIds=[],
-                  groupId=None,
-                  ):
+    def edit_group(self,  # 編輯代理團隊
+                   platUid=None, platToken=None,
+                   groupName=None, channelIds=[],
+                   groupId=None,
+                   ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.put(platfrom_host+"/v1/proxy/group/{}".format(groupId),
@@ -156,10 +156,10 @@ class proxyGroup(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def deleteGroup(self,  # 編輯代理團隊
-                    platUid=None, platToken=None,
-                    groupId=None,
-                    ):
+    def delete_group(self,  # 編輯代理團隊
+                     platUid=None, platToken=None,
+                     groupId=None,
+                     ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.delete(platfrom_host+"/v1/proxy/group/{}".format(groupId),
@@ -169,10 +169,10 @@ class proxyGroup(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def getGroupinfo(self,  # 取得團隊資訊
-                     platUid=None, platToken=None,
-                     page=None, size=None,
-                     ):
+    def get_group_info(self,  # 取得團隊資訊
+                       platUid=None, platToken=None,
+                       page=None, size=None,
+                       ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/group/groupsAndChannels",
@@ -185,10 +185,10 @@ class proxyGroup(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def getExistGroup_auto(self,  # 取得存在團隊id
-                           platUid=None, platToken=None,
-                           page=None, size=1000,
-                           ):
+    def get_exist_group_auto(self,  # 取得存在團隊id
+                             platUid=None, platToken=None,
+                             page=None, size=1000,
+                             ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
 
@@ -204,13 +204,13 @@ class proxyGroup(PLAT_API):
         return ret[0]
 
 
-class proxyCommission(PLAT_API):
+class ProxyCommissionTemplate(PLAT_API):
 
-    def addTemplate(self,     # 建立佣金模板
-                    platToken=None,
-                    name=None, isEnabled=None,
-                    isNeedToVerify=None
-                    ):
+    def add_template(self,     # 建立佣金模板
+                     platToken=None,
+                     name=None, isEnabled=None,
+                     isNeedToVerify=None
+                     ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.post(platfrom_host+"/v1/proxy/commission/template",
@@ -224,12 +224,12 @@ class proxyCommission(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def editTemplate(self,     # 編輯佣金模板
-                     platToken=None,
-                     id=1,
-                     name=None, isEnabled=None,
-                     isNeedToVerify=None
-                     ):
+    def edit_template(self,     # 編輯佣金模板
+                      platToken=None,
+                      id=1,
+                      name=None, isEnabled=None,
+                      isNeedToVerify=None
+                      ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.put(platfrom_host+"/v1/proxy/commission/template/{}".format(id),
@@ -243,9 +243,9 @@ class proxyCommission(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def getTemplate(self,     # 獲取佣金模板
-                    platToken=None
-                    ):
+    def get_template(self,     # 獲取佣金模板
+                     platToken=None
+                     ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/commission/template",
@@ -255,9 +255,9 @@ class proxyCommission(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def getTemplateList(self,     # 獲取佣金模板選單
-                        platToken=None
-                        ):
+    def get_template_list(self,     # 獲取佣金模板選單
+                          platToken=None
+                          ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/commission/template/mapList",
@@ -267,155 +267,159 @@ class proxyCommission(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def getSubConfig(self,     # 獲取下級代理佣金設置
-                     platToken=None,
-                     id=None,
-                     ):
+    def get_sub_config(self,     # 獲取下級代理佣金設置
+                       platToken=None,
+                       id=None,
+                       ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
-        response = self.ps.get(platfrom_host+"/v1/proxy/commission/template/{}/subCommissionConfig".format(id),
+        response = self.ps.get(platfrom_host+f"/v1/proxy/commission/template/{id}/subCommissionConfig",
                                json={},
                                params={}
                                )
         self._printresponse(response)
         return response.json()
 
-    def editSubConfig(self,     # 編輯下級代理佣金設置
-                      platToken=None,
-                      id=None,
-                      subCommissionConfigList=None,
-                      subSubCommissionConfigList=None,
-                      ):
+    def edit_sub_config(self,     # 編輯下級代理佣金設置
+                        platToken=None,
+                        id=None,
+                        subCommissionConfigList=None,
+                        subSubCommissionConfigList=None,
+                        ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
-        response = self.ps.put(platfrom_host+"/v1/proxy/commission/template/{}/subCommissionConfig".format(id),
+        response = self.ps.put(platfrom_host+f"/v1/proxy/commission/template/{id}/subCommissionConfig",
                                json={
-            "subCommissionConfigList": [subCommissionConfigList],
-            "subSubCommissionConfigList": [subSubCommissionConfigList],
-        },
-            params={}
-        )
+                                   "subCommissionConfigList": subCommissionConfigList,
+                                   "subSubCommissionConfigList": subSubCommissionConfigList,
+                               },
+                               params={}
+                               )
         self._printresponse(response)
         return response.json()
 
-    def getSettlementShares(self,     # 獲取結算分攤
-                            platToken=None,
-                            id=None,
-                            ):
+    def get_settlement_shares(self,     # 獲取結算分攤
+                              platToken=None,
+                              id=None,
+                              ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
-        response = self.ps.get(platfrom_host+"/v1/proxy/commission/template/{}/settlementShares".format(id),
+        response = self.ps.get(platfrom_host+f"/v1/proxy/commission/template/{id}/settlementShares",
                                json={},
                                params={}
                                )
         self._printresponse(response)
         return response.json()
 
-    def editSettlementShares(self,     # 編輯結算分攤
-                             platToken=None,
-                             id=None, activity=None,
-                             activityLimit=None, rebate=None,
-                             rebateLimit=None, bet=None, betCount=None,
-                             ):
+    def edit_settlement_shares(self,     # 編輯結算分攤
+                               platToken=None,
+                               id=None, activity=None,
+                               activityLimit=None, rebate=None,
+                               rebateLimit=None, bet=None, betCount=None,
+                               ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
-        response = self.ps.put(platfrom_host+"/v1/proxy/commission/template/{}/settlementShares".format(id),
+        response = self.ps.put(platfrom_host+f"/v1/proxy/commission/template/{id}/settlementShares",
                                json={
-            "activity": activity,
-            "activityLimit": activityLimit,
-            "rebate": rebate,
-            "rebateLimit": rebateLimit,
-            "bet": bet,
-            "betCount": betCount
-        },
-            params={}
-        )
+                                   "activity": activity,
+                                   "activityLimit": activityLimit,
+                                   "rebate": rebate,
+                                   "rebateLimit": rebateLimit,
+                                   "bet": bet,
+                                   "betCount": betCount
+                               },
+                               params={}
+                               )
         self._printresponse(response)
         return response.json()
 
-    def getPlatSettlementShares(self,     # 獲取平台費分攤
-                                platToken=None,
-                                id=None,
-                                ):
+    def get_plat_settlement_shares(self,     # 獲取平台費分攤
+                                   platToken=None,
+                                   id=None,
+                                   ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
-        response = self.ps.get(platfrom_host+"/v1/proxy/commission/template/{}/platformFeeShares".format(id),
+        response = self.ps.get(platfrom_host+f"/v1/proxy/commission/template/{id}/platformFeeShares",
                                json={},
                                params={}
                                )
         self._printresponse(response)
         return response.json()
 
-    def editPlatSettlementShares(self,     # 編輯平台費分攤
-                                 platToken=None,
-                                 id=None, channelCode=None,
-                                 gameType=None, fee=None,
-                                 platformFeeLimit=None,
-                                 ):
+    def edit_plat_settlement_shares(self,     # 編輯平台費分攤
+                                    platToken=None,
+                                    id=None, channelCode=None,
+                                    gameType=None, fee=None,
+                                    platformFeeLimit=None,
+                                    data=FileNotFoundError
+                                    ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
-        response = self.ps.put(platfrom_host+"/v1/proxy/commission/template/{}/platformFeeShares".format(id),
-                               json=[
-            {
-                "channelCode": channelCode,
-                "platformFee": [{
-                    "gameType": gameType,
-                    "fee": fee
-                }],
-                "platformFeeLimit": platformFeeLimit
-            }
-        ],
-            params={}
-        )
+        response = self.ps.put(platfrom_host+f"/v1/proxy/commission/template/{id}/platformFeeShares",
+                               json=data                               # [
+                               #        {
+                               #            "channelCode": channelCode,
+                               #            "platformFee": [{
+                               #                "gameType": gameType,
+                               #                "fee": fee
+                               #            }],
+                               #            "platformFeeLimit": platformFeeLimit
+                               #        }
+                               #    ]
+                               ,
+                               params={}
+                               )
         self._printresponse(response)
         return response.json()
 
-    def getCommissionConfig(self,     # 獲取設置返佣
-                            platToken=None,
-                            id=None,
-                            ):
+    def get_commission_config(self,     # 獲取設置返佣
+                              platToken=None,
+                              id=None,
+                              ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
-        response = self.ps.get(platfrom_host+"/v1/proxy/commission/template/{}/commissionConfig".format(id),
+        response = self.ps.get(platfrom_host+f"/v1/proxy/commission/template/{id}/commissionConfig",
                                json={},
                                params={}
                                )
         self._printresponse(response)
         return response.json()
 
-    def editCommissionConfig(self,     # 獲取設置返佣
-                             platToken=None,
-                             id=None, profit=None,
-                             commissionLimit=None, commission=None,
-                             validUserCount=None,
-                             ):
+    def edit_commission_config(self,     # 獲取設置返佣
+                               platToken=None,
+                               id=None, profit=None,
+                               commissionLimit=None, commission=None,
+                               validUserCount=None,
+                               json=[]
+                               ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
-        response = self.ps.put(platfrom_host+"/v1/proxy/commission/template/{}/commissionConfig".format(id),
-                               json=[
-            {
-                "profit": profit,
-                "commissionLimit": commissionLimit,
-                "commission": commission,
-                "validUserCount": validUserCount
-            }
-        ],
-            params={}
-        )
+        response = self.ps.put(platfrom_host+f"/v1/proxy/commission/template/{id}/commissionConfig",
+                               json=json,
+                               #    [
+                               #        {
+                               #            "profit": profit,
+                               #            "commissionLimit": commissionLimit,
+                               #            "commission": commission,
+                               #            "validUserCount": validUserCount
+                               #        }
+                               #    ],
+                               params={}
+                               )
         self._printresponse(response)
         return response.json()
 
 
-class proxy(PLAT_API):
+class Proxy(PLAT_API):
 
-    def getProxy(self,     # 獲取代理列表
-                 platToken=None,
-                 registerFrom="2022-01-01T00:00:00Z", registerTo="2022-12-31T00:00:00Z",
-                 minBalance=None, maxBalance=None,
-                 creditStatus=None, queryType=None,
-                 input=None, groupName=None,
-                 channel=None, page=None, size=None,
-                 ):
+    def get_proxy(self,     # 獲取代理列表
+                  platToken=None,
+                  registerFrom="2022-01-01T00:00:00Z", registerTo="2022-12-31T00:00:00Z",
+                  minBalance=None, maxBalance=None,
+                  creditStatus=None, queryType=None,
+                  input=None, groupName=None,
+                  channel=None, page=None, size=None,
+                  ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy",
@@ -437,10 +441,10 @@ class proxy(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def accountValidate(self,     # 校驗代理帳號
-                        platToken=None,
-                        accounts=[]
-                        ):
+    def account_validate(self,     # 校驗代理帳號
+                         platToken=None,
+                         accounts=[]
+                         ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.post(platfrom_host+"/v1/proxy/account/validate",
@@ -452,13 +456,13 @@ class proxy(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def addProxy(self,     # 創建代理
-                 platToken=None,
-                 proxyAccount=None,
-                 proxyName=None, password=None,
-                 telephone=None, proxyChannelId=None,
-                 commissionId=None, registerIp=None,
-                 ):
+    def add_proxy(self,     # 創建代理
+                  platToken=None,
+                  proxyAccount=None,
+                  proxyName=None, password=None,
+                  telephone=None, proxyChannelId=None,
+                  commissionId=None, registerIp=None,
+                  ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.post(platfrom_host+"/v1/proxy",
@@ -476,11 +480,11 @@ class proxy(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def editsubCount(self,  # 修改子代理上限
-                     platToken=None,
-                     proxyId=None,
-                     subCount=None,
-                     ):
+    def edit_sub_count(self,  # 修改子代理上限
+                       platToken=None,
+                       proxyId=None,
+                       subCount=None,
+                       ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.put(platfrom_host+"/v1/proxy/{}/subCount".format(proxyId),
@@ -492,11 +496,11 @@ class proxy(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def editsubCommission(self,  # 申請佣金模式變更
-                          platToken=None,
-                          proxyId=None,
-                          commissionId=None,
-                          ):
+    def edit_sub_commission(self,  # 申請佣金模式變更
+                            platToken=None,
+                            proxyId=None,
+                            commissionId=None,
+                            ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.put(platfrom_host+"/v1/proxy/{}/commission".format(proxyId),
@@ -508,11 +512,11 @@ class proxy(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def editChannel(self,  # 編輯代理渠道
-                    platToken=None,
-                    proxyId=None,
-                    channelId=None,
-                    ):
+    def edit_channel(self,  # 編輯代理渠道
+                     platToken=None,
+                     proxyId=None,
+                     channelId=None,
+                     ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.put(platfrom_host+"/v1/proxy/{}/channel".format(proxyId),
@@ -524,10 +528,10 @@ class proxy(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def getDetailEdit(self,  # 查詢代理列表編輯資訊
-                      platToken=None,
-                      userId=None,
-                      ):
+    def get_detail_edit(self,  # 查詢代理列表編輯資訊
+                        platToken=None,
+                        userId=None,
+                        ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/{}/detail/edit".format(userId),
@@ -537,10 +541,10 @@ class proxy(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def getDetailDisplay(self,  # 查詢代理列表顯示資訊
-                         platToken=None,
-                         userId=None,
-                         ):
+    def get_detail_display(self,  # 查詢代理列表顯示資訊
+                           platToken=None,
+                           userId=None,
+                           ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/{}/detail/display".format(userId),
@@ -550,10 +554,10 @@ class proxy(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def getCommissionAvg(self,  # 查詢三個月平均佣金
-                         platToken=None,
-                         proxyId=None,
-                         ):
+    def get_commission_avg(self,  # 查詢三個月平均佣金
+                           platToken=None,
+                           proxyId=None,
+                           ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/{}/commission/avg".format(proxyId),
@@ -563,14 +567,14 @@ class proxy(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def getTradeInfo(self,  # 查詢交易信息
-                     platToken=None,
-                     userId=None,
-                     # 交易类型: 1會員上分(充值額度)|2代理佣金提現|3代理紅利|4代理充值補分(充值上分額度)|5代理充值減分|6代理加幣|7代理減幣|8加幣-代理佣金|9加幣-代理獎金|10減幣-代理佣金|11減幣-代理獎金|12佣金|13充值|14提現|15調整紅利額度|16調整公司額度
-                     tradeTypes=None,
-                     From=None, to=None,
-                     page=None, size=None,
-                     ):
+    def get_trade_info(self,  # 查詢交易信息
+                       platToken=None,
+                       userId=None,
+                       # 交易类型: 1會員上分(充值額度)|2代理佣金提現|3代理紅利|4代理充值補分(充值上分額度)|5代理充值減分|6代理加幣|7代理減幣|8加幣-代理佣金|9加幣-代理獎金|10減幣-代理佣金|11減幣-代理獎金|12佣金|13充值|14提現|15調整紅利額度|16調整公司額度
+                       tradeTypes=None,
+                       From=None, to=None,
+                       page=None, size=None,
+                       ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/tradeInfo",
@@ -585,11 +589,11 @@ class proxy(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def getDomainQuery(self,  # 搜尋代理域名
-                       platToken=None,
-                       type=None, accountOrName=None,
-                       commissionId=None, page=None, size=None,
-                       ):
+    def get_domain_query(self,  # 搜尋代理域名
+                         platToken=None,
+                         type=None, accountOrName=None,
+                         commissionId=None, page=None, size=None,
+                         ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/domain/query",
@@ -599,23 +603,23 @@ class proxy(PLAT_API):
                                    "accountOrName": accountOrName,
                                    "commissionId": commissionId,
                                    "page": page,
-                                   "size": None,
+                                   "size": size,
                                }
                                )
         self._printresponse(response)
         return response.json()
 
 
-class proxyManage(PLAT_API):
+class ProxyManage(PLAT_API):
 
-    def getManageList(self,     # 獲取代理審核列表
-                      platToken=None,
-                      registerStartTime="2022-01-01T00:00:00Z", registerEndTime="2022-12-31T23:59:59Z",
-                      proxyAccount=None, proxyName=None,
-                      # 代理狀態 0:待審核|1:一審通過|2:一審不通過|3:二審通過|4:二審不通過
-                      approver=None, proxyManageStatus=None,
-                      page=None, size=None,
-                      ):
+    def get_manage_list(self,     # 獲取代理審核列表
+                        platToken=None,
+                        registerStartTime="2022-01-01T00:00:00Z", registerEndTime="2022-12-31T23:59:59Z",
+                        proxyAccount=None, proxyName=None,
+                        # 代理狀態 0:待審核|1:一審通過|2:一審不通過|3:二審通過|4:二審不通過
+                        approver=None, proxyManageStatus=None,
+                        page=None, size=None,
+                        ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/user/manage/list",
@@ -634,9 +638,9 @@ class proxyManage(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def getManageApprover(self,     # 獲取代理審批人列表
-                          platToken=None,
-                          ):
+    def get_manage_approver(self,     # 獲取代理審批人列表
+                            platToken=None,
+                            ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/user/manage/list/approver",
@@ -646,10 +650,10 @@ class proxyManage(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def approvalFirst(self,     # 代理審批一審
-                      platToken=None,
-                      id=None, isApprove=None, remark=None
-                      ):
+    def approval_first(self,     # 代理審批一審
+                       platToken=None,
+                       id=None, isApprove=None, remark=None
+                       ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.put(platfrom_host+"/v1/proxy/user/manage/{}/first/approval".format(id),
@@ -662,10 +666,10 @@ class proxyManage(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def approvalSecond(self,     # 代理審批二審
-                       platToken=None,
-                       id=None, isApprove=None, remark=None
-                       ):
+    def approval_second(self,     # 代理審批二審
+                        platToken=None,
+                        id=None, isApprove=None, remark=None
+                        ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.put(platfrom_host+"/v1/proxy/user/manage/{}/second/approval".format(id),
@@ -678,86 +682,86 @@ class proxyManage(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def cleanProxyApproval(self, token=None, size=100):  # 批量駁回待審核訂單
-        jsdata = self.getManageList(
+    def clean_proxy_approval(self, token=None, size=100):  # 批量駁回待審核訂單
+        jsdata = self.get_manage_list(
             platToken=token, size=size, proxyManageStatus=0)
-        jsdata2 = self.getManageList(
+        jsdata2 = self.get_manage_list(
             platToken=token, size=size, proxyManageStatus=1)
         ret = jsonpath.jsonpath(jsdata, "$..id")
         ret2 = jsonpath.jsonpath(jsdata2, "$..id")
         print(ret)
         try:
             for i in ret:
-                self.approvalFirst(platToken=token, id=i,
-                                   isApprove=False, remark="rej")
-            for i in ret2:
-                self.approvalSecond(platToken=token, id=i,
+                self.approval_first(platToken=token, id=i,
                                     isApprove=False, remark="rej")
+            for i in ret2:
+                self.approval_second(platToken=token, id=i,
+                                     isApprove=False, remark="rej")
         except:
             pass
 
-    def getFirstApprovalId(self, token=None):
-        jsdata = self.getManageList(platToken=token, proxyManageStatus=0)
+    def get_first_approval_id(self, token=None):
+        jsdata = self.get_manage_list(platToken=token, proxyManageStatus=0)
         ret = jsonpath.jsonpath(jsdata, "$..id")
         if ret == False:
-            add = proxy()
-            add.addProxy(platToken=token, proxyAccount="產生訂單號碼"+str(random.randrange(99999)),
-                         password="abc123456", telephone=str(random.randrange(10000000000, 19999999999)), commissionId=1)
-            jsdata = self.getManageList(platToken=token, proxyManageStatus=0)
+            add = Proxy()
+            add.add_proxy(platToken=token, proxyAccount="產生訂單號碼"+str(random.randrange(99999)),
+                          password="abc123456", telephone=str(random.randrange(10000000000, 19999999999)), commissionId=1)
+            jsdata = self.get_manage_list(platToken=token, proxyManageStatus=0)
             ret = jsonpath.jsonpath(jsdata, "$..id")
         return str(ret[0])
 
-    def getSecondApprovalId(self, token=None):
-        jsdata = self.getManageList(platToken=token, proxyManageStatus=1)
+    def get_second_approval_id(self, token=None):
+        jsdata = self.get_manage_list(platToken=token, proxyManageStatus=1)
         ret = jsonpath.jsonpath(jsdata, "$..id")
         if ret == False:
-            add = proxy()
-            add.addProxy(platToken=token, proxyAccount="產生訂單號碼"+str(random.randrange(99999)),
-                         password="abc123456", telephone=str(random.randrange(10000000000, 19999999999)), commissionId=1)
-            jsdata = self.getManageList(
+            add = Proxy()
+            add.add_proxy(platToken=token, proxyAccount="產生訂單號碼"+str(random.randrange(99999)),
+                          password="abc123456", telephone=str(random.randrange(10000000000, 19999999999)), commissionId=1)
+            jsdata = self.get_manage_list(
                 platToken=token, proxyManageStatus=0)  # 獲取待一審訂單
             ret = jsonpath.jsonpath(jsdata, "$..id")
             print(ret)
-            self.approvalFirst(
+            self.approval_first(
                 id=str(ret[0]), isApprove=True, remark="auto_test")
-            jsdata = self.getManageList(
+            jsdata = self.get_manage_list(
                 platToken=token, proxyManageStatus=1)  # 獲取待二審訂單
             ret = jsonpath.jsonpath(jsdata, "$..id")
         return str(ret[0])
 
-    def getSecondApprovalSuccessId(self, token=None):
-        jsdata = self.getManageList(platToken=token, proxyManageStatus=4)
+    def get_second_approval_success_id(self, token=None):
+        jsdata = self.get_manage_list(platToken=token, proxyManageStatus=4)
         ret = jsonpath.jsonpath(jsdata, "$..id")
         if ret == False:
-            add = proxy()
-            add.addProxy(platToken=token, proxyAccount="產生訂單號碼"+str(random.randrange(99999)),
-                         password="abc123456", telephone=str(random.randrange(10000000000, 19999999999)), commissionId=1)
-            jsdata = self.getManageList(
+            add = Proxy()
+            add.add_proxy(platToken=token, proxyAccount="產生訂單號碼"+str(random.randrange(99999)),
+                          password="abc123456", telephone=str(random.randrange(10000000000, 19999999999)), commissionId=1)
+            jsdata = self.get_manage_list(
                 platToken=token, proxyManageStatus=0)  # 獲取待一審訂單
             ret = jsonpath.jsonpath(jsdata, "$..id")
-            self.approvalFirst(
+            self.approval_first(
                 id=str(ret[0]), isApprove=True, remark="auto_test")
-            jsdata = self.getManageList(
+            jsdata = self.get_manage_list(
                 platToken=token, proxyManageStatus=1)  # 獲取待二審訂單
             ret = jsonpath.jsonpath(jsdata, "$..id")
-            self.approvalSecond(
+            self.approval_second(
                 id=str(ret[0]), isApprove=False, remark="auto_test")
-            jsdata = self.getManageList(
+            jsdata = self.get_manage_list(
                 platToken=token, proxyManageStatus=4)  # 獲取待二審結束
             ret = jsonpath.jsonpath(jsdata, "$..id")
         return str(ret[0])
 
 
-class proxyCredit(PLAT_API):
+class ProxyCredit(PLAT_API):
 
-    def getCreditDetail(self,     # 查詢上分紀錄
-                        platToken=None,
-                        proxyId=None, tradeType=None,
-                        startTime="2022-01-01T00:00:00Z", endTime="2022-12-31T23:59:59Z",
-                        tradeId=None, relationUsername=None,
-                        minAmount=None, maxAmount=None,
-                        page=None, size=None,
-                        ):
+    def get_credit_detail(self,     # 查詢上分紀錄
+                          platToken=None,
+                          proxyId=None, tradeType=None,
+                          startTime="2022-01-01T00:00:00Z", endTime="2022-12-31T23:59:59Z",
+                          tradeId=None, relationUsername=None,
+                          minAmount=None, maxAmount=None,
+                          page=None, size=None,
+                          ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/proxy/credit/detail",
@@ -778,11 +782,11 @@ class proxyCredit(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def editCredit(self,     # 調整充值額度
-                   platToken=None,
-                   userId=None, amount=None,
-                   changeType=None, status=None,
-                   ):
+    def edit_credit(self,     # 調整充值額度
+                    platToken=None,
+                    userId=None, amount=None,
+                    changeType=None, status=None,
+                    ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.put(platfrom_host+"/v1/proxy/credit",
@@ -791,6 +795,179 @@ class proxyCredit(PLAT_API):
                                    "amount": amount,
                                    "changeType": changeType,
                                    "status": status,
+                               },
+                               params={}
+                               )
+        self._printresponse(response)
+        return response.json()
+
+
+class ProxyCommission(PLAT_API):
+
+    def get_proxy_commission(self,     # 佣金結算查詢
+                             platToken=None,
+                             settleDate=None,
+                             proxyName=None,
+                             proxyAccount=None,
+                             commissionTemplateId=None,
+                             groupName=None,
+                             channelName=None,
+                             minAmount=None, maxAmount=None,
+                             proxyManageStatus=None,
+                             grantStatus=None,
+                             page=None, size=None,
+                             ):
+        if platToken is not None:
+            self.ps.headers.update({"token": str(platToken)})
+        response = self.ps.get(platfrom_host+"/v1/proxy/commission",
+                               json={},
+                               params={
+                                   "settleDate": settleDate,
+                                   "proxyName": proxyName,
+                                   "proxyAccount": proxyAccount,
+                                   "commissionTemplateId": commissionTemplateId,
+                                   "groupName": groupName,
+                                   "channelName": channelName,
+                                   "minAmount": minAmount, "maxAmount": maxAmount,
+                                   "proxyManageStatus": proxyManageStatus,
+                                   "grantStatus": grantStatus,
+                                   "page": page, "size": size,
+                               }
+                               )
+        self._printresponse(response)
+        return response.json()
+
+    def get_win_total(self,     # 查詢公司總輸贏
+                      platToken=None,
+                      proxyId=None, settleDate=None,
+                      ):
+        if platToken is not None:
+            self.ps.headers.update({"token": str(platToken)})
+        response = self.ps.get(platfrom_host+"/v1/proxy/commission/winTotal",
+                               json={},
+                               params={
+                                   "proxyId": proxyId,
+                                   "settleDate": settleDate,
+                               }
+                               )
+        self._printresponse(response)
+        return response.json()
+
+    def get_sub_user_commission(self,     # 查詢下級會員佣金
+                                platToken=None,
+                                proxyId=None, settleDate=None,
+                                ):
+        if platToken is not None:
+            self.ps.headers.update({"token": str(platToken)})
+        response = self.ps.get(platfrom_host+"/v1/proxy/commission/subUserCommission",
+                               json={},
+                               params={
+                                   "proxyId": proxyId,
+                                   "settleDate": settleDate,
+                               }
+                               )
+        self._printresponse(response)
+        return response.json()
+
+    def get_sub_proxy_commission(self,     # 查詢下級代理佣金
+                                 platToken=None,
+                                 proxyId=None, settleDate=None,
+                                 ):
+        if platToken is not None:
+            self.ps.headers.update({"token": str(platToken)})
+        response = self.ps.get(platfrom_host+"/v1/proxy/commission/subProxyCommission",
+                               json={},
+                               params={
+                                   "proxyId": proxyId,
+                                   "settleDate": settleDate,
+                               }
+                               )
+        self._printresponse(response)
+        return response.json()
+
+    def get_history(self,     # 佣金結算歷史查詢
+                    platToken=None,
+                    settleDate=None,
+                    minAmount=None, maxAmount=None,
+                    proxyName=None, proxyAccount=None,
+                    commissionTemplateId=None,
+                    proxyManageStatus=None,
+                    approver=None,
+                    page=None, size=None,
+                    ):
+        if platToken is not None:
+            self.ps.headers.update({"token": str(platToken)})
+        response = self.ps.get(platfrom_host+"/v1/proxy/commission/history",
+                               json={},
+                               params={
+                                   "settleDate": settleDate,
+                                   "minAmount": minAmount, "maxAmount": maxAmount,
+                                   "proxyName": proxyName, "proxyAccount": proxyAccount,
+                                   "commissionTemplateId": commissionTemplateId,
+                                   "proxyManageStatus": proxyManageStatus,
+                                   "approver": approver,
+                                   "page": page, "size": size,
+                               }
+                               )
+        self._printresponse(response)
+        return response.json()
+
+    def get_grant_status(self,     # 結算狀態列表
+                         platToken=None,
+                         ):
+        if platToken is not None:
+            self.ps.headers.update({"token": str(platToken)})
+        response = self.ps.get(platfrom_host+"/v1/proxy/commission/grantStatus",
+                               json={},
+                               params={}
+                               )
+        self._printresponse(response)
+        return response.json()
+
+    def get_costShare(self,     # 查詢成本分攤
+                      platToken=None,
+                      proxyId=None, settleDate=None,
+                      ):
+        if platToken is not None:
+            self.ps.headers.update({"token": str(platToken)})
+        response = self.ps.get(platfrom_host+"/v1/proxy/commission/costShare",
+                               json={},
+                               params={
+                                   "proxyId": proxyId,
+                                   "settleDate": settleDate,
+                               }
+                               )
+        self._printresponse(response)
+        return response.json()
+
+    def first_approve(self,     # 佣金發放一審
+                      platToken=None,
+                      detailId=None,
+                      remark=None, isPass=None
+                      ):
+        if platToken is not None:
+            self.ps.headers.update({"token": str(platToken)})
+        response = self.ps.get(platfrom_host+f"/v1/proxy/commission/{detailId}/firstApprove",
+                               json={
+                                   "remark": remark,
+                                   "isPass": isPass
+                               },
+                               params={}
+                               )
+        self._printresponse(response)
+        return response.json()
+
+    def second_approve(self,     # 佣金發放二審
+                       platToken=None,
+                       detailId=None,
+                       remark=None, isPass=None
+                       ):
+        if platToken is not None:
+            self.ps.headers.update({"token": str(platToken)})
+        response = self.ps.get(platfrom_host+f"/v1/proxy/commission/{detailId}/secondApprove",
+                               json={
+                                   "remark": remark,
+                                   "isPass": isPass
                                },
                                params={}
                                )
