@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from flask import jsonify
 import requests
 import json
 import datetime

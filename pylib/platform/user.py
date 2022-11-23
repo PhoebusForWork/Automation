@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-
-import json
-from bs4 import PageElement
-
-from itsdangerous import NoneAlgorithm
 from ..platform.platApiBase import PLAT_API  # 執行RF時使用
 import configparser
 
@@ -259,7 +254,7 @@ class user(PLAT_API):
 
     def riskAnalysisArbitrage(self,  # 風險套利分析查詢
                               platUid=None, platToken=None,
-                              id=None, registeredFrom=None, registeredTo=None,
+                              id=None, From=None, to=None,
                               username=None, userType=None, reallyName=None,
                               page=None, size=None,
                               ):
@@ -269,7 +264,7 @@ class user(PLAT_API):
         response = self.ps.get(platfrom_host+"/v1/user/{}/risk/analysis/arbitrage".format(id),
                                json={},
                                params={
-            "registeredFrom": registeredFrom, "registeredTo": registeredTo,
+            "from": From, "to": to,
             "username": username, "userType": userType, "reallyName": reallyName,
             "page": page,
             "size": size,

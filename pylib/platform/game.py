@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from ..platform.platApiBase import PLAT_API  # 執行RF時使用
+from ..platform.platApiBase import PLAT_API
+from utils.api_utils import KeywordArgument
 import configparser
 import jsonpath
 import random
@@ -141,8 +142,8 @@ class Game(PLAT_API):
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.post(platfrom_host+"/v1/game/orders",
                                 json={
-                                    "page": page,
-                                    "size": size,
+                                    # "page": page,
+                                    # "size": size,
                                     "startBetTime": startBetTime,
                                     "endBetTime": endBetTime,
                                     "startPayoutTime": startPayoutTime,
@@ -186,6 +187,23 @@ class Game(PLAT_API):
         response = self.ps.get(platfrom_host+"/v1/game/channel/mapList",
                                json={},
                                params={}
+                               )
+        self._printresponse(response)
+        return response.json()
+
+    def get_game_pay_out(self,
+                         platToken=None,
+                         username=None,
+                         channelCode=None, remark=None,
+                         minAmount=None, maxAmount=None,
+                         startTime='2022-01-01T00:00+08:00', endTime='2023-01-01T00:00+08:00',
+                         page=None, size=None
+                         ):
+        if platToken is not None:
+            self.ps.headers.update({"token": str(platToken)})
+        response = self.ps.get(platfrom_host+"/v1/game/payOut",
+                               json={},
+                               params=KeywordArgument.body_data()
                                )
         self._printresponse(response)
         return response.json()
@@ -330,6 +348,27 @@ class Game_rebate(PLAT_API):
                                params={
                                    "open": open
                                }
+                               )
+        self._printresponse(response)
+        return response.json()
+
+
+class RebateRecord(PLAT_API):
+
+    def get_record(self,  # 獲取反水紀錄
+                   platToken=None,
+                   settlementDateStart=None, settlementDateEnd=None,
+                   minRebate=None, maxRebate=None,
+                   minEffectiveBet=None, maxEffectiveBet=None,
+                   parentName=None, username=None,
+                   vipName=None, gameCode=None,
+                   page=None, size=None,
+                   ):
+        if platToken is not None:
+            self.ps.headers.update({"token": str(platToken)})
+        response = self.ps.get(platfrom_host+"/v1/rebate/record",
+                               json={},
+                               params=KeywordArgument.body_data()
                                )
         self._printresponse(response)
         return response.json()

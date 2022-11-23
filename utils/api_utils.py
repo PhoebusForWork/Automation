@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from flask import jsonify
 import requests
 import json
+import inspect
 import datetime
 # import sign #單獨執行python時使用
 # from ..website import sign #執行RF時使用
@@ -119,6 +119,18 @@ class Cs_API_Controller:
             response = "沒有符合的請求模式"
         self._printresponse(response)
         return response
+
+
+class KeywordArgument:
+
+    @staticmethod
+    def body_data():
+        caller = inspect.stack()[1][0]
+        args, _, _, values = inspect.getargvalues(caller)
+        r = dict()
+        for i in args:
+            r[i] = values[i]
+        return r
 
 
 if __name__ == "__main__":
