@@ -1,7 +1,7 @@
 import pytest
 import allure
 from utils.data_utils import JsonReader
-from utils.api_utils import Cs_API_Controller
+from utils.api_utils import API_Controller
 from pylib.website.user import Address
 
 td = JsonReader()
@@ -33,7 +33,7 @@ class Test_address():
 
         json_replace = td.replace_json(json, target)
 
-        api = Cs_API_Controller()
+        api = API_Controller(platfrom='cs')
         resp = api.HttpsClient(req_method, req_url, json_replace,
                                params, token=getCsLoginToken)
 
@@ -51,7 +51,7 @@ class Test_address_other():
 
         json_replace = td.replace_json(json, target)
 
-        api = Cs_API_Controller()
+        api = API_Controller(platfrom='cs')
         resp = api.HttpsClient(req_method, req_url, json_replace,
                                params, token=getCsLoginToken)
 
@@ -69,7 +69,7 @@ class Test_address_other():
             req_url = req_url.replace("可刪除id", str(
                 delete_id.get_user_address_not_default(webToken=getCsLoginToken)))
 
-        api = Cs_API_Controller()
+        api = API_Controller(platfrom='cs')
         resp = api.HttpsClient(req_method, req_url, json,
                                params, token=getCsLoginToken)
         assert resp.status_code == code_status, resp.text
@@ -81,7 +81,7 @@ class Test_address_other():
     @allure.title("{scenario}")
     @pytest.mark.parametrize("test_case, req_method, req_url, scenario, json, params, code_status, keyword", td.get_test_case(testData, 'get_user_address'))
     def test_get_user_address(test_case, req_method, req_url, scenario, json, params, code_status, keyword, getCsLoginToken):
-        api = Cs_API_Controller()
+        api = API_Controller(platfrom='cs')
         resp = api.HttpsClient(req_method, req_url, json,
                                params, token=getCsLoginToken)
         assert resp.status_code == code_status, resp.text
@@ -93,7 +93,7 @@ class Test_address_other():
     @allure.title("{scenario}")
     @pytest.mark.parametrize("test_case, req_method, req_url, scenario, json, params, code_status, keyword", td.get_test_case(testData, 'get_user_address_one'))
     def test_get_user_address_one(test_case, req_method, req_url, scenario, json, params, code_status, keyword, getCsLoginToken):
-        api = Cs_API_Controller()
+        api = API_Controller(platfrom='cs')
         resp = api.HttpsClient(req_method, req_url, json,
                                params, token=getCsLoginToken)
         assert resp.status_code == code_status, resp.text
@@ -105,7 +105,7 @@ class Test_address_other():
     @allure.title("{scenario}")
     @pytest.mark.parametrize("test_case, req_method, req_url, scenario, json, params, code_status, keyword", td.get_test_case(testData, 'get_provinces'))
     def test_get_provinces(test_case, req_method, req_url, scenario, json, params, code_status, keyword, getCsLoginToken):
-        api = Cs_API_Controller()
+        api = API_Controller(platfrom='cs')
         resp = api.HttpsClient(req_method, req_url, json,
                                params, token=getCsLoginToken)
         assert resp.status_code == code_status, resp.text
@@ -117,7 +117,7 @@ class Test_address_other():
     @allure.title("{scenario}")
     @pytest.mark.parametrize("test_case, req_method, req_url, scenario, json, params, code_status, keyword", td.get_test_case(testData, 'get_provinces_city'))
     def test_get_provinces_city(test_case, req_method, req_url, scenario, json, params, code_status, keyword, getCsLoginToken):
-        api = Cs_API_Controller()
+        api = API_Controller(platfrom='cs')
         resp = api.HttpsClient(req_method, req_url, json,
                                params, token=getCsLoginToken)
         assert resp.status_code == code_status, resp.text

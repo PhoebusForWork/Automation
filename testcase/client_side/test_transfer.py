@@ -1,7 +1,7 @@
 import pytest
 import allure
 from utils.data_utils import JsonReader
-from utils.api_utils import Cs_API_Controller
+from utils.api_utils import API_Controller
 from utils.postgres_utils import User_wallet
 from pylib.website.wallet import Wallet
 
@@ -55,7 +55,7 @@ def reset_user_wallet_for_withdraw_all(getCsLoginToken):
 @pytest.mark.parametrize("test_case, req_method, req_url, scenario, json, params, code_status, keyword", td.get_test_case(testData, 'get_wallet_user_info'))
 def test_get_wallet_user_info(test_case, req_method, req_url, scenario, json, params, code_status, keyword, getCsLoginToken):
 
-    api = Cs_API_Controller()
+    api = API_Controller(platfrom='cs')
     resp = api.HttpsClient(req_method, req_url, json,
                            params, token=getCsLoginToken)
     assert resp.status_code == code_status, resp.text
@@ -70,7 +70,7 @@ class Test_deposit():
     @pytest.mark.parametrize("test_case, req_method, req_url, scenario, json, params, code_status, keyword", td.get_test_case(testData, 'wallet_game_transfer_deposit'))
     def test_wallet_game_transfer_deposit(test_case, req_method, req_url, scenario, json, params, code_status, keyword, getCsLoginToken, reset_user_wallet_for_deposit):
 
-        api = Cs_API_Controller()
+        api = API_Controller(platfrom='cs')
         resp = api.HttpsClient(req_method, req_url, json,
                                params, token=getCsLoginToken)
         assert resp.status_code == code_status, resp.text
@@ -88,7 +88,7 @@ class Test_withdraw():
     @pytest.mark.parametrize("test_case, req_method, req_url, scenario, json, params, code_status, keyword", td.get_test_case(testData, 'wallet_game_transfer_withdraw'))
     def test_wallet_game_transfer_withdraw(test_case, req_method, req_url, scenario, json, params, code_status, keyword, getCsLoginToken, reset_user_wallet_for_withdraw):
 
-        api = Cs_API_Controller()
+        api = API_Controller(platfrom='cs')
         resp = api.HttpsClient(req_method, req_url, json,
                                params, token=getCsLoginToken)
         assert resp.status_code == code_status, resp.text
@@ -106,7 +106,7 @@ class Test_withdraw_all():
     @pytest.mark.parametrize("test_case, req_method, req_url, scenario, json, params, code_status, keyword", td.get_test_case(testData, 'wallet_game_transfer_withdraw_all'))
     def test_wallet_game_transfer_withdraw_all(test_case, req_method, req_url, scenario, json, params, code_status, keyword, getCsLoginToken, reset_user_wallet_for_withdraw_all):
 
-        api = Cs_API_Controller()
+        api = API_Controller(platfrom='cs')
         resp = api.HttpsClient(req_method, req_url, json,
                                params, token=getCsLoginToken)
         assert resp.status_code == code_status, resp.text
@@ -121,7 +121,7 @@ class Test_withdraw_all():
 
 #     json_replace = td.replace_json(params, target)
 
-#     api = Cs_API_Controller()
+#     api = Cs_API_Controller(platfrom='cs')
 #     resp = api.HttpsClient(req_method, req_url, json,
 #                            json_replace, token=getPltLoginToken)
 
