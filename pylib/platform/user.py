@@ -217,7 +217,6 @@ class user(PLAT_API):
 
 # --------------------------------------------------------------------------------------------
 
-
     def riskAnalysisSameIp(self,  # 風險套利重複ip
                            platUid=None, platToken=None,
                            userId=None, page=None, size=None,
@@ -276,8 +275,8 @@ class user(PLAT_API):
     def loginInfo(self,  # 登入日誌
                   platUid=None, platToken=None,
                   id=None,
-                  loginInStartTime='2022-01-01T00:00:00Z',
-                  loginInEndTime='2022-12-31T23:59:59Z',
+                  From='2022-01-01T00:00:00Z',
+                  to='2022-12-31T23:59:59Z',
                   type=None, keyword=None, osType=None,
                   page=None, size=None,
                   ):
@@ -287,8 +286,7 @@ class user(PLAT_API):
         response = self.ps.get(platfrom_host+"/v1/user/{}/login/info".format(id),
                                json={},
                                params={
-            "loginInStartTime": loginInStartTime,
-            "loginInEndTime": loginInEndTime,
+            "from": From, "to": to,
             "type": type, "keyword": keyword, "osType": osType,
             "page": page, "size": size,
         }

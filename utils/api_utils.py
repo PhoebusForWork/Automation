@@ -45,7 +45,7 @@ class API_Controller:
             self.s.headers.update({"token": str(token)})
         if reqMethod == 'post':
             response = self.s.post(
-                self.host+reqUrl, data=json, params=params)
+                self.host+reqUrl, json=json, params=params)
         elif reqMethod == 'put':
             response = self.s.put(
                 self.host+reqUrl, json=json, params=params)
