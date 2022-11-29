@@ -272,8 +272,7 @@ class WalletGameTransferFailed(PLAT_API):
         cs_wallet = Wallet()
         data = cs_wallet.Login(deviceId="345", username='AutoTester',
                                password="abc123456").json()['data']
-        userId = data['userId']
-        cs_wallet.wallet_game_transfer_withdraw_all(userId=userId)
+        cs_wallet.wallet_game_transfer_withdraw_all()
         time.sleep(5)
         # 回收後進行redis MOCK配置
         set_plt_result = Redis(platform='plt', select=3)
@@ -281,10 +280,12 @@ class WalletGameTransferFailed(PLAT_API):
             name='MOCK::AWC', key='recheckResult', value='"UNKNOWN"')
         set_cs_result = Redis(platform='cs', select=12)
         set_cs_result.conn.hset(
-            name='MOCK::AWC', key='recheckResult', value='"UNKNOWN"')
+            name='MOCK::AWC', key='transferResult', value='"UNKNOWN"')
 
-        cs_wallet.wallet_game_transfer_deposit(
-            userId=userId, channelCode="AWC", amount=10)
+        retry_times = 5
+        for _ in range(retry_times):
+            cs_wallet.wallet_game_transfer_deposit(
+                channelCode="AWC", amount=10)
 
         XxlJobs.game_transfer_executor()
         time.sleep(10)
@@ -292,7 +293,7 @@ class WalletGameTransferFailed(PLAT_API):
         set_plt_result.conn.hdel(
             'MOCK::AWC', 'recheckResult')
         set_cs_result.conn.hdel(
-            'MOCK::AWC', 'recheckResult')
+            'MOCK::AWC', 'transferResult')
 
     def get_approver(self,  # 顯示所有異常處理人
                      platToken=None,

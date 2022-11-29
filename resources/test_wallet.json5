@@ -82,7 +82,7 @@
         "test_case": "user_withdraw_all",
         "req_method": "post",
         "test_item": [
-            {"req_url": "/v1/wallet/game/transfer/user/99999/withdraw/all","scenario":"不存在的userId","json": {},"params": {},"code_status": 500,"keyword": "该用户无任何子钱包"},
+            {"req_url": "/v1/wallet/game/transfer/user/99999/withdraw/all","scenario":"不存在的userId","json": {},"params": {},"code_status": 400,"keyword": "该用户不存在"},
             {"req_url": "/v1/wallet/game/transfer/user/35/withdraw/all","scenario":"存在的userId","json": {},"params": {},"code_status": 200,"keyword": "data"},
             ]
     },
@@ -134,7 +134,7 @@
             // #缺測試資料{"scenario":"[toChannelCode]YB","target":{"toChannelCode":"YB"},"json": {},"code_status": 200,"keyword": "data"},
             {"scenario":"[toChannelCode]AWC","target":{"toChannelCode":"AWC"},"json": {},"code_status": 200,"keyword": "data"},
             {"scenario":"[tradeId]存在ID","target":{"tradeId":"存在ID"},"json": {},"code_status": 200,"keyword": "636149390286880769"},
-            {"scenario":"[tradeId]不存在ID","target":{"tradeId":"123"},"json": {},"code_status": 200,"keyword": '"records": []'},
+            {"scenario":"[tradeId]不存在ID","target":{"tradeId":"123"},"json": {},"code_status": 200,"keyword": '"records":[]'},
             {"scenario":"[page]null","target":{"page":null},"json": {},"code_status": 200,"keyword": '"current":1'},
             {"scenario":"[page]2","target":{"page":2},"json": {},"code_status": 200,"keyword": '"current":2'},
             {"scenario":"[size]null","target":{"size":null},"json": {},"code_status": 200,"keyword": '"size":10'},
@@ -150,7 +150,7 @@
             {"req_url": "/v1/wallet/game/transfer/failed/tradeId/存在ID/manual/result","scenario":"[result]null","target":{"result":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"req_url": "/v1/wallet/game/transfer/failed/tradeId/存在ID/manual/result","scenario":"[result]1","target":{"result":1},"params": {},"code_status": 200,"keyword": "success"},
             {"req_url": "/v1/wallet/game/transfer/failed/tradeId/存在ID/manual/result","scenario":"[result]0","target":{"result":0},"params": {},"code_status": 200,"keyword": "success"},
-            {"req_url": "/v1/wallet/game/transfer/failed/tradeId/存在ID/manual/result","scenario":"[remark]201字","target":{"remark":'123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901'},"params": {},"code_status": 400,"keyword": "待確認..."},
+            {"req_url": "/v1/wallet/game/transfer/failed/tradeId/存在ID/manual/result","scenario":"[remark]201字","target":{"remark":'123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901'},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"req_url": "/v1/wallet/game/transfer/failed/tradeId/存在ID/manual/result","scenario":"[remark]200字","target":{"remark":'12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890'},"params": {},"code_status": 200,"keyword": "success"},
             ]
     }
