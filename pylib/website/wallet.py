@@ -15,56 +15,56 @@ class Wallet(WEB_API):
                              ):  # 顯示中心錢包及各遊戲錢包金額和渠道狀態
         if webToken is not None:
             self.ws.headers.update({"token": str(webToken)})
-        response = self.ws.get(web_host+"/v1/wallet/game/transfer/user/{}/info".format(userId),
+        response = self.ws.get(web_host+"/v1/wallet/game/transfer/user/info",
                                json={}
                                )
         self._printresponse(response)
         return response.json()
 
-    def wallet_game_transfer_withdraw(self, webToken=None, userId=25, channelCode=None, amount=None
+    def wallet_game_transfer_withdraw(self, webToken=None, channelCode=None, amount=None
                                       ):  # 從指定遊戲渠道轉錢回中心錢包
         if webToken is not None:
             self.ws.headers.update({"token": str(webToken)})
-        response = self.ws.post(web_host+"/v1/wallet/game/transfer/user/{}/withdraw".format(userId),
+        response = self.ws.post(web_host+"/v1/wallet/game/transfer/user/withdraw",
                                 json={
                                     "channelCode": channelCode,
                                     "amount": amount
-        }
-        )
+                                }
+                                )
         self._printresponse(response)
         return response.json()
 
-    def wallet_game_transfer_withdraw_all(self, webToken=None, userId=25,
+    def wallet_game_transfer_withdraw_all(self, webToken=None
                                           ):  # 一鍵回收
         if webToken is not None:
             self.ws.headers.update({"token": str(webToken)})
-        response = self.ws.post(web_host+"/v1/wallet/game/transfer/user/{}/withdraw/all".format(userId),
+        response = self.ws.post(web_host+"/v1/wallet/game/transfer/user/withdraw/all",
                                 json={}
                                 )
         self._printresponse(response)
         return response.json()
 
-    def wallet_game_transfer_deposit(self, webToken=None, userId=25, channelCode=None, amount=None
+    def wallet_game_transfer_deposit(self, webToken=None, channelCode=None, amount=None
                                      ):  # 將錢轉出至遊戲渠道
         if webToken is not None:
             self.ws.headers.update({"token": str(webToken)})
-        response = self.ws.post(web_host+"/v1/wallet/game/transfer/user/{}/deposit".format(userId),
+        response = self.ws.post(web_host+"/v1/wallet/game/transfer/user/deposit",
                                 json={
                                     "channelCode": channelCode,
                                     "amount": amount
-        }
-        )
+                                }
+                                )
         self._printresponse(response)
         return response.json()
 
-    def get_wallet_front_user_fund(self, userId=25, webToken=None,
+    def get_wallet_front_user_fund(self, webToken=None,
                                    ):  # 取得使用者資金明細
         if webToken is not None:
             self.ws.headers.update({"token": str(webToken)})
-        response = self.ws.get(web_host+"/v1/wallet/front/user/{}/fund".format(userId),
+        response = self.ws.get(web_host+"/v1/wallet/front/user/fund",
                                json={},
                                params={
-            "from": "2022-10-01T00:00:00Z", "to": "2023-10-07T00:00:00Z"}
-        )
+                                   "from": "2022-10-01T00:00:00Z", "to": "2023-10-07T00:00:00Z"}
+                               )
         self._printresponse(response)
         return response.json()

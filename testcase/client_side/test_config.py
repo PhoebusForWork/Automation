@@ -1,7 +1,7 @@
 import pytest
 import allure
 from utils.data_utils import JsonReader
-from utils.api_utils import Cs_API_Controller
+from utils.api_utils import API_Controller
 from utils.postgres_utils import User_wallet
 from pylib.website.wallet import Wallet
 
@@ -26,7 +26,7 @@ def test_get_config_avatar_urls(test_case, req_method, req_url, json, scenario, 
 
     # json_replace = td.replace_json(json, target)
 
-    api = Cs_API_Controller()
+    api = API_Controller(platfrom='cs')
     resp = api.HttpsClient(req_method, req_url, json,
                            params, token=getCsLoginToken)
 

@@ -2,7 +2,7 @@
 import configparser
 import jsonpath
 from ..website.webApiBase import WEB_API  # 執行RF時使用
-from utils.generate_utils import make
+from utils.generate_utils import Make
 
 
 config = configparser.ConfigParser()
@@ -238,7 +238,7 @@ class Address(WEB_API):  # 用戶送貨地址
             return ret[0]
         else:
             self.add_user_address(
-                recipient="AutoTest", telephone=make.mobile(), cityId=1, detailAddress="詳細地址")
+                recipient="AutoTest", telephone=Make.mobile(), cityId=1, detailAddress="詳細地址")
             resp = self.get_user_address()
             ret = jsonpath.jsonpath(resp, "$.data[?(@.isDefault != 1)].id")
             return ret[0]
