@@ -23,7 +23,7 @@
         "test_case": "proxy_delete_channel",
         "req_method": "delete",
         "test_item": [
-            {"req_url": "/v1/proxy/channel/19","scenario":"存在id","json": {},"params": {},"code_status": 200,"keyword": "success"},
+            {"req_url": "/v1/proxy/channel/存在id","scenario":"存在id","json": {},"params": {},"code_status": 200,"keyword": "success"},
             {"req_url": "/v1/proxy/channel/19","scenario":"已刪除id","json": {},"params": {},"code_status" : 400,"keyword" : "資料不存在"},
             {"req_url": "/v1/proxy/channel/","scenario":"null","json": {},"params": {},"code_status" : 405,"keyword" : "不允许使用的HTTP方法"},
             {"req_url": "/v1/proxy/channel/98765","scenario":"不存在的渠道id","json": {},"params": {},"code_status" : 400,"keyword" : "資料不存在"}
@@ -103,8 +103,8 @@
         "req_url": "/v1/proxy/commission/template",
         "test_item": [
             {"scenario":"[name]不存在的名稱","json":{"name": "不重複名稱","isEnabled": true,"isNeedToVerify": true},"params": {},"code_status": 200,"keyword": "success"},
-            {"scenario":"建立佣金模板＿[name]存在名稱","json":{"name": "重複名稱","isEnabled": true,"isNeedToVerify": true},"params": {},"code_status": 500,"keyword": "名称已存在"},
-            {"scenario":"[name]超出20字","json":{"name": "123456789012345678901","isEnabled": true,"isNeedToVerify": true},"params": {},"code_status": 500,"keyword": "名称已存在"},
+            {"scenario":"建立佣金模板＿[name]存在名稱","json":{"name": "重複名稱","isEnabled": true,"isNeedToVerify": true},"params": {},"code_status": 400,"keyword": "資料已存在"},
+            {"scenario":"[name]超出20字","json":{"name": "123456789012345678901","isEnabled": true,"isNeedToVerify": true},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[name]空值","json":{"name": null,"isEnabled": true,"isNeedToVerify": true},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[isEnabled]True","json":{"name": "不重複名稱","isEnabled": true,"isNeedToVerify": true},"params": {},"code_status": 200,"keyword": "success"},
             {"scenario":"[isEnabled]False","json":{"name": "不重複名稱","isEnabled": false,"isNeedToVerify": true},"params": {},"code_status": 200,"keyword": "success"},
@@ -197,7 +197,7 @@
         "test_item": [
             {"req_url": "/v1/proxy/commission/template/2/platformFeeShares","scenario":"存在的ID","json":[{"channelCode": "AWC","platformFee": [{"gameType": 6,"fee": 0}],"platformFeeLimit": 0}],"params": {},"code_status": 200,"keyword": "data"},
             {"req_url": "/v1/proxy/commission/template/9992/platformFeeShares","scenario":"不存在的ID","json":[{"channelCode": "AWC","platformFee": [{"gameType": 6,"fee": 0}],"platformFeeLimit": 0}],"params": {},"code_status": 400,"keyword": "資料不存在"},
-            {"req_url": "/v1/proxy/commission/template/2/platformFeeShares","scenario":"[channelCode]不存在的渠道代號","json":[{"channelCode": "IWC","platformFee": [{"gameType": 6,"fee": 0}],"platformFeeLimit": 0}],"params": {},"code_status": 400,"keyword": "資料不存在"},
+            // 評估不會造成影響故先略過 {"req_url": "/v1/proxy/commission/template/2/platformFeeShares","scenario":"[channelCode]不存在的渠道代號","json":[{"channelCode": "IWC","platformFee": [{"gameType": 6,"fee": 0}],"platformFeeLimit": 0}],"params": {},"code_status": 400,"keyword": "資料不存在"},
             {"req_url": "/v1/proxy/commission/template/2/platformFeeShares","scenario":"[channelCode]空值","json":[{"channelCode": null,"platformFee": [{"gameType": 6,"fee": 0}],"platformFeeLimit": 0}],"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"req_url": "/v1/proxy/commission/template/2/platformFeeShares","scenario":"[gameType]0","json":[{"channelCode": "AWC","platformFee": [{"gameType": 0,"fee": 0}],"platformFeeLimit": 0}],"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"req_url": "/v1/proxy/commission/template/2/platformFeeShares","scenario":"[gameType]1","json":[{"channelCode": "AWC","platformFee": [{"gameType": 1,"fee": 0}],"platformFeeLimit": 0}],"params": {},"code_status": 200,"keyword": "data"},
@@ -353,7 +353,7 @@
         "req_method" : "get",
         "test_item" : [
             {"req_url" : "/v1/proxy/13/detail/edit","scenario":"存在的id","json":{},"params": {},"code_status": 200,"keyword": "proxy001"},
-            {"req_url" : "/v1/proxy/1/detail/edit","scenario":"不存在的id","json":{},"params": {},"code_status": 400,"keyword": "该用户不存在"},
+            {"req_url" : "/v1/proxy/1/detail/edit","scenario":"不存在的id","json":{},"params": {},"code_status": 400,"keyword": "資料不存在"},
             ]
     },
     {
@@ -361,7 +361,7 @@
         "req_method" : "get",
         "test_item" : [
             {"req_url" : "/v1/proxy/13/detail/display","scenario":"存在的id","json":{},"params": {},"code_status": 200,"keyword": "proxy001"},
-            {"req_url" : "/v1/proxy/1/detail/display","scenario":"不存在的id","json":{},"params": {},"code_status": 400,"keyword": "该用户不存在"},
+            {"req_url" : "/v1/proxy/1/detail/display","scenario":"不存在的id","json":{},"params": {},"code_status": 400,"keyword": "資料不存在"},
             ]
     },
     {
@@ -378,8 +378,8 @@
         "req_url" : "/v1/proxy/tradeInfo",
         "test_item" : [
             {"scenario":"[userId]存在的id","json":{},"params": {userId:1,tradeTypes:1,from:"2022-01-01T00:00:00Z",to:"2023-01-01T00:00:00Z",page:null,size:null},"code_status": 200,"keyword": "data"},
-            {"scenario":"[userId]不存在的id","json":{},"params": {userId:1,tradeTypes:1,from:"2022-01-01T00:00:00Z",to:"2023-01-01T00:00:00Z",page:null,size:null},"code_status": 400,"keyword": "資料不存在"},
-            {"scenario":"[tradeTypes]1","json":{},"params": {userId:1,tradeTypes:1,from:"2022-01-01T00:00:00Z",to:"2023-01-01T00:00:00Z",page:null,size:null},"code_status": 400,"keyword": "資料不存在"},
+            {"scenario":"[userId]不存在的id","json":{},"params": {userId:1,tradeTypes:1,from:"2022-01-01T00:00:00Z",to:"2023-01-01T00:00:00Z",page:null,size:null},"code_status": 200,"keyword": '"records":[]'},
+            {"scenario":"[tradeTypes]1","json":{},"params": {userId:1,tradeTypes:1,from:"2022-01-01T00:00:00Z",to:"2023-01-01T00:00:00Z",page:null,size:null},"code_status": 200,"keyword": "data"},
             {"scenario":"[tradeTypes]2","json":{},"params": {userId:1,tradeTypes:2,from:"2022-01-01T00:00:00Z",to:"2023-01-01T00:00:00Z",page:null,size:null},"code_status": 200,"keyword": "data"},
             {"scenario":"[tradeTypes]3","json":{},"params": {userId:1,tradeTypes:3,from:"2022-01-01T00:00:00Z",to:"2023-01-01T00:00:00Z",page:null,size:null},"code_status": 200,"keyword": "data"},
             {"scenario":"[tradeTypes]4","json":{},"params": {userId:1,tradeTypes:4,from:"2022-01-01T00:00:00Z",to:"2023-01-01T00:00:00Z",page:null,size:null},"code_status": 200,"keyword": "data"},
@@ -395,7 +395,7 @@
             {"scenario":"[tradeTypes]14","json":{},"params": {userId:1,tradeTypes:14,from:"2022-01-01T00:00:00Z",to:"2023-01-01T00:00:00Z",page:null,size:null},"code_status": 200,"keyword": "data"},
             {"scenario":"[tradeTypes]15","json":{},"params": {userId:1,tradeTypes:15,from:"2022-01-01T00:00:00Z",to:"2023-01-01T00:00:00Z",page:null,size:null},"code_status": 200,"keyword": "data"},
             {"scenario":"[tradeTypes]16","json":{},"params": {userId:1,tradeTypes:16,from:"2022-01-01T00:00:00Z",to:"2023-01-01T00:00:00Z",page:null,size:null},"code_status": 200,"keyword": "data"},
-            {"scenario":"[tradeTypes]17","json":{},"params": {userId:1,tradeTypes:17,from:"2022-01-01T00:00:00Z",to:"2023-01-01T00:00:00Z",page:null,size:null},"code_status": 400,"keyword": "資料不存在"},
+            {"scenario":"[tradeTypes]17","json":{},"params": {userId:1,tradeTypes:17,from:"2022-01-01T00:00:00Z",to:"2023-01-01T00:00:00Z",page:null,size:null},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[from]null","json":{},"params": {userId:1,tradeTypes:1,from:null,to:"2023-01-01T00:00:00Z",page:null,size:null},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[from]格式不符","json":{},"params": {userId:1,tradeTypes:1,from:"格式不符",to:"2023-01-01T00:00:00Z",page:null,size:null},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[to]null","json":{},"params": {userId:1,tradeTypes:1,from:"2022-01-01T00:00:00Z",to:null,page:null,size:null},"code_status": 400,"keyword": "无效的请求参数"},

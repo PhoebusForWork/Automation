@@ -6,6 +6,7 @@ from pylib.platform.proxy import ProxyChannel, ProxyGroup, ProxyManage
 from testcase.platform.conftest import getPltLoginToken
 from utils.data_utils import JsonReader
 from utils.api_utils import API_Controller
+from utils.generate_utils import Make
 
 td = JsonReader()
 testData = td.read_json5('test_proxy.json5')
@@ -48,6 +49,9 @@ def test_proxy_add_channel(test_case, req_method, req_url, scenario, json, param
 @pytest.mark.parametrize("test_case, req_method, req_url, scenario, json, params, code_status, keyword", td.get_test_case(testData, 'proxy_edit_channel'))
 def test_proxy_edit_channel(test_case, req_method, req_url, scenario, json, params, code_status, keyword, getPltLoginToken):
 
+    if json['channel'] == "不重複名稱":
+        json['channel'] = json['channel']+str(random.randrange(99999))
+
     api = API_Controller()
     resp = api.HttpsClient(req_method, req_url, json,
                            params, token=getPltLoginToken)
@@ -61,6 +65,12 @@ def test_proxy_edit_channel(test_case, req_method, req_url, scenario, json, para
 @pytest.mark.parametrize("test_case, req_method, req_url, scenario, json, params, code_status, keyword", td.get_test_case(testData, 'proxy_delete_channel'))
 def test_proxy_delete_channel(test_case, req_method, req_url, scenario, json, params, code_status, keyword, getPltLoginToken):
 
+    if '存在id' in req_url:
+        channel_id = ProxyChannel()
+        req_url = req_url.replace("存在id", str(
+            channel_id.get_available_channel_auto(platToken=getPltLoginToken)))
+
+        pass
     api = API_Controller()
     resp = api.HttpsClient(req_method, req_url, json,
                            params, token=getPltLoginToken)
@@ -307,6 +317,9 @@ def test_proxy_add_proxy(test_case, req_method, req_url, scenario, json, params,
         json['proxyAccount'] = json['proxyAccount'] + \
             str(random.randrange(99999))
 
+    if json['telephone'] == "不重複手機號":
+        json['telephone'] = Make.mobile()
+
     api = API_Controller()
     resp = api.HttpsClient(req_method, req_url, json,
                            params, token=getPltLoginToken)
@@ -433,6 +446,7 @@ def test_proxy_get_tradeInfo(test_case, req_method, req_url, scenario, json, par
     assert keyword in resp.text
 
 
+@pytest.mark.test
 @allure.feature("代理帳號審核")
 @allure.story("代理帳號審核列表")
 @allure.title("{scenario}")

@@ -328,12 +328,17 @@ class WalletGameTransferFailed(PLAT_API):
 
     def trade_manual_result(self,  # 手動處理異常轉帳
                             platToken=None,
-                            tradeId=None
+                            tradeId=None,
+                            result=None,
+                            remark=None,
                             ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.post(platfrom_host+f"/v1/wallet/game/transfer/failed/tradeId/{tradeId}/manual/result",
-                                json={},
+                                json={
+                                    "result": result,
+                                    "remark": remark,
+                                },
                                 params={}
                                 )
         self._printresponse(response)
