@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "automation-testing"
+version = "0.1.0"
+description = ""
+authors = ["mimiclin <mimiclin.gram@gmail.com>"]
+readme = "README.md"
+packages = [{include = "automation_testing"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+pytest = "^7.2.0"
+configparser = "^5.3.0"
+allure-pytest = "^2.11.1"
+jsonpath = "^0.82"
+requests = "^2.28.1"
+redis = "^4.4.0"
+json5 = "^0.9.10"
+pymongo = "^4.3.3"
+psycopg2 = "^2.9.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
