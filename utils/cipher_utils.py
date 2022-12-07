@@ -1,4 +1,4 @@
-from cryptography.fernet import Fernet
+from cryptography.fernet import Fernet, InvalidToken
 
 
 class Cipher:
@@ -16,9 +16,12 @@ class Cipher:
         """
         try:
             cipher_suite = Fernet(bytes(key, 'utf-8'))
-        except ValueError as err:
-            raise err
-        return cipher_suite.encrypt(bytes(data, 'utf-8')).decode("utf-8")
+        except ValueError:
+            raise
+
+        encrypted_data = cipher_suite.encrypt(bytes(data, 'utf-8')).decode("utf-8")
+
+        return encrypted_data
 
     @staticmethod
     def decrypt(key: str, data: str) -> str:
@@ -34,9 +37,16 @@ class Cipher:
         """
         try:
             cipher_suite = Fernet(bytes(key, 'utf-8'))
-        except Exception as err:
-            raise err
-        return cipher_suite.decrypt(bytes(data, 'utf-8')).decode("utf-8")
+        except ValueError:
+            raise
+
+        try:
+            decrypted_data = cipher_suite.decrypt(bytes(data, 'utf-8')).decode("utf-8")
+        except InvalidToken:
+            print('---Secret key might wrong, please check secret key again---')
+            raise
+
+        return decrypted_data
 
     @staticmethod
     def generate_secret_key() -> str:
