@@ -33,14 +33,14 @@ class Game(PLAT_API):
     def edit_game(self,  # 遊戲設置
                   platToken=None,
                   gameCode="必填字串", name="必填字串",
-                  gameDesc="必填字串", gameDetail="必填字串", gameIntro="必填字串",
+                  gameDesc="必填字串", gameDetail="必填字串"*25, gameIntro="必填字串"*25,
                   fee=[{"gameType": 6, "fee": 0}],
                   returnPrize=0, isHot=None, isTesting=None, isNewArrival=None, isHit=None,
                   hotLevel=None, sort=0, navImg="必填字串", navHoverImg="必填字串", mbImg="必填字串", hotImg=None,
                   largeHotImg=None, mbGameImg="必填字串", mbHotImg="必填字串", icon="必填字串", mainIntroImg="必填字串",
                   mainIntroVideo=None, subIntroImgs=["string"],
-                  maintainBufferStartTime=None, maintainBufferEndTime=None,
-                  maintainStartTime=None, maintainEndTime=None, maintainRemark=None, walletImg="必填字串"
+                  maintainBufferStartTime='2022-01-01T00:00:00Z', maintainBufferEndTime='2022-01-01T00:00:00Z',
+                  maintainStartTime='2022-01-01T00:00:00Z', maintainEndTime='2022-01-01T00:00:00Z', maintainRemark=None, walletImg="必填字串"
                   ):
         if platToken is not None:
             self.ps.headers.update({"token": str(platToken)})
