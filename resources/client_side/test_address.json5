@@ -26,7 +26,7 @@
         "test_case": "edit_user_address",
         "req_method": "put",
         "req_url": "/v1/user/address",
-        "json" : {"recipient":"收貨人","telephone":"15487394851","cityId":1,"district":null,"street":null,"detailAddress":"編輯詳細地址","id":1},
+        "json" : {"recipient":"收貨人","telephone":"15487394851","cityId":1,"district":null,"street":null,"detailAddress":"編輯詳細地址","id":73},
         "test_item": [
             {"scenario":"[id]不存在id","target":{"id":998549584},"params": {},"code_status": 400,"keyword": "資料不存在"},
             {"scenario":"[recipient]收貨人不得為空","target":{"recipient":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},

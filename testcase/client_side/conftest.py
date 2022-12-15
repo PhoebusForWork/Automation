@@ -16,8 +16,19 @@ def getCsLoginToken(username=cs_account, password=cs_password):
     resp = api.Login(username=username, password=password)
     try:
         token = resp.json()['data']['token']
+        global user_id
+        user_id = resp.json()['data']['userId']
     except Exception as ex:
         logging.error('登錄失敗！接口返回:{}'.format(resp.text))
         traceback.print_tb(ex)
     logging.info("登錄成功,token為 : {}".format(token))
     return token
+
+
+@pytest.fixture(scope="session")
+def get_user_id():
+    if user_id is not None:
+        return user_id
+    else:
+        print('---用戶尚未登陸,或取得id失敗---')
+        return 0

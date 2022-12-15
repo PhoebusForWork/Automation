@@ -2,7 +2,7 @@
     {
         "test_case": "get_wallet_user_info",
         "req_method": "get",
-        "req_url": "/v1/wallet/game/transfer/user/29/info",
+        "req_url": "/v1/wallet/game/transfer/user/info",
         "test_item": [
             {"scenario":"正常查詢","json": {},"params": {},"code_status": 200,"keyword": 'data'},
             ]
@@ -10,7 +10,7 @@
     {
         "test_case": "wallet_game_transfer_deposit",
         "req_method": "post",
-        "req_url": "/v1/wallet/game/transfer/user/29/deposit",
+        "req_url": "/v1/wallet/game/transfer/user/deposit",
         "test_item": [
             {"scenario":"[amount]null","json": {"channelCode":"AWC","amount":null},"params": {},"code_status": 400,"keyword": '无效的请求参数'},
             {"scenario":"[amount]超出額度","json": {"channelCode":"AWC","amount":200},"params": {},"code_status": 500,"keyword": '中心钱包余额不足'},
@@ -21,7 +21,7 @@
     {
         "test_case": "wallet_game_transfer_withdraw",
         "req_method": "post",
-        "req_url": "/v1/wallet/game/transfer/user/29/withdraw",
+        "req_url": "/v1/wallet/game/transfer/user/withdraw",
         "test_item": [
             {"scenario":"[amount]null","json": {"channelCode":"AWC","amount":null},"params": {},"code_status": 400,"keyword": '无效的请求参数'},
             {"scenario":"[amount]超出額度","json": {"channelCode":"AWC","amount":5000},"params": {},"code_status": 400,"keyword": '子钱包余额不足'},
@@ -32,19 +32,31 @@
     {
         "test_case": "wallet_game_transfer_withdraw_all",
         "req_method": "post",
-        "req_url": "/v1/wallet/game/transfer/user/29/withdraw/all",
+        "req_url": "/v1/wallet/game/transfer/user/withdraw/all",
         "test_item": [
             {"scenario":"[amount]還有餘額","json": {},"params": {},"code_status": 200,"keyword": 'success'},
-            {"scenario":"[amount]沒有餘額","json": {},"params": {},"code_status": 400,"keyword": '子钱包余额不足'},
+            {"scenario":"[amount]沒有餘額","json": {},"params": {},"code_status": 500,"keyword": '所有子钱包余额为零'},
             ]
     },
-    { //功能無法正常操作(待補)
+    { 
         "test_case": "get_wallet_front_user_fund",
         "req_method": "get",
-        "req_url": "/v1/wallet/front/user/29/fund",
-        "params" : {"userId":29,"from":"2022-01-01T00:00:00Z","to":"2023-01-01T00:00:00Z"}, //"transactionType":7,"transactionStatus":null,"page":null,"size":null},
+        "req_url": "/v1/wallet/front/user/fund",
+        "params" : {"from":"2022-12-01T00:00:00Z","to":"2023-01-01T00:00:00Z","transactionType":null,"transactionStatus":null,"page":null,"size":null},
         "test_item": [
-            {"scenario":"[userId]不存在","target":{"userId":29},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[transactionType]充值","target":{"transactionType":7},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[transactionType]提款","target":{"transactionType":9},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[transactionType]轉帳","target":{"transactionType":0},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[transactionType]紅利/充值獎勵/紅包/平台獎勵/派彩/老用戶活動紅利 皆合併至紅利","target":{"transactionType":8},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[transactionType]返水","target":{"transactionType":6},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[transactionType]加幣","target":{"transactionType":13},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[transactionType]減幣","target":{"transactionType":14},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[transactionType]上級轉入","target":{"transactionType":10},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[transactionStatus]成功","target":{"transactionStatus":1},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[transactionStatus]失敗","target":{"transactionStatus":2},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[transactionStatus]超時","target":{"transactionStatus":10},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[transactionStatus]處理中","target":{"transactionStatus":8},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[transactionStatus]出款中","target":{"transactionStatus":9},"json": {},"code_status": 200,"keyword": "data"},
             ]
     }
 ]

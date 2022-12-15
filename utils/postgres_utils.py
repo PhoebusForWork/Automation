@@ -34,6 +34,7 @@ class User_wallet:
         Type, amount = data[0][0], data[0][1]
         game_wallet = f"select balance,freeze_balance from wallet.vs_wallet where user_id = {user_id};"
         data = check.select_sql(game_wallet)
+        print(f'SQL data {data}')
         balance, freeze_balance = data[0][0], data[0][1]
         try:
             assert Type == "WITHDRAW"

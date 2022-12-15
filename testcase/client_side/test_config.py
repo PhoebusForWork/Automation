@@ -2,8 +2,6 @@ import pytest
 import allure
 from utils.data_utils import JsonReader
 from utils.api_utils import API_Controller
-from utils.postgres_utils import User_wallet
-from pylib.website.wallet import Wallet
 
 td = JsonReader()
 testData = td.read_json5('test_config.json5', file_side='cs')

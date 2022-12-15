@@ -225,6 +225,7 @@ class Address(WEB_API):  # 用戶送貨地址
             self.ws.headers.update({"token": str(webToken)})
         resp = self.get_user_address()
         ret = jsonpath.jsonpath(resp, "$.data[?(@.isDefault != 1)].id")
+        print(ret)
         if ret is not False:
             for i in ret:
                 self.delete_user_address(id=i)
