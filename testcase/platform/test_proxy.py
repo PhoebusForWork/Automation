@@ -314,7 +314,7 @@ def test_proxy_edit_commissionConfig(test_case, req_method, req_url, scenario, j
 def test_proxy_add_proxy(test_case, req_method, req_url, scenario, json, params, code_status, keyword, getPltLoginToken):
 
     if json['proxyAccount'] == "不重複名稱":
-        json['proxyAccount'] = json['proxyAccount'] + \
+        json['proxyAccount'] = 'proxyAccount' + \
             str(random.randrange(99999))
 
     if json['telephone'] == "不重複手機號":
@@ -446,7 +446,6 @@ def test_proxy_get_tradeInfo(test_case, req_method, req_url, scenario, json, par
     assert keyword in resp.text
 
 
-@pytest.mark.test
 @allure.feature("代理帳號審核")
 @allure.story("代理帳號審核列表")
 @allure.title("{scenario}")
