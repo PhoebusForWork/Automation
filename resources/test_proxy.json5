@@ -117,6 +117,67 @@
         ]
     },
     {
+        "test_case": "proxy_edit_commission_template",
+        "req_method": "put",
+        "req_url": "/v1/proxy/commission/template/2",
+        "json":{"name": "不重複名稱","isEnabled": true,"isNeedToVerify": true},
+        "test_item": [
+            {"scenario":"[name]不存在的名稱","target":{"null":null},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[name]存在名稱","target":{"name":"重複名稱"},"params": {},"code_status": 400,"keyword": "資料已存在"},
+            {"scenario":"[name]超出20字","target":{"name": "123456789012345678901"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[name]空值","target":{"name": null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[isEnabled]True","target":{"isEnabled": true},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[isEnabled]False","target":{"isEnabled": false},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[isEnabled]字串","target":{"isEnabled": "abc"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[isEnabled]空值","target":{"isEnabled": null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[isNeedToVerify]True","target":{"isNeedToVerify": true},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[isNeedToVerify]False","target":{"isNeedToVerify": false},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[isNeedToVerify]字串","target":{"isNeedToVerify": "abc"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[isNeedToVerify]空值","target":{"isNeedToVerify": null},"params": {},"code_status": 400,"keyword": "无效的请求参数"}
+        ]
+    },
+    {
+        "test_case": "proxy_get_commission_template_subCommissionConfig",
+        "req_method": "get",
+        "json":{},
+        "test_item": [
+            {"req_url": "/v1/proxy/commission/template/1/subCommissionConfig","scenario":"存在的id","params": {},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/proxy/commission/template/999999/subCommissionConfig","scenario":"不存在的id","params": {},"code_status": 400,"keyword": "資料不存在"},
+            ]
+    },
+    {
+        "test_case": "proxy_edit_commission_template_subCommissionConfig",
+        "req_method": "put",
+        "json":{"subCommissionConfigList":[{"commissionLimit":0,"commission":100,"proxyCount":0}],"subSubCommissionConfigList":[{"commissionLimit":0,"commission":100,"proxyCount":0}]},
+        "test_item": [
+            {"req_url": "/v1/proxy/commission/template/2/subCommissionConfig","scenario":"二級代理[commissionLimit]-1","target": {"subCommissionConfigList": [{"commissionLimit":-1,"commission":100,"proxyCount":0}]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/proxy/commission/template/2/subCommissionConfig","scenario":"二級代理[commissionLimit]超過八位數","target": {"subCommissionConfigList": [{"commissionLimit":100000000,"commission":100,"proxyCount":0}]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/proxy/commission/template/2/subCommissionConfig","scenario":"二級代理[commissionLimit]非數字","target": {"subCommissionConfigList": [{"commissionLimit":"一百元","commission":100,"proxyCount":0}]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/proxy/commission/template/2/subCommissionConfig","scenario":"二級代理[commissionLimit]null","target": {"subCommissionConfigList": [{"commissionLimit":null,"commission":100,"proxyCount":0}]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/proxy/commission/template/2/subCommissionConfig","scenario":"二級代理[commission]-1","target": {"subCommissionConfigList": [{"commissionLimit":0,"commission":-1,"proxyCount":0}]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/proxy/commission/template/2/subCommissionConfig","scenario":"二級代理[commission]101","target": {"subCommissionConfigList": [{"commissionLimit":0,"commission":101,"proxyCount":0}]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/proxy/commission/template/2/subCommissionConfig","scenario":"二級代理[commission]非數字","target": {"subCommissionConfigList": [{"commissionLimit":0,"commission":"一百","proxyCount":0}]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/proxy/commission/template/2/subCommissionConfig","scenario":"二級代理[commission]null","target": {"subCommissionConfigList": [{"commissionLimit":0,"commission":null,"proxyCount":0}]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/proxy/commission/template/2/subCommissionConfig","scenario":"二級代理[proxyCount]-1","target": {"subCommissionConfigList": [{"commissionLimit":0,"commission":100,"proxyCount":-1}]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/proxy/commission/template/2/subCommissionConfig","scenario":"二級代理[proxyCount]超過八位數","target": {"subCommissionConfigList": [{"commissionLimit":0,"commission":100,"proxyCount":100000000}]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/proxy/commission/template/2/subCommissionConfig","scenario":"二級代理[proxyCount]非數字","target": {"subCommissionConfigList": [{"commissionLimit":0,"commission":100,"proxyCount":"一百"}]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/proxy/commission/template/2/subCommissionConfig","scenario":"二級代理[proxyCount]null","target": {"subCommissionConfigList": [{"commissionLimit":0,"commission":100,"proxyCount":null}]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/proxy/commission/template/2/subCommissionConfig","scenario":"三級代理[commissionLimit]-1","target": {"subSubCommissionConfigList": [{"commissionLimit":-1,"commission":100,"proxyCount":0}]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/proxy/commission/template/2/subCommissionConfig","scenario":"三級代理[commissionLimit]超過八位數","target": {"subSubCommissionConfigList": [{"commissionLimit":100000000,"commission":100,"proxyCount":0}]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/proxy/commission/template/2/subCommissionConfig","scenario":"三級代理[commissionLimit]非數字","target": {"subSubCommissionConfigList": [{"commissionLimit":"一百元","commission":100,"proxyCount":0}]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/proxy/commission/template/2/subCommissionConfig","scenario":"三級代理[commissionLimit]null","target": {"subSubCommissionConfigList": [{"commissionLimit":null,"commission":100,"proxyCount":0}]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/proxy/commission/template/2/subCommissionConfig","scenario":"三級代理[commission]-1","target": {"subSubCommissionConfigList": [{"commissionLimit":0,"commission":-1,"proxyCount":0}]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/proxy/commission/template/2/subCommissionConfig","scenario":"三級代理[commission]101","target": {"subSubCommissionConfigList": [{"commissionLimit":0,"commission":101,"proxyCount":0}]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/proxy/commission/template/2/subCommissionConfig","scenario":"三級代理[commission]非數字","target": {"subSubCommissionConfigList": [{"commissionLimit":0,"commission":"一百","proxyCount":0}]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/proxy/commission/template/2/subCommissionConfig","scenario":"三級代理[commission]null","target": {"subSubCommissionConfigList": [{"commissionLimit":0,"commission":null,"proxyCount":0}]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/proxy/commission/template/2/subCommissionConfig","scenario":"三級代理[proxyCount]-1","target": {"subSubCommissionConfigList": [{"commissionLimit":0,"commission":100,"proxyCount":-1}]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/proxy/commission/template/2/subCommissionConfig","scenario":"三級代理[proxyCount]超過八位數","target": {"subSubCommissionConfigList": [{"commissionLimit":0,"commission":100,"proxyCount":100000000}]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/proxy/commission/template/2/subCommissionConfig","scenario":"三級代理[proxyCount]非數字","target": {"subSubCommissionConfigList": [{"commissionLimit":0,"commission":100,"proxyCount":"一百"}]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/proxy/commission/template/2/subCommissionConfig","scenario":"三級代理[proxyCount]null","target": {"subSubCommissionConfigList": [{"commissionLimit":0,"commission":100,"proxyCount":null}]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/proxy/commission/template/999999/subCommissionConfig","scenario":"不存在的id","target":{},"params": {},"code_status": 400,"keyword": "資料不存在"},
+            ]
+    },
+    {
         "test_case": "proxy_commission_template",
         "req_method": "get",
         "req_url": "/v1/proxy/commission/template",
