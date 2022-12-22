@@ -22,7 +22,7 @@ testData = td.read_json5('test_config.json5')
 @allure.feature("基本配置")
 @allure.story("新增頭像")
 @allure.title("{test[scenario]}")
-@pytest.mark.parametrize("test", td.get_test_case(testData, 'add_config_avatar'))
+@pytest.mark.parametrize("test", td.get_case('add_config_avatar'))
 def test_add_config_avatar(test, getPltLoginToken):
 
     json_replace = td.replace_json(test['json'], test['target'])
@@ -38,7 +38,7 @@ def test_add_config_avatar(test, getPltLoginToken):
 @allure.feature("基本配置")
 @allure.story("編輯頭像")
 @allure.title("{test[scenario]}")
-@pytest.mark.parametrize("test", td.get_test_case(testData, 'edit_config_avatar'))
+@pytest.mark.parametrize("test", td.get_case('edit_config_avatar'))
 def test_edit_config_avatar(test, getPltLoginToken):
 
     json_replace = td.replace_json(test['json'], test['target'])
@@ -54,7 +54,7 @@ def test_edit_config_avatar(test, getPltLoginToken):
 @allure.feature("基本配置")
 @allure.story("刪除頭像")
 @allure.title("{test[scenario]}")
-@pytest.mark.parametrize("test", td.get_test_case(testData, 'delete_config_avatar'))
+@pytest.mark.parametrize("test", td.get_case('delete_config_avatar'))
 def test_delete_config_avatar(test, getPltLoginToken):
     if "存在id" in test['req_url']:
         id = Avatar()
@@ -71,7 +71,7 @@ def test_delete_config_avatar(test, getPltLoginToken):
 @allure.feature("基本配置")
 @allure.story("依照條件進行查詢")
 @allure.title("{test[scenario]}")
-@pytest.mark.parametrize("test", td.get_test_case(testData, 'get_config_avatars'))
+@pytest.mark.parametrize("test", td.get_case('get_config_avatars'))
 def test_get_config_avatars(test, getPltLoginToken):
     json_replace = td.replace_json(test['params'], test['target'])
     api = API_Controller()
@@ -85,7 +85,7 @@ def test_get_config_avatars(test, getPltLoginToken):
 @allure.feature("基本配置")
 @allure.story("依頭像id進行查詢")
 @allure.title("{test[scenario]}")
-@pytest.mark.parametrize("test", td.get_test_case(testData, 'get_config_avatar_one'))
+@pytest.mark.parametrize("test", td.get_case('get_config_avatar_one'))
 def test_get_config_avatar_one(test, getPltLoginToken):
     if "存在id" in test['req_url']:
         id = Avatar()
