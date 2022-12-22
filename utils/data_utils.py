@@ -32,12 +32,10 @@ class JsonReader:
                             value2 = []
                             key2 = []
                             for k2, v2 in l1.items():
-                                # print(v2)
                                 value2.append(v2)
                                 key2.append(k2)
                             test_data.append(tuple(value1+value2))
-            key_data = key1+key2
-            print(key_data)
+                            # key_data = key1+key2
 
         return test_data
 
@@ -66,15 +64,17 @@ class JsonReader:
                                 value2.append(v2)
                                 key2.append(k2)
                             test_data.append(tuple(value1+value2))
-            # key_data=key1+key2    #之後可能會用到
-
-        return test_data
+                            key_data.append(tuple(key1+key2))  # 之後可能會用到
+            test_case = []
+            for i in range(len(key_data)):
+                test_case.append(dict(zip(key_data[i], test_data[i])))
+        return test_case
 
     @staticmethod
     def get_test_case(data, target):
         testdata = []
         for i in data:
-            if target in i:
+            if target == i["test_case"]:
                 testdata.append(i)
         return testdata
 
