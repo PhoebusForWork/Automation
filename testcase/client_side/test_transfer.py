@@ -55,7 +55,7 @@ def reset_user_wallet_for_withdraw_all(getCsLoginToken, get_user_id):
 @allure.feature("錢包管理")
 @allure.story("顯示中心錢包及各遊戲錢包金額和渠道狀態")
 @allure.title("{test[scenario]}")
-@pytest.mark.parametrize("test", td.get_test_case(testData, 'get_wallet_user_info'))
+@pytest.mark.parametrize("test", td.get_case('get_wallet_user_info'))
 def test_get_wallet_user_info(test, getCsLoginToken):
 
     api = API_Controller(platfrom='cs')
@@ -70,7 +70,7 @@ class Test_withdraw_all():
     @allure.feature("錢包管理")
     @allure.story("一鍵回收")
     @allure.title("{test[scenario]}")
-    @pytest.mark.parametrize("test", td.get_test_case(testData, 'wallet_game_transfer_withdraw_all'))
+    @pytest.mark.parametrize("test", td.get_case('wallet_game_transfer_withdraw_all'))
     def test_wallet_game_transfer_withdraw_all(test, getCsLoginToken, reset_user_wallet_for_withdraw_all):
 
         api = API_Controller(platfrom='cs')
@@ -85,7 +85,7 @@ class Test_deposit():
     @allure.feature("錢包管理")
     @allure.story("將錢轉出至遊戲渠道")
     @allure.title("{test[scenario]}")
-    @pytest.mark.parametrize("test", td.get_test_case(testData, 'wallet_game_transfer_deposit'))
+    @pytest.mark.parametrize("test", td.get_case('wallet_game_transfer_deposit'))
     def test_wallet_game_transfer_deposit(test, getCsLoginToken, get_user_id, reset_user_wallet_for_deposit):
 
         api = API_Controller(platfrom='cs')
@@ -103,7 +103,7 @@ class Test_withdraw():
     @allure.feature("錢包管理")
     @allure.story("從指定遊戲渠道轉回中心錢包")
     @allure.title("{test[scenario]}")
-    @pytest.mark.parametrize("test", td.get_test_case(testData, 'wallet_game_transfer_withdraw'))
+    @pytest.mark.parametrize("test", td.get_case('wallet_game_transfer_withdraw'))
     def test_wallet_game_transfer_withdraw(test, getCsLoginToken, get_user_id, reset_user_wallet_for_withdraw):
 
         api = API_Controller(platfrom='cs')
@@ -119,7 +119,7 @@ class Test_withdraw():
 @allure.feature("錢包管理")  # 不能使用噴錯
 @allure.story("取得使用者資金明細")
 @allure.title("{test[scenario]}")
-@pytest.mark.parametrize("test", td.get_test_case(testData, 'get_wallet_front_user_fund'))
+@pytest.mark.parametrize("test", td.get_case('get_wallet_front_user_fund'))
 def test_get_wallet_front_user_fund(test, getCsLoginToken):
 
     json_replace = td.replace_json(test['params'], test['target'])

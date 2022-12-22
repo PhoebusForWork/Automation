@@ -28,7 +28,7 @@ class Test_address():
     @allure.feature("用戶送貨地址")
     @allure.story("新增地址")
     @allure.title("{test[scenario]}")
-    @pytest.mark.parametrize("test", td.get_test_case(testData, 'add_user_address'))
+    @pytest.mark.parametrize("test", td.get_case('add_user_address'))
     def test_add_user_address(test, getCsLoginToken, clear_address):
 
         json_replace = td.replace_json(test['json'], test['target'])
@@ -46,7 +46,7 @@ class Test_address_other():
     @allure.feature("用戶送貨地址")
     @allure.story("更新地址")
     @allure.title("{test[scenario]}")
-    @pytest.mark.parametrize("test", td.get_test_case(testData, 'edit_user_address'))
+    @pytest.mark.parametrize("test", td.get_case('edit_user_address'))
     def test_edit_user_address(test, getCsLoginToken, clear_address):
 
         json_replace = td.replace_json(test['json'], test['target'])
@@ -62,7 +62,7 @@ class Test_address_other():
     @allure.feature("用戶送貨地址")
     @allure.story("刪除地址")
     @allure.title("{test[scenario]}")
-    @pytest.mark.parametrize("test", td.get_test_case(testData, 'delete_user_address'))
+    @pytest.mark.parametrize("test", td.get_case('delete_user_address'))
     def test_delete_user_address(test, getCsLoginToken):
         if "可刪除id" in test['req_url']:
             delete_id = Address()
@@ -79,7 +79,7 @@ class Test_address_other():
     @allure.feature("用戶送貨地址")
     @allure.story("依使用者查詢地址")
     @allure.title("{test[scenario]}")
-    @pytest.mark.parametrize("test", td.get_test_case(testData, 'get_user_address'))
+    @pytest.mark.parametrize("test", td.get_case('get_user_address'))
     def test_get_user_address(test, getCsLoginToken):
         api = API_Controller(platfrom='cs')
         resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
@@ -91,7 +91,7 @@ class Test_address_other():
     @allure.feature("用戶送貨地址")
     @allure.story("查詢單筆地址")
     @allure.title("{test[scenario]}")
-    @pytest.mark.parametrize("test", td.get_test_case(testData, 'get_user_address_one'))
+    @pytest.mark.parametrize("test", td.get_case('get_user_address_one'))
     def test_get_user_address_one(test, getCsLoginToken):
         api = API_Controller(platfrom='cs')
         resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
@@ -103,7 +103,7 @@ class Test_address_other():
     @allure.feature("用戶送貨地址")
     @allure.story("省列表")
     @allure.title("{test[scenario]}")
-    @pytest.mark.parametrize("test", td.get_test_case(testData, 'get_provinces'))
+    @pytest.mark.parametrize("test", td.get_case('get_provinces'))
     def test_get_provinces(test, getCsLoginToken):
         api = API_Controller(platfrom='cs')
         resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
@@ -115,7 +115,7 @@ class Test_address_other():
     @allure.feature("用戶送貨地址")
     @allure.story("省下城市列表")
     @allure.title("{test[scenario]}")
-    @pytest.mark.parametrize("test", td.get_test_case(testData, 'get_provinces_city'))
+    @pytest.mark.parametrize("test", td.get_case('get_provinces_city'))
     def test_get_provinces_city(test, getCsLoginToken):
         api = API_Controller(platfrom='cs')
         resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],

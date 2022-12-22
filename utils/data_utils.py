@@ -12,6 +12,7 @@ class JsonReader:
             os.path.dirname(__file__)), 'resources')
         self.cs_file_path = os.path.join(os.path.dirname(
             os.path.dirname(__file__)), 'resources/client_side')
+        self.case = None
 
     def read_json(self, json_file):
         test_data = []
@@ -68,7 +69,18 @@ class JsonReader:
             test_case = []
             for i in range(len(key_data)):
                 test_case.append(dict(zip(key_data[i], test_data[i])))
+            self.case = test_case
         return test_case
+
+    def get_case(self, target):
+        if self.case is not None:
+            testdata = []
+            for i in self.case:
+                if target == i["test_case"]:
+                    testdata.append(i)
+            return testdata
+        else:
+            raise ValueError("尚未載入Json檔案")
 
     @staticmethod
     def get_test_case(data, target):
