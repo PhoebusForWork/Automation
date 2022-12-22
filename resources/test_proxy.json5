@@ -546,7 +546,7 @@
             {"scenario":"[from]null","json":{},"params": {"proxyId":1,"from" : null,"to" : "2022-12-31T23:59:59Z",},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[to]null","json":{},"params": {"proxyId":1,"from" : "2022-01-01T00:00:00Z","to" : null,},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[starToEnd]開始不可大於結束","json":{},"params": {"page":null,"proxyId":1,"from" : "2023-01-01T00:00:00Z","to" : "2022-12-31T23:59:59Z",},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[page]null","json":{},"params": {"page":null,"proxyId":1,"from" : "2023-01-01T00:00:00Z","to" : "2022-12-31T23:59:59Z",},"code_status": 200,"keyword": '"current":1'},
+            {"scenario":"[page]null","json":{},"params": {"page":null,"proxyId":1,"from" : "2022-01-01T00:00:00Z","to" : "2022-12-31T23:59:59Z",},"code_status": 200,"keyword": '"current":1'},
             {"scenario":"[page]5","json":{},"params": {"page":5,"proxyId":1,"from" : "2022-01-01T00:00:00Z","to" : "2022-12-31T23:59:59Z",},"code_status": 200,"keyword": 'current":5'},
             {"scenario":"[size]null","json":{},"params": {"size":null,"proxyId":1,"from" : "2022-01-01T00:00:00Z","to" : "2022-12-31T23:59:59Z",},"code_status": 200,"keyword": '"size":10'},
             {"scenario":"[size]5","json":{},"params": {"size":5,"proxyId":1,"from" : "2022-01-01T00:00:00Z","to" : "2022-12-31T23:59:59Z",},"code_status": 200,"keyword": '"size":5'},
