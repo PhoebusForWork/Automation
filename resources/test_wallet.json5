@@ -12,7 +12,7 @@
         "req_method": "get",
         "params" : {"from":"2022-01-01T00:00:00+08:00","to":"2023-01-01T00:00:00+08:00","types":[0],"status":null,"page":null,"size":null},
         "test_item": [
-            {"req_url": "/v1/wallet/user/99999/trade/info","scenario":"用戶不存在","target":{"null":null},"json": {},"code_status": 400,"keyword": "该用户不存在"},
+            {"req_url": "/v1/wallet/user/99999/trade/info","scenario":"用戶不存在","target":{"null":null},"json": {},"code_status": 200,"keyword": '"records":[]'},
             {"req_url": "/v1/wallet/user/35/trade/info","scenario":"用戶存在","target":{"null":null},"json": {},"code_status": 200,"keyword": "data"},
             ]
     },
@@ -21,7 +21,7 @@
         "req_method": "get",
         "params" : {"from":"2022-01-01T00:00:00+08:00","to":"2023-01-01T00:00:00+08:00"},
         "test_item": [
-            {"req_url": "/v1/wallet/user/99999/fund","scenario":"用戶不存在","target":{"null":null},"json": {},"code_status": 400,"keyword": "该用户不存在"},
+            {"req_url": "/v1/wallet/user/99999/fund","scenario":"用戶不存在","target":{"null":null},"json": {},"code_status": 200,"keyword": '"data":{"totalBonus":0,"totalRebate":0,"totalRecharge":0,"rechargeCount":0,"totalWithdraw":0,"withdrawCount":0,"totalExtraSum":0,"totalBet":0,"totalPayout":0,"totalProfit":0}'},
             {"req_url": "/v1/wallet/user/35/fund","scenario":"[from]null","target":{"from":null},"json": {},"code_status": 400,"keyword": "parameter 'from' must not be null"},
             {"req_url": "/v1/wallet/user/35/fund","scenario":"[from]string","target":{"from":"string"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"req_url": "/v1/wallet/user/35/fund","scenario":"[to]null","target":{"to":null},"json": {},"code_status": 400,"keyword": "parameter 'to' must not be null"},

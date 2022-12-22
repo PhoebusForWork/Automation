@@ -107,18 +107,17 @@ class ProxyChannel(PLAT_API):
                                json={},
                                params={}
                                )
-        ret = jsonpath.jsonpath(response.json(), "$..data[0].id")
-        print(ret)
+        ret = jsonpath.jsonpath(response.json(), "$..id")
         if ret is not False:
-            return ret[0]
+            return ret[-1]
         else:
             self.add_channel(platToken, channel=''.join(
                 random.choice(string.ascii_letters) for _ in range(10)))
             response = self.ps.get(
                 platfrom_host+"/v1/proxy/channel/available", json={}, params={})
-            ret = jsonpath.jsonpath(response.json(), "$..data[0].id")
+            ret = jsonpath.jsonpath(response.json(), "$..id")
             # self._printresponse(ret)
-            return ret[0]
+            return ret[-1]
 
 
 class ProxyGroup(PLAT_API):
@@ -414,7 +413,7 @@ class Proxy(PLAT_API):
 
     def get_proxy(self,     # 獲取代理列表
                   platToken=None,
-                  registerFrom="2022-01-01T00:00:00Z", registerTo="2022-12-31T00:00:00Z",
+                  From="2022-01-01T00:00:00Z", to="2022-12-31T00:00:00Z",
                   minBalance=None, maxBalance=None,
                   creditStatus=None, queryType=None,
                   input=None, groupName=None,
@@ -425,8 +424,8 @@ class Proxy(PLAT_API):
         response = self.ps.get(platfrom_host+"/v1/proxy",
                                json={},
                                params={
-                                   "registerFrom": registerFrom,
-                                   "registerTo": registerTo,
+                                   "from": From,
+                                   "to": to,
                                    "minBalance": minBalance,
                                    "maxBalance": maxBalance,
                                    "creditStatus": creditStatus,
@@ -705,7 +704,7 @@ class ProxyManage(PLAT_API):
         ret = jsonpath.jsonpath(jsdata, "$..id")
         if ret == False:
             add = Proxy()
-            add.add_proxy(platToken=token, proxyAccount="產生訂單號碼"+str(random.randrange(99999)),
+            add.add_proxy(platToken=token, proxyAccount="AutoTestProxy"+str(random.randrange(99999)),
                           password="abc123456", telephone=str(random.randrange(10000000000, 19999999999)), commissionId=1)
             jsdata = self.get_manage_list(platToken=token, proxyManageStatus=0)
             ret = jsonpath.jsonpath(jsdata, "$..id")
@@ -716,7 +715,7 @@ class ProxyManage(PLAT_API):
         ret = jsonpath.jsonpath(jsdata, "$..id")
         if ret == False:
             add = Proxy()
-            add.add_proxy(platToken=token, proxyAccount="產生訂單號碼"+str(random.randrange(99999)),
+            add.add_proxy(platToken=token, proxyAccount="AutoTestProxy"+str(random.randrange(99999)),
                           password="abc123456", telephone=str(random.randrange(10000000000, 19999999999)), commissionId=1)
             jsdata = self.get_manage_list(
                 platToken=token, proxyManageStatus=0)  # 獲取待一審訂單
@@ -734,7 +733,7 @@ class ProxyManage(PLAT_API):
         ret = jsonpath.jsonpath(jsdata, "$..id")
         if ret == False:
             add = Proxy()
-            add.add_proxy(platToken=token, proxyAccount="產生訂單號碼"+str(random.randrange(99999)),
+            add.add_proxy(platToken=token, proxyAccount="AutoTestProxy"+str(random.randrange(99999)),
                           password="abc123456", telephone=str(random.randrange(10000000000, 19999999999)), commissionId=1)
             jsdata = self.get_manage_list(
                 platToken=token, proxyManageStatus=0)  # 獲取待一審訂單
@@ -757,7 +756,7 @@ class ProxyCredit(PLAT_API):
     def get_credit_detail(self,     # 查詢上分紀錄
                           platToken=None,
                           proxyId=None, tradeType=None,
-                          startTime="2022-01-01T00:00:00Z", endTime="2022-12-31T23:59:59Z",
+                          From="2022-01-01T00:00:00Z", to="2022-12-31T23:59:59Z",
                           tradeId=None, relationUsername=None,
                           minAmount=None, maxAmount=None,
                           page=None, size=None,
@@ -769,8 +768,8 @@ class ProxyCredit(PLAT_API):
                                params={
                                    "proxyId": proxyId,
                                    "tradeType": tradeType,
-                                   "startTime": startTime,
-                                   "endTime": endTime,
+                                   "from": From,
+                                   "to": to,
                                    "tradeId": tradeId,
                                    "relationUsername": relationUsername,
                                    "minAmount": minAmount,
