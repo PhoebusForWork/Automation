@@ -54,79 +54,79 @@ def reset_user_wallet_for_withdraw_all(getCsLoginToken, get_user_id):
 
 @allure.feature("錢包管理")
 @allure.story("顯示中心錢包及各遊戲錢包金額和渠道狀態")
-@allure.title("{scenario}")
-@pytest.mark.parametrize("test_case, req_method, req_url, scenario, json, params, code_status, keyword", td.get_test_case(testData, 'get_wallet_user_info'))
-def test_get_wallet_user_info(test_case, req_method, req_url, scenario, json, params, code_status, keyword, getCsLoginToken):
+@allure.title("{test[scenario]}")
+@pytest.mark.parametrize("test", td.get_case('get_wallet_user_info'))
+def test_get_wallet_user_info(test, getCsLoginToken):
 
     api = API_Controller(platfrom='cs')
-    resp = api.HttpsClient(req_method, req_url, json,
-                           params, token=getCsLoginToken)
-    assert resp.status_code == code_status, resp.text
-    assert keyword in resp.text
+    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
+                           test['params'], token=getCsLoginToken)
+    assert resp.status_code == test['code_status'], resp.text
+    assert test['keyword'] in resp.text
 
 
 class Test_withdraw_all():
     @staticmethod
     @allure.feature("錢包管理")
     @allure.story("一鍵回收")
-    @allure.title("{scenario}")
-    @pytest.mark.parametrize("test_case, req_method, req_url, scenario, json, params, code_status, keyword", td.get_test_case(testData, 'wallet_game_transfer_withdraw_all'))
-    def test_wallet_game_transfer_withdraw_all(test_case, req_method, req_url, scenario, json, params, code_status, keyword, getCsLoginToken, reset_user_wallet_for_withdraw_all):
+    @allure.title("{test[scenario]}")
+    @pytest.mark.parametrize("test", td.get_case('wallet_game_transfer_withdraw_all'))
+    def test_wallet_game_transfer_withdraw_all(test, getCsLoginToken, reset_user_wallet_for_withdraw_all):
 
         api = API_Controller(platfrom='cs')
-        resp = api.HttpsClient(req_method, req_url, json,
-                               params, token=getCsLoginToken)
-        assert resp.status_code == code_status, resp.text
-        assert keyword in resp.text
+        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
+                               test['params'], token=getCsLoginToken)
+        assert resp.status_code == test['code_status'], resp.text
+        assert test['keyword'] in resp.text
 
 
 class Test_deposit():
     @staticmethod
     @allure.feature("錢包管理")
     @allure.story("將錢轉出至遊戲渠道")
-    @allure.title("{scenario}")
-    @pytest.mark.parametrize("test_case, req_method, req_url, scenario, json, params, code_status, keyword", td.get_test_case(testData, 'wallet_game_transfer_deposit'))
-    def test_wallet_game_transfer_deposit(test_case, req_method, req_url, scenario, json, params, code_status, keyword, getCsLoginToken, get_user_id, reset_user_wallet_for_deposit):
+    @allure.title("{test[scenario]}")
+    @pytest.mark.parametrize("test", td.get_case('wallet_game_transfer_deposit'))
+    def test_wallet_game_transfer_deposit(test, getCsLoginToken, get_user_id, reset_user_wallet_for_deposit):
 
         api = API_Controller(platfrom='cs')
-        resp = api.HttpsClient(req_method, req_url, json,
-                               params, token=getCsLoginToken)
-        assert resp.status_code == code_status, resp.text
-        assert keyword in resp.text
+        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
+                               test['params'], token=getCsLoginToken)
+        assert resp.status_code == test['code_status'], resp.text
+        assert test['keyword'] in resp.text
         if resp.status_code == 200:  # 轉帳成功額外確認資料庫是否正確
             assert User_wallet.user_wallet_deposit_check(user_id=get_user_id,
-                                                         check_amount=json['amount'], channel=json['channelCode']) is True
+                                                         check_amount=test['json']['amount'], channel=test['json']['channelCode']) is True
 
 
 class Test_withdraw():
     @staticmethod
     @allure.feature("錢包管理")
     @allure.story("從指定遊戲渠道轉回中心錢包")
-    @allure.title("{scenario}")
-    @pytest.mark.parametrize("test_case, req_method, req_url, scenario, json, params, code_status, keyword", td.get_test_case(testData, 'wallet_game_transfer_withdraw'))
-    def test_wallet_game_transfer_withdraw(test_case, req_method, req_url, scenario, json, params, code_status, keyword, getCsLoginToken, get_user_id, reset_user_wallet_for_withdraw):
+    @allure.title("{test[scenario]}")
+    @pytest.mark.parametrize("test", td.get_case('wallet_game_transfer_withdraw'))
+    def test_wallet_game_transfer_withdraw(test, getCsLoginToken, get_user_id, reset_user_wallet_for_withdraw):
 
         api = API_Controller(platfrom='cs')
-        resp = api.HttpsClient(req_method, req_url, json,
-                               params, token=getCsLoginToken)
-        assert resp.status_code == code_status, resp.text
-        assert keyword in resp.text
+        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
+                               test['params'], token=getCsLoginToken)
+        assert resp.status_code == test['code_status'], resp.text
+        assert test['keyword'] in resp.text
         if resp.status_code == 200:  # 轉帳成功額外確認資料庫是否正確
             assert User_wallet.user_wallet_withdraw_check(user_id=get_user_id,
-                                                          check_amount=json['amount'], channel=json['channelCode']) is True
+                                                          check_amount=test['json']['amount'], channel=test['json']['channelCode']) is True
 
 
 @allure.feature("錢包管理")  # 不能使用噴錯
 @allure.story("取得使用者資金明細")
-@allure.title("{scenario}")
-@pytest.mark.parametrize("test_case, req_method, req_url, params, scenario, target, json, code_status, keyword", td.get_test_case(testData, 'get_wallet_front_user_fund'))
-def test_get_wallet_front_user_fund(test_case, req_method, req_url, params, scenario, target, json, code_status, keyword, getCsLoginToken):
+@allure.title("{test[scenario]}")
+@pytest.mark.parametrize("test", td.get_case('get_wallet_front_user_fund'))
+def test_get_wallet_front_user_fund(test, getCsLoginToken):
 
-    json_replace = td.replace_json(params, target)
+    json_replace = td.replace_json(test['params'], test['target'])
 
     api = API_Controller(platfrom='cs')
-    resp = api.HttpsClient(req_method, req_url, json,
+    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
                            json_replace, token=getCsLoginToken)
 
-    assert resp.status_code == code_status, resp.text
-    assert keyword in resp.text
+    assert resp.status_code == test['code_status'], resp.text
+    assert test['keyword'] in resp.text

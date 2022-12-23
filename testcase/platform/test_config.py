@@ -21,79 +21,79 @@ testData = td.read_json5('test_config.json5')
 
 @allure.feature("基本配置")
 @allure.story("新增頭像")
-@allure.title("{scenario}")
-@pytest.mark.parametrize("test_case, req_method, req_url, json, scenario, target, params, code_status, keyword", td.get_test_case(testData, 'add_config_avatar'))
-def test_add_config_avatar(test_case, req_method, req_url, json, scenario, target, params, code_status, keyword, getPltLoginToken):
+@allure.title("{test[scenario]}")
+@pytest.mark.parametrize("test", td.get_case('add_config_avatar'))
+def test_add_config_avatar(test, getPltLoginToken):
 
-    json_replace = td.replace_json(json, target)
+    json_replace = td.replace_json(test['json'], test['target'])
 
     api = API_Controller()
-    resp = api.HttpsClient(req_method, req_url, json_replace,
-                           params, token=getPltLoginToken)
+    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
+                           test['params'], token=getPltLoginToken)
 
-    assert resp.status_code == code_status, resp.text
-    assert keyword in resp.text
+    assert resp.status_code == test['code_status'], resp.text
+    assert test['keyword'] in resp.text
 
 
 @allure.feature("基本配置")
 @allure.story("編輯頭像")
-@allure.title("{scenario}")
-@pytest.mark.parametrize("test_case, req_method, json, req_url, scenario, target, params, code_status, keyword", td.get_test_case(testData, 'edit_config_avatar'))
-def test_edit_config_avatar(test_case, req_method, json, req_url, scenario, target, params, code_status, keyword, getPltLoginToken):
+@allure.title("{test[scenario]}")
+@pytest.mark.parametrize("test", td.get_case('edit_config_avatar'))
+def test_edit_config_avatar(test, getPltLoginToken):
 
-    json_replace = td.replace_json(json, target)
+    json_replace = td.replace_json(test['json'], test['target'])
 
     api = API_Controller()
-    resp = api.HttpsClient(req_method, req_url, json_replace,
-                           params, token=getPltLoginToken)
+    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
+                           test['params'], token=getPltLoginToken)
 
-    assert resp.status_code == code_status, resp.text
-    assert keyword in resp.text
+    assert resp.status_code == test['code_status'], resp.text
+    assert test['keyword'] in resp.text
 
 
 @allure.feature("基本配置")
 @allure.story("刪除頭像")
-@allure.title("{scenario}")
-@pytest.mark.parametrize("test_case, req_method, json, req_url, scenario, target, params, code_status, keyword", td.get_test_case(testData, 'delete_config_avatar'))
-def test_delete_config_avatar(test_case, req_method, json, req_url, scenario, target, params, code_status, keyword, getPltLoginToken):
-    if "存在id" in req_url:
+@allure.title("{test[scenario]}")
+@pytest.mark.parametrize("test", td.get_case('delete_config_avatar'))
+def test_delete_config_avatar(test, getPltLoginToken):
+    if "存在id" in test['req_url']:
         id = Avatar()
-        req_url = req_url.replace("存在id", str(
+        test['req_url'] = test['req_url'].replace("存在id", str(
             id.get_delete_avatar(platToken=getPltLoginToken)))
     api = API_Controller()
-    resp = api.HttpsClient(req_method, req_url, json,
-                           params, token=getPltLoginToken)
+    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
+                           test['params'], token=getPltLoginToken)
 
-    assert resp.status_code == code_status, resp.text
-    assert keyword in resp.text
+    assert resp.status_code == test['code_status'], resp.text
+    assert test['keyword'] in resp.text
 
 
 @allure.feature("基本配置")
 @allure.story("依照條件進行查詢")
-@allure.title("{scenario}")
-@pytest.mark.parametrize("test_case, req_method, params, req_url, scenario, target, json, code_status, keyword", td.get_test_case(testData, 'get_config_avatars'))
-def test_get_config_avatars(test_case, req_method, params, req_url, scenario, target, json, code_status, keyword, getPltLoginToken):
-    json_replace = td.replace_json(params, target)
+@allure.title("{test[scenario]}")
+@pytest.mark.parametrize("test", td.get_case('get_config_avatars'))
+def test_get_config_avatars(test, getPltLoginToken):
+    json_replace = td.replace_json(test['params'], test['target'])
     api = API_Controller()
-    resp = api.HttpsClient(req_method, req_url, json,
+    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
                            json_replace, token=getPltLoginToken)
 
-    assert resp.status_code == code_status, resp.text
-    assert keyword in resp.text
+    assert resp.status_code == test['code_status'], resp.text
+    assert test['keyword'] in resp.text
 
 
 @allure.feature("基本配置")
 @allure.story("依頭像id進行查詢")
-@allure.title("{scenario}")
-@pytest.mark.parametrize("test_case, req_method, json, req_url, scenario, target, params, code_status, keyword", td.get_test_case(testData, 'get_config_avatar_one'))
-def test_get_config_avatar_one(test_case, req_method, json, req_url, scenario, target, params, code_status, keyword, getPltLoginToken):
-    if "存在id" in req_url:
+@allure.title("{test[scenario]}")
+@pytest.mark.parametrize("test", td.get_case('get_config_avatar_one'))
+def test_get_config_avatar_one(test, getPltLoginToken):
+    if "存在id" in test['req_url']:
         id = Avatar()
-        req_url = req_url.replace("存在id", str(
+        test['req_url'] = test['req_url'].replace("存在id", str(
             id.get_delete_avatar(platToken=getPltLoginToken)))
     api = API_Controller()
-    resp = api.HttpsClient(req_method, req_url, json,
-                           params, token=getPltLoginToken)
+    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
+                           test['params'], token=getPltLoginToken)
 
-    assert resp.status_code == code_status, resp.text
-    assert keyword in resp.text
+    assert resp.status_code == test['code_status'], resp.text
+    assert test['keyword'] in resp.text
