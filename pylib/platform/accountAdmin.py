@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 
 import json
+import random
 
-from ..platform.platApiBase import PLAT_API  # 執行RF時使用
+# from ..platform.platApiBase import PLAT_API  # 執行RF時使用
+from pylib.platform.platApiBase import PLAT_API
 import configparser
 
 config = configparser.ConfigParser()
 config.read('config/config.ini')  # 在rf_api_test層執行時使用
+config.read('../../config/config.ini') #在website路徑執行時使用
 web_host = config['host']['web_host']
 platfrom_host = config['host']['platform_host']
 
@@ -203,3 +206,15 @@ class accountAdmin(PLAT_API):
         )
         self._printresponse(response)
         return response.json()
+
+    def add_account_auto(self, platToken = None):
+        auto_account = "charlie" + str(random.randrange(99999))
+        print(auto_account)
+        resp = self.addAdmin(platToken=platToken, account=auto_account, password="abc12345",isLeader=True, deptId='6', roleIds=['5'], displayName=auto_account)
+
+        print(resp)
+
+        if resp["data"] == "success":
+            return auto_account
+        else:
+            raise ValueError("創建帳號失敗")
