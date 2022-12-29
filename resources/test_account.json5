@@ -1,72 +1,5 @@
 [
     {
-        "test_case": "test_authority_permission",
-        "req_method": "get",
-        "req_url": "/v1/account/authority/permission",
-        "test_item": [
-            {"scenario":"基本查詢","json": {},"params": {},"code_status": 200,"keyword": "data"},
-        ]
-    },
-
-    {
-        "test_case": "test_authority_menu",
-        "req_method": "get",
-        "req_url": "/v1/account/authority/menu",
-        "test_item": [
-            {"scenario":"基本查詢","json": {},"params": {},"code_status": 200,"keyword": "data"},
-        ]
-    },
-
-      {
-        "test_case": "test_authority_list",
-        "req_method": "get",
-        "req_url": "/v1/account/authority/list",
-        "test_item": [
-            {"scenario":"基本查詢","json": {},"params": {},"code_status": 200,"keyword": "data"},
-        ]
-    },
-
-    {
-        "test_case": "test_platform",
-        "req_method": "get",
-        "req_url": "/v1/platform",
-        "test_item": [
-            {"scenario":"基本查詢","json": {},"params": {},"code_status": 200,"keyword": "data"},
-        ]
-    },
-
-    {
-        "test_case": "test_account_login_resetPassword",
-        "req_method": "put",
-        "req_url": "/v1/account/login/resetPassword",
-        "json" : {"account":"建立新帳號","oldPassword":"abc12345","newPassword":"abc123456","loginIp":"61.220.72.61"},//IP可不填
-        "test_item": [
-            {"scenario":"正確更換","target":{},"params": {},"code_status": 200,"keyword": "success"},
-            {"scenario":"用戶名錯誤","target":{"account":"charlieggyy"},"params": {},"code_status": 400,"keyword": "用户名或密码不正确"},
-            {"scenario":"密碼錯誤","target":{"oldPassword":"abc111111"},"params": {},"code_status": 400,"keyword": "用户名或密码不正确"}
-        ]
-    },
-
-    {
-        "test_case": "test_account_logout",
-        "req_method": "post",
-        "req_url": "/v1/account/logout",
-        "test_item": [
-            {"scenario":"帳號登出","json": {},"params": {},"code_status": 200,"keyword": "SUCCESS"},
-        ]
-    },
-
-    {
-        "test_case": "test_login_imgCode",
-        "req_method": "post",
-        "req_url": "/v1/account/login/imgCode",
-        "test_item": [
-            {"scenario":"正確取得認證碼","json": {},"params": {"uuid": 124},"code_status": 200,"keyword": "code"},
-            {"scenario":"未帶入參數","json": {},"params": {},"code_status": 400,"keyword": "无效的请求参数"}
-        ]
-    },
-
-    {
         "test_case": "test_account_login",
         "req_method": "post",
         "req_url": "/v1/account/login",
@@ -363,6 +296,73 @@
             {"scenario":"[isNonDept]字串","target": {},"json": {},"params" : {"account": "", "displayName": "", "phone": "", "isLeader": "", "deptId": "", "status": "", "deptIdList": "", "roleIdList": "", "startLoginTime": "", "endLoginTime": "", "isNonDept": "abc","page": "", "size": ""},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[page]字串","target": {},"json": {},"params" : {"account": "", "displayName": "", "phone": "", "isLeader": "", "deptId": "", "status": "", "deptIdList": "", "roleIdList": "", "startLoginTime": "", "endLoginTime": "", "isNonDept": "","page": "abc", "size": ""},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[size]字串","target": {},"json": {},"params" : {"account": "", "displayName": "", "phone": "", "isLeader": "", "deptId": "", "status": "", "deptIdList": "", "roleIdList": "", "startLoginTime": "", "endLoginTime": "", "isNonDept": "","page": "", "size": "abc"},"code_status": 400,"keyword": "无效的请求参数"}
+        ]
+    },
+
+    {
+        "test_case": "test_authority_permission",
+        "req_method": "get",
+        "req_url": "/v1/account/authority/permission",
+        "test_item": [
+            {"scenario":"基本查詢","json": {},"params": {},"code_status": 200,"keyword": "data"},
+        ]
+    },
+
+    {
+        "test_case": "test_authority_menu",
+        "req_method": "get",
+        "req_url": "/v1/account/authority/menu",
+        "test_item": [
+            {"scenario":"基本查詢","json": {},"params": {},"code_status": 200,"keyword": "data"},
+        ]
+    },
+
+      {
+        "test_case": "test_authority_list",
+        "req_method": "get",
+        "req_url": "/v1/account/authority/list",
+        "test_item": [
+            {"scenario":"基本查詢","json": {},"params": {},"code_status": 200,"keyword": "data"},
+        ]
+    },
+
+    {
+        "test_case": "test_platform",
+        "req_method": "get",
+        "req_url": "/v1/platform",
+        "test_item": [
+            {"scenario":"基本查詢","json": {},"params": {},"code_status": 200,"keyword": "data"},
+        ]
+    },
+
+    {
+        "test_case": "test_account_login_resetPassword",
+        "req_method": "put",
+        "req_url": "/v1/account/login/resetPassword",
+        "json" : {"account":"建立新帳號","oldPassword":"abc12345","newPassword":"abc123456","loginIp":"61.220.72.61"},//IP可不填
+        "test_item": [
+            {"scenario":"正確更換","target":{},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"用戶名錯誤","target":{"account":"charlieggyy"},"params": {},"code_status": 400,"keyword": "用户名或密码不正确"},
+            {"scenario":"密碼錯誤","target":{"oldPassword":"abc111111"},"params": {},"code_status": 400,"keyword": "用户名或密码不正确"}
+        ]
+    },
+
+    {
+        "test_case": "test_account_logout",
+        "req_method": "post",
+        "req_url": "/v1/account/logout",
+        "test_item": [
+            {"scenario":"帳號登出","json": {},"params": {},"code_status": 200,"keyword": "SUCCESS"},
+        ]
+    },
+
+    {
+        "test_case": "test_login_imgCode",
+        "req_method": "post",
+        "req_url": "/v1/account/login/imgCode",
+        "test_item": [
+            {"scenario":"正確取得認證碼","json": {},"params": {"uuid": 124},"code_status": 200,"keyword": "code"},
+            {"scenario":"未帶入參數","json": {},"params": {},"code_status": 400,"keyword": "无效的请求参数"}
         ]
     }
 ]
