@@ -1,25 +1,38 @@
 # -*- coding: utf-8 -*-
 import psycopg2
+import configparser
 from pymongo import MongoClient
+
+config = configparser.ConfigParser()
+config.read('config/config.ini')
+plt_host = config['postgres_connection']['plt_host']
+cs_host = config['postgres_connection']['cs_host']
+plt_port = config['postgres_connection']['plt_port']
+cs_port = config['postgres_connection']['cs_port']
+plt_password = config['postgres_connection']['plt_password']
+cs_password = config['postgres_connection']['cs_password']
 
 
 class Postgresql:
 
-    def __init__(self, database="wallet", user="app_jr",
-                 password="bzUCpCnMVspNg7Dp", host="127.0.0.1", platform="plt"):
+    def __init__(self, database="wallet", user="app_jr", platform="plt"):
         self.database = database
         self.user = user
-        self.password = password
-        self.host = host
-        port = None
+        self.password = None
+        self.host = None
+        self.port = None
         if platform == "plt":
-            port = "5432"
+            self.host = plt_host
+            self.port = plt_port
+            self.password = plt_password
         elif platform == "cs":
-            port = "5431"
+            self.host = cs_host
+            self.port = cs_port
+            self.password = cs_password
         else:
             raise "platform Error"
         self.db = psycopg2.connect(
-            database=database, user=user, password=password, host=host, port=port)
+            database=self.database, user=self.user, password=self.password, host=self.host, port=self.port)
 
     def select_sql(self, sql):
         self.cursor = self.db.cursor()
