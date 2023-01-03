@@ -64,12 +64,13 @@ class API_Controller:
 class KeywordArgument:
 
     @staticmethod
-    def body_data():
+    def body_data(filter=['self', 'platToken']):
         caller = inspect.stack()[1][0]
         args, _, _, values = inspect.getargvalues(caller)
         r = dict()
         for i in args:
-            r[i] = values[i]
+            if i not in filter and values[i] is not None:
+                r[i] = values[i]
         return r
 
 
