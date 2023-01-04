@@ -59,7 +59,7 @@ def test_delete_config_avatar(test, getPltLoginToken):
     if "存在id" in test['req_url']:
         id = Avatar()
         test['req_url'] = test['req_url'].replace("存在id", str(
-            id.get_delete_avatar(platToken=getPltLoginToken)))
+            id.get_delete_avatar(plat_token=getPltLoginToken)))
     api = API_Controller()
     resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
                            test['params'], token=getPltLoginToken)
@@ -90,7 +90,7 @@ def test_get_config_avatar_one(test, getPltLoginToken):
     if "存在id" in test['req_url']:
         id = Avatar()
         test['req_url'] = test['req_url'].replace("存在id", str(
-            id.get_delete_avatar(platToken=getPltLoginToken)))
+            id.get_delete_avatar(plat_token=getPltLoginToken)))
     api = API_Controller()
     resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
                            test['params'], token=getPltLoginToken)

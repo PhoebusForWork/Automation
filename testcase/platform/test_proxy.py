@@ -1,7 +1,7 @@
 import pytest
 import allure
 import random
-from pylib.platform.userManage import userManage
+from pylib.platform.user import UserManage
 from pylib.platform.proxy import ProxyChannel, ProxyGroup, ProxyManage
 from testcase.platform.conftest import getPltLoginToken
 from utils.data_utils import JsonReader
@@ -72,7 +72,7 @@ class Test_Proxy_Channel():
         if '存在id' in test['req_url']:
             channel_id = ProxyChannel()
             test['req_url'] = test['req_url'].replace("存在id", str(
-                channel_id.get_available_channel_auto(platToken=getPltLoginToken)))
+                channel_id.get_available_channel_auto(plat_token=getPltLoginToken)))
 
             pass
         api = API_Controller()
@@ -135,7 +135,7 @@ class Test_Proxy_Group():
         if test['json']['channelIds'] == "未綁定channel":
             req = ProxyChannel()
             test['json']['channelIds'] = [
-                req.get_available_channel_auto(platToken=getPltLoginToken)]
+                req.get_available_channel_auto(plat_token=getPltLoginToken)]
 
         api = API_Controller()
         resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
@@ -156,7 +156,7 @@ class Test_Proxy_Group():
         if test['json']['channelIds'] == "未綁定channel":
             req = ProxyChannel()
             test['json']['channelIds'] = [
-                req.get_available_channel_auto(platToken=getPltLoginToken)]
+                req.get_available_channel_auto(plat_token=getPltLoginToken)]
 
         api = API_Controller()
         resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
@@ -173,7 +173,7 @@ class Test_Proxy_Group():
         if "存在groupId" in test['req_url']:
             groupId = ProxyGroup()
             test['req_url'] = test['req_url'].replace("存在groupId", str(
-                groupId.get_exist_group_auto(platToken=getPltLoginToken)))
+                groupId.get_exist_group_auto(plat_token=getPltLoginToken)))
 
         api = API_Controller()
         resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
@@ -432,9 +432,9 @@ def test_proxy_proxy_commission(test, getPltLoginToken):
     api = API_Controller()
     resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
                            test['params'], token=getPltLoginToken)
-    clean = userManage()
-    clean.cleanApproval(platToken=getPltLoginToken,
-                        optType="COMMISSION_CHANGE")
+    clean = UserManage()
+    clean.clean_approval(plat_token=getPltLoginToken,
+                         optType="COMMISSION_CHANGE")
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -598,7 +598,7 @@ def test_proxy_edit_credit(test, getPltLoginToken):
     api = API_Controller()
     resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
                            test['params'], token=getPltLoginToken)
-    clean = userManage()
-    clean.cleanApproval(platToken=getPltLoginToken, optType="CREDIT_CHANGE")
+    clean = UserManage()
+    clean.clean_approval(plat_token=getPltLoginToken, optType="CREDIT_CHANGE")
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text

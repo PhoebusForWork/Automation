@@ -18,7 +18,7 @@ testData = td.read_json5('test_game.json5')
 @pytest.fixture(scope="module")  # 保持指定遊戲開啟
 def open_game(getPltLoginToken):
     game = Game()
-    game.edit_game_status(platToken=getPltLoginToken,
+    game.edit_game_status(plat_token=getPltLoginToken,
                           gameCode="AWC_LIVE_SEXY", status=True)
 
 #############
@@ -192,7 +192,7 @@ def test_edit_rebate_template_config(test, getPltLoginToken):
     if "存在模板id" in test['req_url']:
         template = Rebate_template()
         test['req_url'] = test['req_url'].replace("存在模板id", str(
-            template.get_exist_template_auto(platToken=getPltLoginToken)))
+            template.get_exist_template_auto(plat_token=getPltLoginToken)))
 
     json_replace = td.replace_json(test['json'], test['target'])
 
@@ -215,7 +215,7 @@ def test_delete_rebate_template_config(test, getPltLoginToken):
     if "存在模板id" in test['req_url']:
         template = Rebate_template()
         test['req_url'] = test['req_url'].replace("存在模板id", str(
-            template.get_exist_template_auto(platToken=getPltLoginToken)))
+            template.get_exist_template_auto(plat_token=getPltLoginToken)))
     api = API_Controller()
     resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
                            test['params'], token=getPltLoginToken)

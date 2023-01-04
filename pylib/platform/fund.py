@@ -15,7 +15,7 @@ platfrom_host = config['host']['platform_host']
 class Change(PLAT_API):  # 資金配置管理
 
     def change_apply(self,  # 申請變更
-                     platToken=None,
+                     plat_token=None,
                      # 0:玩家, 1:代理
                      userType=0,
                      usernames=[],
@@ -28,8 +28,8 @@ class Change(PLAT_API):  # 資金配置管理
                      water=None,
                      platformType=None, gameId=None, reason: str = 'string'
                      ):
-        if platToken != None:
-            self.ps.headers.update({"token": str(platToken)})
+        if plat_token != None:
+            self.ps.headers.update({"token": str(plat_token)})
         response = self.ps.post(platfrom_host+"/v1/fund/change/apply",
                                 json=KeywordArgument.body_data(),
                                 params={}
@@ -41,11 +41,11 @@ class Change(PLAT_API):  # 資金配置管理
 class ChangeAudit(PLAT_API):  # 資金配置管理
 
     def get_applier_list(self,  # 查詢申請人列表
-                         platToken=None,
+                         plat_token=None,
 
                          ):
-        if platToken != None:
-            self.ps.headers.update({"token": str(platToken)})
+        if plat_token != None:
+            self.ps.headers.update({"token": str(plat_token)})
         response = self.ps.get(platfrom_host+"/v1/fund/change/audit/applier/list",
                                json=KeywordArgument.body_data(),
                                params={}
@@ -54,7 +54,7 @@ class ChangeAudit(PLAT_API):  # 資金配置管理
         return response.json()
 
     def get_list(self,  # 查詢資金審核列表
-                 platToken=None,
+                 plat_token=None,
                  page=None, size=None,
                  id=None,
                  minAmount=None, maxAmount=None,
@@ -65,8 +65,8 @@ class ChangeAudit(PLAT_API):  # 資金配置管理
                  status=None,  # 审核状态：0待审核，1一审通过，2一审拒绝，3二审通过，4二审拒绝
                  startTime=Make.date('start'), endTime=Make.date('end')
                  ):
-        if platToken != None:
-            self.ps.headers.update({"token": str(platToken)})
+        if plat_token != None:
+            self.ps.headers.update({"token": str(plat_token)})
         response = self.ps.post(platfrom_host+"/v1/fund/change/audit/list",
                                 json=KeywordArgument.body_data(),
                                 params={}
@@ -75,12 +75,12 @@ class ChangeAudit(PLAT_API):  # 資金配置管理
         return response.json()
 
     def approve_first(self,  # 一審
-                      platToken=None,
+                      plat_token=None,
                       id=None, status=False,  # 审核结果：true 通过， false 不通过
                       remark='AutoTester'
                       ):
-        if platToken != None:
-            self.ps.headers.update({"token": str(platToken)})
+        if plat_token != None:
+            self.ps.headers.update({"token": str(plat_token)})
         response = self.ps.put(platfrom_host+"/v1/fund/change/audit/approve/first",
                                json=KeywordArgument.body_data(),
                                params={}
@@ -89,12 +89,12 @@ class ChangeAudit(PLAT_API):  # 資金配置管理
         return response.json()
 
     def approve_second(self,  # 二審
-                       platToken=None,
+                       plat_token=None,
                        id=None, status=False,  # 审核结果：true 通过， false 不通过
                        remark='AutoTester'
                        ):
-        if platToken != None:
-            self.ps.headers.update({"token": str(platToken)})
+        if plat_token != None:
+            self.ps.headers.update({"token": str(plat_token)})
         response = self.ps.put(platfrom_host+"/v1/fund/change/audit/approve/second",
                                json=KeywordArgument.body_data(),
                                params={}
@@ -103,12 +103,12 @@ class ChangeAudit(PLAT_API):  # 資金配置管理
         return response.json()
 
     def approve_all(self,  #
-                    platToken=None,
+                    plat_token=None,
                     userName='AutoTester',
                     status: bool = False,  # 审核结果：true 通过， false 不通过
                     ):
-        if platToken != None:
-            self.ps.headers.update({"token": str(platToken)})
+        if plat_token != None:
+            self.ps.headers.update({"token": str(plat_token)})
         response = self.get_list(size=50, status=0, userName=userName)
         target = jsonpath.jsonpath(response, '$..records[*].id')
         if status is True:
