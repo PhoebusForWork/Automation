@@ -151,6 +151,7 @@ def test_dept_admin_list(test, getPltLoginToken):
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
+
 @allure.feature("角色管理")
 @allure.story("創建角色")
 @allure.title("{scenario}")
@@ -222,7 +223,6 @@ def test_role_list(test, getPltLoginToken):
                            test['params'], token=getPltLoginToken)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
-
 
 
 @allure.feature("帳號列表")
@@ -359,7 +359,6 @@ def test_get_admin(test, getPltLoginToken ):
                            test['params'], token=getPltLoginToken)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
-
 
 
 @allure.feature("頁面結構")
