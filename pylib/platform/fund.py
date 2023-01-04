@@ -29,9 +29,7 @@ class Change(PLAT_API):  # 資金配置管理
                      platformType=None, gameId=None, reason: str = 'string'
                      ):
         if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
             self.ps.headers.update({"token": str(platToken)})
-        print(KeywordArgument.body_data())
         response = self.ps.post(platfrom_host+"/v1/fund/change/apply",
                                 json=KeywordArgument.body_data(),
                                 params={}
@@ -47,7 +45,6 @@ class ChangeAudit(PLAT_API):  # 資金配置管理
 
                          ):
         if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.get(platfrom_host+"/v1/fund/change/audit/applier/list",
                                json=KeywordArgument.body_data(),
@@ -69,9 +66,7 @@ class ChangeAudit(PLAT_API):  # 資金配置管理
                  startTime=Make.date('start'), endTime=Make.date('end')
                  ):
         if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
             self.ps.headers.update({"token": str(platToken)})
-        print(KeywordArgument.body_data())
         response = self.ps.post(platfrom_host+"/v1/fund/change/audit/list",
                                 json=KeywordArgument.body_data(),
                                 params={}
@@ -85,7 +80,6 @@ class ChangeAudit(PLAT_API):  # 資金配置管理
                       remark='AutoTester'
                       ):
         if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.put(platfrom_host+"/v1/fund/change/audit/approve/first",
                                json=KeywordArgument.body_data(),
@@ -100,7 +94,6 @@ class ChangeAudit(PLAT_API):  # 資金配置管理
                        remark='AutoTester'
                        ):
         if platToken != None:
-            # self.ps.headers.update({"uid":str(platUid)})
             self.ps.headers.update({"token": str(platToken)})
         response = self.ps.put(platfrom_host+"/v1/fund/change/audit/approve/second",
                                json=KeywordArgument.body_data(),
