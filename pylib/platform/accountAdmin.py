@@ -2,14 +2,12 @@
 
 import json
 import random
-
-# from ..platform.platApiBase import PLAT_API  # 執行RF時使用
+import time
 from pylib.platform.platApiBase import PLAT_API
 import configparser
 
 config = configparser.ConfigParser()
 config.read('config/config.ini')  # 在rf_api_test層執行時使用
-config.read('../../config/config.ini') #在website路徑執行時使用
 web_host = config['host']['web_host']
 platfrom_host = config['host']['platform_host']
 
@@ -208,9 +206,10 @@ class accountAdmin(PLAT_API):
         return response.json()
 
     def add_account_auto(self, platToken = None):
-        auto_account = "charlie" + str(random.randrange(99999))
+        now = time.time()
+        auto_account = "auto" + str(int(now))
         print(auto_account)
-        resp = self.addAdmin(platToken=platToken, account=auto_account, password="abc12345",isLeader=True, deptId='6', roleIds=['5'], displayName=auto_account)
+        resp = self.addAdmin(platToken=platToken, account=auto_account, password="abc123456",isLeader=True, deptId='6', roleIds=['5'], displayName=auto_account)
 
         print(resp)
 

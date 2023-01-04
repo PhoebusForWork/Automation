@@ -1,10 +1,7 @@
 import pytest
 import allure
-import json
-import random
-from pylib.platform.userManage import userManage
+import time
 from pylib.platform.platApiBase import PLAT_API
-from testcase.platform.conftest import getPltLoginToken
 from pylib.platform.accountAdmin import accountAdmin
 from utils.data_utils import JsonReader
 from utils.api_utils import API_Controller
@@ -12,8 +9,6 @@ from utils.generate_utils import Make
 
 td = JsonReader()
 testData = td.read_json5('test_account.json5')
-
-
 
 #############
 # test_case #
@@ -26,21 +21,16 @@ testData = td.read_json5('test_account.json5')
 def test_account_login(test, ):
 
     json_replace = td.replace_json(test["json"], test["target"])  # 替換完後下面參數要用json_replace去操作
-
     imgcode = PLAT_API()
     if json_replace['imgCode'] == "給我圖形驗證碼":
         json_replace['imgCode'] = str(
             imgcode.ImgCode(uuid=json_replace['uuid']))
-
-    print(json_replace['uuid'])
-
     api = API_Controller()
     resp = api.HttpsClient(test["req_method"], test["req_url"], json_replace,
                            test["params"])
 
     assert resp.status_code == test["code_status"], resp.text
     assert test['keyword'] in resp.text
-
 
 
 @allure.feature("組織結構") ###roleId參數會影響resp selected的值(true/false)
@@ -53,13 +43,15 @@ def test_dept_list(test, getPltLoginToken):
     resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
                            test['params'], token=getPltLoginToken)
     assert resp.status_code == test['code_status'], resp.text
-    if "[roleId]基本查詢" in test['scenario']:
+
+    if "[roleId]基本查詢" == test['scenario']:
         resp = resp.json()
         for d in resp['data']:
-            if d['id'] == 2:
+            if d['id'] == test['params']['roleId']:
                 assert d["selected"] is True
     else:
         assert test['keyword'] in resp.text
+
 
 @allure.feature("組織結構")
 @allure.story("新增節點")
@@ -68,9 +60,9 @@ def test_dept_list(test, getPltLoginToken):
 def test_dept(test, getPltLoginToken):
 
     json_replace = td.replace_json(test['json'], test['target'])
+    now = time.time()
     if json_replace['department'] == "新增主節點":
-        json_replace['department'] = json_replace['department']+str(random.randrange(99999))
-        print(json_replace)
+        json_replace['department'] = json_replace['department']+str(int(now))
     api = API_Controller()
     resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
                            test['params'], token=getPltLoginToken)
@@ -85,9 +77,6 @@ def test_dept(test, getPltLoginToken):
 def test_dept_leader(test, getPltLoginToken):
 
     json_replace = td.replace_json(test['json'], test['target'])
-    # if json_replace['department'] == "新增主節點":
-    #     json_replace['department'] = json_replace['department']+str(random.randrange(99999))
-    #     print(json_replace)
     api = API_Controller()
     resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
                            test['params'], token=getPltLoginToken)
@@ -102,9 +91,6 @@ def test_dept_leader(test, getPltLoginToken):
 def test_dept_admin(test, getPltLoginToken):
 
     json_replace = td.replace_json(test['json'], test['target'])
-    # if json_replace['department'] == "新增主節點":
-    #     json_replace['department'] = json_replace['department']+str(random.randrange(99999))
-    #     print(json_replace)
     api = API_Controller()
     resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
                            test['params'], token=getPltLoginToken)
@@ -132,9 +118,6 @@ def test_dept_delete_adminId(test, getPltLoginToken):
 def test_dept_put_departmentId(test, getPltLoginToken):
 
     json_replace = td.replace_json(test['json'], test['target'])
-    # if json_replace['department'] == "新增主節點":
-    #     json_replace['department'] = json_replace['department']+str(random.randrange(99999))
-    #     print(json_replace)
     api = API_Controller()
     resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
                            test['params'], token=getPltLoginToken)
@@ -175,9 +158,9 @@ def test_dept_admin_list(test, getPltLoginToken):
 def test_role(test, getPltLoginToken):
 
     json_replace = td.replace_json(test['json'], test['target'])
+    now = time.time()
     if json_replace['role'] == "浣熊":
-        json_replace['role'] = json_replace['role']+str(random.randrange(99999))
-        print(json_replace)
+        json_replace['role'] = json_replace['role']+str(int(now))
     api = API_Controller()
     resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
                            test['params'], token=getPltLoginToken)
@@ -192,7 +175,6 @@ def test_role(test, getPltLoginToken):
 def test_put_role(test, getPltLoginToken):
 
     json_replace = td.replace_json(test['json'], test['target'])
-
     api = API_Controller()
     resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
                            test['params'], token=getPltLoginToken)
@@ -344,9 +326,6 @@ def test_admin_add_account(test, getPltLoginToken ):
         new_name = Make.name()
         json_replace['account'] = new_name
         json_replace['displayName'] = new_name
-        print(json_replace)
-
-
     api = API_Controller()
     resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
                            test['params'], token=getPltLoginToken)
@@ -361,7 +340,6 @@ def test_admin_add_account(test, getPltLoginToken ):
 def test_admin_quick_search(test, getPltLoginToken ):
 
     json_replace = td.replace_json(test['json'], test['target'])
-
     api = API_Controller()
     resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
                            test['params'], token=getPltLoginToken)
@@ -376,7 +354,6 @@ def test_admin_quick_search(test, getPltLoginToken ):
 def test_get_admin(test, getPltLoginToken ):
 
     json_replace = td.replace_json(test['json'], test['target'])
-
     api = API_Controller()
     resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
                            test['params'], token=getPltLoginToken)
@@ -404,7 +381,6 @@ def test_authority_permission(test, getPltLoginToken):
 @pytest.mark.parametrize("test", td.get_case('test_authority_list'))
 def test_authority_list(test, getPltLoginToken):
 
-
     api = API_Controller()
     resp = api.HttpsClient(test["req_method"], test["req_url"], test["json"],
                            test["params"], token=getPltLoginToken)
@@ -418,13 +394,11 @@ def test_authority_list(test, getPltLoginToken):
 @pytest.mark.parametrize("test", td.get_case( 'test_authority_menu'))
 def test_authority_menu(test, getPltLoginToken):
 
-
     api = API_Controller()
     resp = api.HttpsClient(test["req_method"], test['req_url'], test["json"],
                            test["params"], token=getPltLoginToken)
     assert resp.status_code == test["code_status"], resp.text
     assert test["keyword"] in resp.text
-
 
 
 @allure.feature("平台模組")
@@ -433,13 +407,11 @@ def test_authority_menu(test, getPltLoginToken):
 @pytest.mark.parametrize("test", td.get_case('test_platform'))
 def test_platform(test, getPltLoginToken):
 
-
     api = API_Controller()
     resp = api.HttpsClient(test["req_method"], test["req_url"], test["json"],
                            test["params"], token=getPltLoginToken)
     assert resp.status_code == test["code_status"], resp.text
     assert test["keyword"] in resp.text
-
 
 
 @allure.feature("帳號登入登出模組")
@@ -449,15 +421,9 @@ def test_platform(test, getPltLoginToken):
 def test_account_login_resetPassword(test, getPltLoginToken):
 
     json_replace = td.replace_json(test["json"], test["target"])
-
-    print(json)
-    print(json_replace)
     if json_replace["account"] == "建立新帳號":
         new_account = accountAdmin()
         json_replace["account"] = str(new_account.add_account_auto(platToken=getPltLoginToken))
-    print(json)
-    print(json_replace)
-
     api = API_Controller()
     resp = api.HttpsClient(test["req_method"], test["req_url"], json_replace,
                            test["params"], token=getPltLoginToken)
@@ -471,7 +437,6 @@ def test_account_login_resetPassword(test, getPltLoginToken):
 @pytest.mark.parametrize("test", td.get_case('test_account_logout'))
 def test_account_logout(test, getPltLoginToken):
 
-
     api = API_Controller()
     resp = api.HttpsClient(test["req_method"], test["req_url"], test["json"],
                            test["params"], token=getPltLoginToken)
@@ -484,7 +449,6 @@ def test_account_logout(test, getPltLoginToken):
 @allure.title("{scenario}")
 @pytest.mark.parametrize("test", td.get_case('test_login_imgCode'))
 def test_login_imgCode(test, getPltLoginToken):
-
 
     api = API_Controller()
     resp = api.HttpsClient(test["req_method"], test["req_url"], test["json"],
