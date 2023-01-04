@@ -69,7 +69,7 @@
     },
 
     {
-        "test_case": "test_dept_delete_adminId",
+        "test_case": "test_dept_delete_admin_id",
         "req_method": "delete",
         "test_item": [
             {"req_url": "/v1/account/dept/admin/","scenario":"不帶任何參數","json": {},"target": {},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
@@ -78,7 +78,7 @@
     },
 
     {
-        "test_case": "test_dept_put_departmentId",
+        "test_case": "test_dept_put_department_id",
         "req_method": "put",
         "test_item": [
             {"req_url": "/v1/account/dept/","scenario":"不帶departmentId參數","json": {},"target": {},"params": {},"code_status": 405,"keyword": "不允许使用的HTTP方法"},
@@ -88,7 +88,7 @@
     },
 
     {
-        "test_case": "test_dept_delete_departmentId",
+        "test_case": "test_dept_delete_department_id",
         "req_method": "delete",
         "test_item": [
             {"req_url": "/v1/account/dept/","scenario":"不帶departmentId參數","json": {},"target": {},"params": {},"code_status": 405,"keyword": "不允许使用的HTTP方法"},
@@ -227,7 +227,7 @@
     },
 
     {
-        "test_case": "test_admin_resetPassword",
+        "test_case": "test_admin_reset_password",
         "req_method": "put",
         "req_url": "/v1/account/admin/40/resetPassword",
         "json" : {},
@@ -336,7 +336,7 @@
     },
 
     {
-        "test_case": "test_account_login_resetPassword",
+        "test_case": "test_account_login_reset_password",
         "req_method": "put",
         "req_url": "/v1/account/login/resetPassword",
         "json" : {"account":"建立新帳號","oldPassword":"abc12345","newPassword":"abc123456","loginIp":"61.220.72.61"},//IP可不填
@@ -357,7 +357,7 @@
     },
 
     {
-        "test_case": "test_login_imgCode",
+        "test_case": "test_login_img_code",
         "req_method": "post",
         "req_url": "/v1/account/login/imgCode",
         "test_item": [

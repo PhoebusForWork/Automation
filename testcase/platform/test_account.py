@@ -14,6 +14,7 @@ testData = td.read_json5('test_account.json5')
 # test_case #
 #############
 
+
 @allure.feature("帳號登入登出模組")
 @allure.story("帳號登入")
 @allure.title("{scenario}")
@@ -21,10 +22,10 @@ testData = td.read_json5('test_account.json5')
 def test_account_login(test, ):
 
     json_replace = td.replace_json(test["json"], test["target"])  # 替換完後下面參數要用json_replace去操作
-    imgcode = PLAT_API()
+    img_code = PLAT_API()
     if json_replace['imgCode'] == "給我圖形驗證碼":
         json_replace['imgCode'] = str(
-            imgcode.ImgCode(uuid=json_replace['uuid']))
+            img_code.ImgCode(uuid=json_replace['uuid']))
     api = API_Controller()
     resp = api.HttpsClient(test["req_method"], test["req_url"], json_replace,
                            test["params"])
@@ -33,7 +34,7 @@ def test_account_login(test, ):
     assert test['keyword'] in resp.text
 
 
-@allure.feature("組織結構") ###roleId參數會影響resp selected的值(true/false)
+@allure.feature("組織結構")  # roleId參數會影響resp selected的值(true/false)
 @allure.story("節點列表")
 @allure.title("{scenario}")
 @pytest.mark.parametrize("test", td.get_case('test_dept_list'))
@@ -101,8 +102,8 @@ def test_dept_admin(test, getPltLoginToken):
 @allure.feature("組織結構")
 @allure.story("解除關聯")
 @allure.title("{scenario}")
-@pytest.mark.parametrize("test", td.get_case('test_dept_delete_adminId'))
-def test_dept_delete_adminId(test, getPltLoginToken):
+@pytest.mark.parametrize("test", td.get_case('test_dept_delete_admin_id'))
+def test_dept_delete_admin_id(test, getPltLoginToken):
 
     api = API_Controller()
     resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
@@ -114,8 +115,8 @@ def test_dept_delete_adminId(test, getPltLoginToken):
 @allure.feature("組織結構")
 @allure.story("修改節點")
 @allure.title("{scenario}")
-@pytest.mark.parametrize("test", td.get_case('test_dept_put_departmentId'))
-def test_dept_put_departmentId(test, getPltLoginToken):
+@pytest.mark.parametrize("test", td.get_case('test_dept_put_department_id'))
+def test_dept_put_department_id(test, getPltLoginToken):
 
     json_replace = td.replace_json(test['json'], test['target'])
     api = API_Controller()
@@ -128,8 +129,8 @@ def test_dept_put_departmentId(test, getPltLoginToken):
 @allure.feature("組織結構")
 @allure.story("刪除節點")
 @allure.title("{scenario}")
-@pytest.mark.parametrize("test", td.get_case('test_dept_delete_departmentId'))
-def test_dept_delete_departmentId(test, getPltLoginToken):
+@pytest.mark.parametrize("test", td.get_case('test_dept_delete_department_id'))
+def test_dept_delete_department_id(test, getPltLoginToken):
 
     json_replace = td.replace_json(test['json'], test['target'])
     api = API_Controller()
@@ -284,8 +285,8 @@ def test_admin_status(test, getPltLoginToken):
 @allure.feature("帳號列表")
 @allure.story("重置帳號密碼")
 @allure.title("{scenario}")
-@pytest.mark.parametrize("test", td.get_case('test_admin_resetPassword'))
-def test_admin_resetPassword(test, getPltLoginToken):
+@pytest.mark.parametrize("test", td.get_case('test_admin_reset_password'))
+def test_admin_reset_password(test, getPltLoginToken):
 
     json_replace = td.replace_json(test['json'], test['target'])
     api = API_Controller()
@@ -416,8 +417,8 @@ def test_platform(test, getPltLoginToken):
 @allure.feature("帳號登入登出模組")
 @allure.story("新帳號重設密碼")
 @allure.title("{scenario}")
-@pytest.mark.parametrize("test", td.get_case('test_account_login_resetPassword'))
-def test_account_login_resetPassword(test, getPltLoginToken):
+@pytest.mark.parametrize("test", td.get_case('test_account_login_reset_password'))
+def test_account_login_reset_password(test, getPltLoginToken):
 
     json_replace = td.replace_json(test["json"], test["target"])
     if json_replace["account"] == "建立新帳號":
@@ -446,8 +447,8 @@ def test_account_logout(test, getPltLoginToken):
 @allure.feature("帳號登入登出模組")
 @allure.story("取得圖形驗證碼")
 @allure.title("{scenario}")
-@pytest.mark.parametrize("test", td.get_case('test_login_imgCode'))
-def test_login_imgCode(test, getPltLoginToken):
+@pytest.mark.parametrize("test", td.get_case('test_login_img_code'))
+def test_login_img_code(test, getPltLoginToken):
 
     api = API_Controller()
     resp = api.HttpsClient(test["req_method"], test["req_url"], test["json"],
