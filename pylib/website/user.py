@@ -94,7 +94,7 @@ class Trade(WEB_API):  # 用戶-安全中心
 
     def balanceHistory(self,  # 查詢資金明細
                        webUid=None,
-                       webToken=None,
+                       web_token=None,
                        orderType="",
                        startTime="",
                        endTime="",
@@ -104,7 +104,7 @@ class Trade(WEB_API):  # 用戶-安全中心
                        ):
         if webUid != None:
             self.ws.headers.update({"uid": str(webUid)})
-            self.ws.headers.update({"token": str(webToken)})
+            self.ws.headers.update({"token": str(web_token)})
         response = self.ws.post(web_host+"/api/gl/balance/history/v2",
                                 data={
                                     "orderType": orderType,
@@ -120,7 +120,7 @@ class Trade(WEB_API):  # 用戶-安全中心
 
     def historySportList(self,  # 獲取用戶體育注單列表
                          webUid=None,
-                         webToken=None,
+                         web_token=None,
                          endTime="2022-04-01 23:59:59",
                          startTime="2022-04-01 23:59:59",
                          channelId=None,
@@ -131,7 +131,7 @@ class Trade(WEB_API):  # 用戶-安全中心
                          ):
         if webUid != None:
             self.ws.headers.update({"uid": str(webUid)})
-            self.ws.headers.update({"token": str(webToken)})
+            self.ws.headers.update({"token": str(web_token)})
         response = self.ws.post(web_host+"/api/game/v2/history/sportList",
                                 data={
                                     "channelId": channelId,
@@ -220,18 +220,18 @@ class Address(WEB_API):  # 用戶送貨地址
         self._printresponse(response)
         return response.json()
 
-    def clear_user_address(self, webToken=None):  # 移除非默認地址
-        if webToken is not None:
-            self.ws.headers.update({"token": str(webToken)})
+    def clear_user_address(self, web_token=None):  # 移除非默認地址
+        if web_token is not None:
+            self.ws.headers.update({"token": str(web_token)})
         resp = self.get_user_address()
         ret = jsonpath.jsonpath(resp, "$.data[?(@.isDefault != 1)].id")
         if ret is not False:
             for i in ret:
                 self.delete_user_address(id=i)
 
-    def get_user_address_not_default(self, webToken=None):  # 獲取可刪除地址
-        if webToken is not None:
-            self.ws.headers.update({"token": str(webToken)})
+    def get_user_address_not_default(self, web_token=None):  # 獲取可刪除地址
+        if web_token is not None:
+            self.ws.headers.update({"token": str(web_token)})
         resp = self.get_user_address()
         ret = jsonpath.jsonpath(resp, "$.data[?(@.isDefault != 1)].id")
         if ret is not False:

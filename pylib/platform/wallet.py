@@ -270,7 +270,7 @@ class WalletGameTransferFailed(PLAT_API):
     @staticmethod
     def _create_failed_transfer_record():
         cs_wallet = Wallet()
-        data = cs_wallet.Login(deviceId="345", username='AutoTester',
+        data = cs_wallet.login(deviceId="345", username='AutoTester',
                                password="abc123456").json()['data']
         cs_wallet.wallet_game_transfer_withdraw_all()
         time.sleep(2)

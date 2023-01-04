@@ -17,34 +17,34 @@ testData = td.read_json5('test_wallet.json5', file_side='cs')
 def reset_user_wallet_for_deposit(getCsLoginToken):
     do_withdraw = Wallet()
     do_withdraw.wallet_game_transfer_withdraw_all(
-        webToken=getCsLoginToken)
+        web_token=getCsLoginToken)
     reset = User_wallet()
     reset.user_wallet_reset(balance=100)
     yield
     do_withdraw.wallet_game_transfer_withdraw_all(
-        webToken=getCsLoginToken)
+        web_token=getCsLoginToken)
 
 
 @pytest.fixture(scope="class")  #
 def reset_user_wallet_for_withdraw(getCsLoginToken, get_user_id):
     do_withdraw = Wallet()
     do_withdraw.wallet_game_transfer_withdraw_all(
-        webToken=getCsLoginToken)
+        web_token=getCsLoginToken)
     reset = User_wallet()
     reset.user_wallet_reset(balance=100, user_id=get_user_id)
     do_withdraw.wallet_game_transfer_deposit(
-        webToken=getCsLoginToken, channelCode='AWC', amount=100)
+        web_token=getCsLoginToken, channelCode='AWC', amount=100)
 
 
 @pytest.fixture(scope="class")  #
 def reset_user_wallet_for_withdraw_all(getCsLoginToken, get_user_id):
     do_withdraw = Wallet()
     do_withdraw.wallet_game_transfer_withdraw_all(
-        webToken=getCsLoginToken)
+        web_token=getCsLoginToken)
     reset = User_wallet()
     reset.user_wallet_reset(balance=150, user_id=get_user_id)
     do_withdraw.wallet_game_transfer_deposit(
-        webToken=getCsLoginToken, channelCode='AWC', amount=50)
+        web_token=getCsLoginToken, channelCode='AWC', amount=50)
 
 
 ######################

@@ -14,7 +14,7 @@ login_user_id = None
 @pytest.fixture(scope="session")
 def getCsLoginToken(username=cs_account, password=cs_password):
     api = WEB_API()
-    resp = api.Login(username=username, password=password)
+    resp = api.login(username=username, password=password)
     try:
         token = resp.json()['data']['token']
         global login_user_id
