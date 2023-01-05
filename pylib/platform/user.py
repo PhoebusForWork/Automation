@@ -529,3 +529,10 @@ class UserVip(PLAT_API):
                                )
         self._printresponse(response)
         return response.json()
+
+    def get_vip_id_exist(self,  # 獲取存在vip_id
+                         plat_token=None,
+                         ):
+        response = self.get_vip_list(plat_token=plat_token)
+        target = jsonpath.jsonpath(response, '$..data[*].id')
+        return target[-1]
