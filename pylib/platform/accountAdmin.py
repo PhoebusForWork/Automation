@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import json
-
-from ..platform.platApiBase import PLAT_API  # 執行RF時使用
+import random
+import time
+from pylib.platform.platApiBase import PLAT_API
 import configparser
 
 config = configparser.ConfigParser()
@@ -203,3 +204,16 @@ class accountAdmin(PLAT_API):
         )
         self._printresponse(response)
         return response.json()
+
+    def add_account_auto(self, platToken = None):
+        now = time.time()
+        auto_account = "auto" + str(int(now))
+        print(auto_account)
+        resp = self.addAdmin(platToken=platToken, account=auto_account, password="abc123456",isLeader=True, deptId='6', roleIds=['5'], displayName=auto_account)
+
+        print(resp)
+
+        if resp["data"] == "success":
+            return auto_account
+        else:
+            raise ValueError("創建帳號失敗")
