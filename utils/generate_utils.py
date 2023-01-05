@@ -18,10 +18,10 @@ class Make():
     @staticmethod
     def date(status):
         if status == 'start':
-            return time.strftime('%Y-%m-%d ', time.localtime()) + '00:00:00'
+            return time.strftime('%Y-%m-%d', time.localtime()) + 'T00:00:00Z'
 
         elif status == 'end':
-            return time.strftime('%Y-%m-%d ', time.localtime()) + '23:59:59'
+            return time.strftime('%Y-%m-%dT', time.localtime()) + '23:59:59Z'
 
         else:
             return time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())

@@ -42,7 +42,7 @@ class WEB_API:
               separators=(',', ': '), ensure_ascii=False))
         print('--------------HTTPS response  *  end ------------------\n\n')
 
-    def Login(self, deviceId="123", osType="WEB", username='qwe220805', password='abc123456', code=None):
+    def login(self, deviceId="123", osType="WEB", username='qwe220805', password='abc123456', code=None):
 
         timestemp = str(int(datetime.datetime.now().timestamp()))
         self.ws.headers.update({"device-id": deviceId})
@@ -78,10 +78,10 @@ class WEB_API:
         self._printresponse(response)
         return response.json()
 
-    def userRegister(self, deviceId="123", osType="WEB",  # 註冊帳號
-                     mobile='13224455667', code="000000", countryCode=86,
-                     username='tester001', password="", confirmPassword=None,
-                     proxyCode=None):
+    def user_register(self, deviceId="123", osType="WEB",  # 註冊帳號
+                      mobile='13224455667', code="000000", countryCode=86,
+                      username='tester001', password="", confirmPassword=None,
+                      proxyCode=None):
 
         self.ws.headers.update({"device-id": deviceId})
         self.ws.headers.update({"os-type": osType})
@@ -103,9 +103,9 @@ class WEB_API:
             {"token": str(response.json()['data']['token'])})
         return response.json()
 
-    def userSendCode(self,  # 忘記密碼,發送驗證碼
-                     username=None, telephone=None,
-                     ):
+    def user_send_code(self,  # 忘記密碼,發送驗證碼
+                       username=None, telephone=None,
+                       ):
         response = self.ws.post(web_host+"/v1/user/sendCode",
                                 json={
                                     "username": username,
@@ -119,10 +119,10 @@ class WEB_API:
         self._printresponse(response)
         return response.json()
 
-    def resetPwd(self, deviceId="123", osType="WEB",  # 用戶重設密碼
-                 code=None,
-                 username=None, telephone=None,
-                 newPwd=None):
+    def reset_pwd(self, deviceId="123", osType="WEB",  # 用戶重設密碼
+                  code=None,
+                  username=None, telephone=None,
+                  newPwd=None):
 
         self.ws.headers.update({"device-id": deviceId})
         self.ws.headers.update({"os-type": osType})
@@ -137,8 +137,8 @@ class WEB_API:
         self._printresponse(response)
         return response.json()
 
-    def mobileLogin(self, deviceId="123", osType="WEB",  # 手機快捷登陸
-                    telephone=None, code=None):
+    def mobile_login(self, deviceId="123", osType="WEB",  # 手機快捷登陸
+                     telephone=None, code=None):
 
         self.ws.headers.update({"device-id": deviceId})
         self.ws.headers.update({"os-type": osType})

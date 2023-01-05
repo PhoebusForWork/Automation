@@ -19,8 +19,8 @@ config.read('config/config.ini')  # 在rf_api_test層執行時使用
 @pytest.fixture(scope="session")
 def getPltLoginToken(username='superAdmin', password='abc123456'):
     api = PLAT_API()
-    code = api.ImgCode()
-    resp = api.Login(username=username, password=password, imgCode=code)
+    code = api.imgcode()
+    resp = api.login(username=username, password=password, imgCode=code)
     try:
         token = resp.json()['data']['token']
     except Exception as ex:

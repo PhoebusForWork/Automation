@@ -16,7 +16,7 @@ testData = td.read_json5('test_address.json5', file_side='cs')
 def clear_address(getCsLoginToken):
     clear = Address()
     clear.clear_user_address(
-        webToken=getCsLoginToken)
+        web_token=getCsLoginToken)
 
 
 ######################
@@ -67,7 +67,7 @@ class Test_address_other():
         if "可刪除id" in test['req_url']:
             delete_id = Address()
             test['req_url'] = test['req_url'].replace("可刪除id", str(
-                delete_id.get_user_address_not_default(webToken=getCsLoginToken)))
+                delete_id.get_user_address_not_default(web_token=getCsLoginToken)))
 
         api = API_Controller(platfrom='cs')
         resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],

@@ -148,7 +148,7 @@ class Test_GameTransferFail():
         if "存在ID" == test['params']['tradeId']:
             failed_id = WalletGameTransferFailed()
             test['params']['tradeId'] = test['params']['tradeId'].replace(
-                "存在ID", str(failed_id.get_failed_id(platToken=getPltLoginToken)))
+                "存在ID", str(failed_id.get_failed_id(plat_token=getPltLoginToken)))
 
         api = API_Controller()
         resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
@@ -169,7 +169,7 @@ class Test_GameTransferFail():
         if "存在ID" in test['req_url']:
             failed_id = WalletGameTransferFailed()
             test['req_url'] = test['req_url'].replace(
-                "存在ID", str(failed_id.get_failed_id_unused(platToken=getPltLoginToken)))
+                "存在ID", str(failed_id.get_failed_id_unused(plat_token=getPltLoginToken)))
 
         api = API_Controller()
         resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],

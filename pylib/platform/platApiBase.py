@@ -2,13 +2,10 @@
 import requests
 import json
 import datetime
-# import sign #單獨執行python時使用
-# from ..website import sign #執行RF時使用
 import configparser
 
 config = configparser.ConfigParser()
-config.read('config/config.ini')  # 在rf_api_test層執行時使用
-# config.read('../../config/config.ini') #在website路徑執行時使用
+config.read('config/config.ini')
 platfrom_host = config['host']['platform_host']
 
 
@@ -42,10 +39,9 @@ class PLAT_API:
         printR = json.loads(response.text)
         print(json.dumps(printR, sort_keys=True, indent=4,
               separators=(',', ': '), ensure_ascii=False))
-        # print(response.content.decode('utf-8'))
         print('--------------HTTPS response  *  end ------------------\n\n')
 
-    def firstLoginPassword(self, username='phoebusliu', oldPassword='abc123456', newPassword='abc123456'):  # 新帳戶更新密碼
+    def first_login_password(self, username='phoebusliu', oldPassword='abc123456', newPassword='abc123456'):  # 新帳戶更新密碼
         self.s = requests.Session()
         timestemp = str(int(datetime.datetime.now().timestamp()))
         response = self.ps.put(platfrom_host+"/v1/account/login/resetPassword",
@@ -57,12 +53,9 @@ class PLAT_API:
                                },
                                )
         self._printresponse(response)
-        # self.ps.headers.update({"uid":str(response.json()['data']['adminId'])})
-        # self.ps.headers.update({"token":str(response.json()['data']['token'])})
-        # print(response.json()['data']['token'])
         return response.json()
 
-    def Login(self, username='phoebusliu', password='abc123456', imgCode='a'):  # 用戶登陸
+    def login(self, username='phoebusliu', password='abc123456', imgCode='a'):  # 用戶登陸
         self.s = requests.Session()
         timestemp = str(int(datetime.datetime.now().timestamp()))
         response = self.ps.post(platfrom_host+"/v1/account/login",
@@ -80,25 +73,19 @@ class PLAT_API:
                 {"token": str(response.json()['data']['token'])})
         except:
             print("登入失敗")
-        # print(response.json()['data']['token'])
-        # return response.json()
         return response
 
-    def LogOut(self, platToken=None):  # 用戶登陸
-        if platToken != None:
-            self.ps.headers.update({"token": platToken})
+    def logout(self, plat_token=None):  # 用戶登陸
+        if plat_token != None:
+            self.ps.headers.update({"token": plat_token})
         self.s = requests.Session()
         timestemp = str(int(datetime.datetime.now().timestamp()))
         response = self.ps.post(platfrom_host+"/v1/account/logout",
                                 json={},
                                 )
-        # self._printresponse(response)
-        # self.ps.headers.update({"uid":str(response.json()['data']['adminId'])})
-        # self.ps.headers.update({"token":str(response.json()['data']['token'])})
-        # print(response.json()['data']['token'])
         return response.json()
 
-    def ImgCode(self, uuid=124):  # 獲取驗證碼
+    def imgcode(self, uuid=124):  # 獲取驗證碼
         self.s = requests.Session()
         timestemp = str(int(datetime.datetime.now().timestamp()))
         response = self.ps.post(platfrom_host+"/v1/account/login/imgCode",
@@ -108,10 +95,6 @@ class PLAT_API:
                                     "uuid": uuid,
                                 },
                                 )
-        # self._printresponse(response)
-        # self.ps.headers.update({"uid":str(response.json()['data']['adminId'])})
-        # self.ps.headers.update({"token":str(response.json()['data']['token'])})
-        # print(response.json()['data'])
         return response.json()['data']['code']
 
 

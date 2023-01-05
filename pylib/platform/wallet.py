@@ -19,12 +19,12 @@ platfrom_host = config['host']['platform_host']
 class WalletManage(PLAT_API):
 
     def water_clear_all(self,  # 一鍵流水清零
-                        platToken=None,
+                        plat_token=None,
                         userId=None,
                         remark=None,
                         ):
-        if platToken is not None:
-            self.ps.headers.update({"token": str(platToken)})
+        if plat_token is not None:
+            self.ps.headers.update({"token": str(plat_token)})
         response = self.ps.post(platfrom_host+"/v1/water/manage/withdrawWater/waterAndValidWater/clear",
                                 json={
                                     "userId": userId,
@@ -36,12 +36,12 @@ class WalletManage(PLAT_API):
         return response.json()
 
     def withdraw_water_clear(self,  # 提現流水清零
-                             platToken=None,
+                             plat_token=None,
                              userId=None,
                              remark=None,
                              ):
-        if platToken is not None:
-            self.ps.headers.update({"token": str(platToken)})
+        if plat_token is not None:
+            self.ps.headers.update({"token": str(plat_token)})
         response = self.ps.post(platfrom_host+"/v1/water/manage/withdrawWater/water/clear",
                                 json={
                                     "userId": userId,
@@ -53,12 +53,12 @@ class WalletManage(PLAT_API):
         return response.json()
 
     def withdraw_limit_water_clear(self,  # 限制流水清零
-                                   platToken=None,
+                                   plat_token=None,
                                    userId=None,
                                    remark=None,
                                    ):
-        if platToken is not None:
-            self.ps.headers.update({"token": str(platToken)})
+        if plat_token is not None:
+            self.ps.headers.update({"token": str(plat_token)})
         response = self.ps.post(platfrom_host+"/v1/water/manage/withdrawLimitWater/water/clear",
                                 json={
                                     "userId": userId,
@@ -70,11 +70,11 @@ class WalletManage(PLAT_API):
         return response.json()
 
     def get_withdraw_water_total(self,  # 獲取提現流水匯總
-                                 platToken=None,
+                                 plat_token=None,
                                  userId=None,
                                  ):
-        if platToken is not None:
-            self.ps.headers.update({"token": str(platToken)})
+        if plat_token is not None:
+            self.ps.headers.update({"token": str(plat_token)})
         response = self.ps.get(platfrom_host+"/v1/water/manage/withdrawLimitWater/water/clear",
                                json={},
                                params={
@@ -85,7 +85,7 @@ class WalletManage(PLAT_API):
         return response.json()
 
     def get_withdraw_water_clear_pending_list(self,  # 獲取提現流水清零列表
-                                              platToken=None,
+                                              plat_token=None,
                                               userId=None,
                                               orderId=None,
                                               orderType=None,
@@ -94,8 +94,8 @@ class WalletManage(PLAT_API):
                                               page=None,
                                               size=None,
                                               ):
-        if platToken is not None:
-            self.ps.headers.update({"token": str(platToken)})
+        if plat_token is not None:
+            self.ps.headers.update({"token": str(plat_token)})
         response = self.ps.get(platfrom_host+"/v1/water/manage/withdrawWater/clearPendingList",
                                json={},
                                params=KeywordArgument.body_data()
@@ -104,11 +104,11 @@ class WalletManage(PLAT_API):
         return response.json()
 
     def get_withdraw_limit_water_total(self,  # 獲取提現限制流水匯總
-                                       platToken=None,
+                                       plat_token=None,
                                        userId=None,
                                        ):
-        if platToken is not None:
-            self.ps.headers.update({"token": str(platToken)})
+        if plat_token is not None:
+            self.ps.headers.update({"token": str(plat_token)})
         response = self.ps.get(platfrom_host+"/v1/water/manage/withdrawLimitWater/total",
                                json={},
                                params={
@@ -119,7 +119,7 @@ class WalletManage(PLAT_API):
         return response.json()
 
     def get_withdraw_limit_water_clear_pending_list(self,  # 獲取提現限制流水清零列表
-                                                    platToken=None,
+                                                    plat_token=None,
                                                     userId=None,
                                                     orderId=None,
                                                     orderType=None,
@@ -130,8 +130,8 @@ class WalletManage(PLAT_API):
                                                     page=None,
                                                     size=None,
                                                     ):
-        if platToken is not None:
-            self.ps.headers.update({"token": str(platToken)})
+        if plat_token is not None:
+            self.ps.headers.update({"token": str(plat_token)})
         response = self.ps.get(platfrom_host+"/v1/water/manage/withdrawLimitWater/clearPendingList",
                                json={},
                                params=KeywordArgument.body_data()
@@ -143,11 +143,11 @@ class WalletManage(PLAT_API):
 class WalletUser(PLAT_API):
 
     def get_wallets(self,  # 取得所有錢包現狀
-                    platToken=None,
+                    plat_token=None,
                     userId=None,
                     ):
-        if platToken is not None:
-            self.ps.headers.update({"token": str(platToken)})
+        if plat_token is not None:
+            self.ps.headers.update({"token": str(plat_token)})
         response = self.ps.get(platfrom_host+f"/v1/wallet/user/{userId}/wallets",
                                json={},
                                params={}
@@ -156,7 +156,7 @@ class WalletUser(PLAT_API):
         return response.json()
 
     def get_trade_info(self,  # 取得使用者交易信息
-                       platToken=None,
+                       plat_token=None,
                        userId=None,
                        From=None, to=None,
                        types=None,  # 交易类型:0轉帳|6返水|7存款|8紅利|9提款|10上分|12充值補分|13充值減分|14加幣|15減幣
@@ -164,8 +164,8 @@ class WalletUser(PLAT_API):
                        page=None, size=None,
 
                        ):
-        if platToken is not None:
-            self.ps.headers.update({"token": str(platToken)})
+        if plat_token is not None:
+            self.ps.headers.update({"token": str(plat_token)})
         response = self.ps.get(platfrom_host+f"/v1/wallet/user/{userId}/trade/info",
                                json={},
                                params={
@@ -181,12 +181,12 @@ class WalletUser(PLAT_API):
         return response.json()
 
     def get_fund(self,  # 取得用戶財務信息
-                        platToken=None,
+                        plat_token=None,
                         userId=None,
                         From=None, to=None,
                  ):
-        if platToken is not None:
-            self.ps.headers.update({"token": str(platToken)})
+        if plat_token is not None:
+            self.ps.headers.update({"token": str(plat_token)})
         response = self.ps.get(platfrom_host+f"/v1/wallet/user/{userId}/fund",
                                json={},
                                params={
@@ -201,11 +201,11 @@ class WalletUser(PLAT_API):
 class WalletGameTransfer(PLAT_API):
 
     def update_balance_all(self,  # 刷新所有子錢包餘額
-                           platToken=None,
+                           plat_token=None,
                            userId=None,
                            ):
-        if platToken is not None:
-            self.ps.headers.update({"token": str(platToken)})
+        if plat_token is not None:
+            self.ps.headers.update({"token": str(plat_token)})
         response = self.ps.put(platfrom_host+f"/v1/wallet/game/transfer/user/{userId}/update/balance/all",
                                json={},
                                params={}
@@ -214,11 +214,11 @@ class WalletGameTransfer(PLAT_API):
         return response.json()
 
     def withdraw_all(self,  # 後台一鍵回收
-                     platToken=None,
+                     plat_token=None,
                      userId=None,
                      ):
-        if platToken is not None:
-            self.ps.headers.update({"token": str(platToken)})
+        if plat_token is not None:
+            self.ps.headers.update({"token": str(plat_token)})
         response = self.ps.post(platfrom_host+f"/v1/wallet/game/transfer/user/{userId}/withdraw/all",
                                 json={},
                                 params={}
@@ -227,13 +227,13 @@ class WalletGameTransfer(PLAT_API):
         return response.json()
 
     def deposit(self,  # 後台轉入指定渠道
-                platToken=None,
+                plat_token=None,
                 userId=None,
                 channelCode=None,
                 amount=None,
                 ):
-        if platToken is not None:
-            self.ps.headers.update({"token": str(platToken)})
+        if plat_token is not None:
+            self.ps.headers.update({"token": str(plat_token)})
         response = self.ps.post(platfrom_host+f"/v1/wallet/game/transfer/user/{userId}/deposit",
                                 json={
                                     "channelCode": channelCode,
@@ -245,7 +245,7 @@ class WalletGameTransfer(PLAT_API):
         return response.json()
 
     def get_game_transfer(self,  # 轉賬記錄
-                          platToken=None,
+                          plat_token=None,
                           timeType=None,  # 時間類型 1:轉帳時間|2:更新時間
                           startTime='2022-01-01T00:00:00Z', endTime='2023-01-01T00:00:00Z',
                           username=None,
@@ -255,8 +255,8 @@ class WalletGameTransfer(PLAT_API):
                           tradeId=None,
                           page=None, size=None,
                           ):
-        if platToken is not None:
-            self.ps.headers.update({"token": str(platToken)})
+        if plat_token is not None:
+            self.ps.headers.update({"token": str(plat_token)})
         response = self.ps.get(platfrom_host+f"/v1/wallet/game/transfer",
                                json={},
                                params=KeywordArgument.body_data()
@@ -270,7 +270,7 @@ class WalletGameTransferFailed(PLAT_API):
     @staticmethod
     def _create_failed_transfer_record():
         cs_wallet = Wallet()
-        data = cs_wallet.Login(deviceId="345", username='AutoTester',
+        data = cs_wallet.login(deviceId="345", username='AutoTester',
                                password="abc123456").json()['data']
         cs_wallet.wallet_game_transfer_withdraw_all()
         time.sleep(2)
@@ -300,10 +300,10 @@ class WalletGameTransferFailed(PLAT_API):
         set_plt_IrregularTransfer.conn.delete('IrregularTransfer::isTesting')
 
     def get_approver(self,  # 顯示所有異常處理人
-                     platToken=None,
+                     plat_token=None,
                      ):
-        if platToken is not None:
-            self.ps.headers.update({"token": str(platToken)})
+        if plat_token is not None:
+            self.ps.headers.update({"token": str(plat_token)})
         response = self.ps.get(platfrom_host+"/v1/wallet/game/transfer/failed/approver",
                                json={},
                                params={}
@@ -312,7 +312,7 @@ class WalletGameTransferFailed(PLAT_API):
         return response.json()
 
     def get_failed_list(self,  # 轉帳異常處理列表
-                        platToken=None,
+                        plat_token=None,
                         timeType=None,
                         startTime=None, endTime=None,
                         failedTransferStatus=None,
@@ -321,8 +321,8 @@ class WalletGameTransferFailed(PLAT_API):
                         tradeId=None,
                         page=None, size=None,
                         ):
-        if platToken is not None:
-            self.ps.headers.update({"token": str(platToken)})
+        if plat_token is not None:
+            self.ps.headers.update({"token": str(plat_token)})
         response = self.ps.get(platfrom_host+"/v1/wallet/game/transfer/failed",
                                json={},
                                params=KeywordArgument.body_data()
@@ -331,13 +331,13 @@ class WalletGameTransferFailed(PLAT_API):
         return response.json()
 
     def trade_manual_result(self,  # 手動處理異常轉帳
-                            platToken=None,
+                            plat_token=None,
                             tradeId=None,
                             result=None,
                             remark=None,
                             ):
-        if platToken is not None:
-            self.ps.headers.update({"token": str(platToken)})
+        if plat_token is not None:
+            self.ps.headers.update({"token": str(plat_token)})
         response = self.ps.post(platfrom_host+f"/v1/wallet/game/transfer/failed/tradeId/{tradeId}/manual/result",
                                 json={
                                     "result": result,
@@ -349,19 +349,19 @@ class WalletGameTransferFailed(PLAT_API):
         return response.json()
 
     def get_failed_id(self,
-                      platToken=None
+                      plat_token=None
                       ):
-        if platToken is not None:
-            self.ps.headers.update({"token": str(platToken)})
+        if plat_token is not None:
+            self.ps.headers.update({"token": str(plat_token)})
         target = self.get_failed_list()
         ret = jsonpath.jsonpath(target, "$..tradeId")[0]
         return ret
 
     def get_failed_id_unused(self,
-                             platToken=None
+                             plat_token=None
                              ):
-        if platToken is not None:
-            self.ps.headers.update({"token": str(platToken)})
+        if plat_token is not None:
+            self.ps.headers.update({"token": str(plat_token)})
         target = self.get_failed_list(failedTransferStatus=0)
         ret = jsonpath.jsonpath(target, "$..tradeId")
         if ret is False:
