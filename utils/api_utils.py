@@ -64,7 +64,9 @@ class API_Controller:
 class KeywordArgument:
 
     @staticmethod
-    def body_data(filter=['self', 'plat_token']):
+    def body_data(filter: list = None):
+        if filter is None:
+            filter = ['self', 'plat_token']
         caller = inspect.stack()[1][0]
         args, _, _, values = inspect.getargvalues(caller)
         r = dict()
