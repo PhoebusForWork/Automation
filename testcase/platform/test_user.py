@@ -74,3 +74,29 @@ class Test_User_Vip():
                                test['params'], token=getPltLoginToken)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
+
+
+class Test_User():
+    @staticmethod
+    @allure.feature("客戶管理")
+    @allure.story("客戶管理")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.parametrize("test", td.get_case('get_user_list'))  # 目前噴錯待處理
+    def test_get_user_list(test, getPltLoginToken):
+        api = API_Controller()
+        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
+                               test['params'], token=getPltLoginToken)
+        assert resp.status_code == test['code_status'], resp.text
+        assert test['keyword'] in resp.text
+
+    @staticmethod
+    @allure.feature("客戶管理")
+    @allure.story("客戶管理")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.parametrize("test", td.get_case('get_user_info'))  # 目前噴錯待處理
+    def test_get_user_info(test, getPltLoginToken):
+        api = API_Controller()
+        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
+                               test['params'], token=getPltLoginToken)
+        assert resp.status_code == test['code_status'], resp.text
+        assert test['keyword'] in resp.text
