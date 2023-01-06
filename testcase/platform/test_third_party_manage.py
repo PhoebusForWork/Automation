@@ -55,7 +55,5 @@ class Test_Thrid_Party_Manage():
             id = str(json_replace[0]['id'])
             req = jsonpath.jsonpath(thirdPartyManage().getThirdInterface(plat_token=getPltLoginToken),
                                     f'$.data[?(@.id == {id} )]')
-            # 編輯時若ID不存在，目前會回傳success，但查詢結果無資料，針對此特例排除
-            if req is False:
-               req = [{"error":f"查無此id={id}資料"}]
-            assert set(test['target'].items()).issubset(req[0].items())
+            if req is not False:
+               assert set(test['target'].items()).issubset(req[0].items())
