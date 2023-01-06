@@ -50,9 +50,10 @@ class Test_Thrid_Party_Manage():
         # check response
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
-        # query and check data
+        # query and check data after editing
         if resp.status_code == 200:
-            req = jsonpath.jsonpath(thirdPartyManage().getThirdInterface(platToken=getPltLoginToken),
-                                    '$.data[?(@.id == 5 )]')
-            assert set(test['target']).issubset(req[0])
+            id = str(test['json'][0]['id']) if 'id' not in test['target'] else str(test['target']['id'])
+            req = jsonpath.jsonpath(thirdPartyManage().getThirdInterface(plat_token=getPltLoginToken),
+                                    f'$.data[?(@.id == {id} )]')
+            assert set(test['target'].items()).issubset(req[0].items())
 

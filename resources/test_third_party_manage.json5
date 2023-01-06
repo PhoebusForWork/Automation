@@ -35,7 +35,7 @@
             {"scenario":"[weighting]999","target":{"weighting":999},"params": {},"code_status": 200,"keyword": "success"},
             {"scenario":"[weighting]超出上限","target":{"weighting":1000},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[isEnabled]null","target":{"isEnabled":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[isEnabled]false","target":{"isEnabled":"False"},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[isEnabled]false","target":{"isEnabled":false},"params": {},"code_status": 200,"keyword": "success"},
             {"scenario":"[isEnabled]true","target": {"isEnabled":true},"params": {},"code_status": 200,"keyword": "success"},
             {"scenario":"[isEnabled,weighting]false,9","target": {"isEnabled":false,"weighting":9},"params": {},"code_status": 200,"keyword": "success"},
             {"scenario":"[isEnabled,weighting]true,10","target": {"isEnabled":true,"weighting":10},"params": {},"code_status": 200,"keyword": "success"}
