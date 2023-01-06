@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from .platApiBase import PLAT_API  # 執行RF時使用
+import time
+from pylib.platform.platApiBase import PLAT_API
 from utils.api_utils import KeywordArgument
 import configparser
 
@@ -186,6 +187,19 @@ class AccountAdmin(PLAT_API):
         )
         self._printresponse(response)
         return response.json()
+
+    def add_account_auto(self, plat_token=None):
+        now = time.time()
+        auto_account = "auto" + str(int(now))
+        print(auto_account)
+        resp = self.add_admin(plat_token=plat_token, account=auto_account, password="abc123456", isLeader=True, deptId='6', roleIds=['5'], displayName=auto_account)
+
+        print(resp)
+
+        if resp["data"] == "success":
+            return auto_account
+        else:
+            raise ValueError("創建帳號失敗")
 
 
 class AccountAuthority(PLAT_API):
