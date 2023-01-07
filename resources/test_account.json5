@@ -35,7 +35,7 @@
         "json" : {"department":"浣熊","pid":"49"},
         "test_item": [
             {"scenario":"不帶參數","target": {"department": "","pid": ""},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"增加新主節點","target": {"department": "新增主節點"},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"增加新主節點","target": {"department": "新增主節點","pid":""},"params": {},"code_status": 200,"keyword": "success"},
             {"scenario":"[增加新主節點]null","target": {"department": null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"重複增加新主節點","target": {"department": "真的棒","pid": ""},"params": {},"code_status": 400,"keyword": "資料已存在"},
             {"scenario":"[增加新子節點]department未給參數","target": {"department":"","pid":1},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
@@ -92,7 +92,7 @@
         "req_method": "delete",
         "test_item": [
             {"req_url": "/v1/account/dept/","scenario":"不帶departmentId參數","json": {},"target": {},"params": {},"code_status": 405,"keyword": "不允许使用的HTTP方法"},
-            {"req_url": "/v1/account/dept/72","scenario":"正確帶入參數","json": {},"target": {},"params": {},"code_status": 200,"keyword": "success"},
+            {"req_url": "/v1/account/dept/要刪除的節點","scenario":"正確帶入參數","json": {},"target": {},"params": {},"code_status": 200,"keyword": "success"},
         ]
     },
 
@@ -129,7 +129,7 @@
         "req_url": "/v1/account/role",
         "json" : {"role":"浣熊","remark":"可以空白","authorityIds": ["1"],"departmentIds": ["49"]},
         "test_item": [
-            {"scenario":"創建角色","target": {"role":"浣熊","remark":"可以空白","authorityIds": ["1"],"departmentIds": ["49"]},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"創建角色","target": {"role":"auto","remark":"可以空白","authorityIds": ["2"],"departmentIds": ["2"]},"params": {},"code_status": 200,"keyword": "success"},
             {"scenario":"重複創建角色","target": {"role":"abc","remark":"可以空白","authorityIds": ["1"],"departmentIds": ["49"]},"params": {},"code_status": 400,"keyword": "角色名稱已存在其中一個部門中"},
             {"scenario":"[創建角色]null","target": {"role":"","remark":"可以空白","authorityIds": ["1"],"departmentIds": ["49"]},"params": {},"code_status": 400,"keyword": "parameter 'role' 角色不能为空"},
         ]
@@ -152,7 +152,7 @@
         "test_item": [
             {"req_url": "/v1/account/role/44/status","scenario":"禁用","target": {"status": "0"},"params": {},"code_status": 200,"keyword": "success"},
             {"req_url": "/v1/account/role/44/status","scenario":"啟用","target": {"status": "1"},"params": {},"code_status": 200,"keyword": "success"},
-            {"req_url": "/v1/account/role/45/status","scenario":"軟刪","target": {"status": "2"},"params": {},"code_status": 200,"keyword": "success"}
+            {"req_url": "/v1/account/role/更換role_id/status","scenario":"軟刪","target": {"status": "2"},"params": {},"code_status": 200,"keyword": "success"}
         ]
     },
 
@@ -205,11 +205,33 @@
     },
 
     {
+        "test_case": "test_admin_add_account",
+        "req_method": "post",
+        "req_url": "/v1/account/admin",
+        "json" : {  "phone": "15279277599",
+                    "sipNum": "001",
+                    "fixSipNum": "131456574334556",
+                    "isLeader": true,
+                    "deptId": 2,
+                    "roleIds": [2],
+                    "expiredTime": "",
+                    "account": "charlieadmin004",
+                    "password": "abc123456",
+                    "displayName": "charlie004"},
+        "test_item": [
+            {"scenario":"正常新增帳號","target": {},"params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"帳號重複","target": {"account": "charlieadmin002"},"params": {},"code_status": 400,"keyword": "帳號重複"},
+            {"scenario":"帳號重複","target": {"account": "charlieadmin003","displayName": "charlie002"},"params": {},"code_status": 400,"keyword": "暱稱重複"},
+            {"scenario":"帳號重複","target": {"phone": "15279287599"},"params": {},"code_status": 400,"keyword": "電話重複"}
+        ]
+    },
+
+    {
         "test_case": "test_delete_admin",
         "req_method": "delete",
         "json" : {},
         "test_item": [
-            {"req_url": "/v1/account/admin/51","scenario":"正常刪除","target": {},"params": {},"code_status": 200,"keyword": "success"},
+            {"req_url": "/v1/account/admin/未登入帳號","scenario":"正常刪除","target": {},"params": {},"code_status": 200,"keyword": "success"},
             {"req_url": "/v1/account/admin/51","scenario":"[正常刪除]已登录过的账号不能删除","target": {},"params": {},"code_status": 400,"keyword": "已登录过的账号不能删除"},
             {"req_url": "/v1/account/admin/9999","scenario":"沒有此資料","target": {},"params": {},"code_status": 400,"keyword": "資料不存在"}
         ]
@@ -243,29 +265,7 @@
         "json" : { "oldPassword": "abc123456", "newPassword": "abc12345"},
         "test_item": [
             {"scenario":"正常修改密碼","target": {},"params": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"密碼錯誤","target": {},"params": {},"code_status": 400,"keyword": "用户名或密码不正确"}
-        ]
-    },
-
-    {
-        "test_case": "test_admin_add_account",
-        "req_method": "post",
-        "req_url": "/v1/account/admin",
-        "json" : {  "phone": "15279277599",
-                    "sipNum": "001",
-                    "fixSipNum": "131456574334556",
-                    "isLeader": true,
-                    "deptId": 2,
-                    "roleIds": [2],
-                    "expiredTime": "",
-                    "account": "charlieadmin004",
-                    "password": "abc123456",
-                    "displayName": "charlie004"},
-        "test_item": [
-            {"scenario":"正常新增帳號","target": {},"params": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"帳號重複","target": {"account": "charlieadmin002"},"params": {},"code_status": 400,"keyword": "帳號重複"},
-            {"scenario":"帳號重複","target": {"account": "charlieadmin003","displayName": "charlie002"},"params": {},"code_status": 400,"keyword": "暱稱重複"},
-            {"scenario":"帳號重複","target": {"phone": "15279287599"},"params": {},"code_status": 400,"keyword": "電話重複"}
+            {"scenario":"密碼錯誤","target": {},"params": {},"code_status": 400,"keyword": "舊密碼錯誤"}
         ]
     },
 
@@ -339,7 +339,7 @@
         "test_case": "test_account_login_reset_password",
         "req_method": "put",
         "req_url": "/v1/account/login/resetPassword",
-        "json" : {"account":"建立新帳號","oldPassword":"abc12345","newPassword":"abc123456","loginIp":"61.220.72.61"},//IP可不填
+        "json" : {"account":"建立新帳號","oldPassword":"abc123456","newPassword":"abc12345","loginIp":"61.220.72.61"},//IP可不填
         "test_item": [
             {"scenario":"正確更換","target":{},"params": {},"code_status": 200,"keyword": "success"},
             {"scenario":"用戶名錯誤","target":{"account":"charlieggyy"},"params": {},"code_status": 400,"keyword": "用户名或密码不正确"},
