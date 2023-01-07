@@ -3,7 +3,6 @@ import allure
 import jsonpath
 
 from pylib.platform.thirdPartyManage import thirdPartyManage
-from testcase.platform.conftest import getPltLoginToken
 from utils.data_utils import JsonReader
 from utils.api_utils import API_Controller
 
@@ -56,4 +55,4 @@ class Test_Thrid_Party_Manage():
             req = jsonpath.jsonpath(thirdPartyManage().getThirdInterface(plat_token=getPltLoginToken),
                                     f'$.data[?(@.id == {id} )]')
             if req is not False:
-               assert set(test['target'].items()).issubset(req[0].items())
+                assert set(test['target'].items()).issubset(req[0].items())
