@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import time
+import jsonpath
 from pylib.platform.platApiBase import PLAT_API
 from utils.api_utils import KeywordArgument
 import configparser
@@ -190,16 +191,18 @@ class AccountAdmin(PLAT_API):
 
     def add_account_auto(self, plat_token=None):
         now = time.time()
-        auto_account = "auto" + str(int(now))
-        print(auto_account)
-        resp = self.add_admin(plat_token=plat_token, account=auto_account, password="abc123456", isLeader=True, deptId='6', roleIds=['5'], displayName=auto_account)
-
-        print(resp)
-
+        auto_account = "auto" + str(int(now * 10))
+        resp = self.add_admin(plat_token=plat_token, account=auto_account, password="abc123456",
+                              isLeader=True, deptId='6', roleIds=['5'], displayName=auto_account)
         if resp["data"] == "success":
             return auto_account
         else:
             raise ValueError("創建帳號失敗")
+
+    def find_admin_id(self, plat_token=None):
+        response = self.search_admin_list(plat_token=plat_token, size=200, )
+        admin_id = jsonpath.jsonpath(response, "$..id")
+        return str(admin_id[-1])
 
 
 class AccountAuthority(PLAT_API):
@@ -385,6 +388,11 @@ class AccountDept(PLAT_API):
         self._printresponse(response)
         return response.json()
 
+    def find_dept_id(self, plat_token=None):
+        response = self.dept_list(plat_token=plat_token)
+        dept_id = jsonpath.jsonpath(response, "$..id")
+        return str(dept_id[-1])
+
 
 class AccountRole(PLAT_API):
 
@@ -480,3 +488,8 @@ class AccountRole(PLAT_API):
         )
         self._printresponse(response)
         return response.json()
+
+    def find_role_id(self, plat_token=None):
+        response = self.role_list(plat_token=plat_token, size=100,)
+        role_id = jsonpath.jsonpath(response, "$..id")
+        return str(role_id[-1])
