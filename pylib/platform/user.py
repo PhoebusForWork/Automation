@@ -206,7 +206,6 @@ class User(PLAT_API):
 
 # --------------------------------------------------------------------------------------------
 
-
     def risk_analysis_same_ip(self,  # 風險套利重複ip
                               plat_token=None,
                               userId=None, page=None, size=None,
@@ -276,6 +275,13 @@ class User(PLAT_API):
                                )
         self._printresponse(response)
         return response.json()
+
+    def get_client_user(self, plat_token=None):
+        target = self.get_user_list(plat_token=plat_token, From='2022-01-01T00:00:00Z', status=0,
+                                    to='2023-01-15T00:00:00Z', page=None, size=1000)
+        client_user = jsonpath.jsonpath(
+            target, "$..records[?(@.userType==0).userId]")
+        return client_user[0]
 
 
 class UserManage(PLAT_API):
