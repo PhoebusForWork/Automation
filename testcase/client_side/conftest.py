@@ -11,7 +11,7 @@ cs_password = config['cs_account']['password']
 login_user_id = None
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="module")
 def getCsLoginToken(username=cs_account, password=cs_password):
     api = WEB_API()
     resp = api.login(username=username, password=password)

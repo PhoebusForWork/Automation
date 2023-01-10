@@ -16,7 +16,7 @@ config = configparser.ConfigParser()
 config.read('config/config.ini')  # 在rf_api_test層執行時使用
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="module")
 def getPltLoginToken(username='superAdmin', password='abc123456'):
     api = PLAT_API()
     code = api.imgcode()
