@@ -1,7 +1,7 @@
 import pytest
 import allure
-from testcase.platform.conftest import getPltLoginToken
-from pylib.platform.user import UserVip
+from pylib.platform.user import UserVip, User
+from pylib.platform.proxy import ProxyManage
 from utils.data_utils import JsonReader
 from utils.api_utils import API_Controller
 
@@ -83,6 +83,19 @@ class Test_User():
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", td.get_case('get_user_list'))  # 目前噴錯待處理
     def test_get_user_list(test, getPltLoginToken):
+        params_replace = td.replace_json(test['params'], test['target'])
+        api = API_Controller()
+        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
+                               params_replace, token=getPltLoginToken)
+        assert resp.status_code == test['code_status'], resp.text
+        assert test['keyword'] in resp.text
+
+    @staticmethod  # testcase/platform/test_user.py::Test_User::test_get_user_info -s
+    @allure.feature("客戶管理")
+    @allure.story("客戶管理")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.parametrize("test", td.get_case('get_user_info'))  # 目前噴錯待處理
+    def test_get_user_info(test, getPltLoginToken):
         api = API_Controller()
         resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
                                test['params'], token=getPltLoginToken)
@@ -93,10 +106,130 @@ class Test_User():
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
-    @pytest.mark.parametrize("test", td.get_case('get_user_info'))  # 目前噴錯待處理
-    def test_get_user_info(test, getPltLoginToken):
+    @pytest.mark.parametrize("test", td.get_case('get_user_account'))
+    def test_get_user_account(test, getPltLoginToken):
         api = API_Controller()
         resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
                                test['params'], token=getPltLoginToken)
+        assert resp.status_code == test['code_status'], resp.text
+        assert test['keyword'] in resp.text
+
+    @staticmethod
+    @allure.feature("客戶管理")
+    @allure.story("客戶管理")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.parametrize("test", td.get_case('get_risk_analysis_same_ip'))
+    def test_get_risk_analysis_same_ip(test, getPltLoginToken):
+        params_replace = td.replace_json(test['params'], test['target'])
+        api = API_Controller()
+        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
+                               params_replace, token=getPltLoginToken)
+        assert resp.status_code == test['code_status'], resp.text
+        assert test['keyword'] in resp.text
+
+    @staticmethod
+    @allure.feature("客戶管理")
+    @allure.story("客戶管理")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.parametrize("test", td.get_case('get_risk_analysis_arbitrage'))
+    def test_get_risk_analysis_arbitrage(test, getPltLoginToken):
+        params_replace = td.replace_json(test['params'], test['target'])
+        api = API_Controller()
+        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
+                               params_replace, token=getPltLoginToken)
+        assert resp.status_code == test['code_status'], resp.text
+        assert test['keyword'] in resp.text
+
+    @staticmethod
+    @allure.feature("客戶管理")
+    @allure.story("客戶管理")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.parametrize("test", td.get_case('get_login_info'))
+    def test_get_login_info(test, getPltLoginToken):
+        params_replace = td.replace_json(test['params'], test['target'])
+        api = API_Controller()
+        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
+                               params_replace, token=getPltLoginToken)
+        assert resp.status_code == test['code_status'], resp.text
+        assert test['keyword'] in resp.text
+
+    @staticmethod
+    @allure.feature("客戶管理")
+    @allure.story("客戶管理")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.parametrize("test", td.get_case('get_user_params'))
+    def test_get_user_params(test, getPltLoginToken):
+        api = API_Controller()
+        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
+                               test['params'], token=getPltLoginToken)
+        assert resp.status_code == test['code_status'], resp.text
+        assert test['keyword'] in resp.text
+
+    @staticmethod
+    @allure.feature("客戶管理")
+    @allure.story("客戶管理")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.parametrize("test", td.get_case('get_user_login_stat'))
+    def test_get_user_login_stat(test, getPltLoginToken):
+        params_replace = td.replace_json(test['params'], test['target'])
+        api = API_Controller()
+        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
+                               params_replace, token=getPltLoginToken)
+        assert resp.status_code == test['code_status'], resp.text
+        assert test['keyword'] in resp.text
+
+    @staticmethod
+    @allure.feature("客戶管理")
+    @allure.story("客戶管理")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.parametrize("test", td.get_case('edit_user_remark'))
+    def test_edit_user_remark(test, getPltLoginToken):
+        api = API_Controller()
+        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
+                               test['params'], token=getPltLoginToken)
+        assert resp.status_code == test['code_status'], resp.text
+        assert test['keyword'] in resp.text
+
+    @staticmethod
+    @allure.feature("客戶管理")
+    @allure.story("客戶管理")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.parametrize("test", td.get_case('edit_user_reallyName'))
+    def test_edit_user_reallyName(test, getPltLoginToken):
+        api = API_Controller()
+        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
+                               test['params'], token=getPltLoginToken)
+        assert resp.status_code == test['code_status'], resp.text
+        assert test['keyword'] in resp.text
+
+    @staticmethod
+    @allure.feature("客戶管理")
+    @allure.story("客戶管理")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.parametrize("test", td.get_case('edit_user_isWhiteList'))
+    def test_edit_user_isWhiteList(test, getPltLoginToken):
+        api = API_Controller()
+        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
+                               test['params'], token=getPltLoginToken)
+        assert resp.status_code == test['code_status'], resp.text
+        assert test['keyword'] in resp.text
+
+    @staticmethod
+    @allure.feature("客戶管理")
+    @allure.story("客戶管理")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.parametrize("test", td.get_case('edit_user_convertProxy'))
+    def test_edit_user_convertProxy(test, getPltLoginToken):
+        user_id = None
+        if test['json']['userId'] == 'client_id':
+            user = User()
+            user_id = user.get_client_user(plat_token=getPltLoginToken)
+            test['json']['userId'] = user_id
+        api = API_Controller()
+        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
+                               test['params'], token=getPltLoginToken)
+        if resp.status_code == 200:
+            proxy_manage = ProxyManage()
+            proxy_manage.clean_proxy_approval()
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
