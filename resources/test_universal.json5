@@ -1,0 +1,24 @@
+[
+    {
+        "test_case": "add_config_avatar",
+        "req_method": "post",
+        "req_url": "/v1/config/avatar",
+        "json" : {"title":"ggg","url":"yyy"},
+        "test_item": [
+            {"scenario":"新增頭像","target":{"title":"auto","url":"test"},"params": {},"code_status": 200,"keyword": "success"},
+//            {"scenario":"錯誤帳號","target":{"account":"charlieggyy","uuid":"124"},"params": {},"code_status": 400,"keyword": "用户名或密码不正确"},
+//            {"scenario":"錯誤密碼","target":{"account":"superAdmin","password":"123456","uuid":"124"},"params": {},"code_status": 400,"keyword": "用户名或密码不正确"},
+        ]
+    },
+
+    {
+        "test_case": "edit_config_avatar",
+        "req_method": "put",
+        "req_url": "/v1/config/avatar",
+        "test_item": [
+            {"scenario":"新增頭像","json" : {"id":"40","title":"ggg","url":"yyy"},"target":{},"params": {},"code_status": 200,"keyword": "success"},
+//            {"scenario":"錯誤帳號","target":{"account":"charlieggyy","uuid":"124"},"params": {},"code_status": 400,"keyword": "用户名或密码不正确"},
+//            {"scenario":"錯誤密碼","target":{"account":"superAdmin","password":"123456","uuid":"124"},"params": {},"code_status": 400,"keyword": "用户名或密码不正确"},
+        ]
+    }
+]
