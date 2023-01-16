@@ -97,3 +97,40 @@ def test_get_config_avatar_one(test, getPltLoginToken):
 
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
+
+
+@allure.feature("檔案上傳")
+@allure.story("上傳圖片")
+@allure.title("{test[scenario]}")
+@pytest.mark.parametrize("test", td.get_case('file_image_upload'))
+def test_file_image_upload(test, getPltLoginToken):
+    if test['files'] == 'null':
+        files = None
+    else:
+        files = [('file', ('charliebrown.jpeg',
+                           open('/Users/charliechan/Downloads/charliebrown.jpeg', 'rb'), 'image/jpeg'))]
+    api = API_Controller()
+    api.s.headers.update({"Content-Type": None})
+    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
+                           test['params'], token=getPltLoginToken, files=files)
+    assert resp.status_code == test['code_status'], resp.text
+    assert test['keyword'] in resp.text
+
+
+@allure.feature("檔案上傳")
+@allure.story("上傳影片")
+@allure.title("{test[scenario]}")
+@pytest.mark.parametrize("test", td.get_case('file_video_upload'))
+def test_file_video_upload(test, getPltLoginToken):
+    if test['files'] == 'null':
+        files = None
+    else:
+        files = [('file', ('realshort.mp4',
+        open('/Users/charliechan/opt/anaconda3/lib/python3.9/site-packages/imageio/resources/images/realshort.mp4', 'rb')
+        , 'application/octet-stream'))]
+    api = API_Controller()
+    api.s.headers.update({"Content-Type": None})
+    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=getPltLoginToken, files=files)
+    assert resp.status_code == test['code_status'], resp.text
+    assert test['keyword'] in resp.text
