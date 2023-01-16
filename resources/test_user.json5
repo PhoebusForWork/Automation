@@ -64,7 +64,7 @@
             {"scenario":"修改VIP層級_存在id_正常修改","target":{},"req_url": "/v1/user/vip/config/存在vip_id","params": {},"code_status": 200,"keyword": "success"},
             ]
     },
-    {   //#目前噴錯待處理
+    {
         "test_case": "get_user_list",
         "req_method": "get",
         "req_url": "/v1/user",
@@ -133,7 +133,7 @@
         "req_method": "get",
         "test_item": [
             {"scenario":"查詢客戶資訊_正常查詢","req_url": "/v1/user/1","json": {},"params": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"查詢客戶資訊_不存在userId","req_url": "/v1/user/999999","json": {},"params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"查詢客戶資訊_不存在userId","req_url": "/v1/user/999999","json": {},"params": {},"code_status": 400,"keyword": "该用户不存在"},
             ]
     },
     {
@@ -151,7 +151,7 @@
         "json" : {},
         "params": {"page":null,"size":null},
         "test_item": [
-            {"req_url": "/v1/user/999999/risk/analysis/same/ip","scenario":"風險套利重複Ip_不存在userId","target":{},"code_status": 400,"keyword": "資料不存在"},
+            {"req_url": "/v1/user/999999/risk/analysis/same/ip","scenario":"風險套利重複Ip_不存在userId","target":{},"code_status": 400,"keyword": "该用户不存在"},
             {"req_url": "/v1/user/1/risk/analysis/same/ip","scenario":"風險套利重複Ip_存在userId","target":{},"code_status": 200,"keyword": "data"},
             {"req_url": "/v1/user/1/risk/analysis/same/ip","scenario":"風險套利重複Ip_[page]null","target":{},"code_status": 200,"keyword": '"current":1'},
             {"req_url": "/v1/user/1/risk/analysis/same/ip","scenario":"風險套利重複Ip_[page]5","target":{"page":5},"code_status": 200,"keyword": '"current":5'},
@@ -270,9 +270,42 @@
         "req_url": "/v1/user/convertProxy",
         "params": {},
         "test_item": [
-            // {"scenario":"開通代理角色_不存在id","json": {"userId": 0},"code_status": 400,"keyword": '该用户不存在'},
-            // {"scenario":"開通代理角色_用戶為proxy","json": {"userId": 31},"code_status": 400,"keyword": '该用户已是代理'},
+            {"scenario":"開通代理角色_不存在id","json": {"userId": 0},"code_status": 400,"keyword": '该用户不存在'},
+            {"scenario":"開通代理角色_用戶為proxy","json": {"userId": 31},"code_status": 400,"keyword": '该用户已是代理'},
             {"scenario":"開通代理角色_用戶為client","json": {"userId": "client_id"},"code_status": 200,"keyword": 'success'},
+            ]
+    },
+    {
+        "test_case": "username_validate",
+        "req_method": "post",
+        "req_url": "/v1/user/username/validate",
+        "params": {},
+        "test_item": [
+            {"scenario":"校驗會員帳號是否存在_不存在user_name","json":{"usernames":["notexist"]},"code_status": 200,"keyword": 'notexist'},
+            {"scenario":"校驗會員帳號是否存在_存在user_name","json":{"usernames":["proxy1"]},"code_status": 200,"keyword": '"usernames":[]'},
+            {"scenario":"校驗會員帳號是否存在_[usernames]null","json":{"usernames":null},"code_status": 400,"keyword": '无效的请求参数'},
+            ]
+    },
+    {//鎖定類別 LOGIN：登入, RECHARGE：充值, WITHDRAW：提領, TRANSFER：轉帳
+        "test_case": "edit_lockStatus",
+        "req_method": "post",
+        "req_url": "/v1/user/lockStatus",
+        "params": {},
+        "json":{
+                "userIds": [9999999],
+                "userLockTypeList": [{"lockStatus": "LOGIN","isLock": true}],
+                "remark": "string"
+                },
+        "test_item": [
+            {"scenario":"申請鎖定_[userIds]不存在","target":{},"code_status": 400,"keyword": '資料不存在'},
+            {"scenario":"申請鎖定_[userIds]存在","target":{"userIds":[55]},"code_status": 200,"keyword": 'USER_LOGIN_LOCK'},
+            {"scenario":"申請鎖定_[lockStatus]RECHARGE","target":{"userIds":[55],"userLockTypeList": [{"lockStatus": "RECHARGE","isLock": true}]},"code_status": 200,"keyword": 'USER_RECHARGE_LOCK'},
+            {"scenario":"申請鎖定_[lockStatus]WITHDRAW","target":{"userIds":[55],"userLockTypeList": [{"lockStatus": "WITHDRAW","isLock": true}]},"code_status": 200,"keyword": 'USER_WITHDRAW_LOCK'},
+            {"scenario":"申請鎖定_[lockStatus]TRANSFER","target":{"userIds":[55],"userLockTypeList": [{"lockStatus": "TRANSFER","isLock": true}]},"code_status": 200,"keyword": 'USER_TRANSFER_LOCK'},
+            {"scenario":"申請鎖定_[lockStatus]LOGIN_false","target":{"userIds":[66],"userLockTypeList": [{"lockStatus": "LOGIN","isLock": false}]},"code_status": 200,"keyword": 'USER_LOGIN_UNLOCK'},
+            {"scenario":"申請鎖定_[lockStatus]RECHARGE","target":{"userIds":[66],"userLockTypeList": [{"lockStatus": "RECHARGE","isLock": false}]},"code_status": 200,"keyword": 'USER_RECHARGE_UNLOCK'},
+            {"scenario":"申請鎖定_[lockStatus]WITHDRAW","target":{"userIds":[66],"userLockTypeList": [{"lockStatus": "WITHDRAW","isLock": false}]},"code_status": 200,"keyword": 'USER_WITHDRAW_UNLOCK'},
+            {"scenario":"申請鎖定_[lockStatus]TRANSFER","target":{"userIds":[66],"userLockTypeList": [{"lockStatus": "TRANSFER","isLock": false}]},"code_status": 200,"keyword": 'USER_TRANSFER_UNLOCK'},
             ]
     }
 ]

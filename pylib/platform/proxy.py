@@ -690,12 +690,14 @@ class ProxyManage(PLAT_API):
         ret2 = jsonpath.jsonpath(jsdata2, "$..id")
         print(ret)
         try:
-            for i in ret:
-                self.approval_first(plat_token=token, id=i,
-                                    isApprove=False, remark="rej")
-            for i in ret2:
-                self.approval_second(plat_token=token, id=i,
-                                     isApprove=False, remark="rej")
+            if ret is not False:
+                for i in ret:
+                    self.approval_first(plat_token=token, id=i,
+                                        isApprove=False, remark="rej")
+            if ret2 is not False:
+                for i in ret2:
+                    self.approval_second(plat_token=token, id=i,
+                                         isApprove=False, remark="rej")
         except:
             pass
 
