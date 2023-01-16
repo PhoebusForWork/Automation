@@ -206,6 +206,7 @@ class User(PLAT_API):
 
 # --------------------------------------------------------------------------------------------
 
+
     def risk_analysis_same_ip(self,  # 風險套利重複ip
                               plat_token=None,
                               userId=None, page=None, size=None,
@@ -410,7 +411,7 @@ class UserManage(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def clean_approval(self,  # 編輯會員聯絡資料
+    def clean_approval(self,  #
                        plat_token=None, optType=None
                        ):
         if plat_token != None:

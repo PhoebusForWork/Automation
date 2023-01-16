@@ -1,6 +1,7 @@
 import pytest
 import allure
-from pylib.platform.user import UserVip, User
+import jsonpath
+from pylib.platform.user import UserVip, User, UserManage
 from pylib.platform.proxy import ProxyManage
 from utils.data_utils import JsonReader
 from utils.api_utils import API_Controller
@@ -230,6 +231,39 @@ class Test_User():
                                test['params'], token=getPltLoginToken)
         if resp.status_code == 200:
             proxy_manage = ProxyManage()
-            proxy_manage.clean_proxy_approval()
+            proxy_manage.clean_proxy_approval(getPltLoginToken)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
+
+    @staticmethod
+    @allure.feature("客戶管理")
+    @allure.story("客戶管理")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.parametrize("test", td.get_case('username_validate'))
+    def test_username_validate(test, getPltLoginToken):
+        api = API_Controller()
+        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
+                               test['params'], token=getPltLoginToken)
+        assert resp.status_code == test['code_status'], resp.text
+        assert test['keyword'] in resp.text
+
+    @staticmethod
+    @allure.feature("客戶管理")
+    @allure.story("客戶管理")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.parametrize("test", td.get_case('edit_lockStatus'))
+    def test_edit_lockStatus(test, getPltLoginToken):
+        json_replace = td.replace_json(test['json'], test['target'])
+        api = API_Controller()
+        resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
+                               test['params'], token=getPltLoginToken)
+        assert resp.status_code == test['code_status'], resp.text
+        if resp.status_code == 200:  # 若成功後去確認鎖定類別並且rej掉內容
+            target = UserManage()
+            jsdata = target.get_user_manage_list(
+                plat_token=getPltLoginToken, size=10, status=0)
+            ret = jsonpath.jsonpath(jsdata, "$..id")
+            optType = jsonpath.jsonpath(jsdata, "$..optType")
+            assert test['keyword'] in optType
+            target.first_approval(
+                plat_token=getPltLoginToken, id=ret[0], status=2, remark='test_approval')
