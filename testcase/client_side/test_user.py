@@ -2,7 +2,7 @@ import pytest
 import allure
 from utils.data_utils import JsonReader
 from utils.api_utils import API_Controller
-from pylib.clinet_side.user import Address
+from pylib.client_side.user import Address
 
 td = JsonReader()
 testData = td.read_json5('test_address.json5', file_side='cs')
