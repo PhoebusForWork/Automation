@@ -126,11 +126,9 @@ def test_file_video_upload(test, getPltLoginToken):
         files = None
     else:
         files = [('file', ('upload_video_realshort.mp4',
-        open('resources/upload_file/upload_video_realshort.mp4', 'rb')
-        , 'application/octet-stream'))]
+                           open('resources/upload_file/upload_video_realshort.mp4', 'rb'), 'application/octet-stream'))]
     api = API_Controller()
     api.s.headers.update({"Content-Type": None})
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                            test['params'], token=getPltLoginToken, files=files)
+    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'], test['params'], token=getPltLoginToken, files=files)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
