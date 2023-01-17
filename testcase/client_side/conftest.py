@@ -2,7 +2,7 @@ import logging
 import traceback
 import pytest
 import configparser
-from pylib.website.webApiBase import WEB_API
+from pylib.clinet_side.webApiBase import WEB_API
 
 config = configparser.ConfigParser()
 config.read('config/config.ini')

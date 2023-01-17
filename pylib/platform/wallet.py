@@ -1,6 +1,6 @@
 from unittest.mock import NonCallableMagicMock
 from ..platform.platApiBase import PLAT_API  # 執行RF時使用
-from ..website.wallet import Wallet
+from ..clinet_side.wallet import Wallet
 from utils.api_utils import KeywordArgument
 from utils.redis_utils import Redis
 from utils.xxl_job_utils import XxlJobs
