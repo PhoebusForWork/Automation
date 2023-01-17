@@ -14,11 +14,12 @@ https://github.com/kernellmd/Knowledge/blob/master/Translation/PEP%208%20%E4%B8%
 automation-testing
 ├── config               -- 設定檔
 ├── pylib                -- 內部函式庫
+    ├── client_side        -- 前台共用函式庫
     ├── platform           -- 後台共用函式庫
-    ├── website            -- 前台共用函式庫
 ├── resources            -- 測試案例
     ├── client_side        -- 前台測試案例
     ├── platform           -- 後台測試案例
+    ├── upload_file        -- 測試上傳用檔案
 ├── testcase             -- 測試案例(實作層)
     ├── client_side        -- 前台測試案例(實作層)
     ├── platform           -- 後台測試案例(實作層)
