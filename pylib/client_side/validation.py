@@ -1,7 +1,7 @@
 from re import M
 import datetime
 import configparser
-from ..website.webApiBase import WEB_API  # 執行RF時使用
+from ..client_side.webApiBase import WEB_API  # 執行RF時使用
 
 
 config = configparser.ConfigParser()
