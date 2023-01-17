@@ -107,8 +107,8 @@ def test_file_image_upload(test, getPltLoginToken):
     if test['files'] == 'null':
         files = None
     else:
-        files = [('file', ('charliebrown.jpeg',
-                           open('/Users/charliechan/Downloads/charliebrown.jpeg', 'rb'), 'image/jpeg'))]
+        files = [('file', ('upload_image_charliebrown.jpeg',
+                           open('resources/upload_file/upload_image_charliebrown.jpeg', 'rb'), 'image/jpeg'))]
     api = API_Controller()
     api.s.headers.update({"Content-Type": None})
     resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
@@ -125,8 +125,8 @@ def test_file_video_upload(test, getPltLoginToken):
     if test['files'] == 'null':
         files = None
     else:
-        files = [('file', ('realshort.mp4',
-        open('/Users/charliechan/opt/anaconda3/lib/python3.9/site-packages/imageio/resources/images/realshort.mp4', 'rb')
+        files = [('file', ('upload_video_realshort.mp4',
+        open('resources/upload_file/upload_video_realshort.mp4', 'rb')
         , 'application/octet-stream'))]
     api = API_Controller()
     api.s.headers.update({"Content-Type": None})
