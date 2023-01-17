@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import configparser
-from ..clinet_side.webApiBase import WEB_API  # 執行RF時使用
+from ..client_side.webApiBase import WEB_API  # 執行RF時使用
 
 
 config = configparser.ConfigParser()
