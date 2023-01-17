@@ -62,9 +62,9 @@
         "req_url": "/v1/file/image",
         "json" : {},
         "test_item": [
-            {"scenario":"上傳圖片","files": "","target":{},"params": {"imagePathType": "1"},"code_status": 200,"keyword": "data"},
-            {"scenario":"上傳圖片","files": "","target":{},"params": {"imagePathType": "2"},"code_status": 200,"keyword": "data"},
-            {"scenario":"上傳圖片","files": "","target":{},"params": {"imagePathType": "3"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[上傳圖片]imagePathType=1","files": "","target":{},"params": {"imagePathType": "1"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[上傳圖片]imagePathType=2","files": "","target":{},"params": {"imagePathType": "2"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[上傳圖片]imagePathType=3","files": "","target":{},"params": {"imagePathType": "3"},"code_status": 200,"keyword": "data"},
             {"scenario":"無上傳圖片","files": "null","target":{},"params": {"imagePathType": "1"},"code_status": 415,"keyword": "不支援的媒体类型"},
             {"scenario":"[imagePathType]字串","files": "","target":{},"params": {"imagePathType": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[imagePathType]null","files": "","target":{},"params": {"imagePathType": null},"code_status": 400,"keyword": "无效的请求参数"},
@@ -76,8 +76,8 @@
         "req_url": "/v1/file/video",
         "json" : {},
         "test_item": [
-            {"scenario":"上傳影片","files": "","target":{},"params": {"videoPathType": "1"},"code_status": 200,"keyword": "data"},
-            {"scenario":"上傳影片","files": "","target":{},"params": {"videoPathType": "2"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[上傳影片]videoPathType=1","files": "","target":{},"params": {"videoPathType": "1"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[上傳影片]videoPathType=2","files": "","target":{},"params": {"videoPathType": "2"},"code_status": 200,"keyword": "data"},
             {"scenario":"無上傳影片","files": "null","target":{},"params": {"videoPathType": "1"},"code_status": 415,"keyword": "不支援的媒体类型"},
             {"scenario":"[videoPathType]字串","files": "","target":{},"params": {"videoPathType": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[videoPathType]null","files": "","target":{},"params": {"videoPathType": null},"code_status": 400,"keyword": "无效的请求参数"},
