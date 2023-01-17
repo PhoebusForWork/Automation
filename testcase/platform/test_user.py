@@ -221,7 +221,6 @@ class Test_User():
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", td.get_case('edit_user_convertProxy'))
     def test_edit_user_convertProxy(test, getPltLoginToken):
-        user_id = None
         if test['json']['userId'] == 'client_id':
             user = User()
             user_id = user.get_client_user(plat_token=getPltLoginToken)
