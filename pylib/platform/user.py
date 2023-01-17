@@ -277,6 +277,13 @@ class User(PLAT_API):
         self._printresponse(response)
         return response.json()
 
+    def get_client_user(self, plat_token=None):
+        target = self.get_user_list(plat_token=plat_token, From='2022-01-01T00:00:00Z', status=0,
+                                    to='2023-01-15T00:00:00Z', page=None, size=1000)
+        client_user = jsonpath.jsonpath(
+            target, "$..records[?(@.userType==0).userId]")
+        return client_user[0]
+
 
 class UserManage(PLAT_API):
 
@@ -404,7 +411,7 @@ class UserManage(PLAT_API):
         self._printresponse(response)
         return response.json()
 
-    def clean_approval(self,  # 編輯會員聯絡資料
+    def clean_approval(self,  #
                        plat_token=None, optType=None
                        ):
         if plat_token != None:
@@ -529,3 +536,10 @@ class UserVip(PLAT_API):
                                )
         self._printresponse(response)
         return response.json()
+
+    def get_vip_id_exist(self,  # 獲取存在vip_id
+                         plat_token=None,
+                         ):
+        response = self.get_vip_list(plat_token=plat_token)
+        target = jsonpath.jsonpath(response, '$..data[*].id')
+        return target[-1]
