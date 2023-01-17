@@ -302,10 +302,10 @@
             {"scenario":"申請鎖定_[lockStatus]RECHARGE","target":{"userIds":[55],"userLockTypeList": [{"lockStatus": "RECHARGE","isLock": true}]},"code_status": 200,"keyword": 'USER_RECHARGE_LOCK'},
             {"scenario":"申請鎖定_[lockStatus]WITHDRAW","target":{"userIds":[55],"userLockTypeList": [{"lockStatus": "WITHDRAW","isLock": true}]},"code_status": 200,"keyword": 'USER_WITHDRAW_LOCK'},
             {"scenario":"申請鎖定_[lockStatus]TRANSFER","target":{"userIds":[55],"userLockTypeList": [{"lockStatus": "TRANSFER","isLock": true}]},"code_status": 200,"keyword": 'USER_TRANSFER_LOCK'},
-            {"scenario":"申請鎖定_[lockStatus]LOGIN_false","target":{"userIds":[66],"userLockTypeList": [{"lockStatus": "LOGIN","isLock": false}]},"code_status": 200,"keyword": 'USER_LOGIN_UNLOCK'},
-            {"scenario":"申請鎖定_[lockStatus]RECHARGE","target":{"userIds":[66],"userLockTypeList": [{"lockStatus": "RECHARGE","isLock": false}]},"code_status": 200,"keyword": 'USER_RECHARGE_UNLOCK'},
-            {"scenario":"申請鎖定_[lockStatus]WITHDRAW","target":{"userIds":[66],"userLockTypeList": [{"lockStatus": "WITHDRAW","isLock": false}]},"code_status": 200,"keyword": 'USER_WITHDRAW_UNLOCK'},
-            {"scenario":"申請鎖定_[lockStatus]TRANSFER","target":{"userIds":[66],"userLockTypeList": [{"lockStatus": "TRANSFER","isLock": false}]},"code_status": 200,"keyword": 'USER_TRANSFER_UNLOCK'},
+            {"scenario":"申請鎖定_[lockStatus]LOGIN_false","target":{"userIds":[67],"userLockTypeList": [{"lockStatus": "LOGIN","isLock": false}]},"code_status": 200,"keyword": 'USER_LOGIN_UNLOCK'},
+            {"scenario":"申請鎖定_[lockStatus]RECHARGE","target":{"userIds":[67],"userLockTypeList": [{"lockStatus": "RECHARGE","isLock": false}]},"code_status": 200,"keyword": 'USER_RECHARGE_UNLOCK'},
+            {"scenario":"申請鎖定_[lockStatus]WITHDRAW","target":{"userIds":[67],"userLockTypeList": [{"lockStatus": "WITHDRAW","isLock": false}]},"code_status": 200,"keyword": 'USER_WITHDRAW_UNLOCK'},
+            {"scenario":"申請鎖定_[lockStatus]TRANSFER","target":{"userIds":[67],"userLockTypeList": [{"lockStatus": "TRANSFER","isLock": false}]},"code_status": 200,"keyword": 'USER_TRANSFER_UNLOCK'},
             ]
     }
 ]
