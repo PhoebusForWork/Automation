@@ -40,21 +40,21 @@ class API_Controller:
         # print(response.content.decode('utf-8'))
         print('--------------HTTPS response  *  end ------------------\n\n')
 
-    def HttpsClient(self, reqMethod, reqUrl, json, params, token=None):
+    def HttpsClient(self, reqMethod, reqUrl, json, params, token=None, files=None):
         if token is not None:
             self.s.headers.update({"token": str(token)})
         if reqMethod == 'post':
             response = self.s.post(
-                self.host+reqUrl, json=json, params=params)
+                self.host+reqUrl, json=json, params=params, files=files)
         elif reqMethod == 'put':
             response = self.s.put(
-                self.host+reqUrl, json=json, params=params)
+                self.host+reqUrl, json=json, params=params, files=files)
         elif reqMethod == 'get':
             response = self.s.get(self.host+reqUrl,
-                                  json=json, params=params)
+                                  json=json, params=params, files=files)
         elif reqMethod == 'delete':
             response = self.s.delete(
-                self.host+reqUrl, json=json, params=params)
+                self.host+reqUrl, json=json, params=params, files=files)
         else:
             response = "沒有符合的請求模式"
         self._printresponse(response)

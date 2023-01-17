@@ -14,15 +14,18 @@ class File(PLAT_API):
 
     def upload_video(self,  # 上傳影片
                      plat_token=None,
+                     file=None,
                      videoPathType=None,
                      ):
+        self.ps.headers.update({"Content-Type": None})
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
         response = self.ps.post(platfrom_host+"/v1/file/video",
-                                json={},
+                                data={},
                                 params={
                                     "videoPathType": videoPathType,
-                                }
+                                },
+                                files=file,
                                 )
         self._printresponse(response)
         return response.json()

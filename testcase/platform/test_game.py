@@ -282,3 +282,20 @@ def test_game_rebate_config_open(test, getPltLoginToken):
 
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
+
+
+@allure.feature("返水紀錄")
+@allure.story("獲取返水紀錄")
+@allure.title("{test[scenario]}")
+@pytest.mark.parametrize("test", td.get_case('rebate_record'))
+def test_rebate_record(test, getPltLoginToken):
+
+    api = API_Controller()
+    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
+                           test['params'], token=getPltLoginToken)
+
+    assert resp.status_code == test['code_status'], resp.text
+    assert test['keyword'] in resp.text
+
+
+

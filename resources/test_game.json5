@@ -372,5 +372,35 @@
             {"scenario":"[open]False","json": {},"params": {"open":false},"code_status": 200,"keyword": "success"},
             {"scenario":"[open]字串","json": {},"params": {"open":"abc"},"code_status": 400,"keyword": "无效的请求参数"},
             ]
+    },
+    {
+        "test_case": "rebate_record",
+        "req_method": "get",
+        "req_url": "/v1/rebate/record",
+        "json": {},
+        "test_item": [
+            {"scenario":"[settlementDateStart]字串","params": {"settlementDateStart":"abc"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[settlementDateStart]正確格式","params": {"settlementDateStart":"2022-11-16T15:59:59.999Z"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[settlementDateStart]錯誤格式","params": {"settlementDateStart":"2022-11-16T15:59:59"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[settlementDateEnd]字串","params": {"settlementDateEnd":"abc"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[settlementDateEnd]正確格式","params": {"settlementDateEnd":"2022-11-16T15:59:59.999Z"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[settlementDateEnd]錯誤格式","params": {"settlementDateEnd":"2022-11-16T15:59:59"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[minRebate]字串","params": {"minRebate":"abc"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[minRebate]正確格式","params": {"minRebate": "100"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[maxRebate]字串","params": {"maxRebate": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[maxRebate]正確格式","params": {"maxRebate": "100"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[minEffectiveBet]字串","params": {"minEffectiveBet": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[minEffectiveBet]正確格式","params": {"minEffectiveBet": "50"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[maxEffectiveBet]字串","params": {"maxEffectiveBet": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[maxEffectiveBet]正確格式","params": {"maxEffectiveBet": "50"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[parentName]正確格式","params": {"parentName": "proxy1"},"code_status": 200,"keyword": "proxy1"},
+            {"scenario":"[username]正確格式","params": {"username": "clinet11"},"code_status": 200,"keyword": "clinet11"},
+            {"scenario":"[vipName]正確格式","params": {"vipName": "VIP0測試"},"code_status": 200,"keyword": "VIP0測試"},
+            {"scenario":"[gameCode]正確格式","params": {"gameCode": "AWC_LIVE_SEXY"},"code_status": 200,"keyword": "AWC_LIVE_SEXY"},
+            {"scenario":"[page]正確格式","params": {"page":"1"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[page]正確格式","params": {"page":"abc"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[size]正確格式","params": {"size": "1"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[size]正確格式","params": {"size": "abc"},"code_status": 400,"keyword": "无效的请求参数"}
+        ]
     }
 ]
