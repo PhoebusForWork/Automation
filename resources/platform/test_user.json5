@@ -291,7 +291,11 @@
         "req_method": "post",
         "req_url": "/v1/user/lockStatus",
         "params": {},
-        "json":{"userIds":[9999999],"userLockTypeList":[{"lockStatus":"LOGIN","isLock":true}],"remark":"string"                },
+        "json":{
+                "userIds": [9999999],
+                "userLockTypeList": [{"lockStatus": "LOGIN","isLock": true}],
+                "remark": "string"
+                },
         "test_item": [
             {"scenario":"申請鎖定_[userIds]不存在","target":{},"code_status": 400,"keyword": '資料不存在'},
             {"scenario":"申請鎖定_[userIds]存在","target":{"userIds":[55]},"code_status": 200,"keyword": 'USER_LOGIN_LOCK'},
@@ -455,6 +459,28 @@
             {"scenario":"編輯會員聯絡資料[birthday]正確格式","target":{"birthday":"2000-01-01T00:00:00Z"},"code_status": 200,"keyword": 'success'},
             {"scenario":"編輯會員聯絡資料[remark]超過200字","target":{"remark":"123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901"},"code_status": 400,"keyword": '无效的请求参数'},
             {"scenario":"編輯會員聯絡資料[remark]200字","target":{"remark":"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"},"code_status": 200,"keyword": 'success'},
+            ]
+    },
+    {
+        "test_case": "get_user_vip",
+        "req_method": "get",
+        "req_url": "/v1/userVip",
+        "params": {"userName":"string"},
+        "json":{},
+        "test_item": [
+            {"scenario":"查詢客戶VIP層級[userName]不存在","target":{},"code_status":400,"keyword": '資料不存在'},
+            {"scenario":"查詢客戶VIP層級[userName]存在","target":{"userName":"AutoTester"},"code_status":200,"keyword": 'AutoTester'},
+            ]
+    },
+    {
+        "test_case": "edit_user_vip",
+        "req_method": "put",
+        "params": {"vipId":1},
+        "json":{},
+        "test_item": [
+            {"scenario":"修改客戶VIP層級[userId]不存在","req_url": "/v1/userVip/99999","target":{},"code_status":400,"keyword": '資料不存在'},
+            {"scenario":"修改客戶VIP層級[vipId]不存在","req_url": "/v1/userVip/29","target":{"vipId":0},"code_status":400,"keyword": '資料不存在'},
+            {"scenario":"修改客戶VIP層級[userId]存在","req_url": "/v1/userVip/29","target":{},"code_status":200,"keyword": 'success'},
             ]
     }
 ]
