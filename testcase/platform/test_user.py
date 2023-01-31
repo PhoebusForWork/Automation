@@ -24,7 +24,7 @@ def clean(getPltLoginToken):
 #############
 
 
-class Test_User_Vip():
+class Test_User_Vip_Config():
     @staticmethod
     @allure.feature("客戶管理")
     @allure.story("VIP層級")
@@ -369,5 +369,33 @@ class Test_User_Manage():
         api = API_Controller()
         resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
                                test['params'], token=getPltLoginToken)
+        assert resp.status_code == test['code_status'], resp.text
+        assert test['keyword'] in resp.text
+
+
+class Test_User_Vip():
+    @staticmethod
+    @allure.feature("客戶管理")
+    @allure.story("客戶VIP層級")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.parametrize("test", td.get_case('get_user_vip'))
+    def test_get_user_vip(test, getPltLoginToken):
+        params_replace = td.replace_json(test['params'], test['target'])
+        api = API_Controller()
+        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
+                               params_replace, token=getPltLoginToken)
+        assert resp.status_code == test['code_status'], resp.text
+        assert test['keyword'] in resp.text
+
+    @staticmethod
+    @allure.feature("客戶管理")
+    @allure.story("客戶VIP層級")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.parametrize("test", td.get_case('edit_user_vip'))
+    def test_edit_user_vip(test, getPltLoginToken, clean):
+        params_replace = td.replace_json(test['params'], test['target'])
+        api = API_Controller()
+        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
+                               params_replace, token=getPltLoginToken)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
