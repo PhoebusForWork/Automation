@@ -23,15 +23,8 @@ testData = td.read_json5('test_validation.json5', file_side='cs')
 def test_validation_voice(test, getCsLoginToken):
 
     json_replace = td.replace_json(test['json'], test['target'])
-    if test['scenario'] == "[requestType重複]1:註冊" and json_replace['requestType'] == '1':
-        json_replace['device'] = json_replace['device']
-    elif test['scenario'] == "[requestType]null":
-        json_replace['device'] = json_replace['device']
-    elif test['scenario'] == "[device]email":
-        json_replace['device'] = json_replace['device']
-    else:
+    if json_replace['device'] == "空":
         json_replace['device'] = str(random.randrange(99999999999))
-    print(json_replace)
     api = API_Controller(platfrom='cs')
     resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
                            test['params'], token=getCsLoginToken)
@@ -46,15 +39,8 @@ def test_validation_voice(test, getCsLoginToken):
 def test_validation_sms(test, getCsLoginToken):
 
     json_replace = td.replace_json(test['json'], test['target'])
-    if test['scenario'] == "[requestType重複]1:註冊" and json_replace['requestType'] == '1':
-        json_replace['device'] = json_replace['device']
-    elif test['scenario'] == "[requestType]null":
-        json_replace['device'] = json_replace['device']
-    elif test['scenario'] == "[device]email":
-        json_replace['device'] = json_replace['device']
-    else:
+    if json_replace['device'] == "空":
         json_replace['device'] = str(random.randrange(99999999999))
-    print(json_replace)
     api = API_Controller(platfrom='cs')
     resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
                            test['params'], token=getCsLoginToken)
@@ -69,15 +55,8 @@ def test_validation_sms(test, getCsLoginToken):
 def test_validation_email(test, getCsLoginToken):
 
     json_replace = td.replace_json(test['json'], test['target'])
-    if test['scenario'] == "[requestType重複]1:註冊" and json_replace['requestType'] == '1':
-        json_replace['device'] = json_replace['device']
-    elif test['scenario'] == "[requestType]null":
-        json_replace['device'] = json_replace['device']
-    elif test['scenario'] == "[device]number":
-        json_replace['device'] = json_replace['device']
-    else:
+    if json_replace['device'] == '@gmail.com':
         json_replace['device'] = str(random.randrange(99999))+json_replace['device']
-    print(json_replace)
     api = API_Controller(platfrom='cs')
     resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
                            test['params'], token=getCsLoginToken)
