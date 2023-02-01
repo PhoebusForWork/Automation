@@ -3,6 +3,7 @@ import allure
 from utils.data_utils import JsonReader
 from utils.api_utils import API_Controller
 from pylib.client_side.user import Address
+from pylib.client_side.webApiBase import WEB_API
 
 td = JsonReader()
 testData = td.read_json5('test_address.json5', file_side='cs')
@@ -120,5 +121,38 @@ class Test_address_other():
         api = API_Controller(platfrom='cs')
         resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
                                test['params'], token=getCsLoginToken)
+        assert resp.status_code == test['code_status'], resp.text
+        assert test['keyword'] in resp.text
+
+
+class Test_user_detail():
+    @staticmethod
+    @allure.feature("客戶明細資料")
+    @allure.story("獲取用戶明細資料")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.parametrize("test", td.get_case('get_user_detail'))
+    def test_get_user_detail(test, getCsLoginToken):
+        api = WEB_API()
+        resp = api.login(username="charlie01")
+        admin_token = resp.json()['data']['token']
+        api = API_Controller(platfrom='cs')
+        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'], test['params'], token=admin_token)
+
+        assert resp.status_code == test['code_status'], resp.text
+        assert test['keyword'] in resp.text
+
+    @staticmethod
+    @allure.feature("客戶明細資料")
+    @allure.story("修改用戶明細資料")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.parametrize("test", td.get_case('put_user_detail'))
+    def test_put_user_detail(test, getCsLoginToken):
+        api = WEB_API()
+        resp = api.login(username="charlie01")
+        admin_token = resp.json()['data']['token']
+        json_replace = td.replace_json(test['json'], test['target'])
+        api = API_Controller(platfrom='cs')
+        resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace, test['params'], token=admin_token)
+
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text

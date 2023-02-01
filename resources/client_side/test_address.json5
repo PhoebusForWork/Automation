@@ -115,5 +115,23 @@
             {"req_url": "/v1/user/address/province/32/city","scenario":"港澳","json": {},"params": {},"code_status": 200,"keyword": "data"},
             {"req_url": "/v1/user/address/province/33/city","scenario":"不存在","json": {},"params": {},"code_status": 200,"keyword": "[]"},
             ]
+    },
+    {
+        "test_case": "get_user_detail",
+        "req_method": "get",
+        "req_url": "/v1/user/detail",
+        "test_item": [
+            {"scenario":"獲取明細資料","json": {},"params": {},"code_status": 200,"keyword": "data"},
+            ]
+    },
+    {
+        "test_case": "put_user_detail",
+        "req_method": "put",
+        "req_url": "/v1/user/detail",
+        "test_item": [
+            {"scenario":"修改明細資料","json": {"avatar": "string", "nickname": "六四直男","birthday": "1999-06-04T02:24:30.308Z", "sex": 0},"target":{}, "params": {},"code_status": 400,"keyword": "生日填写后不可修改"},
+            {"scenario":"修改明細資料","json": {"avatar": "string", "nickname": "六四直男", "sex": 0},"target":{}, "params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"修改明細資料","json": {"sex": 2},"target":{}, "params": {},"code_status": 400,"keyword": "无效的请求参数"}
+        ]
     }
 ]
