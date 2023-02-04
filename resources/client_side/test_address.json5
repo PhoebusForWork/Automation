@@ -133,5 +133,113 @@
             {"scenario":"修改明細資料","json": {"avatar": "string", "nickname": "六四直男", "sex": 0},"target":{}, "params": {},"code_status": 200,"keyword": "data"},
             {"scenario":"修改明細資料","json": {"sex": 2},"target":{}, "params": {},"code_status": 400,"keyword": "无效的请求参数"}
         ]
+    },
+    {
+        "test_case": "user_register",
+        "req_method": "post",
+        "req_url": "/v1/user/register",
+        "json": {
+            "mobile": "",
+            "code": "",
+            "countryCode": "86",
+            "username": "",
+            "password": "abc123456",
+            "confirmPassword": "abc123456",
+            "proxyCode": "",
+            "deviceId": ""
+                },
+        "test_item": [
+            {"scenario":"一般註冊","target":{"mobile": "", "code": "", "username": "auto"}, "params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"手機號碼格式錯誤","target":{"mobile": "12345", "code": "", "username": "auto"}, "params": {},"code_status": 400,"keyword": "手机号码格式错误"},
+            {"scenario":"驗證碼錯誤","target":{"mobile": "12345", "code": "123345", "username": "auto"}, "params": {},"code_status": 400,"keyword": "訊息驗證碼錯誤"},
+            {"scenario":"使用者名稱已經註冊","target":{"mobile": "", "code": "", "username": "auto1675320599"}, "params": {},"code_status": 400,"keyword": "您输入的用户名和密码不匹配，请检查后重试"}
+        ]
+    },
+    {
+        "test_case": "user_logout",
+        "req_method": "post",
+        "req_url": "/v1/user/logout",
+        "json": {},
+        "test_item": [
+            {"scenario":"帳號登出","target":{}, "params": {},"code_status": 200,"keyword": "success"},
+        ]
+    },
+    {
+        "test_case": "user_login",
+        "req_method": "post",
+        "req_url": "/v1/user/login",
+        "json": {
+            "username": "",
+            "pwd": "abc123456",
+            "captchaValidation":
+                {"channelName": "string", "imgToken": "string"},
+            "code": ""
+                },
+        "test_item": [
+            {"scenario":"帳號登入","target":{"username": "auto1675389062"}, "params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"帳號錯誤","target":{"username": "auto167538906"}, "params": {},"code_status": 400,"keyword": "您输入的用户名和密码不匹配，请检查后重试"},
+            {"scenario":"密碼錯誤","target":{"username": "auto1675389062", "pwd": "abc12345"}, "params": {},"code_status": 400,"keyword": "您输入的用户名和密码不匹配，请检查后重试"}
+        ]
+    },
+    {
+        "test_case": "user_loginByMobile",
+        "req_method": "post",
+        "req_url": "/v1/user/loginByMobile",
+        "json": {
+                  "telephone": "13125561886",
+                  "code": "",
+                  "captchaValidation": {
+                    "channelName": "string",
+                    "imgToken": "string"
+                  }
+                },
+        "test_item": [
+            {"scenario":"手機快捷登入","target":{"telephone":"","code": ""}, "params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[code]驗證碼錯誤","target":{"telephone":"13191857262","code": "123456"}, "params": {},"code_status": 403,"keyword": "您输入的验证码有误，请检查后重试"},
+            {"scenario":"[code]未輸入驗證碼","target":{"telephone":"13191857262","code": ""}, "params": {},"code_status": 400,"keyword": "无效的请求参数"},
+        ]
+    },
+    {
+        "test_case": "user_pwd",
+        "req_method": "put",
+        "req_url": "/v1/user/pwd",
+        "json": {
+                  "username": "charlie01",
+                  "telephone": "13191857262",
+                  "newPwd": "",
+                  "code": ""
+                },
+        "test_item": [
+            {"scenario":"正確重設密碼","target":{"newPwd": "abc12345", "code": ""}, "params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"密碼重複","target":{"newPwd": "abc12345", "code": ""}, "params": {},"code_status": 400,"keyword": "不可使用此新密碼"},
+            {"scenario":"用戶名錯誤","target":{"username": "charlie0", "newPwd": "abc12345", "code": ""}, "params": {},"code_status": 400,"keyword": "该用户不存在"},
+            {"scenario":"驗證碼錯誤","target":{"username": "charlie01", "newPwd": "abc12345", "code": ""}, "params": {},"code_status": 400,"keyword": "訊息驗證碼錯誤"}
+
+        ]
+    },
+    {
+        "test_case": "user_sendCode",
+        "req_method": "post",
+        "req_url": "/v1/user/sendCode",
+        "json": {
+                  "username": "charlie01",
+                  "telephone": "13191857262",
+                  "captchaValidation": {
+                    "channelName": "string",
+                    "imgToken": "string"
+                  }
+                },
+        "test_item": [
+            {"scenario":"發送驗證碼","target":{}, "params": {},"code_status": 200,"keyword": "data"},
+        ]
+    },
+    {
+        "test_case": "user_heartbeat",
+        "req_method": "post",
+        "req_url": "/v1/user/heartbeat",
+        "json": {},
+        "test_item": [
+            {"scenario":"發送驗證碼","target":{}, "params": {},"code_status": 200,"keyword": "data"},
+        ]
     }
 ]
