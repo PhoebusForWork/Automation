@@ -204,16 +204,16 @@
         "req_method": "put",
         "req_url": "/v1/user/pwd",
         "json": {
-                  "username": "charlie01",
-                  "telephone": "13191857262",
+                  "username": "CCuserpwd01",
+                  "telephone": "18887827895",
                   "newPwd": "",
                   "code": ""
                 },
         "test_item": [
-            {"scenario":"用戶名錯誤","target":{"username": "charlie0", "newPwd": "abc12345", "code": ""}, "params": {},"code_status": 400,"keyword": "该用户不存在"},
-            {"scenario":"驗證碼錯誤","target":{"username": "charlie01", "newPwd": "abc12345", "code": ""}, "params": {},"code_status": 400,"keyword": "訊息驗證碼錯誤"},
             {"scenario":"正確重設密碼","target":{"newPwd": "abc12345", "code": ""}, "params": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"密碼重複","target":{"newPwd": "abc12345", "code": ""}, "params": {},"code_status": 400,"keyword": "不可使用此新密碼"}
+            {"scenario":"用戶名錯誤","target":{"username": "CCuserpwd0", "newPwd": "abc12345", "code": ""}, "params": {},"code_status": 400,"keyword": "该用户不存在"},
+            {"scenario":"驗證碼錯誤","target":{"username": "CCuserpwd01", "newPwd": "abc12345", "code": ""}, "params": {},"code_status": 400,"keyword": "訊息驗證碼錯誤"},
+            {"scenario":"密碼重複","target":{"newPwd": "abc123456", "code": ""}, "params": {},"code_status": 400,"keyword": "不可使用此新密碼"}
         ]
     },
     {
@@ -255,13 +255,13 @@
         "req_method": "put",
         "req_url": "/v1/user/security/email/binding",
         "json": {
-                  "email": "auto1675302225@gmail.com",
+                  "email": "CCemail01@gmail.com",
                   "code": ""
                 },
         "test_item": [
-            {"scenario":"正常綁定","target":{"code": ""}, "params": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"重複綁定","target":{"code": ""}, "params": {},"code_status": 400,"keyword": "已有綁定的郵箱地址"},
-            {"scenario":"重複綁定","target":{"email":"auto1675302225","code": ""}, "params": {},"code_status": 400,"keyword": "訊息驗證碼錯誤"}
+            {"scenario":"正常綁定","target":{"code": "值"}, "params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"重複綁定","target":{"code": "值"}, "params": {},"code_status": 400,"keyword": "已有綁定的郵箱地址"},
+            {"scenario":"重複綁定","target":{"email":"auto1675302225","code": "123456"}, "params": {},"code_status": 400,"keyword": "訊息驗證碼錯誤"}
         ]
     },
     {
@@ -273,7 +273,7 @@
                 },
         "test_item": [
             {"scenario":"正常解除綁定","target":{"code": "值"}, "params": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"尚未綁定","target":{"code": "值"}, "params": {},"code_status": 400,"keyword": "尚未綁定郵箱地址"},
+            {"scenario":"尚未綁定","target":{"code": "123456"}, "params": {},"code_status": 400,"keyword": "尚未綁定郵箱地址"},
             {"scenario":"[code]null","target":{"code": ""}, "params": {},"code_status": 400,"keyword": "无效的请求参数"}
         ]
     },

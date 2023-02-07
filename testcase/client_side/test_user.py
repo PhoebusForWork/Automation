@@ -24,14 +24,13 @@ def clear_address(getCsLoginToken):
         web_token=getCsLoginToken)
 
 
-@pytest.fixture(scope="class")
+@pytest.fixture(scope="function")
 def re_password_default():
-
     api = validation()
-    code = api.valid_sms(device=13191857262, requestType=3)
+    code = api.valid_sms(device=18887827895, requestType=3)
     code = code['data']
     reapi = WEB_API()
-    reapi.reset_pwd(username="charlie01", telephone=13191857262, newPwd="abc123456", code=code)
+    reapi.reset_pwd(username="CCuserpwd01", telephone=18887827895, newPwd="abc123456", code=code)
 
 
 @pytest.fixture(scope="class")
@@ -270,16 +269,16 @@ class Test_user_operation():
     @allure.story("用戶重設密碼")
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", td.get_case('user_pwd'))
-    def test_user_pwd(test, getCsLoginToken, re_password_default):
+    def test_user_pwd(test, re_password_default):
         json_replace = td.replace_json(test['json'], test['target'])
         if test['scenario'] == '驗證碼錯誤':
             json_replace['code'] = str(123456)
         else:
             api = validation()
-            code = api.valid_sms(device=13191857262, requestType=3)
+            code = api.valid_sms(device=18887827895, requestType=3)
             json_replace['code'] = code['data']
         api = API_Controller(platfrom='cs')
-        resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace, test['params'], token=getCsLoginToken)
+        resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace, test['params'])
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -326,13 +325,17 @@ class Test_user_security_center():
     @allure.story("綁定郵箱地址")
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", td.get_case('user_security_email_binding'))
-    def test_user_security_email_binding(test, getCsLoginToken):
-        email_api = validation()
-        get_email_code = email_api.valid_email(device='auto1675302225@gmail.com', requestType=8)
+    def test_user_security_email_binding(test):
+        api = WEB_API()
+        resp = api.login(username='CCemail01', password="abc123456")
+        admin_token = resp.json()['data']['token']
         json_replace = td.replace_json(test['json'], test['target'])
-        json_replace['code'] = get_email_code["data"]
+        if json_replace['code'] == "值":
+            email_api = validation()
+            get_email_code = email_api.valid_email(device='CCemail01@gmail.com', requestType=8)
+            json_replace['code'] = get_email_code["data"]
         api = API_Controller(platfrom='cs')
-        resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace, test['params'], token=getCsLoginToken)
+        resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace, test['params'], token=admin_token)
 
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
@@ -342,14 +345,18 @@ class Test_user_security_center():
     @allure.story("綁定郵箱地址")
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", td.get_case('user_security_email_unbind'))
-    def test_user_security_email_unbind(test, getCsLoginToken):
-        email_api = validation()
-        get_email_code = email_api.valid_email(device='auto1675302225@gmail.com', requestType=7)
+    def test_user_security_email_unbind(test):
+
+        api = WEB_API()
+        resp = api.login(username='CCemail01', password="abc123456")
+        admin_token = resp.json()['data']['token']
         json_replace = td.replace_json(test['json'], test['target'])
         if json_replace['code'] == "值":
+            email_api = validation()
+            get_email_code = email_api.valid_email(device='CCemail01@gmail.com', requestType=7)
             json_replace['code'] = get_email_code["data"]
         api = API_Controller(platfrom='cs')
-        resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace, test['params'], token=getCsLoginToken)
+        resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace, test['params'], token=admin_token)
 
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
