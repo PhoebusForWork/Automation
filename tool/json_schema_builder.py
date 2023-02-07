@@ -1,9 +1,10 @@
 from genson import SchemaBuilder
 
+# 餵入response body
+json_data = {"data": [{"id": 1, "name": "北京"}]}
 
-if __name__ == "__main__":
-    # 產生json Schema
-    asd = SchemaBuilder()
-    asd.add_object({"data": [{"id": 1, "name": "北京"}]})
-    asd.to_schema()
-    print(asd.to_json(indent=4))
+# 產生json Schema
+make = SchemaBuilder()
+make.add_object(json_data)
+make.to_schema()
+print(make.to_json(indent=4))
