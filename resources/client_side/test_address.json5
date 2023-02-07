@@ -210,20 +210,19 @@
                   "code": ""
                 },
         "test_item": [
-            {"scenario":"正確重設密碼","target":{"newPwd": "abc12345", "code": ""}, "params": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"密碼重複","target":{"newPwd": "abc12345", "code": ""}, "params": {},"code_status": 400,"keyword": "不可使用此新密碼"},
             {"scenario":"用戶名錯誤","target":{"username": "charlie0", "newPwd": "abc12345", "code": ""}, "params": {},"code_status": 400,"keyword": "该用户不存在"},
-            {"scenario":"驗證碼錯誤","target":{"username": "charlie01", "newPwd": "abc12345", "code": ""}, "params": {},"code_status": 400,"keyword": "訊息驗證碼錯誤"}
-
+            {"scenario":"驗證碼錯誤","target":{"username": "charlie01", "newPwd": "abc12345", "code": ""}, "params": {},"code_status": 400,"keyword": "訊息驗證碼錯誤"},
+            {"scenario":"正確重設密碼","target":{"newPwd": "abc12345", "code": ""}, "params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"密碼重複","target":{"newPwd": "abc12345", "code": ""}, "params": {},"code_status": 400,"keyword": "不可使用此新密碼"}
         ]
     },
     {
-        "test_case": "user_sendCode",
+        "test_case": "user_send_code",
         "req_method": "post",
         "req_url": "/v1/user/sendCode",
         "json": {
-                  "username": "charlie01",
-                  "telephone": "13191857262",
+                  "username": "CCsendCode01",
+                  "telephone": "15161289115",
                   "captchaValidation": {
                     "channelName": "string",
                     "imgToken": "string"
@@ -240,6 +239,73 @@
         "json": {},
         "test_item": [
             {"scenario":"發送驗證碼","target":{}, "params": {},"code_status": 200,"keyword": "data"},
+        ]
+    },
+    {
+        "test_case": "user_security_info",
+        "req_method": "get",
+        "req_url": "/v1/user/security/info",
+        "json": {},
+        "test_item": [
+            {"scenario":"正常獲取信息","target":{}, "params": {},"code_status": 200,"keyword": "data"},
+        ]
+    },
+    {
+        "test_case": "user_security_email_binding",
+        "req_method": "put",
+        "req_url": "/v1/user/security/email/binding",
+        "json": {
+                  "email": "auto1675302225@gmail.com",
+                  "code": ""
+                },
+        "test_item": [
+            {"scenario":"正常綁定","target":{"code": ""}, "params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"重複綁定","target":{"code": ""}, "params": {},"code_status": 400,"keyword": "已有綁定的郵箱地址"},
+            {"scenario":"重複綁定","target":{"email":"auto1675302225","code": ""}, "params": {},"code_status": 400,"keyword": "訊息驗證碼錯誤"}
+        ]
+    },
+    {
+        "test_case": "user_security_email_unbind",
+        "req_method": "put",
+        "req_url": "/v1/user/security/email/unbind",
+        "json": {
+                  "code": ""
+                },
+        "test_item": [
+            {"scenario":"正常解除綁定","target":{"code": "值"}, "params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"尚未綁定","target":{"code": "值"}, "params": {},"code_status": 400,"keyword": "尚未綁定郵箱地址"},
+            {"scenario":"[code]null","target":{"code": ""}, "params": {},"code_status": 400,"keyword": "无效的请求参数"}
+        ]
+    },
+    {
+        "test_case": "user_security_mobile",
+        "req_method": "put",
+        "req_url": "/v1/user/security/mobile",
+        "json": {
+                  "newMobile": "13947389803",
+                  "nmCode": "",
+                  "omCode": ""
+                },
+        "test_item": [
+            {"scenario":"正常更換手機號碼","target":{"nmCode": "", "omCode": ""}, "params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"新舊號碼一樣","target":{"nmCode": "", "omCode": ""}, "params": {},"code_status": 400,"keyword": "新旧号码不可一样"}
+        ]
+    },
+    {
+        "test_case": "user_security_pwd",
+        "req_method": "put",
+        "req_url": "/v1/user/security/pwd",
+        "json": {
+                  "newPwd": "",
+                  "oldPwd": ""
+                },
+        "test_item": [
+            {"scenario":"[oldPwd]密碼錯誤","target":{"newPwd": "abc123456f", "oldPwd": "abc12345abc123456"}, "params": {},"code_status": 400,"keyword": "您输入的密码錯誤，请检查后重试"},
+            {"scenario":"[oldPwd]null","target":{"newPwd": "abc123456f", "oldPwd": null}, "params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[oldPwd]超過18碼","target":{"newPwd": "abc123456f", "oldPwd": "abc123456abc123456a"}, "params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[newPwd]null","target":{"newPwd": null, "oldPwd": "abc123456"}, "params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[newPwd]超過18碼","target":{"newPwd": "abc123456abc123456a", "oldPwd": "abc123456"}, "params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"正常修改密碼","target":{"newPwd": "abc12345", "oldPwd": "abc123456"}, "params": {},"code_status": 200,"keyword": "success"}
         ]
     }
 ]
