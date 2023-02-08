@@ -182,7 +182,7 @@
         ]
     },
     {
-        "test_case": "user_loginByMobile",
+        "test_case": "user_login_by_mobile",
         "req_method": "post",
         "req_url": "/v1/user/loginByMobile",
         "json": {
@@ -194,7 +194,7 @@
                   }
                 },
         "test_item": [
-            {"scenario":"手機快捷登入","target":{"telephone":"","code": ""}, "params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"手機快捷登入","target":{"telephone":"13176543627","code": ""}, "params": {},"code_status": 200,"keyword": "data"},
             {"scenario":"[code]驗證碼錯誤","target":{"telephone":"13191857262","code": "123456"}, "params": {},"code_status": 403,"keyword": "您输入的验证码有误，请检查后重试"},
             {"scenario":"[code]未輸入驗證碼","target":{"telephone":"13191857262","code": ""}, "params": {},"code_status": 400,"keyword": "无效的请求参数"},
         ]
