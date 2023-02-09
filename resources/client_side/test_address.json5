@@ -136,7 +136,7 @@
     },
     {
         "test_case": "user_register",
-        "req_method": "post",
+   "req_method": "post",
         "req_url": "/v1/user/register",
         "json": {
             "mobile": "",
@@ -283,12 +283,12 @@
         "req_url": "/v1/user/security/mobile",
         "json": {
                   "newMobile": "13947389803",
-                  "nmCode": "",
-                  "omCode": ""
+                  "nmCode": "123456",
+                  "omCode": "654321"
                 },
         "test_item": [
             {"scenario":"正常更換手機號碼","target":{"nmCode": "", "omCode": ""}, "params": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"新舊號碼一樣","target":{"nmCode": "", "omCode": ""}, "params": {},"code_status": 400,"keyword": "新旧号码不可一样"}
+            {"scenario":"新舊號碼一樣","target":{}, "params": {},"code_status": 400,"keyword": "新旧号码不可一样"}
         ]
     },
     {

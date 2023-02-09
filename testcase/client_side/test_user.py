@@ -7,6 +7,7 @@ from utils.api_utils import API_Controller
 from pylib.client_side.user import Address
 from pylib.client_side.validation import validation
 from pylib.client_side.user import Security
+from utils.generate_utils import Make
 
 td = JsonReader()
 testData = td.read_json5('test_address.json5', file_side='cs')
@@ -26,8 +27,7 @@ def clear_address(getCsLoginToken):
 @pytest.fixture(scope="function")
 def re_password_default():
     validation_api = validation()
-    code = validation_api.valid_sms(device=18887827895, requestType=3)
-    code = code['data']
+    code = validation_api.valid_sms(device=18887827895, requestType=3)['data']
     validation_api.reset_pwd(username="CCuserpwd01", telephone=18887827895, newPwd="abc123456", code=code)
 
 
@@ -35,11 +35,10 @@ def re_password_default():
 def re_mobile_default():
 
     sms_api = validation()
-    resp = sms_api.login(username='changephone01')
-    admin_token = resp.json()['data']['token']
+    resp_token = sms_api.login(username='changephone01').json()['data']['token']
     get_nm_code = sms_api.valid_sms(device='13847389803', requestType=6)
     get_om_code = sms_api.valid_sms(device='13947389803', requestType=5)
-    edit_api = Security(admin_token)
+    edit_api = Security(resp_token)
     edit_api.editMobile(newMobile=13847389803, nmCode=get_nm_code['data'], omCode=get_om_code['data'])
 
 @pytest.fixture(scope="class")
@@ -195,15 +194,17 @@ class Test_user_operation():
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", td.get_case('user_register'))
     def test_user_register(test):
-        list_value = [130, 131, 132, 133, 134, 135, 136, 137, 138, 139]
-        random_mobile = str(random.choice(list_value))+str(random.randrange(11111111, 99999999))
+        # list_value = [130, 131, 132, 133, 134, 135, 136, 137, 138, 139]
+        # random_mobile = str(random.choice(list_value))+str(random.randrange(11111111, 99999999))
+        make_mobile = Make()
+        register_mobile = make_mobile.mobile()
         now = time.time()
         api = validation()
-        resp = api.valid_sms(device=random_mobile, requestType=1)
+        resp = api.valid_sms(device=register_mobile, requestType=1)
         json_replace = td.replace_json(test['json'], test['target'])
 
         if test['scenario'] == "一般註冊":
-            json_replace['mobile'] = random_mobile
+            json_replace['mobile'] = register_mobile
             json_replace['username'] = json_replace['username'] + str(int(now))
             json_replace['code'] = resp['data']
         if test['scenario'] == "手機號碼格式錯誤":
@@ -211,7 +212,7 @@ class Test_user_operation():
             json_replace['code'] = code['data']
             json_replace['username'] = json_replace['username'] + str(int(now))
         if test['scenario'] == "使用者名稱已經註冊":
-            json_replace['mobile'] = random_mobile
+            json_replace['mobile'] = register_mobile
             json_replace['code'] = resp['data']
         api = API_Controller(platfrom='cs')
         resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace, test['params'])
@@ -225,8 +226,11 @@ class Test_user_operation():
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", td.get_case('user_logout'))
     def test_user_logout(test, getCsLoginToken):
+        validation_api = validation()
+        resp = validation_api.login(username='CCheartbeat01')
+        admin_token = resp.json()['data']['token']
         api = API_Controller(platfrom='cs')
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'], test['params'], token=getCsLoginToken)
+        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'], test['params'], token=admin_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -251,7 +255,7 @@ class Test_user_operation():
         json_replace = td.replace_json(test['json'], test['target'])
         if test["scenario"] == "手機快捷登入":
             api = validation()
-            code = api.valid_sms(device=13176543627, requestType=2)
+            code = api.valid_sms(device=json_replace['telephone'], requestType=2)
             json_replace["code"] = code['data']
         api = API_Controller(platfrom='cs')
         resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace, test['params'])
@@ -266,10 +270,10 @@ class Test_user_operation():
     def test_user_pwd(test, re_password_default):
         json_replace = td.replace_json(test['json'], test['target'])
         if test['scenario'] == '驗證碼錯誤':
-            json_replace['code'] = 123456
+            json_replace['code'] = '123456'
         else:
             validation_api = validation()
-            code = validation_api.valid_sms(device=18887827895, requestType=3)
+            code = validation_api.valid_sms(device=json_replace['telephone'], requestType=3)
             json_replace['code'] = code['data']
         api = API_Controller(platfrom='cs')
         resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace, test['params'])
@@ -292,13 +296,10 @@ class Test_user_operation():
     @allure.story("用戶心跳")
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", td.get_case('user_heartbeat'))
-    def test_user_heartbeat(test):
-        validation_api = validation()
-        resp = validation_api.login(username='CCheartbeat01')
-        admin_token = resp.json()['data']['token']
+    def test_user_heartbeat(test, getCsLoginToken):
         json_replace = td.replace_json(test['json'], test['target'])
         api = API_Controller(platfrom='cs')
-        resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace, test['params'], token=admin_token)
+        resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace, test['params'], token=getCsLoginToken)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -309,13 +310,10 @@ class Test_user_security_center():
     @allure.story("获取用户安全中心信息")
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", td.get_case('user_security_info'))
-    def test_user_security_info(test):
-        validation_api = validation()
-        resp = validation_api.login(username='CCheartbeat01')
-        admin_token = resp.json()['data']['token']
+    def test_user_security_info(test, getCsLoginToken):
         json_replace = td.replace_json(test['json'], test['target'])
         api = API_Controller(platfrom='cs')
-        resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace, test['params'], token=admin_token)
+        resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace, test['params'], token=getCsLoginToken)
 
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
@@ -365,16 +363,15 @@ class Test_user_security_center():
     @pytest.mark.parametrize("test", td.get_case('user_security_mobile'))
     def test_user_security_mobile(test, re_mobile_default):
         validation_api = validation()
-        resp = validation_api.login(username='changephone01')
-        admin_token = resp.json()['data']['token']
-
-        get_nm_code = validation_api.valid_sms(device='13947389803', requestType=6)
-        get_om_code = validation_api.valid_sms(device='13847389803', requestType=5)
         json_replace = td.replace_json(test['json'], test['target'])
-        json_replace['nmCode'] = get_nm_code["data"]
-        json_replace['omCode'] = get_om_code["data"]
+        resp_token = validation_api.login(username='changephone01').json()['data']['token']
+        if test['scenario'] == '正常更換手機號碼':
+            get_nm_code = validation_api.valid_sms(device=json_replace['newMobile'], requestType=6)
+            get_om_code = validation_api.valid_sms(device='13847389803', requestType=5)
+            json_replace['nmCode'] = get_nm_code["data"]
+            json_replace['omCode'] = get_om_code["data"]
         api = API_Controller(platfrom='cs')
-        resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace, test['params'], token=admin_token)
+        resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace, test['params'], token=resp_token)
 
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
