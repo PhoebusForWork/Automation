@@ -11,7 +11,7 @@ web_host = env.WEB_HOST
 
 class WEB_API:
 
-    def __init__(self):
+    def __init__(self, token=None):
 
         self.timestemp = str(int(datetime.datetime.now().timestamp()))
         self.ws = requests.Session()
@@ -27,6 +27,8 @@ class WEB_API:
             "accept": "*/*",
             "Content-Type": "application/json"
         }
+        if token:
+            self.ws.headers.update({"token": token})
 
     def _printresponse(self, response):  # 印出回傳
         print('\n\n--------------HTTPS response  *  begin ------------------')
