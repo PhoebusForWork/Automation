@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 import psycopg2
-import configparser
 from pymongo import MongoClient
+from utils.data_utils import EnvReader
 
-config = configparser.ConfigParser()
-config.read('config/config.ini')
-plt_host = config['postgres_connection']['plt_host']
-cs_host = config['postgres_connection']['cs_host']
-plt_port = config['postgres_connection']['plt_port']
-cs_port = config['postgres_connection']['cs_port']
-plt_password = config['postgres_connection']['plt_password']
-cs_password = config['postgres_connection']['cs_password']
+
+env = EnvReader()
+plt_host = env.POSTGRES_PLT_HOST
+cs_host = env.POSTGRES_CS_HOST
+plt_port = env.POSTGRES_PLT_PORT
+cs_port = env.POSTGRES_CS_PORT
+plt_password = env.POSTGRES_PLT_PASSWORD
+cs_password = env.POSTGRES_CS_PASSWORD
 
 
 class Postgresql:
@@ -63,4 +63,5 @@ if __name__ == '__main__':
     dbHandle = Postgresql(database='cs_user', platform="cs")
     data = dbHandle.select_sql(
         "select * from cs_user.vs_user where id = 28;")
+    print(data)
     pass

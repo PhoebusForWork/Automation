@@ -2,12 +2,11 @@
 import requests
 import json
 import datetime
-import configparser
+from utils.data_utils import EnvReader
 
-config = configparser.ConfigParser()
-config.read('config/config.ini')  # 在rf_api_test層執行時使用
-web_host = config['host']['web_host']
-platfrom_host = config['host']['platform_host']
+
+env = EnvReader()
+web_host = env.WEB_HOST
 
 
 class WEB_API:

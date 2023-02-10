@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
-from ..platform.platApiBase import PLAT_API  # 執行RF時使用
-from ..platform.proxy import Proxy
-import configparser
+from ..platform.platApiBase import PLAT_API
+from utils.data_utils import EnvReader
 import jsonpath
 
-config = configparser.ConfigParser()
-config.read('config/config.ini')  # 在rf_api_test層執行時使用
-web_host = config['host']['web_host']
-platfrom_host = config['host']['platform_host']
+env = EnvReader()
+platform_host = env.PLATFORM_HOST
 
 
 class User(PLAT_API):
@@ -23,7 +20,7 @@ class User(PLAT_API):
                       ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/user",
+        response = self.ps.get(platform_host+"/v1/user",
                                json={},
                                params={
                                    "from": From, "to": to,
@@ -42,7 +39,7 @@ class User(PLAT_API):
                     ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/user/params",
+        response = self.ps.get(platform_host+"/v1/user/params",
                                json={},
                                params={}
                                )
@@ -55,7 +52,7 @@ class User(PLAT_API):
                       ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/user/{}".format(userId),
+        response = self.ps.get(platform_host+"/v1/user/{}".format(userId),
                                json={},
                                params={}
                                )
@@ -68,7 +65,7 @@ class User(PLAT_API):
                         ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/user/{}/account".format(userId),
+        response = self.ps.get(platform_host+"/v1/user/{}/account".format(userId),
                                json={},
                                params={}
                                )
@@ -81,7 +78,7 @@ class User(PLAT_API):
                     ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/user/{}/remark".format(userId),
+        response = self.ps.put(platform_host+"/v1/user/{}/remark".format(userId),
                                json={
             "remark": remark,
         },
@@ -96,7 +93,7 @@ class User(PLAT_API):
                          ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/user/{}/reallyName".format(userId),
+        response = self.ps.put(platform_host+"/v1/user/{}/reallyName".format(userId),
                                json={
             "reallyName": reallyName,
         },
@@ -111,7 +108,7 @@ class User(PLAT_API):
                        ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/user/{}/isWhiteList".format(userId),
+        response = self.ps.put(platform_host+"/v1/user/{}/isWhiteList".format(userId),
                                json={},
                                params={
             "isWhiteList": isWhiteList,
@@ -126,7 +123,7 @@ class User(PLAT_API):
                            ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/user/convertProxy",
+        response = self.ps.put(platform_host+"/v1/user/convertProxy",
                                json={
                                    "userId": userId,
                                },
@@ -141,7 +138,7 @@ class User(PLAT_API):
                           ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platfrom_host+"/v1/user/username/validate",
+        response = self.ps.post(platform_host+"/v1/user/username/validate",
                                 json={
                                     "usernames": usernames
                                 },
@@ -157,7 +154,7 @@ class User(PLAT_API):
                          ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platfrom_host+"/v1/user/lockStatus",
+        response = self.ps.post(platform_host+"/v1/user/lockStatus",
                                 json={
                                     "userIds": userIds,
                                     "userLockTypeList": [
@@ -179,7 +176,7 @@ class User(PLAT_API):
                       ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/userVip/{}".format(userId),
+        response = self.ps.put(platform_host+"/v1/userVip/{}".format(userId),
                                json={},
                                params={
             "userId": userId,
@@ -195,7 +192,7 @@ class User(PLAT_API):
                           ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/userVip",
+        response = self.ps.get(platform_host+"/v1/userVip",
                                json={},
                                params={
                                    "userName": userName,
@@ -207,13 +204,14 @@ class User(PLAT_API):
 
 # --------------------------------------------------------------------------------------------
 
+
     def risk_analysis_same_ip(self,  # 風險套利重複ip
                               plat_token=None,
                               userId=None, page=None, size=None,
                               ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/user/{}/risk/analysis/same/ip".format(userId),
+        response = self.ps.get(platform_host+"/v1/user/{}/risk/analysis/same/ip".format(userId),
                                json={},
                                params={
             "page": page,
@@ -231,7 +229,7 @@ class User(PLAT_API):
                                 ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/user/{}/risk/analysis/arbitrage".format(id),
+        response = self.ps.get(platform_host+"/v1/user/{}/risk/analysis/arbitrage".format(id),
                                json={},
                                params={
             "from": From, "to": to,
@@ -253,7 +251,7 @@ class User(PLAT_API):
                    ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/user/{}/login/info".format(id),
+        response = self.ps.get(platform_host+"/v1/user/{}/login/info".format(id),
                                json={},
                                params={
             "from": From, "to": to,
@@ -270,7 +268,7 @@ class User(PLAT_API):
                    ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/user/login/stat/{}".format(userId),
+        response = self.ps.get(platform_host+"/v1/user/login/stat/{}".format(userId),
                                json={},
                                params={}
                                )
@@ -298,7 +296,7 @@ class UserManage(PLAT_API):
                              ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/user/manage",
+        response = self.ps.get(platform_host+"/v1/user/manage",
                                json={},
                                params={
                                    "from": From, "to": to,
@@ -316,7 +314,7 @@ class UserManage(PLAT_API):
                                      ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/user/manage/query/params",
+        response = self.ps.get(platform_host+"/v1/user/manage/query/params",
                                json={},
                                params={},
                                )
@@ -331,7 +329,7 @@ class UserManage(PLAT_API):
                             ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/user/manage/log/{}".format(userId),
+        response = self.ps.get(platform_host+"/v1/user/manage/log/{}".format(userId),
                                json={},
                                params={
             "from": From, "to": to,
@@ -348,7 +346,7 @@ class UserManage(PLAT_API):
                        ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/user/manage/{}/first/approval".format(id),
+        response = self.ps.put(platform_host+"/v1/user/manage/{}/first/approval".format(id),
                                json={
             "status": status,
             "remark": remark,
@@ -364,7 +362,7 @@ class UserManage(PLAT_API):
                         ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/user/manage/{}/second/approval".format(id),
+        response = self.ps.put(platform_host+"/v1/user/manage/{}/second/approval".format(id),
                                json={
             "status": status,
             "remark": remark,
@@ -380,7 +378,7 @@ class UserManage(PLAT_API):
                            ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/user/manage/parent",
+        response = self.ps.put(platform_host+"/v1/user/manage/parent",
                                json={
                                    "userId": userId,
                                    "parentUsername": parentUsername,
@@ -398,7 +396,7 @@ class UserManage(PLAT_API):
                             ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/user/manage/parent",
+        response = self.ps.put(platform_host+"/v1/user/manage/parent",
                                json={
                                    "userId": userId,
                                    "telephone": telephone,
@@ -466,7 +464,7 @@ class UserVip(PLAT_API):
                 ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platfrom_host+"/v1/user/vip/config",
+        response = self.ps.post(platform_host+"/v1/user/vip/config",
                                 json={
                                     "name": name,
                                     "regStartTime": regStartTime,
@@ -500,7 +498,7 @@ class UserVip(PLAT_API):
                  ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/user/vip/config/{}".format(vipId),
+        response = self.ps.put(platform_host+"/v1/user/vip/config/{}".format(vipId),
                                json={
             "name": name,
             "regStartTime": regStartTime,
@@ -530,7 +528,7 @@ class UserVip(PLAT_API):
                       ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/user/vip/config/{}/isVip".format(vipId),
+        response = self.ps.put(platform_host+"/v1/user/vip/config/{}/isVip".format(vipId),
                                json={},
                                params={
             "vipId": vipId,
@@ -545,7 +543,7 @@ class UserVip(PLAT_API):
                      ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/user/vip/config",
+        response = self.ps.get(platform_host+"/v1/user/vip/config",
                                json={},
                                params={}
                                )
@@ -557,7 +555,7 @@ class UserVip(PLAT_API):
                      ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/user/vip/config/mapList",
+        response = self.ps.get(platform_host+"/v1/user/vip/config/mapList",
                                json={},
                                params={}
                                )

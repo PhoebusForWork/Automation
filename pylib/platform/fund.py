@@ -2,14 +2,12 @@
 from .platApiBase import PLAT_API  # 執行RF時使用
 from utils.api_utils import KeywordArgument
 from utils.generate_utils import Make
-import configparser
+from utils.data_utils import EnvReader
 import jsonpath
 
 
-config = configparser.ConfigParser()
-config.read('config/config.ini')  # 在rf_api_test層執行時使用
-web_host = config['host']['web_host']
-platfrom_host = config['host']['platform_host']
+env = EnvReader()
+platform_host = env.PLATFORM_HOST
 
 
 class Change(PLAT_API):  # 資金配置管理
@@ -30,7 +28,7 @@ class Change(PLAT_API):  # 資金配置管理
                      ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platfrom_host+"/v1/fund/change/apply",
+        response = self.ps.post(platform_host+"/v1/fund/change/apply",
                                 json=KeywordArgument.body_data(),
                                 params={}
                                 )
@@ -46,7 +44,7 @@ class ChangeAudit(PLAT_API):  # 資金配置管理
                          ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/fund/change/audit/applier/list",
+        response = self.ps.get(platform_host+"/v1/fund/change/audit/applier/list",
                                json=KeywordArgument.body_data(),
                                params={}
                                )
@@ -67,7 +65,7 @@ class ChangeAudit(PLAT_API):  # 資金配置管理
                  ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platfrom_host+"/v1/fund/change/audit/list",
+        response = self.ps.post(platform_host+"/v1/fund/change/audit/list",
                                 json=KeywordArgument.body_data(),
                                 params={}
                                 )
@@ -81,7 +79,7 @@ class ChangeAudit(PLAT_API):  # 資金配置管理
                       ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/fund/change/audit/approve/first",
+        response = self.ps.put(platform_host+"/v1/fund/change/audit/approve/first",
                                json=KeywordArgument.body_data(),
                                params={}
                                )
@@ -95,7 +93,7 @@ class ChangeAudit(PLAT_API):  # 資金配置管理
                        ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/fund/change/audit/approve/second",
+        response = self.ps.put(platform_host+"/v1/fund/change/audit/approve/second",
                                json=KeywordArgument.body_data(),
                                params={}
                                )

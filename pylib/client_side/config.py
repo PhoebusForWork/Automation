@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
-import configparser
 from ..client_side.webApiBase import WEB_API  # 執行RF時使用
-from utils.generate_utils import Make
+from utils.data_utils import EnvReader
 
-
-config = configparser.ConfigParser()
-config.read('config/config.ini')
-web_host = config['host']['web_host']
+env = EnvReader()
+web_host = env.WEB_HOST
 
 
 class Config(WEB_API):  # 客戶詳細資料
