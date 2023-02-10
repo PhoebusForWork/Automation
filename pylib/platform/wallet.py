@@ -1,19 +1,15 @@
-from unittest.mock import NonCallableMagicMock
 from ..platform.platApiBase import PLAT_API  # 執行RF時使用
 from ..client_side.wallet import Wallet
 from utils.api_utils import KeywordArgument
 from utils.redis_utils import Redis
 from utils.xxl_job_utils import XxlJobs
-
-import configparser
+from utils.data_utils import EnvReader
 import time
 import jsonpath
 
 
-config = configparser.ConfigParser()
-config.read('config/config.ini')  # 在rf_api_test層執行時使用
-web_host = config['host']['web_host']
-platfrom_host = config['host']['platform_host']
+env = EnvReader()
+platform_host = env.PLATFORM_HOST
 
 
 class WalletManage(PLAT_API):
@@ -25,7 +21,7 @@ class WalletManage(PLAT_API):
                         ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platfrom_host+"/v1/water/manage/withdrawWater/waterAndValidWater/clear",
+        response = self.ps.post(platform_host+"/v1/water/manage/withdrawWater/waterAndValidWater/clear",
                                 json={
                                     "userId": userId,
                                     "remark": remark
@@ -42,7 +38,7 @@ class WalletManage(PLAT_API):
                              ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platfrom_host+"/v1/water/manage/withdrawWater/water/clear",
+        response = self.ps.post(platform_host+"/v1/water/manage/withdrawWater/water/clear",
                                 json={
                                     "userId": userId,
                                     "remark": remark
@@ -59,7 +55,7 @@ class WalletManage(PLAT_API):
                                    ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platfrom_host+"/v1/water/manage/withdrawLimitWater/water/clear",
+        response = self.ps.post(platform_host+"/v1/water/manage/withdrawLimitWater/water/clear",
                                 json={
                                     "userId": userId,
                                     "remark": remark
@@ -75,7 +71,7 @@ class WalletManage(PLAT_API):
                                  ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/water/manage/withdrawLimitWater/water/clear",
+        response = self.ps.get(platform_host+"/v1/water/manage/withdrawLimitWater/water/clear",
                                json={},
                                params={
                                    "userId": userId
@@ -96,7 +92,7 @@ class WalletManage(PLAT_API):
                                               ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/water/manage/withdrawWater/clearPendingList",
+        response = self.ps.get(platform_host+"/v1/water/manage/withdrawWater/clearPendingList",
                                json={},
                                params=KeywordArgument.body_data()
                                )
@@ -109,7 +105,7 @@ class WalletManage(PLAT_API):
                                        ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/water/manage/withdrawLimitWater/total",
+        response = self.ps.get(platform_host+"/v1/water/manage/withdrawLimitWater/total",
                                json={},
                                params={
                                    "userId": userId,
@@ -132,7 +128,7 @@ class WalletManage(PLAT_API):
                                                     ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/water/manage/withdrawLimitWater/clearPendingList",
+        response = self.ps.get(platform_host+"/v1/water/manage/withdrawLimitWater/clearPendingList",
                                json={},
                                params=KeywordArgument.body_data()
                                )
@@ -148,7 +144,7 @@ class WalletUser(PLAT_API):
                     ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+f"/v1/wallet/user/{userId}/wallets",
+        response = self.ps.get(platform_host+f"/v1/wallet/user/{userId}/wallets",
                                json={},
                                params={}
                                )
@@ -166,7 +162,7 @@ class WalletUser(PLAT_API):
                        ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+f"/v1/wallet/user/{userId}/trade/info",
+        response = self.ps.get(platform_host+f"/v1/wallet/user/{userId}/trade/info",
                                json={},
                                params={
                                    "from": From,
@@ -187,7 +183,7 @@ class WalletUser(PLAT_API):
                  ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+f"/v1/wallet/user/{userId}/fund",
+        response = self.ps.get(platform_host+f"/v1/wallet/user/{userId}/fund",
                                json={},
                                params={
                                    "from": From,
@@ -206,7 +202,7 @@ class WalletGameTransfer(PLAT_API):
                            ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+f"/v1/wallet/game/transfer/user/{userId}/update/balance/all",
+        response = self.ps.put(platform_host+f"/v1/wallet/game/transfer/user/{userId}/update/balance/all",
                                json={},
                                params={}
                                )
@@ -219,7 +215,7 @@ class WalletGameTransfer(PLAT_API):
                      ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platfrom_host+f"/v1/wallet/game/transfer/user/{userId}/withdraw/all",
+        response = self.ps.post(platform_host+f"/v1/wallet/game/transfer/user/{userId}/withdraw/all",
                                 json={},
                                 params={}
                                 )
@@ -234,7 +230,7 @@ class WalletGameTransfer(PLAT_API):
                 ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platfrom_host+f"/v1/wallet/game/transfer/user/{userId}/deposit",
+        response = self.ps.post(platform_host+f"/v1/wallet/game/transfer/user/{userId}/deposit",
                                 json={
                                     "channelCode": channelCode,
                                     "amount": amount,
@@ -257,7 +253,7 @@ class WalletGameTransfer(PLAT_API):
                           ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+f"/v1/wallet/game/transfer",
+        response = self.ps.get(platform_host+f"/v1/wallet/game/transfer",
                                json={},
                                params=KeywordArgument.body_data()
                                )
@@ -304,7 +300,7 @@ class WalletGameTransferFailed(PLAT_API):
                      ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/wallet/game/transfer/failed/approver",
+        response = self.ps.get(platform_host+"/v1/wallet/game/transfer/failed/approver",
                                json={},
                                params={}
                                )
@@ -323,7 +319,7 @@ class WalletGameTransferFailed(PLAT_API):
                         ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/wallet/game/transfer/failed",
+        response = self.ps.get(platform_host+"/v1/wallet/game/transfer/failed",
                                json={},
                                params=KeywordArgument.body_data()
                                )
@@ -338,7 +334,7 @@ class WalletGameTransferFailed(PLAT_API):
                             ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platfrom_host+f"/v1/wallet/game/transfer/failed/tradeId/{tradeId}/manual/result",
+        response = self.ps.post(platform_host+f"/v1/wallet/game/transfer/failed/tradeId/{tradeId}/manual/result",
                                 json={
                                     "result": result,
                                     "remark": remark,

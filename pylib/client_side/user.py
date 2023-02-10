@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 import configparser
 import jsonpath
+import os
 from ..client_side.webApiBase import WEB_API  # 執行RF時使用
 from utils.generate_utils import Make
+from utils.data_utils import EnvReader
 
 
-config = configparser.ConfigParser()
-config.read('config/config.ini')
-web_host = config['host']['web_host']
-platfrom_host = config['host']['platform_host']
+env = EnvReader()
+web_host = env.WEB_HOST
 
 
 class Detail(WEB_API):  # 客戶詳細資料

@@ -3,6 +3,7 @@ import traceback
 import pytest
 import configparser
 from pylib.platform.platApiBase import PLAT_API
+from utils.data_utils import EnvReader
 
 """
 如果用例执行前需要先登录获取token值，就要用到conftest.py文件了
@@ -12,8 +13,8 @@ scope参数为module，那么每一个测试文件执行前都会执行一次con
 scope参数为class，那么每一个测试文件中的测试类执行前都会执行一次conftest文件中的fixture
 scope参数为function，那么所有文件的测试用例执行前都会执行一次conftest文件中的fixture
 """
-config = configparser.ConfigParser()
-config.read('config/config.ini')  # 在rf_api_test層執行時使用
+
+env = EnvReader()
 
 
 @pytest.fixture(scope="module")

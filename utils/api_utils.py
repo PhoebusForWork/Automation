@@ -3,12 +3,14 @@ import requests
 import json
 import inspect
 import datetime
-import configparser
+from utils.data_utils import EnvReader
 
-config = configparser.ConfigParser()
-config.read('config/config.ini')
-platfrom_host = config['host']['platform_host']
-cs_host = config["host"]['web_host']
+env = EnvReader()
+platform_host = env.PLATFORM_HOST
+platform_header = env.PLT_HEADER
+cs_host = env.WEB_HOST
+cs_header = env.CS_HEADER
+xxl_host = env.XXL_HOST
 
 
 class API_Controller:
@@ -17,14 +19,15 @@ class API_Controller:
 
         self.timestamp = str(int(datetime.datetime.now().timestamp()))
         self.s = requests.Session()
-        # 這邊字串轉為dict要使用eval不可用dict會掛
-        self.s.headers = eval(config["API_headers"][platfrom])
         if platfrom == 'plt':
-            self.host = config["host"]['platform_host']
+            self.host = platform_host
+            # 這邊字串轉為dict要使用eval不可用dict會掛
+            self.s.headers = eval(platform_header)
         elif platfrom == 'xxl':
-            self.host = config["host"]['xxl_host']
+            self.host = xxl_host
         else:
-            self.host = config["host"]['web_host']
+            self.host = cs_host
+            self.s.headers = eval(cs_header)
 
     def _printresponse(self, response):  # 印出回傳
         print('\n\n--------------HTTPS response  *  begin ------------------')
@@ -37,7 +40,6 @@ class API_Controller:
         printR = json.loads(response.text)
         print(json.dumps(printR, sort_keys=True, indent=4,
               separators=(',', ': '), ensure_ascii=False))
-        # print(response.content.decode('utf-8'))
         print('--------------HTTPS response  *  end ------------------\n\n')
 
     def HttpsClient(self, reqMethod, reqUrl, json, params, token=None, files=None):

@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from ..platform.platApiBase import PLAT_API  # 執行RF時使用
-import configparser
+from ..platform.platApiBase import PLAT_API
+from utils.data_utils import EnvReader
 import jsonpath
 
-config = configparser.ConfigParser()
-config.read('config/config.ini')  # 在rf_api_test層執行時使用
-web_host = config['host']['web_host']
-platfrom_host = config['host']['platform_host']
+env = EnvReader()
+platform_host = env.PLATFORM_HOST
 
 
 class File(PLAT_API):
@@ -20,7 +18,7 @@ class File(PLAT_API):
         self.ps.headers.update({"Content-Type": None})
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platfrom_host+"/v1/file/video",
+        response = self.ps.post(platform_host+"/v1/file/video",
                                 data={},
                                 params={
                                     "videoPathType": videoPathType,
@@ -38,7 +36,7 @@ class File(PLAT_API):
         self.ps.headers.update({"Content-Type": None})
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platfrom_host+"/v1/file/image",
+        response = self.ps.post(platform_host+"/v1/file/image",
                                 data={},
                                 params={
                                     "imagePathType": imagePathType,
@@ -58,7 +56,7 @@ class Avatar(PLAT_API):
                    ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platfrom_host+"/v1/config/avatar",
+        response = self.ps.post(platform_host+"/v1/config/avatar",
                                 json={
                                     "title": title,
                                     "url": url,
@@ -76,7 +74,7 @@ class Avatar(PLAT_API):
                     ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/config/avatar",
+        response = self.ps.put(platform_host+"/v1/config/avatar",
                                json={
                                    "id": id,
                                    "title": title,
@@ -93,7 +91,7 @@ class Avatar(PLAT_API):
                       ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.delete(platfrom_host+"/v1/config/avatar/{}".format(id),
+        response = self.ps.delete(platform_host+"/v1/config/avatar/{}".format(id),
                                   json={},
                                   params={}
                                   )
@@ -106,7 +104,7 @@ class Avatar(PLAT_API):
                        ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/config/avatar/{}".format(id),
+        response = self.ps.get(platform_host+"/v1/config/avatar/{}".format(id),
                                json={},
                                params={}
                                )
@@ -119,7 +117,7 @@ class Avatar(PLAT_API):
                    ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/config/avatars",
+        response = self.ps.get(platform_host+"/v1/config/avatars",
                                json={},
                                params={
                                    "title": title,
