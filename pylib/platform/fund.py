@@ -4,12 +4,15 @@ from utils.api_utils import KeywordArgument
 from utils.generate_utils import Make
 import configparser
 import jsonpath
+import os
 
 
-config = configparser.ConfigParser()
-config.read('config/config.ini')  # 在rf_api_test層執行時使用
-web_host = config['host']['web_host']
-platfrom_host = config['host']['platform_host']
+if os.getenv('MODE') is None:
+    config = configparser.ConfigParser()
+    config.read('config/config.ini')  # 在rf_api_test層執行時使用
+    platfrom_host = config['host']['platform_host']
+else:
+    platfrom_host = os.getenv('PLATFORM_HOST')
 
 
 class Change(PLAT_API):  # 資金配置管理

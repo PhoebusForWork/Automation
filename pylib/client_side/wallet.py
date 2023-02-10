@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 import configparser
+import os
 from ..client_side.webApiBase import WEB_API  # 執行RF時使用
 
 
-config = configparser.ConfigParser()
-config.read('config/config.ini')
-web_host = config['host']['web_host']
-platfrom_host = config['host']['platform_host']
+if os.getenv('MODE') is None:
+    config = configparser.ConfigParser()
+    config.read('config/config.ini')
+    web_host = config['host']['web_host']
+else:
+    web_host = os.getenv('WEB_HOST')
 
 
 class Wallet(WEB_API):

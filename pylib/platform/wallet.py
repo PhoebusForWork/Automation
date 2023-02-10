@@ -4,16 +4,18 @@ from ..client_side.wallet import Wallet
 from utils.api_utils import KeywordArgument
 from utils.redis_utils import Redis
 from utils.xxl_job_utils import XxlJobs
-
+import os
 import configparser
 import time
 import jsonpath
 
 
-config = configparser.ConfigParser()
-config.read('config/config.ini')  # 在rf_api_test層執行時使用
-web_host = config['host']['web_host']
-platfrom_host = config['host']['platform_host']
+if os.getenv('MODE') is None:
+    config = configparser.ConfigParser()
+    config.read('config/config.ini')  # 在rf_api_test層執行時使用
+    platfrom_host = config['host']['platform_host']
+else:
+    platfrom_host = os.getenv('PLATFORM_HOST')
 
 
 class WalletManage(PLAT_API):

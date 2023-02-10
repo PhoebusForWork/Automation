@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 from ..platform.platApiBase import PLAT_API  # 執行RF時使用
 import configparser
+import os
 
-config = configparser.ConfigParser()
-config.read('config/config.ini')
-web_host = config['host']['web_host']
-platfrom_host = config['host']['platform_host']
+if os.getenv('MODE') is None:
+    config = configparser.ConfigParser()
+    config.read('config/config.ini')  # 在rf_api_test層執行時使用
+    platfrom_host = config['host']['platform_host']
+else:
+    platfrom_host = os.getenv('PLATFORM_HOST')
 
 
 class platform(PLAT_API):

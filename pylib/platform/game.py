@@ -6,11 +6,14 @@ import configparser
 import jsonpath
 import random
 import string
+import os
 
-config = configparser.ConfigParser()
-config.read('config/config.ini')  # 在rf_api_test層執行時使用
-web_host = config['host']['web_host']
-platfrom_host = config['host']['platform_host']
+if os.getenv('MODE') is None:
+    config = configparser.ConfigParser()
+    config.read('config/config.ini')  # 在rf_api_test層執行時使用
+    platfrom_host = config['host']['platform_host']
+else:
+    platfrom_host = os.getenv('PLATFORM_HOST')
 
 
 class Game(PLAT_API):

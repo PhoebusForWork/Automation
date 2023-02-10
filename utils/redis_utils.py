@@ -1,16 +1,25 @@
 # -*- coding: utf-8 -*-
 import redis
 import configparser
+import os
 
 
-config = configparser.ConfigParser()
-config.read('config/config.ini')
-plt_host = config['redis_connection']['plt_host']
-cs_host = config['redis_connection']['cs_host']
-plt_port = config['redis_connection']['plt_port']
-cs_port = config['redis_connection']['cs_port']
-plt_password = config['redis_connection']['plt_password']
-cs_password = config['redis_connection']['cs_password']
+if os.getenv('MODE') is None:
+    config = configparser.ConfigParser()
+    config.read('config/config.ini')
+    plt_host = config['redis_connection']['plt_host']
+    cs_host = config['redis_connection']['cs_host']
+    plt_port = config['redis_connection']['plt_port']
+    cs_port = config['redis_connection']['cs_port']
+    plt_password = config['redis_connection']['plt_password']
+    cs_password = config['redis_connection']['cs_password']
+else:
+    plt_host = os.getenv('REDIS_PLT_HOST')
+    cs_host = os.getenv('REDIS_CS_HOST')
+    plt_port = os.getenv('REDIS_PLT_PORT')
+    cs_port = os.getenv('REDIS_CS_PORT')
+    plt_password = os.getenv('REDIS_PLT_PASSWORD')
+    cs_password = os.getenv('REDIS_CS_PASSWORD')
 
 
 class Redis:

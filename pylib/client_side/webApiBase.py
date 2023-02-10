@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 import requests
 import json
+import os
 import datetime
 import configparser
 
-config = configparser.ConfigParser()
-config.read('config/config.ini')  # 在rf_api_test層執行時使用
-web_host = config['host']['web_host']
-platfrom_host = config['host']['platform_host']
+if os.getenv('MODE') is None:
+    config = configparser.ConfigParser()
+    config.read('config/config.ini')
+    web_host = config['host']['web_host']
+else:
+    web_host = os.getenv('WEB_HOST')
 
 
 class WEB_API:

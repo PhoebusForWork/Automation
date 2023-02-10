@@ -4,11 +4,18 @@ import json
 import inspect
 import datetime
 import configparser
+import os
 
-config = configparser.ConfigParser()
-config.read('config/config.ini')
-platfrom_host = config['host']['platform_host']
-cs_host = config["host"]['web_host']
+if os.getenv('MODE') is None:
+    config = configparser.ConfigParser()
+    config.read('config/config.ini')
+    platfrom_host = config['host']['platform_host']
+    cs_host = config["host"]['web_host']
+    xxl_host = config["host"]['xxl_host']
+else:
+    platfrom_host = os.getenv('PLATFORM_HOST')
+    cs_host = os.getenv('WEB_HOST')
+    xxl_host = os.getenv('XXL_HOST')
 
 
 class API_Controller:
@@ -20,11 +27,11 @@ class API_Controller:
         # 這邊字串轉為dict要使用eval不可用dict會掛
         self.s.headers = eval(config["API_headers"][platfrom])
         if platfrom == 'plt':
-            self.host = config["host"]['platform_host']
+            self.host = platfrom_host
         elif platfrom == 'xxl':
-            self.host = config["host"]['xxl_host']
+            self.host = xxl_host
         else:
-            self.host = config["host"]['web_host']
+            self.host = cs_host
 
     def _printresponse(self, response):  # 印出回傳
         print('\n\n--------------HTTPS response  *  begin ------------------')

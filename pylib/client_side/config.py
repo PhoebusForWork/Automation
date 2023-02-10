@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 import configparser
+import os
 from ..client_side.webApiBase import WEB_API  # 執行RF時使用
 from utils.generate_utils import Make
 
-
-config = configparser.ConfigParser()
-config.read('config/config.ini')
-web_host = config['host']['web_host']
+if os.getenv('MODE') is None:
+    config = configparser.ConfigParser()
+    config.read('config/config.ini')
+    web_host = config['host']['web_host']
+else:
+    web_host = os.getenv('WEB_HOST')
 
 
 class Config(WEB_API):  # 客戶詳細資料
