@@ -4,5 +4,5 @@ variables:
 
 include:
   project: bbc/devops/gitlab-pipeline/cicd-pipeline
-  ref: master
-  file: 'qa-automation-test.yml'
+  ref: test_cicd
+  file: 'devops-ci.yml'
