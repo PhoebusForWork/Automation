@@ -3,17 +3,12 @@
 import jsonpath
 import random
 import string
-import os
-import configparser
 from ..platform.platApiBase import PLAT_API  # 執行RF時使用
+from utils.data_utils import EnvReader
 
 
-if os.getenv('MODE') is None:
-    config = configparser.ConfigParser()
-    config.read('config/config.ini')  # 在rf_api_test層執行時使用
-    platfrom_host = config['host']['platform_host']
-else:
-    platfrom_host = os.getenv('PLATFORM_HOST')
+env = EnvReader()
+platform_host = env.PLATFORM_HOST
 
 
 class ProxyChannel(PLAT_API):
@@ -24,7 +19,7 @@ class ProxyChannel(PLAT_API):
                     ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platfrom_host+"/v1/proxy/channel",
+        response = self.ps.post(platform_host+"/v1/proxy/channel",
                                 json={
                                     "channel": channel,
                                 },
@@ -39,7 +34,7 @@ class ProxyChannel(PLAT_API):
                      ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/proxy/channel/{}".format(channelId),
+        response = self.ps.put(platform_host+"/v1/proxy/channel/{}".format(channelId),
                                json={
             "channel": channel,
         },
@@ -54,7 +49,7 @@ class ProxyChannel(PLAT_API):
                        ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.delete(platfrom_host+"/v1/proxy/channel/{}".format(channelId),
+        response = self.ps.delete(platform_host+"/v1/proxy/channel/{}".format(channelId),
                                   json={},
                                   params={}
                                   )
@@ -67,7 +62,7 @@ class ProxyChannel(PLAT_API):
                     ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/proxy/channel",
+        response = self.ps.get(platform_host+"/v1/proxy/channel",
                                json={},
                                params={
                                    "page": page,
@@ -82,7 +77,7 @@ class ProxyChannel(PLAT_API):
                         ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/proxy/channel/all",
+        response = self.ps.get(platform_host+"/v1/proxy/channel/all",
                                json={},
                                params={}
                                )
@@ -94,7 +89,7 @@ class ProxyChannel(PLAT_API):
                               ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/proxy/channel/available",
+        response = self.ps.get(platform_host+"/v1/proxy/channel/available",
                                json={},
                                params={}
                                )
@@ -106,7 +101,7 @@ class ProxyChannel(PLAT_API):
                                    ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/proxy/channel/available",
+        response = self.ps.get(platform_host+"/v1/proxy/channel/available",
                                json={},
                                params={}
                                )
@@ -117,7 +112,7 @@ class ProxyChannel(PLAT_API):
             self.add_channel(plat_token, channel=''.join(
                 random.choice(string.ascii_letters) for _ in range(10)))
             response = self.ps.get(
-                platfrom_host+"/v1/proxy/channel/available", json={}, params={})
+                platform_host+"/v1/proxy/channel/available", json={}, params={})
             ret = jsonpath.jsonpath(response.json(), "$..id")
             # self._printresponse(ret)
             return ret[-1]
@@ -131,7 +126,7 @@ class ProxyGroup(PLAT_API):
                   ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platfrom_host+"/v1/proxy/group",
+        response = self.ps.post(platform_host+"/v1/proxy/group",
                                 json={
                                     "groupName": groupName,
                                     "channelIds": channelIds,
@@ -148,7 +143,7 @@ class ProxyGroup(PLAT_API):
                    ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/proxy/group/{}".format(groupId),
+        response = self.ps.put(platform_host+"/v1/proxy/group/{}".format(groupId),
                                json={
             "groupName": groupName,
             "channelIds": channelIds,
@@ -164,7 +159,7 @@ class ProxyGroup(PLAT_API):
                      ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.delete(platfrom_host+"/v1/proxy/group/{}".format(groupId),
+        response = self.ps.delete(platform_host+"/v1/proxy/group/{}".format(groupId),
                                   json={},
                                   params={}
                                   )
@@ -177,7 +172,7 @@ class ProxyGroup(PLAT_API):
                        ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/proxy/group/groupsAndChannels",
+        response = self.ps.get(platform_host+"/v1/proxy/group/groupsAndChannels",
                                json={},
                                params={
                                    "page": page,
@@ -194,7 +189,7 @@ class ProxyGroup(PLAT_API):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
 
-        response = self.ps.get(platfrom_host+"/v1/proxy/group/groupsAndChannels",
+        response = self.ps.get(platform_host+"/v1/proxy/group/groupsAndChannels",
                                json={},
                                params={
                                    "page": page,
@@ -215,7 +210,7 @@ class ProxyCommissionTemplate(PLAT_API):
                      ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platfrom_host+"/v1/proxy/commission/template",
+        response = self.ps.post(platform_host+"/v1/proxy/commission/template",
                                 json={
                                     "name": name,
                                     "isEnabled": isEnabled,
@@ -234,7 +229,7 @@ class ProxyCommissionTemplate(PLAT_API):
                       ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/proxy/commission/template/{}".format(id),
+        response = self.ps.put(platform_host+"/v1/proxy/commission/template/{}".format(id),
                                json={
             "name": name,
             "isEnabled": isEnabled,
@@ -250,7 +245,7 @@ class ProxyCommissionTemplate(PLAT_API):
                      ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/proxy/commission/template",
+        response = self.ps.get(platform_host+"/v1/proxy/commission/template",
                                json={},
                                params={}
                                )
@@ -262,7 +257,7 @@ class ProxyCommissionTemplate(PLAT_API):
                           ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/proxy/commission/template/mapList",
+        response = self.ps.get(platform_host+"/v1/proxy/commission/template/mapList",
                                json={},
                                params={}
                                )
@@ -275,7 +270,7 @@ class ProxyCommissionTemplate(PLAT_API):
                        ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+f"/v1/proxy/commission/template/{id}/subCommissionConfig",
+        response = self.ps.get(platform_host+f"/v1/proxy/commission/template/{id}/subCommissionConfig",
                                json={},
                                params={}
                                )
@@ -290,7 +285,7 @@ class ProxyCommissionTemplate(PLAT_API):
                         ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+f"/v1/proxy/commission/template/{id}/subCommissionConfig",
+        response = self.ps.put(platform_host+f"/v1/proxy/commission/template/{id}/subCommissionConfig",
                                json={
                                    "subCommissionConfigList": subCommissionConfigList,
                                    "subSubCommissionConfigList": subSubCommissionConfigList,
@@ -306,7 +301,7 @@ class ProxyCommissionTemplate(PLAT_API):
                               ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+f"/v1/proxy/commission/template/{id}/settlementShares",
+        response = self.ps.get(platform_host+f"/v1/proxy/commission/template/{id}/settlementShares",
                                json={},
                                params={}
                                )
@@ -321,7 +316,7 @@ class ProxyCommissionTemplate(PLAT_API):
                                ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+f"/v1/proxy/commission/template/{id}/settlementShares",
+        response = self.ps.put(platform_host+f"/v1/proxy/commission/template/{id}/settlementShares",
                                json={
                                    "activity": activity,
                                    "activityLimit": activityLimit,
@@ -341,7 +336,7 @@ class ProxyCommissionTemplate(PLAT_API):
                                    ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+f"/v1/proxy/commission/template/{id}/platformFeeShares",
+        response = self.ps.get(platform_host+f"/v1/proxy/commission/template/{id}/platformFeeShares",
                                json={},
                                params={}
                                )
@@ -357,7 +352,7 @@ class ProxyCommissionTemplate(PLAT_API):
                                     ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+f"/v1/proxy/commission/template/{id}/platformFeeShares",
+        response = self.ps.put(platform_host+f"/v1/proxy/commission/template/{id}/platformFeeShares",
                                json=data                               # [
                                #        {
                                #            "channelCode": channelCode,
@@ -380,7 +375,7 @@ class ProxyCommissionTemplate(PLAT_API):
                               ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+f"/v1/proxy/commission/template/{id}/commissionConfig",
+        response = self.ps.get(platform_host+f"/v1/proxy/commission/template/{id}/commissionConfig",
                                json={},
                                params={}
                                )
@@ -396,7 +391,7 @@ class ProxyCommissionTemplate(PLAT_API):
                                ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+f"/v1/proxy/commission/template/{id}/commissionConfig",
+        response = self.ps.put(platform_host+f"/v1/proxy/commission/template/{id}/commissionConfig",
                                json=json,
                                #    [
                                #        {
@@ -424,7 +419,7 @@ class Proxy(PLAT_API):
                   ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/proxy",
+        response = self.ps.get(platform_host+"/v1/proxy",
                                json={},
                                params={
                                    "from": From,
@@ -449,7 +444,7 @@ class Proxy(PLAT_API):
                          ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platfrom_host+"/v1/proxy/account/validate",
+        response = self.ps.post(platform_host+"/v1/proxy/account/validate",
                                 json={
                                     "accounts": accounts,
                                 },
@@ -467,7 +462,7 @@ class Proxy(PLAT_API):
                   ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platfrom_host+"/v1/proxy",
+        response = self.ps.post(platform_host+"/v1/proxy",
                                 json={
                                     "proxyAccount": proxyAccount,
                                     "proxyName": proxyName,
@@ -489,7 +484,7 @@ class Proxy(PLAT_API):
                        ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/proxy/{}/subCount".format(proxyId),
+        response = self.ps.put(platform_host+"/v1/proxy/{}/subCount".format(proxyId),
                                json={
             "subCount": subCount
         },
@@ -505,7 +500,7 @@ class Proxy(PLAT_API):
                             ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/proxy/{}/commission".format(proxyId),
+        response = self.ps.put(platform_host+"/v1/proxy/{}/commission".format(proxyId),
                                json={
             "commissionId": commissionId
         },
@@ -521,7 +516,7 @@ class Proxy(PLAT_API):
                      ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/proxy/{}/channel".format(proxyId),
+        response = self.ps.put(platform_host+"/v1/proxy/{}/channel".format(proxyId),
                                json={
             "channelId": channelId
         },
@@ -536,7 +531,7 @@ class Proxy(PLAT_API):
                         ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/proxy/{}/detail/edit".format(userId),
+        response = self.ps.get(platform_host+"/v1/proxy/{}/detail/edit".format(userId),
                                json={},
                                params={}
                                )
@@ -549,7 +544,7 @@ class Proxy(PLAT_API):
                            ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/proxy/{}/detail/display".format(userId),
+        response = self.ps.get(platform_host+"/v1/proxy/{}/detail/display".format(userId),
                                json={},
                                params={}
                                )
@@ -562,7 +557,7 @@ class Proxy(PLAT_API):
                            ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/proxy/{}/commission/avg".format(proxyId),
+        response = self.ps.get(platform_host+"/v1/proxy/{}/commission/avg".format(proxyId),
                                json={},
                                params={}
                                )
@@ -579,7 +574,7 @@ class Proxy(PLAT_API):
                        ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/proxy/tradeInfo",
+        response = self.ps.get(platform_host+"/v1/proxy/tradeInfo",
                                json={},
                                params={
                                    "userId": userId,
@@ -598,7 +593,7 @@ class Proxy(PLAT_API):
                          ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/proxy/domain/query",
+        response = self.ps.get(platform_host+"/v1/proxy/domain/query",
                                json={},
                                params={
                                    "type": type,
@@ -624,7 +619,7 @@ class ProxyManage(PLAT_API):
                         ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/proxy/user/manage/list",
+        response = self.ps.get(platform_host+"/v1/proxy/user/manage/list",
                                json={},
                                params={
                                    "registerStartTime": registerStartTime,
@@ -645,7 +640,7 @@ class ProxyManage(PLAT_API):
                             ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/proxy/user/manage/list/approver",
+        response = self.ps.get(platform_host+"/v1/proxy/user/manage/list/approver",
                                json={},
                                params={}
                                )
@@ -658,7 +653,7 @@ class ProxyManage(PLAT_API):
                        ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/proxy/user/manage/{}/first/approval".format(id),
+        response = self.ps.put(platform_host+"/v1/proxy/user/manage/{}/first/approval".format(id),
                                json={
             "isApprove": isApprove,
             "remark": remark,
@@ -674,7 +669,7 @@ class ProxyManage(PLAT_API):
                         ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/proxy/user/manage/{}/second/approval".format(id),
+        response = self.ps.put(platform_host+"/v1/proxy/user/manage/{}/second/approval".format(id),
                                json={
             "isApprove": isApprove,
             "remark": remark,
@@ -768,7 +763,7 @@ class ProxyCredit(PLAT_API):
                           ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/proxy/credit/detail",
+        response = self.ps.get(platform_host+"/v1/proxy/credit/detail",
                                json={},
                                params={
                                    "proxyId": proxyId,
@@ -793,7 +788,7 @@ class ProxyCredit(PLAT_API):
                     ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/proxy/credit",
+        response = self.ps.put(platform_host+"/v1/proxy/credit",
                                json={
                                    "userId": userId,
                                    "amount": amount,
@@ -823,7 +818,7 @@ class ProxyCommission(PLAT_API):
                              ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/proxy/commission",
+        response = self.ps.get(platform_host+"/v1/proxy/commission",
                                json={},
                                params={
                                    "settleDate": settleDate,
@@ -847,7 +842,7 @@ class ProxyCommission(PLAT_API):
                       ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/proxy/commission/winTotal",
+        response = self.ps.get(platform_host+"/v1/proxy/commission/winTotal",
                                json={},
                                params={
                                    "proxyId": proxyId,
@@ -863,7 +858,7 @@ class ProxyCommission(PLAT_API):
                                 ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/proxy/commission/subUserCommission",
+        response = self.ps.get(platform_host+"/v1/proxy/commission/subUserCommission",
                                json={},
                                params={
                                    "proxyId": proxyId,
@@ -879,7 +874,7 @@ class ProxyCommission(PLAT_API):
                                  ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/proxy/commission/subProxyCommission",
+        response = self.ps.get(platform_host+"/v1/proxy/commission/subProxyCommission",
                                json={},
                                params={
                                    "proxyId": proxyId,
@@ -901,7 +896,7 @@ class ProxyCommission(PLAT_API):
                     ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/proxy/commission/history",
+        response = self.ps.get(platform_host+"/v1/proxy/commission/history",
                                json={},
                                params={
                                    "settleDate": settleDate,
@@ -921,7 +916,7 @@ class ProxyCommission(PLAT_API):
                          ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/proxy/commission/grantStatus",
+        response = self.ps.get(platform_host+"/v1/proxy/commission/grantStatus",
                                json={},
                                params={}
                                )
@@ -934,7 +929,7 @@ class ProxyCommission(PLAT_API):
                       ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/proxy/commission/costShare",
+        response = self.ps.get(platform_host+"/v1/proxy/commission/costShare",
                                json={},
                                params={
                                    "proxyId": proxyId,
@@ -951,7 +946,7 @@ class ProxyCommission(PLAT_API):
                       ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+f"/v1/proxy/commission/{detailId}/firstApprove",
+        response = self.ps.get(platform_host+f"/v1/proxy/commission/{detailId}/firstApprove",
                                json={
                                    "remark": remark,
                                    "isPass": isPass
@@ -968,7 +963,7 @@ class ProxyCommission(PLAT_API):
                        ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+f"/v1/proxy/commission/{detailId}/secondApprove",
+        response = self.ps.get(platform_host+f"/v1/proxy/commission/{detailId}/secondApprove",
                                json={
                                    "remark": remark,
                                    "isPass": isPass

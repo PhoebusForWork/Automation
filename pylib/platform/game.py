@@ -2,18 +2,14 @@
 
 from ..platform.platApiBase import PLAT_API
 from utils.api_utils import KeywordArgument
-import configparser
+from utils.data_utils import EnvReader
 import jsonpath
 import random
 import string
-import os
 
-if os.getenv('MODE') is None:
-    config = configparser.ConfigParser()
-    config.read('config/config.ini')  # 在rf_api_test層執行時使用
-    platfrom_host = config['host']['platform_host']
-else:
-    platfrom_host = os.getenv('PLATFORM_HOST')
+
+env = EnvReader()
+platform_host = env.PLATFORM_HOST
 
 
 class Game(PLAT_API):
@@ -24,7 +20,7 @@ class Game(PLAT_API):
                       ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/game",
+        response = self.ps.get(platform_host+"/v1/game",
                                json={},
                                params={
                                    "gameType": gameType,
@@ -47,7 +43,7 @@ class Game(PLAT_API):
                   ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/game",
+        response = self.ps.put(platform_host+"/v1/game",
                                json={
                                    "gameCode": gameCode,
                                    "name": name,
@@ -92,7 +88,7 @@ class Game(PLAT_API):
                          ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/game/{}/status".format(gameCode),
+        response = self.ps.put(platform_host+"/v1/game/{}/status".format(gameCode),
                                json={},
                                params={
             "status": status,
@@ -108,7 +104,7 @@ class Game(PLAT_API):
                             ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/game/{}/isTesting".format(gameCode),
+        response = self.ps.put(platform_host+"/v1/game/{}/isTesting".format(gameCode),
                                json={},
                                params={
             "isTesting": isTesting,
@@ -123,7 +119,7 @@ class Game(PLAT_API):
                   ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platfrom_host+"/v1/game/sync/{}".format(gameCode),
+        response = self.ps.post(platform_host+"/v1/game/sync/{}".format(gameCode),
                                 json={},
                                 params={}
                                 )
@@ -143,7 +139,7 @@ class Game(PLAT_API):
                         ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platfrom_host+"/v1/game/orders",
+        response = self.ps.post(platform_host+"/v1/game/orders",
                                 json={
                                     # "page": page,
                                     # "size": size,
@@ -175,7 +171,7 @@ class Game(PLAT_API):
                       ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/game/code",
+        response = self.ps.get(platform_host+"/v1/game/code",
                                json={},
                                params={}
                                )
@@ -187,7 +183,7 @@ class Game(PLAT_API):
                                  ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/game/channel/mapList",
+        response = self.ps.get(platform_host+"/v1/game/channel/mapList",
                                json={},
                                params={}
                                )
@@ -204,7 +200,7 @@ class Game(PLAT_API):
                          ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/game/payOut",
+        response = self.ps.get(platform_host+"/v1/game/payOut",
                                json={},
                                params=KeywordArgument.body_data()
                                )
@@ -219,7 +215,7 @@ class Rebate_template(PLAT_API):
                             ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/rebate/template/config",
+        response = self.ps.get(platform_host+"/v1/rebate/template/config",
                                json={},
                                params={}
                                )
@@ -233,7 +229,7 @@ class Rebate_template(PLAT_API):
                             ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platfrom_host+"/v1/rebate/template/config",
+        response = self.ps.post(platform_host+"/v1/rebate/template/config",
                                 json={"templateName": templateName, "gameType": gameType, "rebateConfig": [
                                     {"betAmount": betAmount, "vipLevelRebateConfig": [{"vipId": vipId, "vipName": vipName, "rebateRatio": rebateRatio}]}]},
                                 params={}
@@ -249,7 +245,7 @@ class Rebate_template(PLAT_API):
                              ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/rebate/template/{}/config".format(templateId),
+        response = self.ps.put(platform_host+"/v1/rebate/template/{}/config".format(templateId),
                                json={"templateName": templateName, "gameType": gameType, "rebateConfig": [
                                     {"betAmount": betAmount, "vipLevelRebateConfig": [{"vipId": vipId, "vipName": vipName, "rebateRatio": rebateRatio}]}]},
                                params={}
@@ -263,7 +259,7 @@ class Rebate_template(PLAT_API):
                                ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.delete(platfrom_host+"/v1/rebate/template/{}/config".format(templateId),
+        response = self.ps.delete(platform_host+"/v1/rebate/template/{}/config".format(templateId),
                                   json={},
                                   params={}
                                   )
@@ -275,7 +271,7 @@ class Rebate_template(PLAT_API):
                                    ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/rebate/template/allByGameType",
+        response = self.ps.get(platform_host+"/v1/rebate/template/allByGameType",
                                json={},
                                params={}
                                )
@@ -304,7 +300,7 @@ class Game_rebate(PLAT_API):
                                ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/game/rebate/{}/config".format(gameType),
+        response = self.ps.get(platform_host+"/v1/game/rebate/{}/config".format(gameType),
                                json={},
                                params={}
                                )
@@ -317,7 +313,7 @@ class Game_rebate(PLAT_API):
                                 ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platfrom_host+"/v1/game/rebate/config",
+        response = self.ps.post(platform_host+"/v1/game/rebate/config",
                                 json=[{"id": id, "gameCode": gameCode,
                                       "templateIds": templateIds}],
                                 params={}
@@ -331,7 +327,7 @@ class Game_rebate(PLAT_API):
                                   ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platfrom_host+"/v1/game/rebate/manual/rebate",
+        response = self.ps.post(platform_host+"/v1/game/rebate/manual/rebate",
                                 json={},
                                 params={
                                     "from": From
@@ -346,7 +342,7 @@ class Game_rebate(PLAT_API):
                                      ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/game/rebate/config/open",
+        response = self.ps.put(platform_host+"/v1/game/rebate/config/open",
                                json={},
                                params={
                                    "open": open
@@ -369,7 +365,7 @@ class RebateRecord(PLAT_API):
                    ):
         if plat_token is not None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/rebate/record",
+        response = self.ps.get(platform_host+"/v1/rebate/record",
                                json={},
                                params=KeywordArgument.body_data()
                                )

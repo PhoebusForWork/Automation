@@ -1,16 +1,13 @@
 # -*- coding: utf-8 -*-
 import requests
 import json
-import os
 import datetime
-import configparser
+from utils.data_utils import EnvReader
 
-if os.getenv('MODE') is None:
-    config = configparser.ConfigParser()
-    config.read('config/config.ini')  # 在rf_api_test層執行時使用
-    platfrom_host = config['host']['platform_host']
-else:
-    platfrom_host = os.getenv('PLATFORM_HOST')
+
+env = EnvReader()
+platform_host = env.PLATFORM_HOST\
+
 
 
 class PLAT_API:
@@ -47,8 +44,7 @@ class PLAT_API:
 
     def first_login_password(self, username='phoebusliu', oldPassword='abc123456', newPassword='abc123456'):  # 新帳戶更新密碼
         self.s = requests.Session()
-        timestemp = str(int(datetime.datetime.now().timestamp()))
-        response = self.ps.put(platfrom_host+"/v1/account/login/resetPassword",
+        response = self.ps.put(platform_host+"/v1/account/login/resetPassword",
                                json={
                                    "account": username,
                                    "oldPassword": oldPassword,
@@ -61,8 +57,7 @@ class PLAT_API:
 
     def login(self, username='phoebusliu', password='abc123456', imgCode='a'):  # 用戶登陸
         self.s = requests.Session()
-        timestemp = str(int(datetime.datetime.now().timestamp()))
-        response = self.ps.post(platfrom_host+"/v1/account/login",
+        response = self.ps.post(platform_host+"/v1/account/login",
                                 json={
                                     "account": username,
                                     "password": password,
@@ -71,7 +66,6 @@ class PLAT_API:
                                 },
                                 )
         self._printresponse(response)
-        # self.ps.headers.update({"uid":str(response.json()['data']['adminId'])})
         try:
             self.ps.headers.update(
                 {"token": str(response.json()['data']['token'])})
@@ -83,16 +77,14 @@ class PLAT_API:
         if plat_token != None:
             self.ps.headers.update({"token": plat_token})
         self.s = requests.Session()
-        timestemp = str(int(datetime.datetime.now().timestamp()))
-        response = self.ps.post(platfrom_host+"/v1/account/logout",
+        response = self.ps.post(platform_host+"/v1/account/logout",
                                 json={},
                                 )
         return response.json()
 
     def imgcode(self, uuid=124):  # 獲取驗證碼
         self.s = requests.Session()
-        timestemp = str(int(datetime.datetime.now().timestamp()))
-        response = self.ps.post(platfrom_host+"/v1/account/login/imgCode",
+        response = self.ps.post(platform_host+"/v1/account/login/imgCode",
                                 json={
                                 },
                                 params={

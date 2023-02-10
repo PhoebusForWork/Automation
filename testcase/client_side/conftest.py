@@ -1,13 +1,12 @@
 import logging
 import traceback
 import pytest
-import configparser
 from pylib.client_side.webApiBase import WEB_API
+from utils.data_utils import EnvReader
 
-config = configparser.ConfigParser()
-config.read('config/config.ini')
-cs_account = config['cs_account']['account']
-cs_password = config['cs_account']['password']
+env = EnvReader()
+cs_account = env.CS_ACCOUNT
+cs_password = env.CS_PASSWORD
 login_user_id = None
 
 

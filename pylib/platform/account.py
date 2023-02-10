@@ -1,18 +1,13 @@
 # -*- coding: utf-8 -*-
 import time
 import jsonpath
-import os
 from pylib.platform.platApiBase import PLAT_API
 from utils.api_utils import KeywordArgument
-import configparser
+from utils.data_utils import EnvReader
 
 
-if os.getenv('MODE') is None:
-    config = configparser.ConfigParser()
-    config.read('config/config.ini')  # 在rf_api_test層執行時使用
-    platfrom_host = config['host']['platform_host']
-else:
-    platfrom_host = os.getenv('PLATFORM_HOST')
+env = EnvReader()
+platform_host = env.PLATFORM_HOST
 
 
 class AccountAdmin(PLAT_API):
@@ -27,7 +22,7 @@ class AccountAdmin(PLAT_API):
                           ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/account/admin",
+        response = self.ps.get(platform_host+"/v1/account/admin",
                                json={},
                                params={
                                    "account": account,
@@ -63,7 +58,7 @@ class AccountAdmin(PLAT_API):
                   ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platfrom_host+"/v1/account/admin",
+        response = self.ps.post(platform_host+"/v1/account/admin",
                                 json={
                                     "phone": phone,
                                     "sipNum": sipNum,
@@ -89,7 +84,7 @@ class AccountAdmin(PLAT_API):
                    ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/account/admin/{}".format(adminId),
+        response = self.ps.get(platform_host+"/v1/account/admin/{}".format(adminId),
                                json={},
                                params={
             "adminId": adminId,
@@ -110,7 +105,7 @@ class AccountAdmin(PLAT_API):
                    ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/account/admin/{}".format(adminId),
+        response = self.ps.put(platform_host+"/v1/account/admin/{}".format(adminId),
                                json={
             "phone": phone,
             "sipNum": sipNum,
@@ -134,7 +129,7 @@ class AccountAdmin(PLAT_API):
                      ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.delete(platfrom_host+"/v1/account/admin/{}".format(adminId),
+        response = self.ps.delete(platform_host+"/v1/account/admin/{}".format(adminId),
                                   json={},
                                   params={
             "adminId": adminId,
@@ -151,7 +146,7 @@ class AccountAdmin(PLAT_API):
         if plat_token != None:
 
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/account/admin/{}/status".format(adminId),
+        response = self.ps.put(platform_host+"/v1/account/admin/{}/status".format(adminId),
                                json={},
                                params={
             "adminId": adminId,
@@ -168,7 +163,7 @@ class AccountAdmin(PLAT_API):
                       ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/account/admin/password",
+        response = self.ps.put(platform_host+"/v1/account/admin/password",
                                json={
                                    "oldPassword": oldPassword,
                                    "newPassword": newPassword,
@@ -184,7 +179,7 @@ class AccountAdmin(PLAT_API):
                        ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/account/admin/{}/resetPassword".format(adminId),
+        response = self.ps.put(platform_host+"/v1/account/admin/{}/resetPassword".format(adminId),
                                json={},
                                params={
             "adminId": adminId,
@@ -216,7 +211,7 @@ class AccountAuthority(PLAT_API):
                        ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/account/authority/list",
+        response = self.ps.get(platform_host+"/v1/account/authority/list",
                                json={},
                                params={}
                                )
@@ -228,7 +223,7 @@ class AccountAuthority(PLAT_API):
                        ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/account/authority/menu",
+        response = self.ps.get(platform_host+"/v1/account/authority/menu",
                                json={},
                                params={}
                                )
@@ -240,7 +235,7 @@ class AccountAuthority(PLAT_API):
                              ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/account/authority/permission",
+        response = self.ps.get(platform_host+"/v1/account/authority/permission",
                                json={},
                                params={}
                                )
@@ -256,7 +251,7 @@ class AccountDept(PLAT_API):
                   ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/account/dept/list",
+        response = self.ps.get(platform_host+"/v1/account/dept/list",
                                json={},
                                params={
                                    "roleId": roleId,
@@ -289,7 +284,7 @@ class AccountDept(PLAT_API):
                    ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/account/dept/admin/list",
+        response = self.ps.get(platform_host+"/v1/account/dept/admin/list",
                                json={},
                                params=KeywordArgument.body_data()
 
@@ -303,7 +298,7 @@ class AccountDept(PLAT_API):
                  ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platfrom_host+"/v1/account/dept",
+        response = self.ps.post(platform_host+"/v1/account/dept",
                                 json={
                                     "department": department,
                                     "pid": pid,
@@ -319,7 +314,7 @@ class AccountDept(PLAT_API):
                   ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/account/dept/{}".format(departmentId),
+        response = self.ps.put(platform_host+"/v1/account/dept/{}".format(departmentId),
                                json={
             "department": department,
         },
@@ -336,7 +331,7 @@ class AccountDept(PLAT_API):
                     ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.delete(platfrom_host+"/v1/account/dept/{}".format(departmentId),
+        response = self.ps.delete(platform_host+"/v1/account/dept/{}".format(departmentId),
                                   json={},
                                   params={
             "departmentId": departmentId,
@@ -351,7 +346,7 @@ class AccountDept(PLAT_API):
                     ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/account/dept/leader",
+        response = self.ps.put(platform_host+"/v1/account/dept/leader",
                                json={
                                    "adminId": adminId,
                                    "isLeader": isLeader,
@@ -367,7 +362,7 @@ class AccountDept(PLAT_API):
                    ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/account/dept/admin",
+        response = self.ps.put(platform_host+"/v1/account/dept/admin",
                                json={
                                    "adminIdList": adminIdList,
                                    "departmentId": departmentId,
@@ -383,7 +378,7 @@ class AccountDept(PLAT_API):
                           ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/account/dept/leader",
+        response = self.ps.put(platform_host+"/v1/account/dept/leader",
                                json={},
                                params={
                                    "adminId": adminId,
@@ -408,7 +403,7 @@ class AccountRole(PLAT_API):
                   ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/account/role/list",
+        response = self.ps.get(platform_host+"/v1/account/role/list",
                                json={},
                                params={
                                    "role": role,
@@ -429,7 +424,7 @@ class AccountRole(PLAT_API):
                  ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platfrom_host+"/v1/account/role",
+        response = self.ps.post(platform_host+"/v1/account/role",
                                 json={
                                     "role": role,
                                     "remark": remark,
@@ -450,7 +445,7 @@ class AccountRole(PLAT_API):
                   ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/account/role/{}".format(roleId),
+        response = self.ps.put(platform_host+"/v1/account/role/{}".format(roleId),
                                json={
             "role": role,
             "remark": remark,
@@ -469,7 +464,7 @@ class AccountRole(PLAT_API):
                     ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/account/role/{}/status".format(roleId),
+        response = self.ps.put(platform_host+"/v1/account/role/{}/status".format(roleId),
                                json={
             "status": status,
         },
@@ -484,7 +479,7 @@ class AccountRole(PLAT_API):
                          ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/account/role/{}/authorities".format(roleId),
+        response = self.ps.get(platform_host+"/v1/account/role/{}/authorities".format(roleId),
                                json={},
                                params={
             "roleId": roleId,

@@ -1,14 +1,9 @@
 # -*- coding: utf-8 -*-
-from ..platform.platApiBase import PLAT_API  # 執行RF時使用
-import configparser
-import os
+from ..platform.platApiBase import PLAT_API
+from utils.data_utils import EnvReader
 
-if os.getenv('MODE') is None:
-    config = configparser.ConfigParser()
-    config.read('config/config.ini')  # 在rf_api_test層執行時使用
-    platfrom_host = config['host']['platform_host']
-else:
-    platfrom_host = os.getenv('PLATFORM_HOST')
+env = EnvReader()
+platform_host = env.PLATFORM_HOST
 
 
 class thirdPartyManage(PLAT_API):
@@ -19,7 +14,7 @@ class thirdPartyManage(PLAT_API):
                           ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platfrom_host+"/v1/thirdPartyManage",
+        response = self.ps.get(platform_host+"/v1/thirdPartyManage",
                                json={},
                                params={
                                    "type": type,
@@ -35,7 +30,7 @@ class thirdPartyManage(PLAT_API):
                            ):
         if plat_token != None:
             self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platfrom_host+"/v1/thirdPartyManage",
+        response = self.ps.put(platform_host+"/v1/thirdPartyManage",
                                json=[{
                                    "id": id,
                                    "name": name,

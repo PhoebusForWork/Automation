@@ -1,6 +1,11 @@
 import os
 import json5
 import copy
+import configparser
+
+
+config = configparser.ConfigParser()
+config.read('config/config.ini')
 
 
 class JsonReader:
@@ -73,3 +78,63 @@ class JsonReader:
             except:
                 json_copy[0][key] = value
         return json_copy
+
+
+class EnvReader:
+    def __init__(self) -> None:
+        self.__load_host()
+        self.__load_postgres()
+        self.__load_redis()
+        self.__load_cs_test_account()
+        self.__load_API_headers()
+
+    def __load_host(self):
+        if os.getenv('MODE') is None:
+            self.PLATFORM_HOST = config['host']['platform_host']
+            self.WEB_HOST = config["host"]['web_host']
+            self.XXL_HOST = config["host"]['xxl_host']
+        else:
+            self.PLATFORM_HOST = os.getenv('PLATFORM_HOST')
+            self.WEB_HOST = os.getenv('WEB_HOST')
+            self.XXL_HOST = os.getenv('XXL_HOST')
+
+    def __load_postgres(self):
+        if os.getenv('MODE') is None:
+            self.POSTGRES_PLT_HOST = config['postgres_connection']['postgres_plt_host']
+            self.POSTGRES_CS_HOST = config['postgres_connection']['postgres_cs_host']
+            self.POSTGRES_PLT_PORT = config['postgres_connection']['postgres_plt_port']
+            self.POSTGRES_CS_PORT = config['postgres_connection']['postgres_cs_port']
+            self.POSTGRES_PLT_PASSWORD = config['postgres_connection']['postgres_plt_password']
+            self.POSTGRES_CS_PASSWORD = config['postgres_connection']['postgres_cs_password']
+        else:
+            self.POSTGRES_PLT_HOST = os.getenv('POSTGRES_PLT_HOST')
+            self.POSTGRES_CS_HOST = os.getenv('POSTGRES_CS_HOST')
+            self.POSTGRES_PLT_PORT = os.getenv('POSTGRES_PLT_PORT')
+            self.POSTGRES_CS_PORT = os.getenv('POSTGRES_CS_PORT')
+            self.POSTGRES_PLT_PASSWORD = os.getenv('POSTGRES_PLT_PASSWORD')
+            self.POSTGRES_CS_PASSWORD = os.getenv('POSTGRES_CS_PASSWORD')
+
+    def __load_redis(self):
+        if os.getenv('MODE') is None:
+            self.REDIS_PLT_HOST = config['redis_connection']['redis_plt_host']
+            self.REDIS_CS_HOST = config['redis_connection']['redis_cs_host']
+            self.REDIS_PLT_PORT = config['redis_connection']['redis_plt_port']
+            self.REDIS_CS_PORT = config['redis_connection']['redis_cs_port']
+            self.REDIS_PLT_PASSWORD = config['redis_connection']['redis_plt_password']
+            self.REDIS_CS_PASSWORD = config['redis_connection']['redis_cs_password']
+        else:
+            self.REDIS_PLT_HOST = os.getenv('REDIS_PLT_HOST')
+            self.REDIS_CS_HOSTcs_host = os.getenv('REDIS_CS_HOST')
+            self.REDIS_PLT_PORT = os.getenv('REDIS_PLT_PORT')
+            self.REDIS_CS_PORT = os.getenv('REDIS_CS_PORT')
+            self.REDIS_PLT_PASSWORD = os.getenv('REDIS_PLT_PASSWORD')
+            self.REDIS_CS_PASSWORD = os.getenv('REDIS_CS_PASSWORD')
+
+    def __load_cs_test_account(self):
+        self.CS_ACCOUNT = config['cs_account']['account']
+        self.CS_PASSWORD = config['cs_account']['password']
+
+    def __load_API_headers(self):
+        self.PLT_HEADER = config['API_headers']['plt']
+        self.XXL_HEADER = config['API_headers']['xxl']
+        self.CS_HEADER = config['API_headers']['cs']
