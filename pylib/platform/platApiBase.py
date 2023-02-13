@@ -12,7 +12,7 @@ platform_host = env.PLATFORM_HOST\
 
 class PLAT_API:
 
-    def __init__(self):
+    def __init__(self, token=None):
 
         self.timestemp = str(int(datetime.datetime.now().timestamp()))
         self.ps = requests.Session()
@@ -28,6 +28,8 @@ class PLAT_API:
             "Accept": "application/json, text/plain, */*",
             "timestamp": "1636102887000"
         }
+        if token:
+            self.ps.headers.update({"token": token})
 
     def _printresponse(self, response):  # 印出回傳
         print('\n\n--------------HTTPS response  *  begin ------------------')
