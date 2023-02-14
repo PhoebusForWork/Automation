@@ -2,10 +2,6 @@ variables:
   IMAGE_PATH: qa
   IMAGE_NAME: ${CI_PROJECT_NAME}
 
-stages:
-  - test1
-  - test2
-
 include:
   stage: test1
   project: bbc/devops/gitlab-pipeline/cicd-pipeline
@@ -13,7 +9,6 @@ include:
   file: 'qa-automaion-pipeline.yml'
 
 test:
-  stage: test1
   script:
     - env
 
