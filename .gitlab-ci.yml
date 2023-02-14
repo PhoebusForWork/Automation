@@ -5,4 +5,4 @@ variables:
 include:
   project: bbc/devops/gitlab-pipeline/cicd-pipeline
   ref: master
-  file: '.gitlab-ci.yml'
+  file: 'qa-automaion-pipeline.yml'
