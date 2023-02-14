@@ -1,8 +1,5 @@
 #!/bin/bash
 
-REDIS_CLIENT_PORT=6379
-REDIS_SENTINEL_PORT=26379
-
 run() {
   FIND_MASTER=$(redis-cli -h $1 -p $REDIS_SENTINEL_PORT -a $2 --no-auth-warning sentinel masters | awk 'NR == 4')
   
