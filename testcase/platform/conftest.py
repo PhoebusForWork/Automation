@@ -1,7 +1,6 @@
 import logging
 import traceback
 import pytest
-import configparser
 from pylib.platform.platApiBase import PLAT_API
 from utils.data_utils import EnvReader
 
