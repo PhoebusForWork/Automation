@@ -18,10 +18,10 @@ testData = td.read_json5('test_user.json5', file_side='cs')
 ######################
 
 @pytest.fixture(scope="class")
-def clear_address(getCsLoginToken):
+def clear_address(get_client_side_token):
     clear = Address()
     clear.clear_user_address(
-        web_token=getCsLoginToken)
+        web_token=get_client_side_token)
 
 
 @pytest.fixture(scope="function")
@@ -59,13 +59,13 @@ class Test_address():
     @allure.story("新增地址")
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", td.get_case('add_user_address'))
-    def test_add_user_address(test, getCsLoginToken, clear_address):
+    def test_add_user_address(test, get_client_side_token, clear_address):
 
         json_replace = td.replace_json(test['json'], test['target'])
 
         api = API_Controller(platfrom='cs')
         resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                               test['params'], token=getCsLoginToken)
+                               test['params'], token=get_client_side_token)
 
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
@@ -77,13 +77,13 @@ class Test_address_other():
     @allure.story("更新地址")
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", td.get_case('edit_user_address'))
-    def test_edit_user_address(test, getCsLoginToken, clear_address):
+    def test_edit_user_address(test, get_client_side_token, clear_address):
 
         json_replace = td.replace_json(test['json'], test['target'])
 
         api = API_Controller(platfrom='cs')
         resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                               test['params'], token=getCsLoginToken)
+                               test['params'], token=get_client_side_token)
 
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
@@ -93,15 +93,15 @@ class Test_address_other():
     @allure.story("刪除地址")
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", td.get_case('delete_user_address'))
-    def test_delete_user_address(test, getCsLoginToken):
+    def test_delete_user_address(test, get_client_side_token):
         if "可刪除id" in test['req_url']:
             delete_id = Address()
             test['req_url'] = test['req_url'].replace("可刪除id", str(
-                delete_id.get_user_address_not_default(web_token=getCsLoginToken)))
+                delete_id.get_user_address_not_default(web_token=get_client_side_token)))
 
         api = API_Controller(platfrom='cs')
         resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=getCsLoginToken)
+                               test['params'], token=get_client_side_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -110,10 +110,10 @@ class Test_address_other():
     @allure.story("依使用者查詢地址")
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", td.get_case('get_user_address'))
-    def test_get_user_address(test, getCsLoginToken):
+    def test_get_user_address(test, get_client_side_token):
         api = API_Controller(platfrom='cs')
         resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=getCsLoginToken)
+                               test['params'], token=get_client_side_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -122,10 +122,10 @@ class Test_address_other():
     @allure.story("查詢單筆地址")
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", td.get_case('get_user_address_one'))
-    def test_get_user_address_one(test, getCsLoginToken):
+    def test_get_user_address_one(test, get_client_side_token):
         api = API_Controller(platfrom='cs')
         resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=getCsLoginToken)
+                               test['params'], token=get_client_side_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -134,10 +134,10 @@ class Test_address_other():
     @allure.story("省列表")
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", td.get_case('get_provinces'))
-    def test_get_provinces(test, getCsLoginToken):
+    def test_get_provinces(test, get_client_side_token):
         api = API_Controller(platfrom='cs')
         resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=getCsLoginToken)
+                               test['params'], token=get_client_side_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -146,10 +146,10 @@ class Test_address_other():
     @allure.story("省下城市列表")
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", td.get_case('get_provinces_city'))
-    def test_get_provinces_city(test, getCsLoginToken):
+    def test_get_provinces_city(test, get_client_side_token):
         api = API_Controller(platfrom='cs')
         resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=getCsLoginToken)
+                               test['params'], token=get_client_side_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 

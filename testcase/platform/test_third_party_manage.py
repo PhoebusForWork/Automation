@@ -25,10 +25,10 @@ class Test_Thrid_Party_Manage():
     @allure.story("獲取三方接口列表")
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", td.get_case('get_third_party_manage'))
-    def test_get_third_party_manage(test, getPltLoginToken):
+    def test_get_third_party_manage(test, get_platform_token):
         api = API_Controller()
         resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=getPltLoginToken)
+                               test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         # check multi-type
         if "所有資料" in test['scenario']:
@@ -41,18 +41,18 @@ class Test_Thrid_Party_Manage():
     @allure.story("保存三方接口列表")
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", td.get_case('edit_third_party_manage'))
-    def test_edit_third_party_manage(test, getPltLoginToken):
+    def test_edit_third_party_manage(test, get_platform_token):
         json_replace = td.replace_json(test['json'], test['target'])
         api = API_Controller()
         resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                               test['params'], token=getPltLoginToken)
+                               test['params'], token=get_platform_token)
         # check response
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
         # query and check data after editing
         if resp.status_code == 200:
             id = str(json_replace[0]['id'])
-            req = jsonpath.jsonpath(thirdPartyManage().getThirdInterface(plat_token=getPltLoginToken),
+            req = jsonpath.jsonpath(thirdPartyManage().getThirdInterface(plat_token=get_platform_token),
                                     f'$.data[?(@.id == {id} )]')
             if req is not False:
                 assert set(test['target'].items()).issubset(req[0].items())

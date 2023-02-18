@@ -20,14 +20,14 @@ testData = td.read_json5('test_validation.json5', file_side='cs')
 @allure.story("發送語音驗證訊息")
 @allure.title("{test[scenario]}")
 @pytest.mark.parametrize("test", td.get_case('validation_voice'))
-def test_validation_voice(test, getCsLoginToken):
+def test_validation_voice(test, get_client_side_token):
 
     json_replace = td.replace_json(test['json'], test['target'])
     if json_replace['device'] == "空":
         json_replace['device'] = str(random.randrange(99999999999))
     api = API_Controller(platfrom='cs')
     resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=getCsLoginToken)
+                           test['params'], token=get_client_side_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -36,14 +36,14 @@ def test_validation_voice(test, getCsLoginToken):
 @allure.story("發送短信驗證訊息")
 @allure.title("{test[scenario]}")
 @pytest.mark.parametrize("test", td.get_case('validation_sms'))
-def test_validation_sms(test, getCsLoginToken):
+def test_validation_sms(test, get_client_side_token):
 
     json_replace = td.replace_json(test['json'], test['target'])
     if json_replace['device'] == "空":
         json_replace['device'] = str(random.randrange(99999999999))
     api = API_Controller(platfrom='cs')
     resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=getCsLoginToken)
+                           test['params'], token=get_client_side_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -52,14 +52,14 @@ def test_validation_sms(test, getCsLoginToken):
 @allure.story("發送郵箱驗證訊息")
 @allure.title("{test[scenario]}")
 @pytest.mark.parametrize("test", td.get_case('validation_email'))
-def test_validation_email(test, getCsLoginToken):
+def test_validation_email(test, get_client_side_token):
 
     json_replace = td.replace_json(test['json'], test['target'])
     if json_replace['device'] == '@gmail.com':
         json_replace['device'] = str(random.randrange(99999))+json_replace['device']
     api = API_Controller(platfrom='cs')
     resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=getCsLoginToken)
+                           test['params'], token=get_client_side_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 

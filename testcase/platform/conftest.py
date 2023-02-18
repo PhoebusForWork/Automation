@@ -18,7 +18,7 @@ env = EnvReader()
 
 
 @pytest.fixture(scope="module")
-def getPltLoginToken(username='superAdmin', password='abc123456'):
+def get_platform_token(username='superAdmin', password='abc123456'):
     api = PLAT_API()
     code = api.imgcode()
     resp = api.login(username=username, password=password, imgCode=code)
