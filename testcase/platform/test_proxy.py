@@ -26,7 +26,7 @@ def clean(get_platform_token):
 # test_case #
 #############
 
-class Test_Proxy_Channel():
+class TestProxyChannel:
     @staticmethod
     @allure.feature("渠道及團隊")
     @allure.story("新增代理渠道")
@@ -120,7 +120,7 @@ class Test_Proxy_Channel():
         assert test['keyword'] in resp.text
 
 
-class Test_Proxy_Group():
+class TestProxyGroup:
     @staticmethod
     @allure.feature("渠道及團隊")
     @allure.story("新增代理團隊")
@@ -194,7 +194,7 @@ class Test_Proxy_Group():
         assert test['keyword'] in resp.text
 
 
-class Test_Proxy_Commission():
+class TestProxyCommission:
     @staticmethod
     @allure.feature("佣金模式管理")
     @allure.story("建立佣金模板")

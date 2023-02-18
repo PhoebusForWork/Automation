@@ -65,7 +65,7 @@ def test_get_wallet_user_info(test, get_client_side_token):
     assert test['keyword'] in resp.text
 
 
-class Test_withdraw_all():
+class TestWithdrawAll:
     @staticmethod
     @allure.feature("錢包管理")
     @allure.story("一鍵回收")
@@ -80,7 +80,7 @@ class Test_withdraw_all():
         assert test['keyword'] in resp.text
 
 
-class Test_deposit():
+class TestDeposit:
     @staticmethod
     @allure.feature("錢包管理")
     @allure.story("將錢轉出至遊戲渠道")
@@ -98,7 +98,7 @@ class Test_deposit():
                                                          check_amount=test['json']['amount'], channel=test['json']['channelCode']) is True
 
 
-class Test_withdraw():
+class TestWithdraw:
     @staticmethod
     @allure.feature("錢包管理")
     @allure.story("從指定遊戲渠道轉回中心錢包")

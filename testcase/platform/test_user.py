@@ -24,7 +24,7 @@ def clean(get_platform_token):
 #############
 
 
-class Test_User_Vip_Config():
+class TestUserVipConfig:
     @staticmethod
     @allure.feature("客戶管理")
     @allure.story("VIP層級")
@@ -80,7 +80,7 @@ class Test_User_Vip_Config():
         assert test['keyword'] in resp.text
 
 
-class Test_User():
+class TestUser:
     @staticmethod
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
@@ -271,7 +271,7 @@ class Test_User():
                 plat_token=get_platform_token, id=ret[0], status=2, remark='test_approval')
 
 
-class Test_User_Manage():
+class TestUserManage:
     @staticmethod
     @allure.feature("客戶管理")
     @allure.story("審批操作")
@@ -373,7 +373,7 @@ class Test_User_Manage():
         assert test['keyword'] in resp.text
 
 
-class Test_User_Vip():
+class TestUserVip:
     @staticmethod
     @allure.feature("客戶管理")
     @allure.story("客戶VIP層級")

@@ -52,7 +52,7 @@ def re_security_pwd_default():
 #      testCase      #
 ######################
 
-class Test_address():
+class TestAddress:
     @staticmethod
     @allure.feature("用戶送貨地址")
     @allure.story("新增地址")
@@ -70,7 +70,7 @@ class Test_address():
         assert test['keyword'] in resp.text
 
 
-class Test_address_other():
+class TestAddressOther:
     @staticmethod
     @allure.feature("用戶送貨地址")
     @allure.story("更新地址")

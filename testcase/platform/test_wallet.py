@@ -20,7 +20,7 @@ test_data.read_json5('test_wallet.json5')
 # test_case #
 #############
 
-class Test_UserTransfer():
+class TestUserTransfer:
     @staticmethod
     @allure.feature("客戶列表/資金往來")
     @allure.story("取得所有錢包現狀")
@@ -119,7 +119,7 @@ class Test_UserTransfer():
         assert test['keyword'] in resp.text
 
 
-class Test_GameTransferFail():
+class TestGameTransferFail:
 
     @staticmethod
     @allure.feature("異常轉帳處理")

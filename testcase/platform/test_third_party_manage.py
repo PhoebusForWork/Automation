@@ -14,12 +14,12 @@ test_data.read_json5('test_third_party_manage.json5')
 ######################
 
 
-
 #############
 # test_case #
 #############
 
-class Test_Thrid_Party_Manage():
+
+class TestThirdPartyManage:
     @staticmethod
     @allure.feature("三方接口管理")
     @allure.story("獲取三方接口列表")
