@@ -32,8 +32,8 @@ def open_game(get_platform_token):
 def test_get_game_list(test, get_platform_token):
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -47,8 +47,8 @@ def test_edit_game_list(test, get_platform_token):
     json_replace = test_data.replace_json(test['json'], test['target'])
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
 
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
@@ -61,8 +61,8 @@ def test_edit_game_list(test, get_platform_token):
 def test_edit_game_status(test, get_platform_token):
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -74,8 +74,8 @@ def test_edit_game_status(test, get_platform_token):
 def test_edit_game_isTesting(test, get_platform_token, open_game):
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -87,8 +87,8 @@ def test_edit_game_isTesting(test, get_platform_token, open_game):
 def test_game_sync(test, get_platform_token, open_game):
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -102,8 +102,8 @@ def test_get_game_orders(test, get_platform_token):
     json_replace = test_data.replace_json(test['json'], test['target'])
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
 
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
@@ -116,8 +116,8 @@ def test_get_game_orders(test, get_platform_token):
 def test_get_game_code(test, get_platform_token):
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
 
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
@@ -130,8 +130,8 @@ def test_get_game_code(test, get_platform_token):
 def test_get_game_channel_mapList(test, get_platform_token):
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
 
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
@@ -144,8 +144,8 @@ def test_get_game_channel_mapList(test, get_platform_token):
 def test_get_rebate_template_config(test, get_platform_token):
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
 
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
@@ -158,8 +158,8 @@ def test_get_rebate_template_config(test, get_platform_token):
 def test_get_rebate_template_allByGameType(test, get_platform_token):
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
 
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
@@ -176,8 +176,8 @@ def test_add_rebate_template_config(test, get_platform_token):
         json_replace['templateName'] = json_replace['templateName'] + \
             str(random.randrange(99999))
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
 
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
@@ -199,8 +199,8 @@ def test_edit_rebate_template_config(test, get_platform_token):
         json_replace['templateName'] = json_replace['templateName'] + \
             str(random.randrange(99999))
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
 
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
@@ -216,8 +216,8 @@ def test_delete_rebate_template_config(test, get_platform_token):
         test['req_url'] = test['req_url'].replace("存在模板id", str(
             template.get_exist_template_auto(plat_token=get_platform_token)))
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
 
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
@@ -230,8 +230,8 @@ def test_delete_rebate_template_config(test, get_platform_token):
 def test_get_game_rebate_config(test, get_platform_token):
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
 
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
@@ -248,8 +248,8 @@ def test_edit_game_rebate_config(test, get_platform_token):
         json_replace[0]['gameCode'] = json_replace[0]['gameCode'] + \
             str(random.randrange(99999))
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
 
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
@@ -262,8 +262,8 @@ def test_edit_game_rebate_config(test, get_platform_token):
 def test_game_rebate_manual_rebate(test, get_platform_token):
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
 
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
@@ -276,8 +276,8 @@ def test_game_rebate_manual_rebate(test, get_platform_token):
 def test_game_rebate_config_open(test, get_platform_token):
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
 
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
@@ -290,8 +290,8 @@ def test_game_rebate_config_open(test, get_platform_token):
 def test_rebate_record(test, get_platform_token):
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
 
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text

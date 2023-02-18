@@ -2,13 +2,14 @@ import os
 import json5
 import copy
 import configparser
-
+import pytest
 
 config = configparser.ConfigParser()
 config.read('config/config.ini')
 
 
 class TestDataReader:
+    __test__ = False
 
     def __init__(self):
 

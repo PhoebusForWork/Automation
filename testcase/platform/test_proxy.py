@@ -39,8 +39,8 @@ class TestProxyChannel:
                 str(random.randrange(99999))
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -56,8 +56,8 @@ class TestProxyChannel:
                 str(random.randrange(99999))
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -75,8 +75,8 @@ class TestProxyChannel:
 
             pass
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -88,8 +88,8 @@ class TestProxyChannel:
     def test_proxy_get_channel_all(test, get_platform_token):
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -101,8 +101,8 @@ class TestProxyChannel:
     def test_proxy_available_channel(test, get_platform_token):
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -114,8 +114,8 @@ class TestProxyChannel:
     def test_proxy_get_channel(test, get_platform_token):
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -137,8 +137,8 @@ class TestProxyGroup:
                 req.get_available_channel_auto(plat_token=get_platform_token)]
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -158,8 +158,8 @@ class TestProxyGroup:
                 req.get_available_channel_auto(plat_token=get_platform_token)]
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -175,8 +175,8 @@ class TestProxyGroup:
                 groupId.get_exist_group_auto(plat_token=get_platform_token)))
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -188,8 +188,8 @@ class TestProxyGroup:
     def test_proxy_get_groupsAndChannels(test, get_platform_token):
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -207,8 +207,8 @@ class TestProxyCommission:
                 str(random.randrange(99999))
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -226,8 +226,8 @@ class TestProxyCommission:
                 str(random.randrange(99999))
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -239,8 +239,8 @@ class TestProxyCommission:
     def test_proxy_get_commission_template_subCommissionConfig(test, get_platform_token):
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -254,8 +254,8 @@ class TestProxyCommission:
         test['json'] = test_data.replace_json(test['json'], test['target'])
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -267,8 +267,8 @@ class TestProxyCommission:
     def test_proxy_commission_template(test, get_platform_token):
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -280,8 +280,8 @@ class TestProxyCommission:
     def test_proxy_commission_list(test, get_platform_token):
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -293,8 +293,8 @@ class TestProxyCommission:
     def test_proxy_get_commission(test, get_platform_token):
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -306,8 +306,8 @@ class TestProxyCommission:
     def test_proxy_edit_commission(test, get_platform_token):
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -319,8 +319,8 @@ class TestProxyCommission:
     def test_proxy_get_settlementShares(test, get_platform_token):
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -332,8 +332,8 @@ class TestProxyCommission:
     def test_proxy_edit_platformFeeShares(test, get_platform_token):
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -345,8 +345,8 @@ class TestProxyCommission:
     def test_proxy_get_commissionConfig(test, get_platform_token):
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -358,8 +358,8 @@ class TestProxyCommission:
     def test_proxy_edit_commissionConfig(test, get_platform_token):
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -378,8 +378,8 @@ def test_proxy_add_proxy(test, get_platform_token):
         test['json']['telephone'] = Make.mobile()
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -391,8 +391,8 @@ def test_proxy_add_proxy(test, get_platform_token):
 def test_proxy_proxy_list(test, get_platform_token):
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -403,8 +403,8 @@ def test_proxy_proxy_list(test, get_platform_token):
 @pytest.mark.parametrize("test", test_data.get_case('proxy_proxy_validate'))
 def test_proxy_proxy_validate(test, get_platform_token):
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -416,8 +416,8 @@ def test_proxy_proxy_validate(test, get_platform_token):
 def test_proxy_proxy_subCount(test, get_platform_token):
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -429,8 +429,8 @@ def test_proxy_proxy_subCount(test, get_platform_token):
 def test_proxy_proxy_commission(test, get_platform_token):
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
     clean = UserManage()
     clean.clean_approval(plat_token=get_platform_token,
                          optType="COMMISSION_CHANGE")
@@ -445,8 +445,8 @@ def test_proxy_proxy_commission(test, get_platform_token):
 def test_proxy_proxy_channel(test, get_platform_token):
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -458,8 +458,8 @@ def test_proxy_proxy_channel(test, get_platform_token):
 def test_proxy_get_edit_detail(test, get_platform_token):
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -471,8 +471,8 @@ def test_proxy_get_edit_detail(test, get_platform_token):
 def test_proxy_get_edit_display(test, get_platform_token):
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -484,8 +484,8 @@ def test_proxy_get_edit_display(test, get_platform_token):
 def test_proxy_get_commission_avg(test, get_platform_token):
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -497,8 +497,8 @@ def test_proxy_get_commission_avg(test, get_platform_token):
 def test_proxy_get_tradeInfo(test, get_platform_token):
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -510,8 +510,8 @@ def test_proxy_get_tradeInfo(test, get_platform_token):
 def test_proxy_get_manage_list(test, get_platform_token):
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -523,8 +523,8 @@ def test_proxy_get_manage_list(test, get_platform_token):
 def test_proxy_get_manage_approver_list(test, get_platform_token):
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -548,8 +548,8 @@ def test_proxy_manage_approver_first(test, get_platform_token):
             "二審完成訂單", orderid.get_second_approval_success_id(token=get_platform_token))
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -569,8 +569,8 @@ def test_proxy_manage_approver_second(test, get_platform_token):
             "二審完成訂單", orderid.get_second_approval_success_id(token=get_platform_token))
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -582,8 +582,8 @@ def test_proxy_manage_approver_second(test, get_platform_token):
 def test_proxy_get_credit_detail(test, get_platform_token):
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -595,8 +595,8 @@ def test_proxy_get_credit_detail(test, get_platform_token):
 def test_proxy_edit_credit(test, get_platform_token):
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
     clean = UserManage()
     clean.clean_approval(plat_token=get_platform_token, optType="CREDIT_CHANGE")
     assert resp.status_code == test['code_status'], resp.text

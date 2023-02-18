@@ -63,8 +63,8 @@ class TestAddress:
         json_replace = test_data.replace_json(test['json'], test['target'])
 
         api = API_Controller(platform='cs')
-        resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                               test['params'], token=get_client_side_token)
+        resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                                test['params'], token=get_client_side_token)
 
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
@@ -81,8 +81,8 @@ class TestAddressOther:
         json_replace = test_data.replace_json(test['json'], test['target'])
 
         api = API_Controller(platform='cs')
-        resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                               test['params'], token=get_client_side_token)
+        resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                                test['params'], token=get_client_side_token)
 
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
@@ -99,8 +99,8 @@ class TestAddressOther:
                 delete_id.get_user_address_not_default(web_token=get_client_side_token)))
 
         api = API_Controller(platform='cs')
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_client_side_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_client_side_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -111,8 +111,8 @@ class TestAddressOther:
     @pytest.mark.parametrize("test", test_data.get_case('get_user_address'))
     def test_get_user_address(test, get_client_side_token):
         api = API_Controller(platform='cs')
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_client_side_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_client_side_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -123,8 +123,8 @@ class TestAddressOther:
     @pytest.mark.parametrize("test", test_data.get_case('get_user_address_one'))
     def test_get_user_address_one(test, get_client_side_token):
         api = API_Controller(platform='cs')
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_client_side_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_client_side_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -135,8 +135,8 @@ class TestAddressOther:
     @pytest.mark.parametrize("test", test_data.get_case('get_provinces'))
     def test_get_provinces(test, get_client_side_token):
         api = API_Controller(platform='cs')
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_client_side_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_client_side_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -147,8 +147,8 @@ class TestAddressOther:
     @pytest.mark.parametrize("test", test_data.get_case('get_provinces_city'))
     def test_get_provinces_city(test, get_client_side_token):
         api = API_Controller(platform='cs')
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_client_side_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_client_side_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 

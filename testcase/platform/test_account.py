@@ -41,8 +41,8 @@ def test_account_login(test, ):
         json_replace['imgCode'] = str(
             img_code.imgcode(uuid=json_replace['uuid']))
     api = API_Controller()
-    resp = api.HttpsClient(test["req_method"], test["req_url"], json_replace,
-                           test["params"])
+    resp = api.send_request(test["req_method"], test["req_url"], json_replace,
+                            test["params"])
 
     assert resp.status_code == test["code_status"], resp.text
     assert test['keyword'] in resp.text
@@ -55,8 +55,8 @@ def test_account_login(test, ):
 def test_dept_list(test, get_platform_token):
     json_replace = test_data.replace_json(test['json'], test['target'])
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
 
     if "[roleId]基本查詢" == test['scenario']:
@@ -79,8 +79,8 @@ def test_dept(test, get_platform_token):
     if json_replace['department'] == "新增主節點":
         json_replace['department'] = json_replace['department']+str(int(now))
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -93,8 +93,8 @@ def test_dept_leader(test, get_platform_token):
 
     json_replace = test_data.replace_json(test['json'], test['target'])
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -107,8 +107,8 @@ def test_dept_admin(test, get_platform_token):
 
     json_replace = test_data.replace_json(test['json'], test['target'])
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -120,8 +120,8 @@ def test_dept_admin(test, get_platform_token):
 def test_dept_delete_admin_id(test, get_platform_token):
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -134,8 +134,8 @@ def test_dept_put_department_id(test, get_platform_token):
 
     json_replace = test_data.replace_json(test['json'], test['target'])
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -153,8 +153,8 @@ def test_dept_delete_department_id(test, get_platform_token):
 
     json_replace = test_data.replace_json(test['json'], test['target'])
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -166,8 +166,8 @@ def test_dept_delete_department_id(test, get_platform_token):
 def test_dept_admin_list(test, get_platform_token):
     json_replace = test_data.replace_json(test['json'], test['target'])
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -183,8 +183,8 @@ def test_role(test, get_platform_token):
     if json_replace['role'] == "auto":
         json_replace['role'] = json_replace['role']+str(int(now))
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -197,8 +197,8 @@ def test_put_role(test, get_platform_token):
 
     json_replace = test_data.replace_json(test['json'], test['target'])
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -216,8 +216,8 @@ def test_put_role_status(test, get_platform_token):
 
     json_replace = test_data.replace_json(test['json'], test['target'])
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -230,8 +230,8 @@ def test_get_role_status(test, get_platform_token):
 
     json_replace = test_data.replace_json(test['json'], test['target'])
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -244,8 +244,8 @@ def test_role_list(test, get_platform_token):
 
     json_replace = test_data.replace_json(test['json'], test['target'])
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -258,8 +258,8 @@ def test_admin(test, get_platform_token):
 
     json_replace = test_data.replace_json(test['json'], test['target'])
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -272,8 +272,8 @@ def test_edit_admin(test, get_platform_token):
 
     json_replace = test_data.replace_json(test['json'], test['target'])
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -291,8 +291,8 @@ def test_admin_add_account(test, get_platform_token):
         json_replace['account'] = new_name
         json_replace['displayName'] = new_name
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -308,8 +308,8 @@ def test_delete_admin(test, get_platform_token):
             "未登入帳號", dep_id.find_admin_id(plat_token=get_platform_token))
     json_replace = test_data.replace_json(test['json'], test['target'])
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -322,8 +322,8 @@ def test_admin_status(test, get_platform_token):
 
     json_replace = test_data.replace_json(test['json'], test['target'])
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -336,8 +336,8 @@ def test_admin_reset_password(test, get_platform_token):
 
     json_replace = test_data.replace_json(test['json'], test['target'])
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -356,7 +356,7 @@ def test_admin_password(test, get_platform_token, re_password_default):
     admin_token = resp.json()['data']['token']
     json_replace = test_data.replace_json(test['json'], test['target'])
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace, test['params'], token=admin_token)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace, test['params'], token=admin_token)
 
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
@@ -370,8 +370,8 @@ def test_admin_quick_search(test, get_platform_token):
 
     json_replace = test_data.replace_json(test['json'], test['target'])
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -384,8 +384,8 @@ def test_get_admin(test, get_platform_token):
 
     json_replace = test_data.replace_json(test['json'], test['target'])
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -397,8 +397,8 @@ def test_get_admin(test, get_platform_token):
 def test_authority_permission(test, get_platform_token):
 
     api = API_Controller()
-    resp = api.HttpsClient(test["req_method"], test["req_url"], test["json"],
-                           test["params"], token=get_platform_token)
+    resp = api.send_request(test["req_method"], test["req_url"], test["json"],
+                            test["params"], token=get_platform_token)
     assert resp.status_code == test["code_status"], resp.text
     assert test["keyword"] in resp.text
 
@@ -410,8 +410,8 @@ def test_authority_permission(test, get_platform_token):
 def test_authority_list(test, get_platform_token):
 
     api = API_Controller()
-    resp = api.HttpsClient(test["req_method"], test["req_url"], test["json"],
-                           test["params"], token=get_platform_token)
+    resp = api.send_request(test["req_method"], test["req_url"], test["json"],
+                            test["params"], token=get_platform_token)
     assert resp.status_code == test["code_status"], resp.text
     assert test["keyword"] in resp.text
 
@@ -423,8 +423,8 @@ def test_authority_list(test, get_platform_token):
 def test_authority_menu(test, get_platform_token):
 
     api = API_Controller()
-    resp = api.HttpsClient(test["req_method"], test['req_url'], test["json"],
-                           test["params"], token=get_platform_token)
+    resp = api.send_request(test["req_method"], test['req_url'], test["json"],
+                            test["params"], token=get_platform_token)
     assert resp.status_code == test["code_status"], resp.text
     assert test["keyword"] in resp.text
 
@@ -436,8 +436,8 @@ def test_authority_menu(test, get_platform_token):
 def test_platform(test, get_platform_token):
 
     api = API_Controller()
-    resp = api.HttpsClient(test["req_method"], test["req_url"], test["json"],
-                           test["params"], token=get_platform_token)
+    resp = api.send_request(test["req_method"], test["req_url"], test["json"],
+                            test["params"], token=get_platform_token)
     assert resp.status_code == test["code_status"], resp.text
     assert test["keyword"] in resp.text
 
@@ -453,8 +453,8 @@ def test_account_login_reset_password(test, get_platform_token):
         new_account = AccountAdmin()
         json_replace["account"] = str(new_account.add_account_auto(plat_token=get_platform_token))
     api = API_Controller()
-    resp = api.HttpsClient(test["req_method"], test["req_url"], json_replace,
-                           test["params"], token=get_platform_token)
+    resp = api.send_request(test["req_method"], test["req_url"], json_replace,
+                            test["params"], token=get_platform_token)
     assert resp.status_code == test["code_status"], resp.text
     assert test["keyword"] in resp.text
 
@@ -466,8 +466,8 @@ def test_account_login_reset_password(test, get_platform_token):
 def test_account_logout(test, get_platform_token):
 
     api = API_Controller()
-    resp = api.HttpsClient(test["req_method"], test["req_url"], test["json"],
-                           test["params"], token=get_platform_token)
+    resp = api.send_request(test["req_method"], test["req_url"], test["json"],
+                            test["params"], token=get_platform_token)
     assert resp.status_code == test["code_status"], resp.text
     assert test["keyword"] in resp.text
 
@@ -479,7 +479,7 @@ def test_account_logout(test, get_platform_token):
 def test_login_img_code(test, get_platform_token):
 
     api = API_Controller()
-    resp = api.HttpsClient(test["req_method"], test["req_url"], test["json"],
-                           test["params"], token=get_platform_token)
+    resp = api.send_request(test["req_method"], test["req_url"], test["json"],
+                            test["params"], token=get_platform_token)
     assert resp.status_code == test["code_status"], resp.text
     assert test["keyword"] in resp.text

@@ -17,19 +17,20 @@ class API_Controller:
 
     def __init__(self, platform='plt'):
 
-        self.timestamp = str(int(datetime.datetime.now().timestamp()))
-        self.s = requests.Session()
+        self.current_timestamp = str(int(datetime.datetime.now().timestamp()))
+        self.request_session = requests.Session()
         if platform == 'plt':
             self.host = platform_host
             # 這邊字串轉為dict要使用eval不可用dict會掛
-            self.s.headers = eval(platform_header)
+            self.request_session.headers = eval(platform_header)
         elif platform == 'xxl':
             self.host = xxl_host
         else:
             self.host = cs_host
-            self.s.headers = eval(cs_header)
+            self.request_session.headers = eval(cs_header)
 
-    def _printresponse(self, response):  # 印出回傳
+    @staticmethod
+    def _print_response(response):  # 印出回傳
         print('\n\n--------------HTTPS response  *  begin ------------------')
         print(response.status_code)
 
@@ -37,29 +38,32 @@ class API_Controller:
             print(f'{k};{v}')
 
         print('')
-        printR = json.loads(response.text)
-        print(json.dumps(printR, sort_keys=True, indent=4,
+        response_text = json.loads(response.text)
+        print(json.dumps(response_text, sort_keys=True, indent=4,
               separators=(',', ': '), ensure_ascii=False))
         print('--------------HTTPS response  *  end ------------------\n\n')
 
-    def HttpsClient(self, reqMethod, reqUrl, json, params, token=None, files=None):
-        if token is not None:
-            self.s.headers.update({"token": str(token)})
-        if reqMethod == 'post':
-            response = self.s.post(
-                self.host+reqUrl, json=json, params=params, files=files)
-        elif reqMethod == 'put':
-            response = self.s.put(
-                self.host+reqUrl, json=json, params=params, files=files)
-        elif reqMethod == 'get':
-            response = self.s.get(self.host+reqUrl,
-                                  json=json, params=params, files=files)
-        elif reqMethod == 'delete':
-            response = self.s.delete(
-                self.host+reqUrl, json=json, params=params, files=files)
+    def send_request(self, method, url, json, params, token=None, files=None):
+        if token:
+            self.request_session.headers.update({"token": str(token)})
+
+        request_body = {"url": self.host + url,
+                        "json": json,
+                        "params": params,
+                        "files": files}
+
+        if method == 'post':
+            response = self.request_session.post(**request_body)
+        elif method == 'put':
+            response = self.request_session.put(**request_body)
+        elif method == 'get':
+            response = self.request_session.get(**request_body)
+        elif method == 'delete':
+            response = self.request_session.delete(**request_body)
         else:
             response = "沒有符合的請求模式"
-        self._printresponse(response)
+
+        self._print_response(response)
         return response
 
 

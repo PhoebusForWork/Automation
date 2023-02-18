@@ -27,8 +27,8 @@ def test_add_config_avatar(test, get_platform_token):
     json_replace = test_data.replace_json(test['json'], test['target'])
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
 
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
@@ -43,8 +43,8 @@ def test_edit_config_avatar(test, get_platform_token):
     json_replace = test_data.replace_json(test['json'], test['target'])
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
 
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
@@ -60,8 +60,8 @@ def test_delete_config_avatar(test, get_platform_token):
         test['req_url'] = test['req_url'].replace("存在id", str(
             id.get_delete_avatar(plat_token=get_platform_token)))
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
 
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
@@ -74,8 +74,8 @@ def test_delete_config_avatar(test, get_platform_token):
 def test_get_config_avatars(test, get_platform_token):
     json_replace = test_data.replace_json(test['params'], test['target'])
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           json_replace, token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            json_replace, token=get_platform_token)
 
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
@@ -91,8 +91,8 @@ def test_get_config_avatar_one(test, get_platform_token):
         test['req_url'] = test['req_url'].replace("存在id", str(
             id.get_delete_avatar(plat_token=get_platform_token)))
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
 
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
@@ -109,9 +109,9 @@ def test_file_image_upload(test, get_platform_token):
         files = [('file', ('upload_image_charliebrown.jpeg',
                            open('resources/upload_file/upload_image_charliebrown.jpeg', 'rb'), 'image/jpeg'))]
     api = API_Controller()
-    api.s.headers.update({"Content-Type": None})
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=get_platform_token, files=files)
+    api.request_session.headers.update({"Content-Type": None})
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token, files=files)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -127,7 +127,7 @@ def test_file_video_upload(test, get_platform_token):
         files = [('file', ('upload_video_realshort.mp4',
                            open('resources/upload_file/upload_video_realshort.mp4', 'rb'), 'application/octet-stream'))]
     api = API_Controller()
-    api.s.headers.update({"Content-Type": None})
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'], test['params'], token=get_platform_token, files=files)
+    api.request_session.headers.update({"Content-Type": None})
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'], test['params'], token=get_platform_token, files=files)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text

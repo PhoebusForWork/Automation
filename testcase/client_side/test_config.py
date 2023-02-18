@@ -23,8 +23,8 @@ test_data.read_json5('test_config.json5', file_side='cs')
 def test_get_config_avatar_urls(test, get_client_side_token):
 
     api = API_Controller(platform='cs')
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['json'], token=get_client_side_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['json'], token=get_client_side_token)
 
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text

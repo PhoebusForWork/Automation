@@ -27,8 +27,8 @@ class TestThirdPartyManage:
     @pytest.mark.parametrize("test", test_data.get_case('get_third_party_manage'))
     def test_get_third_party_manage(test, get_platform_token):
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         # check multi-type
         if "所有資料" in test['scenario']:
@@ -44,8 +44,8 @@ class TestThirdPartyManage:
     def test_edit_third_party_manage(test, get_platform_token):
         json_replace = test_data.replace_json(test['json'], test['target'])
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                                test['params'], token=get_platform_token)
         # check response
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text

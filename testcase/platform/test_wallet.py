@@ -29,8 +29,8 @@ class TestUserTransfer:
     def test_get_user_wallets(test, get_platform_token):
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -42,8 +42,8 @@ class TestUserTransfer:
     def test_get_user_trade_info(test, get_platform_token):
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -57,8 +57,8 @@ class TestUserTransfer:
         test['params'] = test_data.replace_json(test['params'], test['target'])
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
 
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
@@ -73,8 +73,8 @@ class TestUserTransfer:
         test['params'] = test_data.replace_json(test['params'], test['target'])
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
 
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
@@ -87,8 +87,8 @@ class TestUserTransfer:
     def test_update_balance_all(test, get_platform_token):
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -100,8 +100,8 @@ class TestUserTransfer:
     def test_user_withdraw_all(test, get_platform_token):
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -113,8 +113,8 @@ class TestUserTransfer:
     def test_user_deposit(test, get_platform_token):
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -129,8 +129,8 @@ class TestGameTransferFail:
     def test_get_fail_approver(test, get_platform_token):
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -149,8 +149,8 @@ class TestGameTransferFail:
                 "存在ID", str(failed_id.get_failed_id(plat_token=get_platform_token)))
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
 
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
@@ -170,8 +170,8 @@ class TestGameTransferFail:
                 "存在ID", str(failed_id.get_failed_id_unused(plat_token=get_platform_token)))
 
         api = API_Controller()
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                               test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
 
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
