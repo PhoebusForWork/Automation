@@ -1,8 +1,6 @@
 import pytest
 import allure
-import random
 from pylib.platform.wallet import WalletGameTransferFailed
-from testcase.platform.conftest import get_platform_token
 from utils.data_utils import TestDataReader
 from utils.api_utils import API_Controller
 

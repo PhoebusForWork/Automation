@@ -3,7 +3,6 @@ import allure
 import random
 from pylib.platform.user import UserManage
 from pylib.platform.proxy import ProxyChannel, ProxyGroup, ProxyManage
-from testcase.platform.conftest import get_platform_token
 from utils.data_utils import TestDataReader
 from utils.api_utils import API_Controller
 from utils.generate_utils import Make
