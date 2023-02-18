@@ -1,11 +1,11 @@
 import pytest
 import allure
-from utils.data_utils import JsonReader
+from utils.data_utils import TestDataReader
 from utils.api_utils import API_Controller
 import random
 
-td = JsonReader()
-td.read_json5('test_validation.json5', file_side='cs')
+test_data = TestDataReader()
+test_data.read_json5('test_validation.json5', file_side='cs')
 
 ######################
 #  setup & teardown  #
@@ -19,10 +19,10 @@ td.read_json5('test_validation.json5', file_side='cs')
 @allure.feature("發送驗證")
 @allure.story("發送語音驗證訊息")
 @allure.title("{test[scenario]}")
-@pytest.mark.parametrize("test", td.get_case('validation_voice'))
+@pytest.mark.parametrize("test", test_data.get_case('validation_voice'))
 def test_validation_voice(test, get_client_side_token):
 
-    json_replace = td.replace_json(test['json'], test['target'])
+    json_replace = test_data.replace_json(test['json'], test['target'])
     if json_replace['device'] == "空":
         json_replace['device'] = str(random.randrange(99999999999))
     api = API_Controller(platfrom='cs')
@@ -35,10 +35,10 @@ def test_validation_voice(test, get_client_side_token):
 @allure.feature("發送驗證")
 @allure.story("發送短信驗證訊息")
 @allure.title("{test[scenario]}")
-@pytest.mark.parametrize("test", td.get_case('validation_sms'))
+@pytest.mark.parametrize("test", test_data.get_case('validation_sms'))
 def test_validation_sms(test, get_client_side_token):
 
-    json_replace = td.replace_json(test['json'], test['target'])
+    json_replace = test_data.replace_json(test['json'], test['target'])
     if json_replace['device'] == "空":
         json_replace['device'] = str(random.randrange(99999999999))
     api = API_Controller(platfrom='cs')
@@ -51,10 +51,10 @@ def test_validation_sms(test, get_client_side_token):
 @allure.feature("發送驗證")
 @allure.story("發送郵箱驗證訊息")
 @allure.title("{test[scenario]}")
-@pytest.mark.parametrize("test", td.get_case('validation_email'))
+@pytest.mark.parametrize("test", test_data.get_case('validation_email'))
 def test_validation_email(test, get_client_side_token):
 
-    json_replace = td.replace_json(test['json'], test['target'])
+    json_replace = test_data.replace_json(test['json'], test['target'])
     if json_replace['device'] == '@gmail.com':
         json_replace['device'] = str(random.randrange(99999))+json_replace['device']
     api = API_Controller(platfrom='cs')

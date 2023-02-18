@@ -1,12 +1,12 @@
 import pytest
 import allure
 from testcase.platform.conftest import get_platform_token
-from utils.data_utils import JsonReader
+from utils.data_utils import TestDataReader
 from utils.api_utils import API_Controller
 from pylib.platform.config import Avatar
 
-td = JsonReader()
-td.read_json5('test_config.json5')
+test_data = TestDataReader()
+test_data.read_json5('test_config.json5')
 
 
 ######################
@@ -22,10 +22,10 @@ td.read_json5('test_config.json5')
 @allure.feature("基本配置")
 @allure.story("新增頭像")
 @allure.title("{test[scenario]}")
-@pytest.mark.parametrize("test", td.get_case('add_config_avatar'))
+@pytest.mark.parametrize("test", test_data.get_case('add_config_avatar'))
 def test_add_config_avatar(test, get_platform_token):
 
-    json_replace = td.replace_json(test['json'], test['target'])
+    json_replace = test_data.replace_json(test['json'], test['target'])
 
     api = API_Controller()
     resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
@@ -38,10 +38,10 @@ def test_add_config_avatar(test, get_platform_token):
 @allure.feature("基本配置")
 @allure.story("編輯頭像")
 @allure.title("{test[scenario]}")
-@pytest.mark.parametrize("test", td.get_case('edit_config_avatar'))
+@pytest.mark.parametrize("test", test_data.get_case('edit_config_avatar'))
 def test_edit_config_avatar(test, get_platform_token):
 
-    json_replace = td.replace_json(test['json'], test['target'])
+    json_replace = test_data.replace_json(test['json'], test['target'])
 
     api = API_Controller()
     resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
@@ -54,7 +54,7 @@ def test_edit_config_avatar(test, get_platform_token):
 @allure.feature("基本配置")
 @allure.story("刪除頭像")
 @allure.title("{test[scenario]}")
-@pytest.mark.parametrize("test", td.get_case('delete_config_avatar'))
+@pytest.mark.parametrize("test", test_data.get_case('delete_config_avatar'))
 def test_delete_config_avatar(test, get_platform_token):
     if "存在id" in test['req_url']:
         id = Avatar()
@@ -71,9 +71,9 @@ def test_delete_config_avatar(test, get_platform_token):
 @allure.feature("基本配置")
 @allure.story("依照條件進行查詢")
 @allure.title("{test[scenario]}")
-@pytest.mark.parametrize("test", td.get_case('get_config_avatars'))
+@pytest.mark.parametrize("test", test_data.get_case('get_config_avatars'))
 def test_get_config_avatars(test, get_platform_token):
-    json_replace = td.replace_json(test['params'], test['target'])
+    json_replace = test_data.replace_json(test['params'], test['target'])
     api = API_Controller()
     resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
                            json_replace, token=get_platform_token)
@@ -85,7 +85,7 @@ def test_get_config_avatars(test, get_platform_token):
 @allure.feature("基本配置")
 @allure.story("依頭像id進行查詢")
 @allure.title("{test[scenario]}")
-@pytest.mark.parametrize("test", td.get_case('get_config_avatar_one'))
+@pytest.mark.parametrize("test", test_data.get_case('get_config_avatar_one'))
 def test_get_config_avatar_one(test, get_platform_token):
     if "存在id" in test['req_url']:
         id = Avatar()
@@ -102,7 +102,7 @@ def test_get_config_avatar_one(test, get_platform_token):
 @allure.feature("檔案上傳")
 @allure.story("上傳圖片")
 @allure.title("{test[scenario]}")
-@pytest.mark.parametrize("test", td.get_case('file_image_upload'))
+@pytest.mark.parametrize("test", test_data.get_case('file_image_upload'))
 def test_file_image_upload(test, get_platform_token):
     if test['files'] == 'null':
         files = None
@@ -120,7 +120,7 @@ def test_file_image_upload(test, get_platform_token):
 @allure.feature("檔案上傳")
 @allure.story("上傳影片")
 @allure.title("{test[scenario]}")
-@pytest.mark.parametrize("test", td.get_case('file_video_upload'))
+@pytest.mark.parametrize("test", test_data.get_case('file_video_upload'))
 def test_file_video_upload(test, get_platform_token):
     if test['files'] == 'null':
         files = None

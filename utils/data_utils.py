@@ -8,7 +8,7 @@ config = configparser.ConfigParser()
 config.read('config/config.ini')
 
 
-class JsonReader:
+class TestDataReader:
 
     def __init__(self):
 
