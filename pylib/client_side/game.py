@@ -1,52 +1,52 @@
 # -*- coding: utf-8 -*-
-from ..client_side.webApiBase import WEB_API  # 執行RF時使用
+from ..client_side.webApiBase import WebAPI  # 執行RF時使用
 from utils.data_utils import EnvReader
 
 env = EnvReader()
 web_host = env.WEB_HOST
 
 
-class Game(WEB_API):
+class Game(WebAPI):
 
     def get_game_list(self, web_token=None,
                       ignoreGameIds=[], os_type="WEB"  # (WEB/H5/ANDROID/IOS)
                       ):  # 遊戲列表
         if web_token is not None:
-            self.ws.headers.update({"token": str(web_token)})
-        response = self.ws.get(web_host+"/v1/game/list",
+            self.request_session.headers.update({"token": str(web_token)})
+        response = self.request_session.get(web_host+"/v1/game/list",
                                json={},
                                params={"ignoreGameIds": ignoreGameIds,
                                        "os-type": os_type}
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def get_game_usual(self, web_token=None,
                        ):  # 常用遊戲列表
         if web_token is not None:
-            self.ws.headers.update({"token": str(web_token)})
-        response = self.ws.get(web_host+"/v1/game/usual",
+            self.request_session.headers.update({"token": str(web_token)})
+        response = self.request_session.get(web_host+"/v1/game/usual",
                                json={},
                                params={}
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def game_redirect(self, web_token=None,
                       gameCode='AWC_LIVE_SEXY', backUrl="https://tttint.onlinegames22.com/wallet/login", subGameCode=None, os_type="", token=None
                       ):  # 遊戲跳轉
         if web_token is not None:
-            self.ws.headers.update({"token": str(web_token)})
-        response = self.ws.get(web_host+"/v1/game/redirect/{}/url".format(gameCode),
+            self.request_session.headers.update({"token": str(web_token)})
+        response = self.request_session.get(web_host+"/v1/game/redirect/{}/url".format(gameCode),
                                json={},
                                params={"gameCode": gameCode, "backUrl": backUrl,
                                        "subGameCode": subGameCode, "os-type": os_type, "token": token}
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
 
-class GameOrder(WEB_API):
+class GameOrder(WebAPI):
 
     def get_game_order(self, web_token=None,
                        orderType=2, gameCode=None,
@@ -55,8 +55,8 @@ class GameOrder(WEB_API):
                        page=None, size=None
                        ):  # 查詢注單
         if web_token is not None:
-            self.ws.headers.update({"token": str(web_token)})
-        response = self.ws.get(web_host+"/v1/game/order",
+            self.request_session.headers.update({"token": str(web_token)})
+        response = self.request_session.get(web_host+"/v1/game/order",
                                json={},
                                params={
                                    "orderType": orderType,
@@ -68,7 +68,7 @@ class GameOrder(WEB_API):
                                    "size": size,
                                }
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def get_game_order_summary(self, web_token=None,
@@ -77,8 +77,8 @@ class GameOrder(WEB_API):
                                startTime="2022-10-17T00:00:00+08:00", endTime="2022-10-17T23:59:59+08:00",
                                ):  # 注單總和查詢
         if web_token is not None:
-            self.ws.headers.update({"token": str(web_token)})
-        response = self.ws.get(web_host+"/v1/game/order/summary",
+            self.request_session.headers.update({"token": str(web_token)})
+        response = self.request_session.get(web_host+"/v1/game/order/summary",
                                json={},
                                params={
                                    "orderType": orderType,
@@ -88,5 +88,5 @@ class GameOrder(WEB_API):
                                    "endTime": endTime,
                                }
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()

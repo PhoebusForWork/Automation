@@ -1,52 +1,18 @@
 # -*- coding: utf-8 -*-
-import requests
-import json
-import datetime
 from utils.data_utils import EnvReader
+from utils.api_utils import API_Controller
 
 
 env = EnvReader()
-platform_host = env.PLATFORM_HOST\
+platform_host = env.PLATFORM_HOST
 
 
-
-class PLAT_API:
-
-    def __init__(self, token=None):
-
-        self.timestemp = str(int(datetime.datetime.now().timestamp()))
-        self.ps = requests.Session()
-        self.ps.headers = {
-            "Connection": "keep-alive",
-            "Content-Length": "64",
-            "os_type": "0",
-            "device_id": "3263782594",
-            "version": "1.0",
-            "sign": "0fc750ae19a42db64dff8c57aec07f07",
-            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36",
-            "Content-Type": "application/json",
-            "Accept": "application/json, text/plain, */*",
-            "timestamp": "1636102887000"
-        }
-        if token:
-            self.ps.headers.update({"token": token})
-
-    def _printresponse(self, response):  # 印出回傳
-        print('\n\n--------------HTTPS response  *  begin ------------------')
-        print(response.status_code)
-
-        for k, v in response.headers.items():
-            print(f'{k};{v}')
-
-        print('')
-        printR = json.loads(response.text)
-        print(json.dumps(printR, sort_keys=True, indent=4,
-              separators=(',', ': '), ensure_ascii=False))
-        print('--------------HTTPS response  *  end ------------------\n\n')
+class PlatformAPI(API_Controller):
+    def __init__(self):
+        super().__init__(platform='plt')
 
     def first_login_password(self, username='phoebusliu', oldPassword='abc123456', newPassword='abc123456'):  # 新帳戶更新密碼
-        self.s = requests.Session()
-        response = self.ps.put(platform_host+"/v1/account/login/resetPassword",
+        response = self.request_session.put(platform_host+"/v1/account/login/resetPassword",
                                json={
                                    "account": username,
                                    "oldPassword": oldPassword,
@@ -54,12 +20,11 @@ class PLAT_API:
                                    "loginIp": "string"
                                },
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def login(self, username='phoebusliu', password='abc123456', imgCode='a'):  # 用戶登陸
-        self.s = requests.Session()
-        response = self.ps.post(platform_host+"/v1/account/login",
+        response = self.request_session.post(platform_host+"/v1/account/login",
                                 json={
                                     "account": username,
                                     "password": password,
@@ -67,26 +32,24 @@ class PLAT_API:
                                     "uuid": "124"
                                 },
                                 )
-        self._printresponse(response)
+        self.print_response(response)
         try:
-            self.ps.headers.update(
+            self.request_session.headers.update(
                 {"token": str(response.json()['data']['token'])})
         except:
             print("登入失敗")
         return response
 
-    def logout(self, plat_token=None):  # 用戶登陸
-        if plat_token != None:
-            self.ps.headers.update({"token": plat_token})
-        self.s = requests.Session()
-        response = self.ps.post(platform_host+"/v1/account/logout",
+    def logout(self, platform_token=None):  # 用戶登陸
+        if platform_token is not None:
+            self.request_session.headers.update({"token": platform_token})
+        response = self.request_session.post(platform_host+"/v1/account/logout",
                                 json={},
                                 )
         return response.json()
 
     def imgcode(self, uuid=124):  # 獲取驗證碼
-        self.s = requests.Session()
-        response = self.ps.post(platform_host+"/v1/account/login/imgCode",
+        response = self.request_session.post(platform_host+"/v1/account/login/imgCode",
                                 json={
                                 },
                                 params={

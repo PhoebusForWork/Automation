@@ -1,7 +1,7 @@
 import pytest
 import allure
 import time
-from pylib.platform.platApiBase import PLAT_API
+from pylib.platform.platApiBase import PlatformAPI
 from pylib.platform.account import AccountAdmin, AccountDept, AccountRole 
 from utils.data_utils import TestDataReader
 from utils.api_utils import API_Controller
@@ -17,7 +17,7 @@ test_data.read_json5('test_account.json5')
 
 @pytest.fixture(scope="module")  # 將密碼重置為可登入狀態
 def re_password_default(get_platform_token):
-    api = PLAT_API()
+    api = PlatformAPI()
     code = api.imgcode()
     resp = api.login(username='charlieadmin100', password='abc12345', imgCode=code)
     admin_token = resp.json()['data']['token']
@@ -36,7 +36,7 @@ def re_password_default(get_platform_token):
 def test_account_login(test, ):
 
     json_replace = test_data.replace_json(test["json"], test["target"])  # 替換完後下面參數要用json_replace去操作
-    img_code = PLAT_API()
+    img_code = PlatformAPI()
     if json_replace['imgCode'] == "給我圖形驗證碼":
         json_replace['imgCode'] = str(
             img_code.imgcode(uuid=json_replace['uuid']))
@@ -347,7 +347,7 @@ def test_admin_reset_password(test, get_platform_token):
 @allure.title("{test[scenario]}")
 @pytest.mark.parametrize("test", test_data.get_case('test_admin_password'))
 def test_admin_password(test, get_platform_token, re_password_default):
-    api = PLAT_API()
+    api = PlatformAPI()
     code = api.imgcode()
     if test['scenario'] == "正常修改密碼":
         resp = api.login(username='charlieadmin100', password='abc123456', imgCode=code)

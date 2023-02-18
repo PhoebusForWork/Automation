@@ -2,7 +2,7 @@ import pytest
 import allure
 import jsonpath
 
-from pylib.platform.thirdPartyManage import thirdPartyManage
+from pylib.platform.thirdPartyManage import ThirdPartyManage
 from utils.data_utils import TestDataReader
 from utils.api_utils import API_Controller
 
@@ -52,7 +52,7 @@ class TestThirdPartyManage:
         # query and check data after editing
         if resp.status_code == 200:
             id = str(json_replace[0]['id'])
-            req = jsonpath.jsonpath(thirdPartyManage().getThirdInterface(plat_token=get_platform_token),
+            req = jsonpath.jsonpath(ThirdPartyManage().getThirdInterface(plat_token=get_platform_token),
                                     f'$.data[?(@.id == {id} )]')
             if req is not False:
                 assert set(test['target'].items()).issubset(req[0].items())

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from ..platform.platApiBase import PLAT_API
+from ..platform.platApiBase import PlatformAPI
 from utils.api_utils import KeywordArgument
 from utils.data_utils import EnvReader
 import jsonpath
@@ -12,21 +12,21 @@ env = EnvReader()
 platform_host = env.PLATFORM_HOST
 
 
-class Game(PLAT_API):
+class Game(PlatformAPI):
 
     def get_game_list(self,  # 獲取遊戲列表
                       plat_token=None,
                       gameType=None,
                       ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platform_host+"/v1/game",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.get(platform_host+"/v1/game",
                                json={},
                                params={
                                    "gameType": gameType,
                                }
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def edit_game(self,  # 遊戲設置
@@ -42,8 +42,8 @@ class Game(PLAT_API):
                   maintainStartTime='2022-01-01T00:00:00Z', maintainEndTime='2022-01-01T00:00:00Z', maintainRemark=None, walletImg="必填字串"
                   ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platform_host+"/v1/game",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.put(platform_host+"/v1/game",
                                json={
                                    "gameCode": gameCode,
                                    "name": name,
@@ -78,7 +78,7 @@ class Game(PLAT_API):
                                },
                                params={}
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def edit_game_status(self,  # 遊戲開啟/關閉狀態
@@ -87,14 +87,14 @@ class Game(PLAT_API):
                          status=None,
                          ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platform_host+"/v1/game/{}/status".format(gameCode),
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.put(platform_host+"/v1/game/{}/status".format(gameCode),
                                json={},
                                params={
             "status": status,
         }
         )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def edit_game_isTesting(self,  # 遊戲開啟/關閉狀態
@@ -103,14 +103,14 @@ class Game(PLAT_API):
                             isTesting=None,
                             ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platform_host+"/v1/game/{}/isTesting".format(gameCode),
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.put(platform_host+"/v1/game/{}/isTesting".format(gameCode),
                                json={},
                                params={
             "isTesting": isTesting,
         }
         )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def game_sync(self,  # 同步遊戲數據
@@ -118,12 +118,12 @@ class Game(PLAT_API):
                          gameCode=None,
                   ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platform_host+"/v1/game/sync/{}".format(gameCode),
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.post(platform_host+"/v1/game/sync/{}".format(gameCode),
                                 json={},
                                 params={}
                                 )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def get_game_orders(self,  # 查詢注單
@@ -138,8 +138,8 @@ class Game(PLAT_API):
                         page=1, size=10,
                         ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platform_host+"/v1/game/orders",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.post(platform_host+"/v1/game/orders",
                                 json={
                                     # "page": page,
                                     # "size": size,
@@ -163,31 +163,31 @@ class Game(PLAT_API):
                                 },
                                 params={}
                                 )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def get_game_code(self,  # 遊戲平台下拉選單
                       plat_token=None,
                       ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platform_host+"/v1/game/code",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.get(platform_host+"/v1/game/code",
                                json={},
                                params={}
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def get_game_channel_mapList(self,  # 取得遊戲平台查詢條件的下拉選單
                                  plat_token=None,
                                  ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platform_host+"/v1/game/channel/mapList",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.get(platform_host+"/v1/game/channel/mapList",
                                json={},
                                params={}
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def get_game_pay_out(self,
@@ -199,27 +199,27 @@ class Game(PLAT_API):
                          page=None, size=None
                          ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platform_host+"/v1/game/payOut",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.get(platform_host+"/v1/game/payOut",
                                json={},
                                params=KeywordArgument.body_data()
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
 
-class Rebate_template(PLAT_API):
+class Rebate_template(PlatformAPI):
 
     def get_template_config(self,  # 獲取返水模板配置
                             plat_token=None,
                             ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platform_host+"/v1/rebate/template/config",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.get(platform_host+"/v1/rebate/template/config",
                                json={},
                                params={}
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def add_template_config(self,  # 新增返水模板配置
@@ -228,13 +228,13 @@ class Rebate_template(PLAT_API):
                             vipId=0, vipName="string", rebateRatio=0
                             ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platform_host+"/v1/rebate/template/config",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.post(platform_host+"/v1/rebate/template/config",
                                 json={"templateName": templateName, "gameType": gameType, "rebateConfig": [
                                     {"betAmount": betAmount, "vipLevelRebateConfig": [{"vipId": vipId, "vipName": vipName, "rebateRatio": rebateRatio}]}]},
                                 params={}
                                 )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def edit_template_config(self,  # 編輯返水模板配置
@@ -244,13 +244,13 @@ class Rebate_template(PLAT_API):
                              vipId=None, vipName=None, rebateRatio=None
                              ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platform_host+"/v1/rebate/template/{}/config".format(templateId),
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.put(platform_host+"/v1/rebate/template/{}/config".format(templateId),
                                json={"templateName": templateName, "gameType": gameType, "rebateConfig": [
                                     {"betAmount": betAmount, "vipLevelRebateConfig": [{"vipId": vipId, "vipName": vipName, "rebateRatio": rebateRatio}]}]},
                                params={}
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def delete_template_config(self,  # 刪除返水模板配置
@@ -258,31 +258,31 @@ class Rebate_template(PLAT_API):
                                templateId=1
                                ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.delete(platform_host+"/v1/rebate/template/{}/config".format(templateId),
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.delete(platform_host+"/v1/rebate/template/{}/config".format(templateId),
                                   json={},
                                   params={}
                                   )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def get_template_allByGameType(self,  # 依遊戲類型分類獲取所有返水模板
                                    plat_token=None,
                                    ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platform_host+"/v1/rebate/template/allByGameType",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.get(platform_host+"/v1/rebate/template/allByGameType",
                                json={},
                                params={}
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def get_exist_template_auto(self,
                                 plat_token=None,
                                 ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
+            self.request_session.headers.update({"token": str(plat_token)})
         response = self.get_template_config()
         ret = jsonpath.jsonpath(response, "$..id")
         if ret is False:
@@ -293,18 +293,18 @@ class Rebate_template(PLAT_API):
         return ret[-1]
 
 
-class Game_rebate(PLAT_API):
+class Game_rebate(PlatformAPI):
 
     def get_game_rebate_config(self,  # 獲取指定遊戲類型返水模板配置
                                plat_token=None, gameType=None,
                                ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platform_host+"/v1/game/rebate/{}/config".format(gameType),
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.get(platform_host+"/v1/game/rebate/{}/config".format(gameType),
                                json={},
                                params={}
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def edit_game_rebate_config(self,  # 新增/編輯遊戲類型返水模板配置
@@ -312,13 +312,13 @@ class Game_rebate(PLAT_API):
                                 id=None, gameCode="string", templateIds=[1]
                                 ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platform_host+"/v1/game/rebate/config",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.post(platform_host+"/v1/game/rebate/config",
                                 json=[{"id": id, "gameCode": gameCode,
                                       "templateIds": templateIds}],
                                 params={}
                                 )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def game_rebate_manual_rebate(self,  # 手動結算反水
@@ -326,14 +326,14 @@ class Game_rebate(PLAT_API):
                                   From="2022-09-28T00:00:00Z"
                                   ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platform_host+"/v1/game/rebate/manual/rebate",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.post(platform_host+"/v1/game/rebate/manual/rebate",
                                 json={},
                                 params={
                                     "from": From
                                 }
                                 )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def edit_game_rebate_config_open(self,  # 遊戲反水開關
@@ -341,18 +341,18 @@ class Game_rebate(PLAT_API):
                                      open=None
                                      ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platform_host+"/v1/game/rebate/config/open",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.put(platform_host+"/v1/game/rebate/config/open",
                                json={},
                                params={
                                    "open": open
                                }
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
 
-class RebateRecord(PLAT_API):
+class RebateRecord(PlatformAPI):
 
     def get_record(self,  # 獲取反水紀錄
                    plat_token=None,
@@ -364,10 +364,10 @@ class RebateRecord(PLAT_API):
                    page=None, size=None,
                    ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platform_host+"/v1/rebate/record",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.get(platform_host+"/v1/rebate/record",
                                json={},
                                params=KeywordArgument.body_data()
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()

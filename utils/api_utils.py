@@ -30,7 +30,7 @@ class API_Controller:
             self.request_session.headers = eval(cs_header)
 
     @staticmethod
-    def _print_response(response):  # 印出回傳
+    def print_response(response):  # 印出回傳
         print('\n\n--------------HTTPS response  *  begin ------------------')
         print(response.status_code)
 
@@ -63,7 +63,7 @@ class API_Controller:
         else:
             response = "沒有符合的請求模式"
 
-        self._print_response(response)
+        self.print_response(response)
         return response
 
 
