@@ -6,3 +6,6 @@ include:
   project: bbc/devops/gitlab-pipeline/cicd-pipeline
   ref: master
   file: 'qa-automaion-pipeline.yml'
+
+test:
+  comment: new-line
