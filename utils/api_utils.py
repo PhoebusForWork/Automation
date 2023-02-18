@@ -15,15 +15,15 @@ xxl_host = env.XXL_HOST
 
 class API_Controller:
 
-    def __init__(self, platfrom='plt'):
+    def __init__(self, platform='plt'):
 
         self.timestamp = str(int(datetime.datetime.now().timestamp()))
         self.s = requests.Session()
-        if platfrom == 'plt':
+        if platform == 'plt':
             self.host = platform_host
             # 這邊字串轉為dict要使用eval不可用dict會掛
             self.s.headers = eval(platform_header)
-        elif platfrom == 'xxl':
+        elif platform == 'xxl':
             self.host = xxl_host
         else:
             self.host = cs_host

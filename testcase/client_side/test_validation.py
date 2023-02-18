@@ -25,7 +25,7 @@ def test_validation_voice(test, get_client_side_token):
     json_replace = test_data.replace_json(test['json'], test['target'])
     if json_replace['device'] == "空":
         json_replace['device'] = str(random.randrange(99999999999))
-    api = API_Controller(platfrom='cs')
+    api = API_Controller(platform='cs')
     resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
                            test['params'], token=get_client_side_token)
     assert resp.status_code == test['code_status'], resp.text
@@ -41,7 +41,7 @@ def test_validation_sms(test, get_client_side_token):
     json_replace = test_data.replace_json(test['json'], test['target'])
     if json_replace['device'] == "空":
         json_replace['device'] = str(random.randrange(99999999999))
-    api = API_Controller(platfrom='cs')
+    api = API_Controller(platform='cs')
     resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
                            test['params'], token=get_client_side_token)
     assert resp.status_code == test['code_status'], resp.text
@@ -57,7 +57,7 @@ def test_validation_email(test, get_client_side_token):
     json_replace = test_data.replace_json(test['json'], test['target'])
     if json_replace['device'] == '@gmail.com':
         json_replace['device'] = str(random.randrange(99999))+json_replace['device']
-    api = API_Controller(platfrom='cs')
+    api = API_Controller(platform='cs')
     resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
                            test['params'], token=get_client_side_token)
     assert resp.status_code == test['code_status'], resp.text
@@ -71,7 +71,7 @@ def test_validation_email(test, get_client_side_token):
 # def test_validation_captcha(test, getCsLoginToken):
 #
 #     json_replace = td.replace_json(test['json'], test['target'])
-#     api = API_Controller(platfrom='cs')
+#     api = API_Controller(platform='cs')
 #     resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
 #                            test['params'], token=getCsLoginToken)
 #     assert resp.status_code == test['code_status'], resp.text

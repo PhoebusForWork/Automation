@@ -5,7 +5,7 @@ from .api_utils import API_Controller
 class XxlJobs():
     @staticmethod
     def game_transfer_executor():
-        xxl = API_Controller(platfrom='xxl')
+        xxl = API_Controller(platform='xxl')
         xxl.HttpsClient(reqMethod='post', reqUrl='/xxl-job-admin/login',
                         json={}, params={"userName": "admin", "password": "123456"})
         """
