@@ -10,7 +10,7 @@ from pylib.client_side.user import Security
 from utils.generate_utils import Make
 
 td = JsonReader()
-testData = td.read_json5('test_user.json5', file_side='cs')
+td.read_json5('test_address.json5', file_side='cs')
 
 
 ######################

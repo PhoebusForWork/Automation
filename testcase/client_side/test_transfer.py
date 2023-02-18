@@ -6,7 +6,7 @@ from utils.postgres_utils import User_wallet
 from pylib.client_side.wallet import Wallet
 
 td = JsonReader()
-testData = td.read_json5('test_wallet.json5', file_side='cs')
+td.read_json5('test_wallet.json5', file_side='cs')
 
 
 ######################

@@ -6,7 +6,7 @@ from utils.api_utils import API_Controller
 from pylib.platform.config import Avatar
 
 td = JsonReader()
-testData = td.read_json5('test_config.json5')
+td.read_json5('test_config.json5')
 
 
 ######################

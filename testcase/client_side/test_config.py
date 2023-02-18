@@ -4,7 +4,7 @@ from utils.data_utils import JsonReader
 from utils.api_utils import API_Controller
 
 td = JsonReader()
-testData = td.read_json5('test_config.json5', file_side='cs')
+td.read_json5('test_config.json5', file_side='cs')
 
 
 ######################

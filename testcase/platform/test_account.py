@@ -8,7 +8,7 @@ from utils.api_utils import API_Controller
 from utils.generate_utils import Make
 
 td = JsonReader()
-testData = td.read_json5('test_account.json5')
+td.read_json5('test_account.json5')
 
 ######################
 #  setup & teardown  #
