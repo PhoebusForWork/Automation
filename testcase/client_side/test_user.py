@@ -9,7 +9,7 @@ from pylib.client_side.user import Security
 from utils.generate_utils import Make
 
 test_data = TestDataReader()
-test_data.read_json5('test_address.json5', file_side='cs')
+test_data.read_json5('test_user.json5', file_side='cs')
 
 
 ######################
@@ -39,6 +39,7 @@ def re_mobile_default():
     get_om_code = sms_api.valid_sms(device='13947389803', requestType=5)
     edit_api = Security(resp_token)
     edit_api.editMobile(newMobile=13847389803, nmCode=get_nm_code['data'], omCode=get_om_code['data'])
+
 
 @pytest.fixture(scope="class")
 def re_security_pwd_default():
@@ -153,18 +154,18 @@ class TestAddressOther:
         assert test['keyword'] in resp.text
 
 
-class Test_user_detail():
+class TestUserDetail:
     @staticmethod
     @allure.feature("客戶明細資料")
     @allure.story("獲取用戶明細資料")
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", test_data.get_case('get_user_detail'))
-    def test_get_user_detail(test, getCsLoginToken):
+    def test_get_user_detail(test, get_client_side_token):
         validation_api = validation()
         resp = validation_api.login(username="charlie01")
         admin_token = resp.json()['data']['token']
-        api = API_Controller(platfrom='cs')
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'], test['params'], token=admin_token)
+        api = API_Controller(platform='cs')
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'], test['params'], token=admin_token)
 
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
@@ -174,19 +175,19 @@ class Test_user_detail():
     @allure.story("修改用戶明細資料")
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", test_data.get_case('put_user_detail'))
-    def test_put_user_detail(test, getCsLoginToken):
+    def test_put_user_detail(test, get_client_side_token):
         validation_api = validation()
         resp = validation_api.login(username="charlie01")
         admin_token = resp.json()['data']['token']
         json_replace = test_data.replace_json(test['json'], test['target'])
-        api = API_Controller(platfrom='cs')
-        resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace, test['params'], token=admin_token)
+        api = API_Controller(platform='cs')
+        resp = api.send_request(test['req_method'], test['req_url'], json_replace, test['params'], token=admin_token)
 
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
 
-class Test_user_operation():
+class TestUserOperation:
     @staticmethod
     @allure.feature("用戶操作")
     @allure.story("用戶註冊")
@@ -213,8 +214,8 @@ class Test_user_operation():
         if test['scenario'] == "使用者名稱已經註冊":
             json_replace['mobile'] = register_mobile
             json_replace['code'] = resp['data']
-        api = API_Controller(platfrom='cs')
-        resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace, test['params'])
+        api = API_Controller(platform='cs')
+        resp = api.send_request(test['req_method'], test['req_url'], json_replace, test['params'])
 
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
@@ -224,12 +225,12 @@ class Test_user_operation():
     @allure.story("用戶登出")
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", test_data.get_case('user_logout'))
-    def test_user_logout(test, getCsLoginToken):
+    def test_user_logout(test, get_client_side_token):
         validation_api = validation()
         resp = validation_api.login(username='CCheartbeat01')
         admin_token = resp.json()['data']['token']
-        api = API_Controller(platfrom='cs')
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'], test['params'], token=admin_token)
+        api = API_Controller(platform='cs')
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'], test['params'], token=admin_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -240,8 +241,8 @@ class Test_user_operation():
     @pytest.mark.parametrize("test", test_data.get_case('user_login'))
     def test_user_login(test):
         json_replace = test_data.replace_json(test['json'], test['target'])
-        api = API_Controller(platfrom='cs')
-        resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace, test['params'])
+        api = API_Controller(platform='cs')
+        resp = api.send_request(test['req_method'], test['req_url'], json_replace, test['params'])
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -256,8 +257,8 @@ class Test_user_operation():
             api = validation()
             code = api.valid_sms(device=json_replace['telephone'], requestType=2)
             json_replace["code"] = code['data']
-        api = API_Controller(platfrom='cs')
-        resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace, test['params'])
+        api = API_Controller(platform='cs')
+        resp = api.send_request(test['req_method'], test['req_url'], json_replace, test['params'])
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -274,8 +275,8 @@ class Test_user_operation():
             validation_api = validation()
             code = validation_api.valid_sms(device=json_replace['telephone'], requestType=3)
             json_replace['code'] = code['data']
-        api = API_Controller(platfrom='cs')
-        resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace, test['params'])
+        api = API_Controller(platform='cs')
+        resp = api.send_request(test['req_method'], test['req_url'], json_replace, test['params'])
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -285,8 +286,8 @@ class Test_user_operation():
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", test_data.get_case('user_send_code'))
     def test_user_send_code(test):
-        api = API_Controller(platfrom='cs')
-        resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'], test['params'])
+        api = API_Controller(platform='cs')
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'], test['params'])
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
@@ -295,24 +296,24 @@ class Test_user_operation():
     @allure.story("用戶心跳")
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", test_data.get_case('user_heartbeat'))
-    def test_user_heartbeat(test, getCsLoginToken):
+    def test_user_heartbeat(test, get_client_side_token):
         json_replace = test_data.replace_json(test['json'], test['target'])
-        api = API_Controller(platfrom='cs')
-        resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace, test['params'], token=getCsLoginToken)
+        api = API_Controller(platform='cs')
+        resp = api.send_request(test['req_method'], test['req_url'], json_replace, test['params'], token=get_client_side_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
 
 
-class Test_user_security_center():
+class TestUserSecurityCenter:
     @staticmethod
     @allure.feature("用戶安全中心")
     @allure.story("获取用户安全中心信息")
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", test_data.get_case('user_security_info'))
-    def test_user_security_info(test, getCsLoginToken):
+    def test_user_security_info(test, get_client_side_token):
         json_replace = test_data.replace_json(test['json'], test['target'])
-        api = API_Controller(platfrom='cs')
-        resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace, test['params'], token=getCsLoginToken)
+        api = API_Controller(platform='cs')
+        resp = api.send_request(test['req_method'], test['req_url'], json_replace, test['params'], token=get_client_side_token)
 
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
@@ -330,8 +331,8 @@ class Test_user_security_center():
         if json_replace['code'] == "值":
             get_email_code = validation_api.valid_email(device='CCemail01@gmail.com', requestType=8)
             json_replace['code'] = get_email_code["data"]
-        api = API_Controller(platfrom='cs')
-        resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace, test['params'], token=admin_token)
+        api = API_Controller(platform='cs')
+        resp = api.send_request(test['req_method'], test['req_url'], json_replace, test['params'], token=admin_token)
 
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
@@ -349,8 +350,8 @@ class Test_user_security_center():
         if json_replace['code'] == "值":
             get_email_code = validation_api.valid_email(device='CCemail01@gmail.com', requestType=7)
             json_replace['code'] = get_email_code["data"]
-        api = API_Controller(platfrom='cs')
-        resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace, test['params'], token=admin_token)
+        api = API_Controller(platform='cs')
+        resp = api.send_request(test['req_method'], test['req_url'], json_replace, test['params'], token=admin_token)
 
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
@@ -369,8 +370,8 @@ class Test_user_security_center():
             get_om_code = validation_api.valid_sms(device='13847389803', requestType=5)
             json_replace['nmCode'] = get_nm_code["data"]
             json_replace['omCode'] = get_om_code["data"]
-        api = API_Controller(platfrom='cs')
-        resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace, test['params'], token=resp_token)
+        api = API_Controller(platform='cs')
+        resp = api.send_request(test['req_method'], test['req_url'], json_replace, test['params'], token=resp_token)
 
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
@@ -385,10 +386,8 @@ class Test_user_security_center():
         resp = validation_api.login(username='changepwd01')
         admin_token = resp.json()['data']['token']
         json_replace = test_data.replace_json(test['json'], test['target'])
-        api = API_Controller(platfrom='cs')
-        resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace, test['params'], token=admin_token)
+        api = API_Controller(platform='cs')
+        resp = api.send_request(test['req_method'], test['req_url'], json_replace, test['params'], token=admin_token)
 
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
-
-

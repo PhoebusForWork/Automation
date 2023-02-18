@@ -8,8 +8,11 @@ web_host = env.WEB_HOST
 
 
 class WebAPI(API_Controller):
-    def __init__(self):
+    def __init__(self, token=None):
         super().__init__(platform='cs')
+        if token:
+            self.request_session.headers.update({"token": token})
+
 
     def login(self, deviceId="123", osType="WEB", username='qwe220805', password='abc123456', code=None):
         self.request_session.headers.update({"device-id": deviceId})
