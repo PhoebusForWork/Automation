@@ -2,7 +2,7 @@ import pytest
 import allure
 from utils.data_utils import TestDataReader
 from utils.api_utils import API_Controller
-from utils.postgres_utils import User_wallet
+from utils.postgres_utils import UserWallet
 from pylib.client_side.wallet import Wallet
 
 td = TestDataReader()
@@ -18,8 +18,8 @@ def reset_user_wallet_for_deposit(get_client_side_token):
     do_withdraw = Wallet()
     do_withdraw.wallet_game_transfer_withdraw_all(
         web_token=get_client_side_token)
-    reset = User_wallet()
-    reset.user_wallet_reset(balance=100)
+    reset = UserWallet()
+    reset.reset(balance=100)
     yield
     do_withdraw.wallet_game_transfer_withdraw_all(
         web_token=get_client_side_token)
@@ -30,8 +30,8 @@ def reset_user_wallet_for_withdraw(get_client_side_token, get_user_id):
     do_withdraw = Wallet()
     do_withdraw.wallet_game_transfer_withdraw_all(
         web_token=get_client_side_token)
-    reset = User_wallet()
-    reset.user_wallet_reset(balance=100, user_id=get_user_id)
+    reset = UserWallet()
+    reset.reset(balance=100, user_id=get_user_id)
     do_withdraw.wallet_game_transfer_deposit(
         web_token=get_client_side_token, channelCode='AWC', amount=100)
 
@@ -41,8 +41,8 @@ def reset_user_wallet_for_withdraw_all(get_client_side_token, get_user_id):
     do_withdraw = Wallet()
     do_withdraw.wallet_game_transfer_withdraw_all(
         web_token=get_client_side_token)
-    reset = User_wallet()
-    reset.user_wallet_reset(balance=150, user_id=get_user_id)
+    reset = UserWallet()
+    reset.reset(balance=150, user_id=get_user_id)
     do_withdraw.wallet_game_transfer_deposit(
         web_token=get_client_side_token, channelCode='AWC', amount=50)
 
@@ -94,8 +94,8 @@ class TestDeposit:
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
         if resp.status_code == 200:  # 轉帳成功額外確認資料庫是否正確
-            assert User_wallet.user_wallet_deposit_check(user_id=get_user_id,
-                                                         check_amount=test['json']['amount'], channel=test['json']['channelCode']) is True
+            assert UserWallet.check_deposit(user_id=get_user_id,
+                                            check_amount=test['json']['amount'], channel=test['json']['channelCode']) is True
 
 
 class TestWithdraw:
@@ -112,8 +112,8 @@ class TestWithdraw:
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
         if resp.status_code == 200:  # 轉帳成功額外確認資料庫是否正確
-            assert User_wallet.user_wallet_withdraw_check(user_id=get_user_id,
-                                                          check_amount=test['json']['amount'], channel=test['json']['channelCode']) is True
+            assert UserWallet.check_withdraw(user_id=get_user_id,
+                                             check_amount=test['json']['amount'], channel=test['json']['channelCode']) is True
 
 
 @allure.feature("錢包管理")  # 不能使用噴錯
