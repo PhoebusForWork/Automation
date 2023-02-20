@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import sys,os
+sys.path.append(os.path.abspath('.'))
 import redis
 from redis.sentinel import Sentinel
 from utils.data_utils import EnvReader
@@ -13,6 +15,8 @@ plt_sentinel_list = env.REDIS_PLT_SENTINEL_LIST
 cs_sentinel_list = env.REDIS_PLT_SENTINEL_LIST
 plt_password = env.REDIS_PLT_PASSWORD
 cs_password = env.REDIS_CS_PASSWORD
+plt_sentinel_password = env.REDIS_SENTINEL_PLT_PASSWORD
+cs_sentinel_password = env.REDIS_SENTINEL_CS_PASSWORD
 
 
 class Redis:
@@ -43,30 +47,25 @@ class Redis:
 
 
 class RedisSentinel:
-    def __init__(self, platform='plt', name='mymaster', select=None):
+    def __init__(self, platform='plt', name='redis-master', select=None):
         if platform == 'plt':
             self.sentinel_list = plt_sentinel_list
-            self.password = plt_password
+            self.sentinel_password = plt_sentinel_password
         elif platform == 'cs':
             self.sentinel_list = cs_sentinel_list
-            self.password = cs_password
+            self.sentinel_password = cs_sentinel_password
         else:
             raise "Platform Error"
         setting = {
-            'service_name': name,
+            'sentinels': self.sentinel_list,
+            'sentinel_kwargs': {'password': self.sentinel_password},
             "socket_timeout": 60,
-            "password": self.password,
+            "password": self.sentinel_password,
             "db": select
         }
-        self.sentinel = Sentinel(
-            sentinels=self.sentinel_list, socket_timeout=60)
-        self.master = self.sentinel.master_for(**setting)
-        self.slave = self.sentinel.slave_for(**setting)
-
+        self.sentinel = Sentinel(**setting)
+        self.master = self.sentinel.master_for(service_name=name)
 
 if __name__ == '__main__':
-    set_result = Redis(platform='plt', select=3)
-    set_result.conn.hset(name='MOCK::AWC', key='recheckResult', value='"UNKNOWN"'
-                         )
-    target = set_result.conn.hget(name='MOCK::AWC', key='recheckResult')
-    print(target)
+    sentinel = RedisSentinel(platform='plt', select=0)
+    print(sentinel.master.keys('*'))
