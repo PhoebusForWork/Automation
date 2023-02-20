@@ -124,7 +124,7 @@ class EnvReader:
             self.REDIS_CS_PASSWORD = config['redis_connection']['redis_cs_password']
         else:
             self.REDIS_PLT_HOST = os.getenv('REDIS_PLT_HOST')
-            self.REDIS_CS_HOSTcs_host = os.getenv('REDIS_CS_HOST')
+            self.REDIS_CS_HOST = os.getenv('REDIS_CS_HOST')
             self.REDIS_PLT_PORT = os.getenv('REDIS_PLT_PORT')
             self.REDIS_CS_PORT = os.getenv('REDIS_CS_PORT')
             self.REDIS_PLT_PASSWORD = os.getenv('REDIS_PLT_PASSWORD')
