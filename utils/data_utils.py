@@ -92,7 +92,6 @@ class TestDataReader:
 
 
 class EnvReader:
-
     def __init__(self) -> None:
         self.__load_host()
         self.__load_postgres()
@@ -100,6 +99,7 @@ class EnvReader:
         self.__load_redis()
         self.__load_cs_test_account()
         self.__load_API_headers()
+        self.__load_mongo()
 
     def __load_host(self):
         if os.getenv('MODE') is None:
@@ -115,18 +115,12 @@ class EnvReader:
 
     def __load_postgres(self):
         if os.getenv('MODE') is None:
-            self.POSTGRES_PLT_HOST = config['postgres_connection'][
-                'postgres_plt_host']
-            self.POSTGRES_CS_HOST = config['postgres_connection'][
-                'postgres_cs_host']
-            self.POSTGRES_PLT_PORT = config['postgres_connection'][
-                'postgres_plt_port']
-            self.POSTGRES_CS_PORT = config['postgres_connection'][
-                'postgres_cs_port']
-            self.POSTGRES_PLT_PASSWORD = config['postgres_connection'][
-                'postgres_plt_password']
-            self.POSTGRES_CS_PASSWORD = config['postgres_connection'][
-                'postgres_cs_password']
+            self.POSTGRES_PLT_HOST = config['postgres_connection']['postgres_plt_host']
+            self.POSTGRES_CS_HOST = config['postgres_connection']['postgres_cs_host']
+            self.POSTGRES_PLT_PORT = config['postgres_connection']['postgres_plt_port']
+            self.POSTGRES_CS_PORT = config['postgres_connection']['postgres_cs_port']
+            self.POSTGRES_PLT_PASSWORD = config['postgres_connection']['postgres_plt_password']
+            self.POSTGRES_CS_PASSWORD = config['postgres_connection']['postgres_cs_password']
         else:
             self.POSTGRES_PLT_HOST = os.getenv('POSTGRES_PLT_HOST')
             self.POSTGRES_CS_HOST = os.getenv('POSTGRES_CS_HOST')
@@ -192,6 +186,12 @@ class EnvReader:
         self.XXL_HEADER = config['API_headers']['xxl']
         self.CS_HEADER = config['API_headers']['cs']
         self.SECRET = config['secret']['secret']
+
+    def __load_mongo(self):
+        self.MONGO_PLT_HOST = config['mongo_connection']['mongo_plt_host']
+        self.MONGO_CS_HOST = config['mongo_connection']['mongo_cs_host']
+        self.MONGO_PLT_PASSWORD = config['mongo_connection']['mongo_plt_password']
+        self.MONGO_CS_PASSWORD = config['mongo_connection']['mongo_cs_password']
 
 
 class ResponseVerification:

@@ -2,9 +2,10 @@
 import os
 import sys
 sys.path.append(os.path.abspath('.'))
+import psycopg2
+import pymongo
 from utils.data_utils import EnvReader
 from elasticsearch import Elasticsearch, helpers
-import psycopg2
 import json
 
 env = EnvReader()
@@ -14,6 +15,10 @@ plt_port = env.POSTGRES_PLT_PORT
 cs_port = env.POSTGRES_CS_PORT
 plt_password = env.POSTGRES_PLT_PASSWORD
 cs_password = env.POSTGRES_CS_PASSWORD
+mongo_plt_host = env.MONGO_PLT_HOST
+mongo_cs_host = env.MONGO_CS_HOST
+mongo_plt_password = env.MONGO_PLT_PASSWORD
+mongo_cs_password = env.MONGO_CS_PASSWORD
 
 
 class Postgresql:
@@ -93,6 +98,30 @@ class ElasticsearchTool:
     '''
     def add_bulk_data(self, json_body):
         helpers.bulk(self.es, body=json_body)
+
+
+class Mongo:
+    def __init__(self, database="user", user="app_jr", platform="plt"):
+        self.database = database
+        self.user = user
+        self.password = None
+        self.host = None
+        if platform == "plt":
+            self.host = mongo_plt_host
+            self.password = mongo_plt_password
+        elif platform == "cs":
+            self.host = mongo_cs_host
+            self.password = mongo_cs_password
+        else:
+            raise "platform Error"
+        conn_str = f'mongodb+srv://{self.user}:{self.password}@{self.host}/{self.database}?authMechanism=DEFAULT'
+        # set a 5-second connection timeout
+        self.client = pymongo.MongoClient(
+            conn_str, serverSelectionTimeoutMS=5000, tls=True, tlsAllowInvalidCertificates=True)
+        try:
+            print(self.client.server_info())
+        except Exception:
+            print("Unable to connect to the server.")
 
 
 if __name__ == '__main__':
