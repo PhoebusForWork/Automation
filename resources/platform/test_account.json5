@@ -1065,6 +1065,54 @@
     },
 
     {
+        "test_case": "test_put_admin_language",
+        "req_method": "put",
+        "req_url": "/v1/account/admin/language",
+        "schema": {
+                    "$schema": "http://json-schema.org/draft-04/schema#",
+                    "type": "object",
+                    "properties": {
+                        "data": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "data"
+                    ]
+                },
+        "test_item": [
+            {"scenario":"切換為EN","target": {},"json": {},"params" : {"language": "EN"},"code_status": 200,"keyword": "data"},
+            {"scenario":"切換為ZH","target": {},"json": {},"params" : {"language": "ZH"},"code_status": 200,"keyword": "data"},
+            {"scenario":"不給值","target": {},"json": {},"params" : {"language": null},"code_status": 400,"keyword": "无效的请求参数"}
+        ]
+    },
+
+    {
+        "test_case": "test_put_admin_currency",
+        "req_method": "put",
+        "req_url": "/v1/account/admin/currency",
+        "schema": {
+                    "$schema": "http://json-schema.org/draft-04/schema#",
+                    "type": "object",
+                    "properties": {
+                        "data": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "data"
+                    ]
+                },
+        "test_item": [
+            {"scenario":"切換為USDT_TRC20","target": {},"json": {},"params" : {"currency": "USDT_TRC20"},"code_status": 200,"keyword": "data"},
+            {"scenario":"切換為USD","target": {},"json": {},"params" : {"currency": "USD"},"code_status": 200,"keyword": "data"},
+            {"scenario":"切換為USDT_ERC20","target": {},"json": {},"params" : {"currency": "USDT_ERC20"},"code_status": 200,"keyword": "data"},
+            {"scenario":"切換為CNY","target": {},"json": {},"params" : {"currency": "CNY"},"code_status": 200,"keyword": "data"},
+            {"scenario":"不給值","target": {},"json": {},"params" : {"currency": null},"code_status": 400,"keyword": "无效的请求参数"}
+        ]
+    },
+
+    {
         "test_case": "test_authority_permission",
         "req_method": "get",
         "req_url": "/v1/account/authority/permission",
