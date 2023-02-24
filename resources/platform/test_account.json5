@@ -339,6 +339,18 @@
         "test_case": "test_account_login_reset_password",
         "req_method": "put",
         "req_url": "/v1/account/login/resetPassword",
+        "schema": {
+                    "$schema": "http://json-schema.org/draft-04/schema#",
+                    "type": "object",
+                    "properties": {
+                        "data": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "data"
+                    ]
+                },
         "json" : {"account":"建立新帳號","oldPassword":"abc123456","newPassword":"abc12345","loginIp":"61.220.72.61"},//IP可不填
         "test_item": [
             {"scenario":"正確更換","target":{},"params": {},"code_status": 200,"keyword": "success"},
@@ -351,6 +363,18 @@
         "test_case": "test_account_logout",
         "req_method": "post",
         "req_url": "/v1/account/logout",
+        "schema": {
+                    "$schema": "http://json-schema.org/draft-04/schema#",
+                    "type": "object",
+                    "properties": {
+                        "data": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "data"
+                    ]
+                },
         "test_item": [
             {"scenario":"帳號登出","json": {},"params": {},"code_status": 200,"keyword": "SUCCESS"},
         ]
@@ -360,6 +384,30 @@
         "test_case": "test_login_img_code",
         "req_method": "post",
         "req_url": "/v1/account/login/imgCode",
+        "schema": {
+                    "$schema": "http://json-schema.org/draft-04/schema#",
+                    "type": "object",
+                    "properties": {
+                        "data": {
+                            "type": "object",
+                            "properties": {
+                                "imgCode": {
+                                    "type": "string"
+                                },
+                                "code": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "code",
+                                "imgCode"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "data"
+                    ]
+                },
         "test_item": [
             {"scenario":"正確取得認證碼","json": {},"params": {"uuid": 124},"code_status": 200,"keyword": "code"},
             {"scenario":"未帶入參數","json": {},"params": {},"code_status": 400,"keyword": "无效的请求参数"}
