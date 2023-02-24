@@ -199,7 +199,12 @@ class AccountAdmin(PlatformAPI):
             raise ValueError("創建帳號失敗")
 
     def find_admin_id(self, plat_token=None):
-        response = self.search_admin_list(plat_token=plat_token, size=200, )
+        response = self.search_admin_list(plat_token=plat_token, size=200)
+        total = response['data']['total']
+        size = response['data']['size']
+        if total >= size:
+            add_size = size + total
+            response = self.search_admin_list(plat_token=plat_token, size=add_size)
         admin_id = jsonpath.jsonpath(response, "$..id")
         return str(admin_id[-1])
 
@@ -489,6 +494,11 @@ class AccountRole(PlatformAPI):
         return response.json()
 
     def find_role_id(self, plat_token=None):
-        response = self.role_list(plat_token=plat_token, size=100,)
+        response = self.role_list(plat_token=plat_token, size=10,)
+        total = response['data']['total']
+        size = response['data']['size']
+        if total >= size:
+            add_size = size + total
+            response = self.role_list(plat_token=plat_token, size=add_size)
         role_id = jsonpath.jsonpath(response, "$..id")
         return str(role_id[-1])
