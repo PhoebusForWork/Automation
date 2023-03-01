@@ -1,7 +1,7 @@
 import logging
 import traceback
 import pytest
-from pylib.client_side.webApiBase import WEB_API
+from pylib.client_side.webApiBase import WebAPI
 from utils.data_utils import EnvReader
 
 env = EnvReader()
@@ -11,8 +11,8 @@ login_user_id = None
 
 
 @pytest.fixture(scope="module")
-def getCsLoginToken(username=cs_account, password=cs_password):
-    api = WEB_API()
+def get_client_side_token(username=cs_account, password=cs_password):
+    api = WebAPI()
     resp = api.login(username=username, password=password)
     try:
         token = resp.json()['data']['token']

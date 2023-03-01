@@ -3,12 +3,12 @@ import json5
 import copy
 import configparser
 
-
 config = configparser.ConfigParser()
 config.read('config/config.ini')
 
 
-class JsonReader:
+class TestDataReader:
+    __test__ = False
 
     def __init__(self):
 
