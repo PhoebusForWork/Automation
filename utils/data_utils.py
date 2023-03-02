@@ -12,13 +12,22 @@ class TestDataReader:
     __test__ = False
 
     def __init__(self):
-
-        self.file_path = os.path.join(
-            os.path.dirname(os.path.dirname(__file__)), 'resources/platform')
-        self.cs_file_path = os.path.join(
-            os.path.dirname(os.path.dirname(__file__)),
-            'resources/client_side')
-        self.case = None
+        if os.getenv('MODE') is None:
+            self.file_path = os.path.join(
+                os.path.dirname(os.path.dirname(__file__)),
+                'resources/dev/platform')
+            self.cs_file_path = os.path.join(
+                os.path.dirname(os.path.dirname(__file__)),
+                'resources/dev/client_side')
+            self.case = None
+        else:
+            self.file_path = os.path.join(
+                os.path.dirname(os.path.dirname(__file__)),
+                'resources/regression/platform')
+            self.cs_file_path = os.path.join(
+                os.path.dirname(os.path.dirname(__file__)),
+                'resources/regression/client_side')
+            self.case = None
 
     def read_json5(self, json_file, file_side='plt') -> None:
         test_data = []
