@@ -365,8 +365,62 @@ def test_get_game_payout(test, get_platform_token):
 
 
 @allure.feature("資金歸集審核管理")
+@allure.story("資金歸集一審")
+@allure.title("{test[scenario]}")
+@pytest.mark.regression
+@pytest.mark.parametrize("test", test_data.get_case('post_game_recover_first'))
+def test_post_game_recover_first(test, get_platform_token, clear_game_recover_second):
+    json_replace = test_data.replace_json(test['json'], test['target'])
+    if json_replace['recoverManageId'] == "true_false_case":
+        get_recover_manage = GameRecover()
+        get_recover_manage.post_game_recover(plat_token=get_platform_token)
+        manage_id = get_recover_manage.find_recover_manage_id(plat_token=get_platform_token, status=0)
+        json_replace['recoverManageId'] = manage_id
+    api = API_Controller()
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
+    ResponseVerification.basic_assert(resp, test)
+
+
+@allure.feature("資金歸集審核管理")
+@allure.story("資金歸集二審")
+@allure.title("{test[scenario]}")
+@pytest.mark.regression
+@pytest.mark.parametrize("test", test_data.get_case('post_game_recover_second'))
+def test_post_game_recover_second(test, get_platform_token,):
+    json_replace = test_data.replace_json(test['json'], test['target'])
+    if json_replace['recoverManageId'] == "true_false_case":
+        get_recover_manage = GameRecover()
+        get_recover_manage.post_game_recover(plat_token=get_platform_token)
+        manage_id = get_recover_manage.find_recover_manage_id(plat_token=get_platform_token, status=0)
+        get_recover_manage.post_game_recover_first(
+            plat_token=get_platform_token,
+            recoverManageId=manage_id,
+            isApprove=True)
+        json_replace['recoverManageId'] = manage_id
+    api = API_Controller()
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
+    ResponseVerification.basic_assert(resp, test)
+
+
+@allure.feature("資金歸集審核管理")
+@allure.story("一鍵歸集")
+@allure.title("{test[scenario]}")
+@pytest.mark.regression
+@pytest.mark.parametrize("test", test_data.get_case('post_game_recover'))
+def test_post_game_recover(test, get_platform_token, clear_game_recover_first):
+    json_replace = test_data.replace_json(test['json'], test['target'])
+    api = API_Controller()
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
+    ResponseVerification.basic_assert(resp, test)
+
+
+@allure.feature("資金歸集審核管理")
 @allure.story("資金歸集審核列表")
 @allure.title("{test[scenario]}")
+@pytest.mark.regression
 @pytest.mark.parametrize("test", test_data.get_case('get_game_recover'))
 def test_get_game_recover(test, get_platform_token, clear_game_recover_first_change, clear_game_recover_second):
     params_replace = test_data.replace_json(test['params'], test['target'])
@@ -386,56 +440,15 @@ def test_get_game_recover(test, get_platform_token, clear_game_recover_first_cha
             plat_token=get_platform_token,
             recoverManageId=manage_id,
             isApprove=True)
+    elif params_replace['status'] == "status_case2":
+        params_replace = {'from': date_from, 'to': date_to, 'status': 2}
+    elif params_replace['status'] == "status_case3":
+        params_replace = {'from': date_from, 'to': date_to, 'status': 3}
+    elif params_replace['status'] == "status_case4":
+        params_replace = {'from': date_from, 'to': date_to, 'status': 4}
+    elif params_replace['to'] == "change":
+        params_replace = {'from': date_from, 'to': date_to}
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], test['json'], params_replace, token=get_platform_token)
     ResponseVerification.basic_assert(resp, test)
 
-
-@allure.feature("資金歸集審核管理")
-@allure.story("一鍵歸集")
-@allure.title("{test[scenario]}")
-@pytest.mark.parametrize("test", test_data.get_case('post_game_recover'))
-def test_post_game_recover(test, get_platform_token, clear_game_recover_first):
-    json_replace = test_data.replace_json(test['json'], test['target'])
-    api = API_Controller()
-    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
-                            test['params'], token=get_platform_token)
-    ResponseVerification.basic_assert(resp, test)
-
-
-@allure.feature("資金歸集審核管理")
-@allure.story("資金歸集一審")
-@allure.title("{test[scenario]}")
-@pytest.mark.parametrize("test", test_data.get_case('post_game_recover_first'))
-def test_post_game_recover_first(test, get_platform_token, clear_game_recover_second):
-    json_replace = test_data.replace_json(test['json'], test['target'])
-    if json_replace['recoverManageId'] == "true_false_case":
-        get_recover_manage = GameRecover()
-        get_recover_manage.post_game_recover(plat_token=get_platform_token)
-        manage_id = get_recover_manage.find_recover_manage_id(plat_token=get_platform_token, status=0)
-        json_replace['recoverManageId'] = manage_id
-    api = API_Controller()
-    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
-                            test['params'], token=get_platform_token)
-    ResponseVerification.basic_assert(resp, test)
-
-
-@allure.feature("資金歸集審核管理")
-@allure.story("資金歸集二審")
-@allure.title("{test[scenario]}")
-@pytest.mark.parametrize("test", test_data.get_case('post_game_recover_second'))
-def test_post_game_recover_second(test, get_platform_token,):
-    json_replace = test_data.replace_json(test['json'], test['target'])
-    if json_replace['recoverManageId'] == "true_false_case":
-        get_recover_manage = GameRecover()
-        get_recover_manage.post_game_recover(plat_token=get_platform_token)
-        manage_id = get_recover_manage.find_recover_manage_id(plat_token=get_platform_token, status=0)
-        get_recover_manage.post_game_recover_first(
-            plat_token=get_platform_token,
-            recoverManageId=manage_id,
-            isApprove=True)
-        json_replace['recoverManageId'] = manage_id
-    api = API_Controller()
-    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
-                            test['params'], token=get_platform_token)
-    ResponseVerification.basic_assert(resp, test)

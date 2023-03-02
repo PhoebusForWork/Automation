@@ -514,65 +514,22 @@
         ]
     },
     {
-        "test_case": "get_game_recover",//RTcase尚未完成
-        "req_method": "get",
-        "req_url": "/v1/game/recover",
-        "schema": {"type": "object", "properties": {"data": {"type": "object", "properties": {"total": {"type": "integer"}, "size": {"type": "integer"}, "current": {"type": "integer"}, "pages": {"type": "integer"}, "records": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "currency": {"type": "string"}, "gameCode": {"type": "string"}, "gameName": {"type": "string"}, "status": {"type": "integer"}, "firstApprover": {"type": ["string", "null"]}, "firstTime": {"type": ["string", "null"]}, "secondApprover": {"type": ["string", "null"]}, "secondTime": {"type": ["string", "null"]}, "creator": {"type": "string"}, "createTime": {"type": "string"}}, "required": ["createTime", "creator", "currency", "firstApprover", "firstTime", "gameCode", "gameName", "id", "secondApprover", "secondTime", "status"]}}}, "required": ["current", "pages", "records", "size", "total"]}}, "required": ["data"]},
-        "params": {"from": "2023-03-10T04:10:27Z","to": "2023-04-21T14:50:27Z","creator": null,"approver": null,"status": null,"currency": null,"page": null,"size": null},
-        "test_item": [
-            {"scenario":"[from and to]正常搜尋","target": {},"json": {},"code_status": 200,"keyword": "\"gameCode\":\"AI_SPORT_AI\""},
-            {"scenario":"[from]null","target": {"from": null},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[to]null","target": {"to": null},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[creator]superAdmin","target": {},"json": {},"code_status": 200,"keyword": "\"creator\":\"superAdmin\""},
-            {"scenario":"[creator]null","target": {},"json": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"[approver]superAdmin","target": {},"json": {},"code_status": 200,"keyword": "\"firstApprover\":\"superAdmin\""},
-            {"scenario":"[status]0:待審核","target": {"from": null,"to": null,"status": "status_case0"},"json": {},"code_status": 200,"keyword": "\"status\":0"},
-            {"scenario":"[status]1:一審通過","target": {"from": null,"to": null, "status": "status_case1"},"json": {},"code_status": 200,"keyword": "\"status\":1"},
-            {"scenario":"[status]2:一審不通過","target": {"status": 2},"json": {},"code_status": 200,"keyword": "\"status\":2"},
-            {"scenario":"[status]3:二審通過","target": {"status": 3},"json": {},"code_status": 200,"keyword": "\"status\":3"},
-            {"scenario":"[status]4:二審不通過","target": {"status": 4},"json": {},"code_status": 200,"keyword": "\"status\":4"},
-            {"scenario":"[currency]CNY","target": {"currency": "CNY"},"json": {},"code_status": 200,"keyword": "\"currency\":\"CNY\""},
-            //先不測此幣種{"scenario":"[currency]USD","target": {"currency": "USD"},"json": {},"code_status": 200,"keyword": "\"currency\":\"CNY\""},
-            //先不測此幣種{"scenario":"[currency]USDT_TRC20","target": {"currency": "USDT_TRC20"},"json": {},"code_status": 200,"keyword": "\"currency\":\"CNY\""},
-            //先不測此幣種{"scenario":"[currency]USDT_ERC20","target": {"currency": "USDT_ERC20"},"json": {},"code_status": 200,"keyword": "\"currency\":\"CNY\""},
-            {"scenario":"[page]null","target": {"page": null},"json": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"[size]null","target": {"size": null},"json": {},"code_status": 200,"keyword": "data"}
-            ]
-    },
-    {
-        "test_case": "post_game_recover",//RTcase尚未完成
-        "req_method": "post",
-        "req_url": "/v1/game/recover",
-        "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
-        "json": {"channelCode": "AI", "gameCode": "AI_SPORT_AI", "currency": "CNY"},
-        "test_item": [
-            {"scenario":"[channelCode]null","target": {"channelCode": null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[channelCode]無此渠道","target": {"channelCode": "BI"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[gameCode]null","target": {"gameCode": null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[gameCode]無此遊戲訊息","target": {"gameCode": "BI_SPORT_BI"},"params": {},"code_status": 400,"keyword": "游戏信息不存在"},
-            {"scenario":"[currency]null","target": {"currency": null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[currency]無此幣別","target": {"currency": "JPY"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"正常申請","target": {},"params": {},"code_status": 200,"keyword": "success"},
-            {"scenario":"重複申請","target": {},"params": {},"code_status": 400,"keyword": "有审核中的记录，请处理后再发起申请操作"}
-        ]
-    },
-    {
-        "test_case": "post_game_recover_first",//RTcase尚未完成
+        "test_case": "post_game_recover_first",
         "req_method": "post",
         "req_url": "/v1/game/recover/first",
         "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "json": {"recoverManageId": 0, "isApprove": true},
         "test_item": [
             {"scenario":"無此資料","target": {"recoverManageId": 0, "isApprove": false},"params": {},"code_status": 400,"keyword": "資料不存在"},
-            {"scenario":"重複審核","target": {"recoverManageId": 1, "isApprove": false},"params": {},"code_status": 400,"keyword": "资金归集审核状态错误"},
             {"scenario":"[recoverManageId]null","target": {"recoverManageId": null, "isApprove": false},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[isApprove]null","target": {"recoverManageId": 0, "isApprove": null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[isApprove]false","target": {"recoverManageId": "true_false_case", "isApprove": false},"params": {},"code_status": 200,"keyword": "success"},
-            {"scenario":"[isApprove]True","target": {"recoverManageId": "true_false_case", "isApprove": true},"params": {},"code_status": 200,"keyword": "success"}
+            {"scenario":"[isApprove]True","target": {"recoverManageId": "true_false_case", "isApprove": true},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"重複審核","target": {"recoverManageId": 1, "isApprove": false},"params": {},"code_status": 400,"keyword": "资金归集审核状态错误"}
         ]
     },
     {
-        "test_case": "post_game_recover_second",//RTcase尚未完成
+        "test_case": "post_game_recover_second",
         "req_method": "post",
         "req_url": "/v1/game/recover/second",
         "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
@@ -585,5 +542,51 @@
             {"scenario":"[isApprove]null","target": {"recoverManageId": 0, "isApprove": null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[isApprove]True","target": {"recoverManageId": "true_false_case", "isApprove": true},"params": {},"code_status": 200,"keyword": "success"}
         ]
+    },
+    {
+        "test_case": "post_game_recover",
+        "req_method": "post",
+        "req_url": "/v1/game/recover",
+        "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
+        "json": {"channelCode": "AI", "gameCode": "AI_SPORT_AI", "currency": "CNY"},
+        "test_item": [
+            {"scenario":"[channelCode]null","target": {"channelCode": null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[channelCode]無此渠道","target": {"channelCode": "BI"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[gameCode]null","target": {"gameCode": null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[gameCode]無此遊戲訊息","target": {"gameCode": "BI_SPORT_BI"},"params": {},"code_status": 400,"keyword": "游戏信息不存在"},
+            {"scenario":"[currency]USD","target": {"currency": "USD"},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[currency]USD","target": {"currency": "USDT_ERC20"},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[currency]USD","target": {"currency": "USDT_TRC20"},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[currency]null","target": {"currency": null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[currency]無此幣別","target": {"currency": "JPY"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"正常申請","target": {},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"重複申請","target": {},"params": {},"code_status": 400,"keyword": "有审核中的记录，请处理后再发起申请操作"}
+        ]
+    },
+    {
+        "test_case": "get_game_recover",
+        "req_method": "get",
+        "req_url": "/v1/game/recover",
+        "schema": {"type": "object", "properties": {"data": {"type": "object", "properties": {"total": {"type": "integer"}, "size": {"type": "integer"}, "current": {"type": "integer"}, "pages": {"type": "integer"}, "records": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "currency": {"type": "string"}, "gameCode": {"type": "string"}, "gameName": {"type": "string"}, "status": {"type": "integer"}, "firstApprover": {"type": ["string", "null"]}, "firstTime": {"type": ["string", "null"]}, "secondApprover": {"type": ["string", "null"]}, "secondTime": {"type": ["string", "null"]}, "creator": {"type": "string"}, "createTime": {"type": "string"}}, "required": ["createTime", "creator", "currency", "firstApprover", "firstTime", "gameCode", "gameName", "id", "secondApprover", "secondTime", "status"]}}}, "required": ["current", "pages", "records", "size", "total"]}}, "required": ["data"]},
+        "params": {"from": "2023-05-10T04:10:27Z","to": "2023-05-20T23:59:59Z","creator": null,"approver": null,"status": null,"currency": null,"page": null,"size": 50},
+        "test_item": [
+            {"scenario":"[from and to]正常搜尋","target": {"to": "change"},"json": {},"code_status": 200,"keyword": "\"gameCode\":\"AI_SPORT_AI\""},
+            {"scenario":"[from]null","target": {"from": null},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[to]null","target": {"to": null},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[creator]superAdmin","target": {"to": "change"},"json": {},"code_status": 200,"keyword": "\"creator\":\"superAdmin\""},
+            {"scenario":"[creator]null","target": {},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[approver]superAdmin","target": {"from": null,"to": "change"},"json": {},"code_status": 200,"keyword": "\"firstApprover\":\"superAdmin\""},
+            {"scenario":"[status]0:待審核","target": {"from": null,"to": null,"status": "status_case0"},"json": {},"code_status": 200,"keyword": "\"status\":0"},
+            {"scenario":"[status]1:一審通過","target": {"from": null,"to": null, "status": "status_case1"},"json": {},"code_status": 200,"keyword": "\"status\":1"},
+            {"scenario":"[status]2:一審不通過","target": {"from": null,"to": null, "status": "status_case2"},"json": {},"code_status": 200,"keyword": "\"status\":2"},
+            {"scenario":"[status]3:二審通過","target": {"from": null,"to": null, "status": "status_case3"},"json": {},"code_status": 200,"keyword": "\"status\":3"},
+            {"scenario":"[status]4:二審不通過","target": {"from": null,"to": null, "status": "status_case4"},"json": {},"code_status": 200,"keyword": "\"status\":4"},
+            {"scenario":"[currency]CNY","target": {"to": "change", "currency": "CNY"},"json": {},"code_status": 200,"keyword": "\"currency\":\"CNY\""},
+            {"scenario":"[currency]USD","target": {"to": "change","currency": "USD"},"json": {},"code_status": 200,"keyword": "\"currency\":\"CNY\""},
+            {"scenario":"[currency]USDT_TRC20","target": {"to": "change","currency": "USDT_TRC20"},"json": {},"code_status": 200,"keyword": "\"currency\":\"CNY\""},
+            {"scenario":"[currency]USDT_ERC20","target": {"to": "change","currency": "USDT_ERC20"},"json": {},"code_status": 200,"keyword": "\"currency\":\"CNY\""},
+            {"scenario":"[page]null","target": {"page": null},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[size]null","target": {"size": null},"json": {},"code_status": 200,"keyword": "data"}
+            ]
     }
 ]
