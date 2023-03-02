@@ -3,67 +3,12 @@
         "test_case": "test_account_login",
         "req_method": "post",
         "req_url": "/v1/account/login",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "object",
-                            "properties": {
-                                "id": {
-                                    "type": "integer"
-                                },
-                                "token": {
-                                    "type": "string"
-                                },
-                                "account": {
-                                    "type": "string"
-                                },
-                                "displayName": {
-                                    "type": "string"
-                                },
-                                "preferLanguage": {
-                                    "type": "string"
-                                },
-                                "preferCurrency": {
-                                    "type": "string"
-                                },
-                                "isLeader": {
-                                    "type": "boolean"
-                                },
-                                "deptId": {
-                                    "type": "integer"
-                                },
-                                "department": {
-                                    "type": "string"
-                                },
-                                "role": {
-                                    "type": "string"
-                                }
-                            },
-                            "required": [
-                                "account",
-                                "department",
-                                "deptId",
-                                "displayName",
-                                "id",
-                                "isLeader",
-                                "preferCurrency",
-                                "preferLanguage",
-                                "role",
-                                "token"
-                            ]
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "object", "properties": {"id": {"type": "integer"}, "token": {"type": "string"}, "account": {"type": "string"}, "displayName": {"type": "string"}, "preferLanguage": {"type": "string"}, "preferCurrency": {"type": "string"}, "isLeader": {"type": "boolean"}, "deptId": {"type": "integer"}, "department": {"type": "string"}, "role": {"type": "string"}}, "required": ["account", "department", "deptId", "displayName", "id", "isLeader", "preferCurrency", "preferLanguage", "role", "token"]}}, "required": ["data"]},
         "json" : {"account":"superAdmin","password":"abc123456","imgCode":"給我圖形驗證碼","uuid":123},
         "test_item": [
             {"scenario":"正確登入","target":{"null":null,"uuid":"124"},"params": {},"code_status": 200,"keyword": "data"},
             {"scenario":"錯誤帳號","target":{"account":"charlieggyy","uuid":"124"},"params": {},"code_status": 400,"keyword": "用户名或密码不正确"},
-            {"scenario":"錯誤密碼","target":{"account":"superAdmin","password":"123456","uuid":"124"},"params": {},"code_status": 400,"keyword": "用户名或密码不正确"},
+            {"scenario":"錯誤密碼","target":{"account":"superAdmin","password":"123456","uuid":"124"},"params": {},"code_status": 400,"keyword": "用户名或密码不正确"}
         ]
     },
 
@@ -71,69 +16,7 @@
         "test_case": "test_dept_list",
         "req_method": "get",
         "req_url": "/v1/account/dept/list",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "id": {
-                                        "type": "integer"
-                                    },
-                                    "department": {
-                                        "type": "string"
-                                    },
-                                    "pid": {
-                                        "type": "integer"
-                                    },
-                                    "status": {
-                                        "type": "integer"
-                                    },
-                                    "creatorId": {
-                                        "type": "integer"
-                                    },
-                                    "creator": {
-                                        "type": "string"
-                                    },
-                                    "createTime": {
-                                        "type": "string"
-                                    },
-                                    "lastModifiedAdminId": {
-                                        "type": ["integer","null"]
-                                    },
-                                    "lastModifiedAdmin": {
-                                        "type": ["string","null"]
-                                    },
-                                    "lastModifiedTime": {
-                                        "type": "string"
-                                    },
-                                    "selected": {
-                                        "type": ["boolean","null"]
-                                    }
-                                },
-                                "required": [
-                                    "createTime",
-                                    "creator",
-                                    "creatorId",
-                                    "department",
-                                    "id",
-                                    "lastModifiedAdmin",
-                                    "lastModifiedAdminId",
-                                    "lastModifiedTime",
-                                    "pid",
-                                    "selected",
-                                    "status"
-                                ]
-                            }
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "department": {"type": "string"}, "pid": {"type": "integer"}, "status": {"type": "integer"}, "creatorId": {"type": "integer"}, "creator": {"type": "string"}, "createTime": {"type": "string"}, "lastModifiedAdminId": {"type": ["integer","null"]}, "lastModifiedAdmin": {"type": ["string","null"]}, "lastModifiedTime": {"type": "string"}, "selected": {"type": ["boolean","null"]}}, "required": ["createTime", "creator", "creatorId", "department", "id", "lastModifiedAdmin", "lastModifiedAdminId", "lastModifiedTime", "pid", "selected", "status"]}}}, "required": ["data"]},
         "test_item": [
             {"scenario":"基本查詢-不帶參數","json": {},"target":{},"params": {},"code_status": 200,"keyword": "data"},
             {"scenario":"[roleId]基本查詢","json": {},"target":{},"params": {"roleId": 2},"code_status": 200,"keyword": "true"},
@@ -151,18 +34,7 @@
         "test_case": "test_dept",
         "req_method": "post",
         "req_url": "/v1/account/dept",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "json" : {"department":"浣熊","pid":"49"},
         "test_item": [
             {"scenario":"不帶參數","target": {"department": "","pid": ""},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
@@ -178,18 +50,7 @@
         "test_case": "test_dept_leader",
         "req_method": "put",
         "req_url": "/v1/account/dept/leader",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "json" : {"adminId":"40","isLeader":"true"},
         "test_item": [
             {"scenario":"不帶任何參數","target": {"adminId": "","isLeader": ""},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
@@ -203,18 +64,7 @@
         "test_case": "test_dept_admin",
         "req_method": "put",
         "req_url": "/v1/account/dept/admin",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "json" : {"adminIdList":["40"],"departmentId":"2"},
         "test_item": [
             {"scenario":"不帶任何參數","target": {"adminIdList": "","departmentId": ""},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
@@ -226,18 +76,7 @@
     {
         "test_case": "test_dept_delete_admin_id",
         "req_method": "delete",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "test_item": [
             {"req_url": "/v1/account/dept/admin/","scenario":"不帶任何參數","json": {},"target": {},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"req_url": "/v1/account/dept/admin/40","scenario":"正確帶入參數","json": {},"target": {"adminIdList":["40"],"departmentId":"2"},"params": {},"code_status": 200,"keyword": "success"},
@@ -247,18 +86,7 @@
     {
         "test_case": "test_dept_put_department_id",
         "req_method": "put",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "test_item": [
             {"req_url": "/v1/account/dept/","scenario":"不帶departmentId參數","json": {},"target": {},"params": {},"code_status": 405,"keyword": "不允许使用的HTTP方法"},
             {"req_url": "/v1/account/dept/49","scenario":"不帶department參數","json": {},"target": {},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
@@ -269,18 +97,7 @@
     {
         "test_case": "test_dept_delete_department_id",
         "req_method": "delete",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "test_item": [
             {"req_url": "/v1/account/dept/","scenario":"不帶departmentId參數","json": {},"target": {},"params": {},"code_status": 405,"keyword": "不允许使用的HTTP方法"},
             {"req_url": "/v1/account/dept/要刪除的節點","scenario":"正確帶入參數","json": {},"target": {},"params": {},"code_status": 200,"keyword": "success"},
@@ -291,133 +108,7 @@
         "test_case": "test_dept_admin_list",
         "req_method": "get",
         "req_url": "/v1/account/dept/admin/list",
-         "schema":{
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "object",
-                            "properties": {
-                                "total": {
-                                    "type": "integer"
-                                },
-                                "size": {
-                                    "type": "integer"
-                                },
-                                "current": {
-                                    "type": "integer"
-                                },
-                                "pages": {
-                                    "type": "integer"
-                                },
-                                "records": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "id": {
-                                                "type": "integer"
-                                            },
-                                            "account": {
-                                                "type": "string"
-                                            },
-                                            "password": {
-                                                "type": "string"
-                                            },
-                                            "displayName": {
-                                                "type": "string"
-                                            },
-                                            "phone": {
-                                                "type": "string"
-                                            },
-                                            "sipNum": {
-                                                "type": ["string","null"]
-                                            },
-                                            "fixSipNum": {
-                                                "type": ["string","null"]
-                                            },
-                                            "isLeader": {
-                                                "type": "boolean"
-                                            },
-                                            "deptId": {
-                                                "type": "integer"
-                                            },
-                                            "lastLoginTime": {
-                                                "type": ["string","null"]
-                                            },
-                                            "lastLoginDeviceId": {
-                                                "type": ["string","null"]
-                                            },
-                                            "lastLoginIp": {
-                                                "type": ["string","null"]
-                                            },
-                                            "status": {
-                                                "type": "integer"
-                                            },
-                                            "creatorId": {
-                                                "type": "integer"
-                                            },
-                                            "creator": {
-                                                "type": "string"
-                                            },
-                                            "createTime": {
-                                                "type": "string"
-                                            },
-                                            "lastModifiedAdminId": {
-                                                "type": ["integer","null"]
-                                            },
-                                            "lastModifiedAdmin": {
-                                                "type": ["string","null"]
-                                            },
-                                            "lastModifiedTime": {
-                                                "type": ["string","null"]
-                                            },
-                                            "department": {
-                                                "type": "string"
-                                            },
-                                            "role": {
-                                                "type": "string"
-                                            }
-                                        },
-                                        "required": [
-                                            "account",
-                                            "createTime",
-                                            "creator",
-                                            "creatorId",
-                                            "department",
-                                            "deptId",
-                                            "displayName",
-                                            "fixSipNum",
-                                            "id",
-                                            "isLeader",
-                                            "lastLoginDeviceId",
-                                            "lastLoginIp",
-                                            "lastLoginTime",
-                                            "lastModifiedAdmin",
-                                            "lastModifiedAdminId",
-                                            "lastModifiedTime",
-                                            "password",
-                                            "phone",
-                                            "role",
-                                            "sipNum",
-                                            "status"
-                                        ]
-                                    }
-                                }
-                            },
-                            "required": [
-                                "current",
-                                "pages",
-                                "records",
-                                "size",
-                                "total"
-                            ]
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema":{"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "object", "properties": {"total": {"type": "integer"}, "size": {"type": "integer"}, "current": {"type": "integer"}, "pages": {"type": "integer"}, "records": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "account": {"type": "string"}, "password": {"type": "string"}, "displayName": {"type": "string"}, "phone": {"type": "string"}, "sipNum": {"type": ["string","null"]}, "fixSipNum": {"type": ["string","null"]}, "isLeader": {"type": "boolean"}, "deptId": {"type": "integer"}, "lastLoginTime": {"type": ["string","null"]}, "lastLoginDeviceId": {"type": ["string","null"]}, "lastLoginIp": {"type": ["string","null"]}, "status": {"type": "integer"}, "creatorId": {"type": "integer"}, "creator": {"type": "string"}, "createTime": {"type": "string"}, "lastModifiedAdminId": {"type": ["integer","null"]}, "lastModifiedAdmin": {"type": ["string","null"]}, "lastModifiedTime": {"type": ["string","null"]}, "department": {"type": "string"}, "role": {"type": "string"}}, "required": ["account", "createTime", "creator", "creatorId", "department", "deptId", "displayName", "fixSipNum", "id", "isLeader", "lastLoginDeviceId", "lastLoginIp", "lastLoginTime", "lastModifiedAdmin", "lastModifiedAdminId", "lastModifiedTime", "password", "phone", "role", "sipNum", "status"]}}}, "required": ["current", "pages", "records", "size", "total"]}}, "required": ["data"]},
         "test_item": [
             {"scenario":"正常查詢","target": {},"json": {},"params" : {"account": "charlieadmin001", "displayName": "charlie", "phone": "", "isLeader": "", "deptId": "", "status": "", "deptIdList": "", "roleIdList": "", "startLoginTime": "", "endLoginTime": "", "isNonDept": "","page": "", "size": ""},"code_status": 200,"keyword": "data"},
             {"scenario":"[isLeader]字串","target": {},"json": {},"params" : {"account": "", "displayName": "", "phone": "", "isLeader": "abc", "deptId": "", "status": "", "deptIdList": "", "roleIdList": "", "startLoginTime": "", "endLoginTime": "", "isNonDept": "","page": "", "size": ""},"code_status": 400,"keyword": "无效的请求参数"},
@@ -445,18 +136,7 @@
         "test_case": "test_role",
         "req_method": "post",
         "req_url": "/v1/account/role",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "json" : {"role":"浣熊","remark":"可以空白","authorityIds": ["1"],"departmentIds": ["49"]},
         "test_item": [
             {"scenario":"創建角色","target": {"role":"auto","remark":"可以空白","authorityIds": ["2"],"departmentIds": ["2"]},"params": {},"code_status": 200,"keyword": "success"},
@@ -468,18 +148,7 @@
     {
         "test_case": "test_put_role",
         "req_method": "put",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "json": {"role":"浣熊","remark":"可以空白","authorityIds": ["1"],"departmentIds": ["49"]},
         "test_item": [
             {"req_url": "/v1/account/role/","scenario":"不帶入roleId參數","target": {"role":"浣熊","remark":"可以空白","authorityIds": ["1"],"departmentIds": ["49"]},"params": {},"code_status": 405,"keyword": "不允许使用的HTTP方法"},
@@ -490,18 +159,7 @@
     {
         "test_case": "test_put_role_status",
         "req_method": "put",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "json" : {"status": "0"},
         "test_item": [
             {"req_url": "/v1/account/role/44/status","scenario":"禁用","target": {"status": "0"},"params": {},"code_status": 200,"keyword": "success"},
@@ -513,41 +171,7 @@
     {
         "test_case": "test_get_role_status",
         "req_method": "get",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "id": {
-                                        "type": "integer"
-                                    },
-                                    "authority": {
-                                        "type": "string"
-                                    },
-                                    "pid": {
-                                        "type": "integer"
-                                    },
-                                    "selected": {
-                                        "type": "boolean"
-                                    }
-                                },
-                                "required": [
-                                    "authority",
-                                    "id",
-                                    "pid",
-                                    "selected"
-                                ]
-                            }
-                        }
-                    },
-    "required": [
-        "data"
-    ]
-},
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "authority": {"type": "string"}, "pid": {"type": "integer"}, "selected": {"type": "boolean"}}, "required": ["authority", "id", "pid", "selected"]}}}, "required": ["data"]},
 
         "json" : {},
         "test_item": [
@@ -559,77 +183,7 @@
         "test_case": "test_role_list",
         "req_method": "get",
         "req_url": "/v1/account/role/list",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "object",
-                            "properties": {
-                                "total": {
-                                    "type": "integer"
-                                },
-                                "size": {
-                                    "type": "integer"
-                                },
-                                "current": {
-                                    "type": "integer"
-                                },
-                                "pages": {
-                                    "type": "integer"
-                                },
-                                "records": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "id": {
-                                                "type": "integer"
-                                            },
-                                            "role": {
-                                                "type": "string"
-                                            },
-                                            "numOfTotalAdmin": {
-                                                "type": "integer"
-                                            },
-                                            "departments": {
-                                                "type": "string"
-                                            },
-                                            "status": {
-                                                "type": "integer"
-                                            },
-                                            "remark": {
-                                                "type": "string"
-                                            },
-                                            "canDelete": {
-                                                "type": "boolean"
-                                            }
-                                        },
-                                        "required": [
-                                            "canDelete",
-                                            "departments",
-                                            "id",
-                                            "numOfTotalAdmin",
-                                            "remark",
-                                            "role",
-                                            "status"
-                                        ]
-                                    }
-                                }
-                            },
-                            "required": [
-                                "current",
-                                "pages",
-                                "records",
-                                "size",
-                                "total"
-                            ]
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "object", "properties": {"total": {"type": "integer"}, "size": {"type": "integer"}, "current": {"type": "integer"}, "pages": {"type": "integer"}, "records": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "role": {"type": "string"}, "numOfTotalAdmin": {"type": "integer"}, "departments": {"type": "string"}, "status": {"type": "integer"}, "remark": {"type": "string"}, "canDelete": {"type": "boolean"}}, "required": ["canDelete", "departments", "id", "numOfTotalAdmin", "remark", "role", "status"]}}}, "required": ["current", "pages", "records", "size", "total"]}}, "required": ["data"]},
         "json" : {},
         "test_item": [
             {"scenario":"[role]帶入參數","target": {},"params": {"role": "浣熊","authorityId": "","departmentId": "","page": "1","size": "100"},"code_status": 200,"keyword": "data"},
@@ -643,73 +197,7 @@
         "test_case": "test_admin",
         "req_method": "get",
         "req_url": "/v1/account/admin/40",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "object",
-                            "properties": {
-                                "id": {
-                                    "type": "integer"
-                                },
-                                "account": {
-                                    "type": "string"
-                                },
-                                "displayName": {
-                                    "type": "string"
-                                },
-                                "phone": {
-                                    "type": ["string","null"]
-                                },
-                                "sipNum": {
-                                    "type": ["string","null"]
-                                },
-                                "fixSipNum": {
-                                    "type": ["string","null"]
-                                },
-                                "isLeader": {
-                                    "type": "boolean"
-                                },
-                                "deptId": {
-                                    "type": "integer"
-                                },
-                                "roleIds": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "integer"
-                                    }
-                                },
-                                "expiration": {
-                                    "type": ["string","null"]
-                                },
-                                "status": {
-                                    "type": "integer"
-                                },
-                                "lastLoginTime": {
-                                    "type": "string"
-                                }
-                            },
-                            "required": [
-                                "account",
-                                "deptId",
-                                "displayName",
-                                "expiration",
-                                "fixSipNum",
-                                "id",
-                                "isLeader",
-                                "lastLoginTime",
-                                "phone",
-                                "roleIds",
-                                "sipNum",
-                                "status"
-                            ]
-                        }
-                    },
-    "required": [
-        "data"
-    ]
-},
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "object", "properties": {"id": {"type": "integer"}, "account": {"type": "string"}, "displayName": {"type": "string"}, "phone": {"type": ["string","null"]}, "sipNum": {"type": ["string","null"]}, "fixSipNum": {"type": ["string","null"]}, "isLeader": {"type": "boolean"}, "deptId": {"type": "integer"}, "roleIds": {"type": "array", "items": {"type": "integer"}}, "expiration": {"type": ["string","null"]}, "status": {"type": "integer"}, "lastLoginTime": {"type": "string"}}, "required": ["account", "deptId", "displayName", "expiration", "fixSipNum", "id", "isLeader", "lastLoginTime", "phone", "roleIds", "sipNum", "status"]}}, "required": ["data"]},
         "json" : {},
         "test_item": [
             {"scenario":"正常查詢","target": {},"params": {},"code_status": 200,"keyword": "data"},
@@ -720,18 +208,7 @@
         "test_case": "test_edit_admin",
         "req_method": "put",
         "req_url": "/v1/account/admin/31",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "json" : {  "phone": "",
                     "sipNum": "",
                     "fixSipNum": "080449",
@@ -748,18 +225,7 @@
         "test_case": "test_admin_add_account",
         "req_method": "post",
         "req_url": "/v1/account/admin",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "json" : {  "phone": "15279277599",
                     "sipNum": "001",
                     "fixSipNum": "131456574334556",
@@ -781,18 +247,7 @@
     {
         "test_case": "test_delete_admin",
         "req_method": "delete",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "json" : {},
         "test_item": [
             {"req_url": "/v1/account/admin/未登入帳號","scenario":"正常刪除","target": {},"params": {},"code_status": 200,"keyword": "success"},
@@ -805,18 +260,7 @@
         "test_case": "test_admin_status",
         "req_method": "put",
         "req_url": "/v1/account/admin/40/status",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "json" : {},
         "test_item": [
             {"scenario":"帳號狀態 0:停用","target": {},"params": {"status": "0"},"code_status": 200,"keyword": "success"},
@@ -828,18 +272,7 @@
         "test_case": "test_admin_reset_password",
         "req_method": "put",
         "req_url": "/v1/account/admin/40/resetPassword",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "json" : {},
         "test_item": [
             {"scenario":"正常重置密碼","target": {},"params": {},"code_status": 200,"keyword": "data"},
@@ -850,18 +283,7 @@
         "test_case": "test_admin_password",
         "req_method": "put",
         "req_url": "/v1/account/admin/password",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "json" : { "oldPassword": "abc123456", "newPassword": "abc12345"},
         "test_item": [
             {"scenario":"正常修改密碼","target": {},"params": {},"code_status": 200,"keyword": "data"},
@@ -873,84 +295,7 @@
         "test_case": "test_admin_quick_search",
         "req_method": "get",
         "req_url": "/v1/account/admin/quick/search",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "id": {
-                                        "type": "integer"
-                                    },
-                                    "account": {
-                                        "type": "string"
-                                    },
-                                    "displayName": {
-                                        "type": "string"
-                                    },
-                                    "phone": {
-                                        "type": "string"
-                                    },
-                                    "sipNum": {
-                                        "type": "string"
-                                    },
-                                    "fixSipNum": {
-                                        "type": "string"
-                                    },
-                                    "isLeader": {
-                                        "type": "boolean"
-                                    },
-                                    "deptId": {
-                                        "type": "integer"
-                                    },
-                                    "department": {
-                                        "type": ["string","null"]
-                                    },
-                                    "roleIds": {
-                                        "type": ["array","null"],
-                                        "items": {
-                                            "type": ["integer","null"]
-                                        }
-                                    },
-                                    "role": {
-                                        "type": ["string","null"]
-                                    },
-                                    "expiration": {
-                                        "type": ["string","null"]
-                                    },
-                                    "status": {
-                                        "type": "integer"
-                                    },
-                                    "lastLoginTime": {
-                                        "type": ["string","null"]
-                                    }
-                                },
-                                "required": [
-                                    "account",
-                                    "department",
-                                    "deptId",
-                                    "displayName",
-                                    "expiration",
-                                    "fixSipNum",
-                                    "id",
-                                    "isLeader",
-                                    "lastLoginTime",
-                                    "phone",
-                                    "role",
-                                    "roleIds",
-                                    "sipNum",
-                                    "status"
-                                ]
-                            }
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "account": {"type": "string"}, "displayName": {"type": "string"}, "phone": {"type": "string"}, "sipNum": {"type": "string"}, "fixSipNum": {"type": "string"}, "isLeader": {"type": "boolean"}, "deptId": {"type": "integer"}, "department": {"type": ["string","null"]}, "roleIds": {"type": ["array","null"], "items": {"type": ["integer","null"]}}, "role": {"type": ["string","null"]}, "expiration": {"type": ["string","null"]}, "status": {"type": "integer"}, "lastLoginTime": {"type": ["string","null"]}}, "required": ["account", "department", "deptId", "displayName", "expiration", "fixSipNum", "id", "isLeader", "lastLoginTime", "phone", "role", "roleIds", "sipNum", "status"]}}}, "required": ["data"]},
         "json" : {},
         "test_item": [
             {"scenario":"正常查詢","target": {},"params": {"nickName": "charlieadmin002"},"code_status": 200,"keyword": "data"},
@@ -962,93 +307,7 @@
         "test_case": "test_get_admin",
         "req_method": "get",
         "req_url": "/v1/account/admin",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "object",
-                            "properties": {
-                                "total": {
-                                    "type": "integer"
-                                },
-                                "size": {
-                                    "type": "integer"
-                                },
-                                "current": {
-                                    "type": "integer"
-                                },
-                                "pages": {
-                                    "type": "integer"
-                                },
-                                "records": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "id": {
-                                                "type": "integer"
-                                            },
-                                            "account": {
-                                                "type": "string"
-                                            },
-                                            "displayName": {
-                                                "type": "string"
-                                            },
-                                            "phone": {
-                                                "type": "string"
-                                            },
-                                            "sipNum": {
-                                                "type": "string"
-                                            },
-                                            "fixSipNum": {
-                                                "type": "string"
-                                            },
-                                            "isLeader": {
-                                                "type": "boolean"
-                                            },
-                                            "department": {
-                                                "type": "string"
-                                            },
-                                            "role": {
-                                                "type": "string"
-                                            },
-                                            "status": {
-                                                "type": "integer"
-                                            },
-                                            "lastLoginTime": {
-                                                "type": ["string","null"]
-                                            }
-                                        },
-                                        "required": [
-                                            "account",
-                                            "department",
-                                            "displayName",
-                                            "fixSipNum",
-                                            "id",
-                                            "isLeader",
-                                            "lastLoginTime",
-                                            "phone",
-                                            "role",
-                                            "sipNum",
-                                            "status"
-                                        ]
-                                    }
-                                }
-                            },
-                            "required": [
-                                "current",
-                                "pages",
-                                "records",
-                                "size",
-                                "total"
-                            ]
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "object", "properties": {"total": {"type": "integer"}, "size": {"type": "integer"}, "current": {"type": "integer"}, "pages": {"type": "integer"}, "records": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "account": {"type": "string"}, "displayName": {"type": "string"}, "phone": {"type": "string"}, "sipNum": {"type": "string"}, "fixSipNum": {"type": "string"}, "isLeader": {"type": "boolean"}, "department": {"type": "string"}, "role": {"type": "string"}, "status": {"type": "integer"}, "lastLoginTime": {"type": ["string","null"]}}, "required": ["account", "department", "displayName", "fixSipNum", "id", "isLeader", "lastLoginTime", "phone", "role", "sipNum", "status"]}}}, "required": ["current", "pages", "records", "size", "total"]}}, "required": ["data"]},
         "test_item": [
             {"scenario":"正常查詢","target": {},"json": {},"params" : {"account": "charlieadmin001", "displayName": "charlie", "phone": "", "isLeader": "", "deptId": "", "status": "", "deptIdList": "", "roleIdList": "", "startLoginTime": "", "endLoginTime": "", "isNonDept": "","page": "", "size": ""},"code_status": 200,"keyword": "data"},
             {"scenario":"[isLeader]字串","target": {},"json": {},"params" : {"account": "", "displayName": "", "phone": "", "isLeader": "abc", "deptId": "", "status": "", "deptIdList": "", "roleIdList": "", "startLoginTime": "", "endLoginTime": "", "isNonDept": "","page": "", "size": ""},"code_status": 400,"keyword": "无效的请求参数"},
@@ -1068,18 +327,7 @@
         "test_case": "test_put_admin_language",
         "req_method": "put",
         "req_url": "/v1/account/admin/language",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "test_item": [
             {"scenario":"切換為EN","target": {},"json": {},"params" : {"language": "EN"},"code_status": 200,"keyword": "data"},
             {"scenario":"切換為ZH","target": {},"json": {},"params" : {"language": "ZH"},"code_status": 200,"keyword": "data"},
@@ -1091,18 +339,7 @@
         "test_case": "test_put_admin_currency",
         "req_method": "put",
         "req_url": "/v1/account/admin/currency",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "test_item": [
             {"scenario":"切換為USDT_TRC20","target": {},"json": {},"params" : {"currency": "USDT_TRC20"},"code_status": 200,"keyword": "data"},
             {"scenario":"切換為USD","target": {},"json": {},"params" : {"currency": "USD"},"code_status": 200,"keyword": "data"},
@@ -1116,21 +353,7 @@
         "test_case": "test_authority_permission",
         "req_method": "get",
         "req_url": "/v1/account/authority/permission",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "array", "items": {"type": "string"}}}, "required": ["data"]},
 
         "test_item": [
             {"scenario":"基本查詢","json": {},"params": {},"code_status": 200,"keyword": "data"},
@@ -1141,49 +364,7 @@
         "test_case": "test_authority_list",
         "req_method": "get",
         "req_url": "/v1/account/authority/list",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "id": {
-                                        "type": "integer"
-                                    },
-                                    "name": {
-                                        "type": "string"
-                                    },
-                                    "authority": {
-                                        "type": "string"
-                                    },
-                                    "pid": {
-                                        "type": "integer"
-                                    },
-                                    "type": {
-                                        "type": "integer"
-                                    },
-                                    "sort": {
-                                        "type": ["integer","null"]
-                                    }
-                                },
-                                "required": [
-                                    "authority",
-                                    "id",
-                                    "name",
-                                    "pid",
-                                    "sort",
-                                    "type"
-                                ]
-                            }
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "name": {"type": "string"}, "authority": {"type": "string"}, "pid": {"type": "integer"}, "type": {"type": "integer"}, "sort": {"type": ["integer","null"]}}, "required": ["authority", "id", "name", "pid", "sort", "type"]}}}, "required": ["data"]},
         "test_item": [
             {"scenario":"基本查詢","json": {},"params": {},"code_status": 200,"keyword": "data"},
         ]
@@ -1193,49 +374,7 @@
         "test_case": "test_authority_menu",
         "req_method": "get",
         "req_url": "/v1/account/authority/menu",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "id": {
-                                        "type": "integer"
-                                    },
-                                    "name": {
-                                        "type": "string"
-                                    },
-                                    "authority": {
-                                        "type": "string"
-                                    },
-                                    "pid": {
-                                        "type": "integer"
-                                    },
-                                    "type": {
-                                        "type": "integer"
-                                    },
-                                    "sort": {
-                                        "type": ["integer","null"]
-                                    }
-                                },
-                                "required": [
-                                    "authority",
-                                    "id",
-                                    "name",
-                                    "pid",
-                                    "sort",
-                                    "type"
-                                ]
-                            }
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "name": {"type": "string"}, "authority": {"type": "string"}, "pid": {"type": "integer"}, "type": {"type": "integer"}, "sort": {"type": ["integer","null"]}}, "required": ["authority", "id", "name", "pid", "sort", "type"]}}}, "required": ["data"]},
         "test_item": [
             {"scenario":"基本查詢","json": {},"params": {},"code_status": 200,"keyword": "data"},
         ]
@@ -1245,94 +384,7 @@
         "test_case": "test_platform",
         "req_method": "get",
         "req_url": "/v1/platform",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "object",
-                            "properties": {
-                                "language": {
-                                    "type": "string"
-                                },
-                                "currency": {
-                                    "type": "string"
-                                },
-                                "timeZone": {
-                                    "type": "integer"
-                                },
-                                "supportLanguages": {
-                                    "type": "object",
-                                    "patternProperties": {
-                                        "[A-Z]": {
-                                            "type": "array",
-                                            "items": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "code": {
-                                                        "type": "string"
-                                                    },
-                                                    "name": {
-                                                        "type": "string"
-                                                    }
-                                                },
-                                                "required": [
-                                                    "code",
-                                                    "name"
-                                                ]
-                                            }
-                                        }
-                                    },
-                                },
-                                "supportCurrencies": {
-                                    "type": "object",
-                                    "patternProperties": {
-                                        "[A-Z]": {
-                                            "type": "array",
-                                            "items": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "code": {
-                                                        "type": "string"
-                                                    },
-                                                    "name": {
-                                                        "type": "string"
-                                                    },
-                                                    "currencyType": {
-                                                        "type": "string"
-                                                    },
-                                                    "icon": {
-                                                        "type": "string"
-                                                    },
-                                                    "cnyExchangeRate": {
-                                                        "type": "number"
-                                                    }
-                                                },
-                                                "required": [
-                                                    "cnyExchangeRate",
-                                                    "code",
-                                                    "currencyType",
-                                                    "icon",
-                                                    "name"
-                                                ]
-                                            }
-                                        }
-                                    },
-                                }
-                            },
-                            "required": [
-                                "currency",
-                                "language",
-                                "supportCurrencies",
-                                "supportLanguages",
-                                "timeZone"
-                            ]
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "object", "properties": {"language": {"type": "string"}, "currency": {"type": "string"}, "timeZone": {"type": "integer"}, "supportLanguages": {"type": "object", "patternProperties": {"[A-Z]": {"type": "array", "items": {"type": "object", "properties": {"code": {"type": "string"}, "name": {"type": "string"}}, "required": ["code", "name"]}}},}, "supportCurrencies": {"type": "object", "patternProperties": {"[A-Z]": {"type": "array", "items": {"type": "object", "properties": {"code": {"type": "string"}, "name": {"type": "string"}, "currencyType": {"type": "string"}, "icon": {"type": "string"}, "cnyExchangeRate": {"type": "number"}}, "required": ["cnyExchangeRate", "code", "currencyType", "icon", "name"]}}},}}, "required": ["currency", "language", "supportCurrencies", "supportLanguages", "timeZone"]}}, "required": ["data"]},
         "test_item": [
             {"scenario":"基本查詢","json": {},"params": {},"code_status": 200,"keyword": "data"},
         ]
@@ -1342,18 +394,7 @@
         "test_case": "test_account_login_reset_password",
         "req_method": "put",
         "req_url": "/v1/account/login/resetPassword",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "json" : {"account":"建立新帳號","oldPassword":"abc123456","newPassword":"abc12345","loginIp":"61.220.72.61"},//IP可不填
         "test_item": [
             {"scenario":"正確更換","target":{},"params": {},"code_status": 200,"keyword": "success"},
@@ -1366,18 +407,7 @@
         "test_case": "test_account_logout",
         "req_method": "post",
         "req_url": "/v1/account/logout",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "test_item": [
             {"scenario":"帳號登出","json": {},"params": {},"code_status": 200,"keyword": "SUCCESS"},
         ]
@@ -1387,30 +417,7 @@
         "test_case": "test_login_img_code",
         "req_method": "post",
         "req_url": "/v1/account/login/imgCode",
-        "schema": {
-                    "$schema": "http://json-schema.org/draft-04/schema#",
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "object",
-                            "properties": {
-                                "imgCode": {
-                                    "type": "string"
-                                },
-                                "code": {
-                                    "type": "string"
-                                }
-                            },
-                            "required": [
-                                "code",
-                                "imgCode"
-                            ]
-                        }
-                    },
-                    "required": [
-                        "data"
-                    ]
-                },
+        "schema": {"$schema": "http://json-schema.org/draft-04/schema#", "type": "object", "properties": {"data": {"type": "object", "properties": {"imgCode": {"type": "string"}, "code": {"type": "string"}}, "required": ["code", "imgCode"]}}, "required": ["data"]},
         "test_item": [
             {"scenario":"正確取得認證碼","json": {},"params": {"uuid": 124},"code_status": 200,"keyword": "code"},
             {"scenario":"未帶入參數","json": {},"params": {},"code_status": 400,"keyword": "无效的请求参数"}
