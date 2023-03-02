@@ -1,7 +1,9 @@
 from genson import SchemaBuilder
 
 # 餵入response body
-json_data = {"data": [{"id": 1, "name": "北京"}]}
+json_data = {
+  "data": "string"
+}
 
 # 產生json Schema
 make = SchemaBuilder()
