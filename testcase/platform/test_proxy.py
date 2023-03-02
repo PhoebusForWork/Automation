@@ -6,7 +6,6 @@ from pylib.platform.proxy import ProxyChannel, ProxyGroup, ProxyManage
 from utils.data_utils import TestDataReader, ResponseVerification
 from utils.api_utils import API_Controller
 from utils.generate_utils import Make
-from utils.json_verification import validate_json
 
 test_data = TestDataReader()
 test_data.read_json5('test_proxy.json5')
