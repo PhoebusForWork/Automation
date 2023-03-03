@@ -156,10 +156,10 @@ def test_dept_delete_department_id(test, get_platform_token):
 @allure.title("{test[scenario]}")
 @pytest.mark.parametrize("test", test_data.get_case('test_dept_admin_list'))
 def test_dept_admin_list(test, get_platform_token):
-    json_replace = test_data.replace_json(test['json'], test['target'])
+    params_replace = test_data.replace_json(test['params'], test['target'])
     api = API_Controller()
-    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
-                            test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            params_replace, token=get_platform_token)
     ResponseVerification.basic_assert(resp, test)
 
 
@@ -229,10 +229,10 @@ def test_get_role_status(test, get_platform_token):
 @pytest.mark.parametrize("test", test_data.get_case('test_role_list'))
 def test_role_list(test, get_platform_token):
 
-    json_replace = test_data.replace_json(test['json'], test['target'])
+    params_replace = test_data.replace_json(test['params'], test['target'])
     api = API_Controller()
-    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
-                            test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            params_replace, token=get_platform_token)
     ResponseVerification.basic_assert(resp, test)
 
 
