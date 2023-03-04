@@ -271,8 +271,8 @@
         "test_item": [
             {"scenario":"正常新增帳號","target": {},"params": {},"code_status": 200,"keyword": "data"},
             {"scenario":"帳號重複","target": {"account": "charlieadmin002"},"params": {},"code_status": 400,"keyword": "帳號重複"},
-            {"scenario":"帳號重複","target": {"account": "charlieadmingg1","displayName": "charlie002"},"params": {},"code_status": 400,"keyword": "暱稱重複"},
-            {"scenario":"帳號重複","target": {"phone": "15279287599"},"params": {},"code_status": 400,"keyword": "電話重複"}
+            {"scenario":"暱稱重複","target": {"account": "charlieadmingg1","displayName": "charlie002"},"params": {},"code_status": 400,"keyword": "暱稱重複"},
+            {"scenario":"電話重複","target": {"phone": "15279287599"},"params": {},"code_status": 400,"keyword": "電話重複"}
         ]
     },
 
