@@ -258,16 +258,7 @@
         "req_method": "post",
         "req_url": "/v1/account/admin",
         "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
-        "json" : {  "phone": "15279277599",
-                    "sipNum": "001",
-                    "fixSipNum": "131456574334556",
-                    "isLeader": true,
-                    "deptId": 2,
-                    "roleIds": [2],
-                    "expiredTime": "",
-                    "account": "charlieadmin004",
-                    "password": "abc123456",
-                    "displayName": "charlie004"},
+        "json" : {  "phone": "15279277599", "sipNum": "001", "fixSipNum": "131456574334556", "isLeader": true, "deptId": 2, "roleIds": [2], "expiredTime": "", "account": "charlieadmin004", "password": "abc123456", "displayName": "charlie004"},
         "test_item": [
             {"scenario":"正常新增帳號","target": {},"params": {},"code_status": 200,"keyword": "data"},
             {"scenario":"帳號重複","target": {"account": "charlieadmin002"},"params": {},"code_status": 400,"keyword": "帳號重複"},
@@ -395,7 +386,6 @@
         "req_method": "get",
         "req_url": "/v1/account/authority/permission",
         "schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "string"}}}, "required": ["data"]},
-
         "test_item": [
             {"scenario":"基本查詢","json": {},"params": {},"code_status": 200,"keyword": "data"},
         ]
