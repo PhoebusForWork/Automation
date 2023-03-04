@@ -3,61 +3,7 @@
         "test_case": "test_account_login",
         "req_method": "post",
         "req_url": "/v1/account/login",
-        "schema": {
-            "type": "object",
-            "properties": {
-                "data": {
-                    "type": "object",
-                    "properties": {
-                        "id": {
-                            "type": "integer"
-                        },
-                        "token": {
-                            "type": "string"
-                        },
-                        "account": {
-                            "type": "string"
-                        },
-                        "displayName": {
-                            "type": "string"
-                        },
-                        "preferLanguage": {
-                            "type": "string"
-                        },
-                        "preferCurrency": {
-                            "type": "string"
-                        },
-                        "isLeader": {
-                            "type": "boolean"
-                        },
-                        "deptId": {
-                            "type": "integer"
-                        },
-                        "department": {
-                            "type": "string"
-                        },
-                        "role": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "account",
-                        "department",
-                        "deptId",
-                        "displayName",
-                        "id",
-                        "isLeader",
-                        "preferCurrency",
-                        "preferLanguage",
-                        "role",
-                        "token"
-                    ]
-                }
-            },
-            "required": [
-                "data"
-            ]
-        },
+        "schema": {"type": "object", "properties": {"data": {"type": "object", "properties": {"id": {"type": "integer"}, "token": {"type": "string"}, "account": {"type": "string"}, "displayName": {"type": "string"}, "preferLanguage": {"type": "string"}, "preferCurrency": {"type": "string"}, "isLeader": {"type": "boolean"}, "deptId": {"type": "integer"}, "department": {"type": ["string", "null"]}, "role": {"type": "string"}}, "required": ["account", "department", "deptId", "displayName", "id", "isLeader", "preferCurrency", "preferLanguage", "role", "token"]}}, "required": ["data"]},
         "json" : {"account":"superAdmin","password":"abc123456","imgCode":"給我圖形驗證碼","uuid":123},
         "test_item": [
             {"scenario":"正確登入","target":{"null":null,"uuid":"124"},"params": {},"code_status": 200,"keyword": "data"},
@@ -163,8 +109,8 @@
         "req_method": "get",
         "req_url": "/v1/account/dept/admin/list",
         "schema":{"type": "object", "properties": {"data": {"type": "object", "properties": {"total": {"type": "integer"}, "size": {"type": "integer"}, "current": {"type": "integer"}, "pages": {"type": "integer"}, "records": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "account": {"type": "string"}, "password": {"type": "string"}, "displayName": {"type": "string"}, "phone": {"type": "string"}, "sipNum": {"type": ["string","null"]}, "fixSipNum": {"type": ["string","null"]}, "isLeader": {"type": "boolean"}, "deptId": {"type": "integer"}, "lastLoginTime": {"type": ["string","null"]}, "lastLoginDeviceId": {"type": ["string","null"]}, "lastLoginIp": {"type": ["string","null"]}, "status": {"type": "integer"}, "creatorId": {"type": "integer"}, "creator": {"type": "string"}, "createTime": {"type": "string"}, "lastModifiedAdminId": {"type": ["integer","null"]}, "lastModifiedAdmin": {"type": ["string","null"]}, "lastModifiedTime": {"type": ["string","null"]}, "department": {"type": "string"}, "role": {"type": "string"}}, "required": ["account", "createTime", "creator", "creatorId", "department", "deptId", "displayName", "fixSipNum", "id", "isLeader", "lastLoginDeviceId", "lastLoginIp", "lastLoginTime", "lastModifiedAdmin", "lastModifiedAdminId", "lastModifiedTime", "password", "phone", "role", "sipNum", "status"]}}}, "required": ["current", "pages", "records", "size", "total"]}}, "required": ["data"]},
-         "params": {"account": "", "displayName": "", "phone": "", "isLeader": "", "deptId": "", "status": "", "deptIdList": "", "roleIdList": "", "startLoginTime": "", "endLoginTime": "", "isNonDept": "", "page": "", "size": ""},
-         "test_item": [
+        "params": {"account": "", "displayName": "", "phone": "", "isLeader": "", "deptId": "", "status": "", "deptIdList": "", "roleIdList": "", "startLoginTime": "", "endLoginTime": "", "isNonDept": "", "page": "", "size": ""},
+        "test_item": [
             {"scenario":"正常查詢","json": {},"target" : {"account": "charlieadmin001", "displayName": "charlie", "phone": "", "isLeader": "", "deptId": "", "status": "", "deptIdList": "", "roleIdList": "", "startLoginTime": "", "endLoginTime": "", "isNonDept": "","page": "", "size": ""},"code_status": 200,"keyword": "data"},
             {"scenario":"[isLeader]字串","json": {},"target" : {"isLeader": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[isLeader]0是","json": {},"target" : {"isLeader": "0"},"code_status": 200,"keyword": "data"},
