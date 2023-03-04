@@ -359,11 +359,10 @@ def test_admin_quick_search(test, get_platform_token):
 @allure.title("{test[scenario]}")
 @pytest.mark.parametrize("test", test_data.get_case('test_get_admin'))
 def test_get_admin(test, get_platform_token):
-
-    json_replace = test_data.replace_json(test['json'], test['target'])
+    params_replace = test_data.replace_json(test['params'], test['target'])
     api = API_Controller()
-    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
-                            test['params'], token=get_platform_token)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            params_replace, token=get_platform_token)
     ResponseVerification.basic_assert(resp, test)
 
 
