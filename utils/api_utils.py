@@ -9,6 +9,7 @@ env = EnvReader()
 platform_host = env.PLATFORM_HOST
 platform_header = env.PLT_HEADER
 cs_host = env.WEB_HOST
+control_host = env.CONTROL_HOST
 cs_header = env.CS_HEADER
 xxl_host = env.XXL_HOST
 
@@ -25,6 +26,8 @@ class API_Controller:
             self.request_session.headers = eval(platform_header)
         elif platform == 'xxl':
             self.host = xxl_host
+        elif platform == 'control':
+            self.host = control_host
         else:
             self.host = cs_host
             self.request_session.headers = eval(cs_header)
@@ -39,18 +42,24 @@ class API_Controller:
 
         print('')
         response_text = json.loads(response.text)
-        print(json.dumps(response_text, sort_keys=True, indent=4,
-              separators=(',', ': '), ensure_ascii=False))
+        print(
+            json.dumps(response_text,
+                       sort_keys=True,
+                       indent=4,
+                       separators=(',', ': '),
+                       ensure_ascii=False))
         print('--------------HTTPS response  *  end ------------------\n\n')
 
     def send_request(self, method, url, json, params, token=None, files=None):
         if token:
             self.request_session.headers.update({"token": str(token)})
 
-        request_body = {"url": self.host + url,
-                        "json": json,
-                        "params": params,
-                        "files": files}
+        request_body = {
+            "url": self.host + url,
+            "json": json,
+            "params": params,
+            "files": files
+        }
 
         if method == 'post':
             response = self.request_session.post(**request_body)

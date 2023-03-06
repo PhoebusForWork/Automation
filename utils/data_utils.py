@@ -96,10 +96,12 @@ class EnvReader:
             self.PLATFORM_HOST = config['host']['platform_host']
             self.WEB_HOST = config["host"]['web_host']
             self.XXL_HOST = config["host"]['xxl_host']
+            self.CONTROL_HOST = config["host"]['control_host']
         else:
             self.PLATFORM_HOST = os.getenv('PLATFORM_HOST')
             self.WEB_HOST = os.getenv('WEB_HOST')
             self.XXL_HOST = os.getenv('XXL_HOST')
+            self.CONTROL_HOST = os.getenv('CONTROL_HOST')
 
     def __load_postgres(self):
         if os.getenv('MODE') is None:
