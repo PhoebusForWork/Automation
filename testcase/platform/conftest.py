@@ -1,8 +1,7 @@
 import logging
 import traceback
 import pytest
-import configparser
-from pylib.platform.platApiBase import PLAT_API
+from pylib.platform.platApiBase import PlatformAPI
 from utils.data_utils import EnvReader
 
 """
@@ -18,8 +17,8 @@ env = EnvReader()
 
 
 @pytest.fixture(scope="module")
-def getPltLoginToken(username='superAdmin', password='abc123456'):
-    api = PLAT_API()
+def get_platform_token(username='superAdmin', password='abc123456'):
+    api = PlatformAPI()
     code = api.imgcode()
     resp = api.login(username=username, password=password, imgCode=code)
     try:

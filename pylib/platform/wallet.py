@@ -1,4 +1,4 @@
-from ..platform.platApiBase import PLAT_API  # 執行RF時使用
+from ..platform.platApiBase import PlatformAPI  # 執行RF時使用
 from ..client_side.wallet import Wallet
 from utils.api_utils import KeywordArgument
 from utils.redis_utils import RedisSentinel
@@ -12,7 +12,7 @@ env = EnvReader()
 platform_host = env.PLATFORM_HOST
 
 
-class WalletManage(PLAT_API):
+class WalletManage(PlatformAPI):
 
     def water_clear_all(self,  # 一鍵流水清零
                         plat_token=None,
@@ -20,15 +20,15 @@ class WalletManage(PLAT_API):
                         remark=None,
                         ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platform_host+"/v1/water/manage/withdrawWater/waterAndValidWater/clear",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.post(platform_host+"/v1/water/manage/withdrawWater/waterAndValidWater/clear",
                                 json={
                                     "userId": userId,
                                     "remark": remark
                                 },
                                 params={}
                                 )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def withdraw_water_clear(self,  # 提現流水清零
@@ -37,15 +37,15 @@ class WalletManage(PLAT_API):
                              remark=None,
                              ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platform_host+"/v1/water/manage/withdrawWater/water/clear",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.post(platform_host+"/v1/water/manage/withdrawWater/water/clear",
                                 json={
                                     "userId": userId,
                                     "remark": remark
                                 },
                                 params={}
                                 )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def withdraw_limit_water_clear(self,  # 限制流水清零
@@ -54,15 +54,15 @@ class WalletManage(PLAT_API):
                                    remark=None,
                                    ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platform_host+"/v1/water/manage/withdrawLimitWater/water/clear",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.post(platform_host+"/v1/water/manage/withdrawLimitWater/water/clear",
                                 json={
                                     "userId": userId,
                                     "remark": remark
                                 },
                                 params={}
                                 )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def get_withdraw_water_total(self,  # 獲取提現流水匯總
@@ -70,14 +70,14 @@ class WalletManage(PLAT_API):
                                  userId=None,
                                  ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platform_host+"/v1/water/manage/withdrawLimitWater/water/clear",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.get(platform_host+"/v1/water/manage/withdrawLimitWater/water/clear",
                                json={},
                                params={
                                    "userId": userId
                                }
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def get_withdraw_water_clear_pending_list(self,  # 獲取提現流水清零列表
@@ -91,12 +91,12 @@ class WalletManage(PLAT_API):
                                               size=None,
                                               ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platform_host+"/v1/water/manage/withdrawWater/clearPendingList",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.get(platform_host+"/v1/water/manage/withdrawWater/clearPendingList",
                                json={},
                                params=KeywordArgument.body_data()
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def get_withdraw_limit_water_total(self,  # 獲取提現限制流水匯總
@@ -104,14 +104,14 @@ class WalletManage(PLAT_API):
                                        userId=None,
                                        ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platform_host+"/v1/water/manage/withdrawLimitWater/total",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.get(platform_host+"/v1/water/manage/withdrawLimitWater/total",
                                json={},
                                params={
                                    "userId": userId,
                                }
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def get_withdraw_limit_water_clear_pending_list(self,  # 獲取提現限制流水清零列表
@@ -127,28 +127,28 @@ class WalletManage(PLAT_API):
                                                     size=None,
                                                     ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platform_host+"/v1/water/manage/withdrawLimitWater/clearPendingList",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.get(platform_host+"/v1/water/manage/withdrawLimitWater/clearPendingList",
                                json={},
                                params=KeywordArgument.body_data()
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
 
-class WalletUser(PLAT_API):
+class WalletUser(PlatformAPI):
 
     def get_wallets(self,  # 取得所有錢包現狀
                     plat_token=None,
                     userId=None,
                     ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platform_host+f"/v1/wallet/user/{userId}/wallets",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.get(platform_host+f"/v1/wallet/user/{userId}/wallets",
                                json={},
                                params={}
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def get_trade_info(self,  # 取得使用者交易信息
@@ -161,8 +161,8 @@ class WalletUser(PLAT_API):
 
                        ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platform_host+f"/v1/wallet/user/{userId}/trade/info",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.get(platform_host+f"/v1/wallet/user/{userId}/trade/info",
                                json={},
                                params={
                                    "from": From,
@@ -173,7 +173,7 @@ class WalletUser(PLAT_API):
                                    "size": size,
                                }
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def get_fund(self,  # 取得用戶財務信息
@@ -182,31 +182,31 @@ class WalletUser(PLAT_API):
                         From=None, to=None,
                  ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platform_host+f"/v1/wallet/user/{userId}/fund",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.get(platform_host+f"/v1/wallet/user/{userId}/fund",
                                json={},
                                params={
                                    "from": From,
                                    "to": to,
                                }
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
 
-class WalletGameTransfer(PLAT_API):
+class WalletGameTransfer(PlatformAPI):
 
     def update_balance_all(self,  # 刷新所有子錢包餘額
                            plat_token=None,
                            userId=None,
                            ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platform_host+f"/v1/wallet/game/transfer/user/{userId}/update/balance/all",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.put(platform_host+f"/v1/wallet/game/transfer/user/{userId}/update/balance/all",
                                json={},
                                params={}
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def withdraw_all(self,  # 後台一鍵回收
@@ -214,12 +214,12 @@ class WalletGameTransfer(PLAT_API):
                      userId=None,
                      ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platform_host+f"/v1/wallet/game/transfer/user/{userId}/withdraw/all",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.post(platform_host+f"/v1/wallet/game/transfer/user/{userId}/withdraw/all",
                                 json={},
                                 params={}
                                 )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def deposit(self,  # 後台轉入指定渠道
@@ -229,15 +229,15 @@ class WalletGameTransfer(PLAT_API):
                 amount=None,
                 ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platform_host+f"/v1/wallet/game/transfer/user/{userId}/deposit",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.post(platform_host+f"/v1/wallet/game/transfer/user/{userId}/deposit",
                                 json={
                                     "channelCode": channelCode,
                                     "amount": amount,
                                 },
                                 params={}
                                 )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def get_game_transfer(self,  # 轉賬記錄
@@ -252,16 +252,16 @@ class WalletGameTransfer(PLAT_API):
                           page=None, size=None,
                           ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platform_host+f"/v1/wallet/game/transfer",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.get(platform_host+f"/v1/wallet/game/transfer",
                                json={},
                                params=KeywordArgument.body_data()
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
 
-class WalletGameTransferFailed(PLAT_API):
+class WalletGameTransferFailed(PlatformAPI):
 
     @staticmethod
     def _create_failed_transfer_record():
@@ -299,12 +299,12 @@ class WalletGameTransferFailed(PLAT_API):
                      plat_token=None,
                      ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platform_host+"/v1/wallet/game/transfer/failed/approver",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.get(platform_host+"/v1/wallet/game/transfer/failed/approver",
                                json={},
                                params={}
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def get_failed_list(self,  # 轉帳異常處理列表
@@ -318,12 +318,12 @@ class WalletGameTransferFailed(PLAT_API):
                         page=None, size=None,
                         ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platform_host+"/v1/wallet/game/transfer/failed",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.get(platform_host+"/v1/wallet/game/transfer/failed",
                                json={},
                                params=KeywordArgument.body_data()
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def trade_manual_result(self,  # 手動處理異常轉帳
@@ -333,22 +333,22 @@ class WalletGameTransferFailed(PLAT_API):
                             remark=None,
                             ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platform_host+f"/v1/wallet/game/transfer/failed/tradeId/{tradeId}/manual/result",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.post(platform_host+f"/v1/wallet/game/transfer/failed/tradeId/{tradeId}/manual/result",
                                 json={
                                     "result": result,
                                     "remark": remark,
                                 },
                                 params={}
                                 )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def get_failed_id(self,
                       plat_token=None
                       ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
+            self.request_session.headers.update({"token": str(plat_token)})
         target = self.get_failed_list()
         ret = jsonpath.jsonpath(target, "$..tradeId")[0]
         return ret
@@ -357,7 +357,7 @@ class WalletGameTransferFailed(PLAT_API):
                              plat_token=None
                              ):
         if plat_token is not None:
-            self.ps.headers.update({"token": str(plat_token)})
+            self.request_session.headers.update({"token": str(plat_token)})
         target = self.get_failed_list(failedTransferStatus=0)
         ret = jsonpath.jsonpath(target, "$..tradeId")
         if ret is False:

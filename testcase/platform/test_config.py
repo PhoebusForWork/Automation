@@ -1,12 +1,11 @@
 import pytest
 import allure
-from testcase.platform.conftest import getPltLoginToken
-from utils.data_utils import JsonReader
+from utils.data_utils import TestDataReader
 from utils.api_utils import API_Controller
 from pylib.platform.config import Avatar
 
-td = JsonReader()
-testData = td.read_json5('test_config.json5')
+test_data = TestDataReader()
+test_data.read_json5('test_config.json5')
 
 
 ######################
@@ -22,14 +21,14 @@ testData = td.read_json5('test_config.json5')
 @allure.feature("基本配置")
 @allure.story("新增頭像")
 @allure.title("{test[scenario]}")
-@pytest.mark.parametrize("test", td.get_case('add_config_avatar'))
-def test_add_config_avatar(test, getPltLoginToken):
+@pytest.mark.parametrize("test", test_data.get_case('add_config_avatar'))
+def test_add_config_avatar(test, get_platform_token):
 
-    json_replace = td.replace_json(test['json'], test['target'])
+    json_replace = test_data.replace_json(test['json'], test['target'])
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=getPltLoginToken)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
 
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
@@ -38,14 +37,14 @@ def test_add_config_avatar(test, getPltLoginToken):
 @allure.feature("基本配置")
 @allure.story("編輯頭像")
 @allure.title("{test[scenario]}")
-@pytest.mark.parametrize("test", td.get_case('edit_config_avatar'))
-def test_edit_config_avatar(test, getPltLoginToken):
+@pytest.mark.parametrize("test", test_data.get_case('edit_config_avatar'))
+def test_edit_config_avatar(test, get_platform_token):
 
-    json_replace = td.replace_json(test['json'], test['target'])
+    json_replace = test_data.replace_json(test['json'], test['target'])
 
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], json_replace,
-                           test['params'], token=getPltLoginToken)
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
 
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
@@ -54,15 +53,15 @@ def test_edit_config_avatar(test, getPltLoginToken):
 @allure.feature("基本配置")
 @allure.story("刪除頭像")
 @allure.title("{test[scenario]}")
-@pytest.mark.parametrize("test", td.get_case('delete_config_avatar'))
-def test_delete_config_avatar(test, getPltLoginToken):
+@pytest.mark.parametrize("test", test_data.get_case('delete_config_avatar'))
+def test_delete_config_avatar(test, get_platform_token):
     if "存在id" in test['req_url']:
         id = Avatar()
         test['req_url'] = test['req_url'].replace("存在id", str(
-            id.get_delete_avatar(plat_token=getPltLoginToken)))
+            id.get_delete_avatar(plat_token=get_platform_token)))
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=getPltLoginToken)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
 
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
@@ -71,12 +70,12 @@ def test_delete_config_avatar(test, getPltLoginToken):
 @allure.feature("基本配置")
 @allure.story("依照條件進行查詢")
 @allure.title("{test[scenario]}")
-@pytest.mark.parametrize("test", td.get_case('get_config_avatars'))
-def test_get_config_avatars(test, getPltLoginToken):
-    json_replace = td.replace_json(test['params'], test['target'])
+@pytest.mark.parametrize("test", test_data.get_case('get_config_avatars'))
+def test_get_config_avatars(test, get_platform_token):
+    json_replace = test_data.replace_json(test['params'], test['target'])
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           json_replace, token=getPltLoginToken)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            json_replace, token=get_platform_token)
 
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
@@ -85,15 +84,15 @@ def test_get_config_avatars(test, getPltLoginToken):
 @allure.feature("基本配置")
 @allure.story("依頭像id進行查詢")
 @allure.title("{test[scenario]}")
-@pytest.mark.parametrize("test", td.get_case('get_config_avatar_one'))
-def test_get_config_avatar_one(test, getPltLoginToken):
+@pytest.mark.parametrize("test", test_data.get_case('get_config_avatar_one'))
+def test_get_config_avatar_one(test, get_platform_token):
     if "存在id" in test['req_url']:
         id = Avatar()
         test['req_url'] = test['req_url'].replace("存在id", str(
-            id.get_delete_avatar(plat_token=getPltLoginToken)))
+            id.get_delete_avatar(plat_token=get_platform_token)))
     api = API_Controller()
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=getPltLoginToken)
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
 
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
@@ -102,17 +101,17 @@ def test_get_config_avatar_one(test, getPltLoginToken):
 @allure.feature("檔案上傳")
 @allure.story("上傳圖片")
 @allure.title("{test[scenario]}")
-@pytest.mark.parametrize("test", td.get_case('file_image_upload'))
-def test_file_image_upload(test, getPltLoginToken):
+@pytest.mark.parametrize("test", test_data.get_case('file_image_upload'))
+def test_file_image_upload(test, get_platform_token):
     if test['files'] == 'null':
         files = None
     else:
         files = [('file', ('upload_image_charliebrown.jpeg',
                            open('resources/upload_file/upload_image_charliebrown.jpeg', 'rb'), 'image/jpeg'))]
     api = API_Controller()
-    api.s.headers.update({"Content-Type": None})
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'],
-                           test['params'], token=getPltLoginToken, files=files)
+    api.request_session.headers.update({"Content-Type": None})
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token, files=files)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text
 
@@ -120,15 +119,15 @@ def test_file_image_upload(test, getPltLoginToken):
 @allure.feature("檔案上傳")
 @allure.story("上傳影片")
 @allure.title("{test[scenario]}")
-@pytest.mark.parametrize("test", td.get_case('file_video_upload'))
-def test_file_video_upload(test, getPltLoginToken):
+@pytest.mark.parametrize("test", test_data.get_case('file_video_upload'))
+def test_file_video_upload(test, get_platform_token):
     if test['files'] == 'null':
         files = None
     else:
         files = [('file', ('upload_video_realshort.mp4',
                            open('resources/upload_file/upload_video_realshort.mp4', 'rb'), 'application/octet-stream'))]
     api = API_Controller()
-    api.s.headers.update({"Content-Type": None})
-    resp = api.HttpsClient(test['req_method'], test['req_url'], test['json'], test['params'], token=getPltLoginToken, files=files)
+    api.request_session.headers.update({"Content-Type": None})
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'], test['params'], token=get_platform_token, files=files)
     assert resp.status_code == test['code_status'], resp.text
     assert test['keyword'] in resp.text

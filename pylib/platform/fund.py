@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from .platApiBase import PLAT_API  # 執行RF時使用
+from .platApiBase import PlatformAPI  # 執行RF時使用
 from utils.api_utils import KeywordArgument
 from utils.generate_utils import Make
 from utils.data_utils import EnvReader
@@ -10,7 +10,7 @@ env = EnvReader()
 platform_host = env.PLATFORM_HOST
 
 
-class Change(PLAT_API):  # 資金配置管理
+class Change(PlatformAPI):  # 資金配置管理
 
     def change_apply(self,  # 申請變更
                      plat_token=None,
@@ -27,28 +27,28 @@ class Change(PLAT_API):  # 資金配置管理
                      platformType=None, gameId=None, reason: str = 'string'
                      ):
         if plat_token != None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platform_host+"/v1/fund/change/apply",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.post(platform_host+"/v1/fund/change/apply",
                                 json=KeywordArgument.body_data(),
                                 params={}
                                 )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
 
-class ChangeAudit(PLAT_API):  # 資金配置管理
+class ChangeAudit(PlatformAPI):  # 資金配置管理
 
     def get_applier_list(self,  # 查詢申請人列表
                          plat_token=None,
 
                          ):
         if plat_token != None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.get(platform_host+"/v1/fund/change/audit/applier/list",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.get(platform_host+"/v1/fund/change/audit/applier/list",
                                json=KeywordArgument.body_data(),
                                params={}
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def get_list(self,  # 查詢資金審核列表
@@ -64,12 +64,12 @@ class ChangeAudit(PLAT_API):  # 資金配置管理
                  startTime=Make.date('start'), endTime=Make.date('end')
                  ):
         if plat_token != None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.post(platform_host+"/v1/fund/change/audit/list",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.post(platform_host+"/v1/fund/change/audit/list",
                                 json=KeywordArgument.body_data(),
                                 params={}
                                 )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def approve_first(self,  # 一審
@@ -78,12 +78,12 @@ class ChangeAudit(PLAT_API):  # 資金配置管理
                       remark='AutoTester'
                       ):
         if plat_token != None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platform_host+"/v1/fund/change/audit/approve/first",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.put(platform_host+"/v1/fund/change/audit/approve/first",
                                json=KeywordArgument.body_data(),
                                params={}
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def approve_second(self,  # 二審
@@ -92,12 +92,12 @@ class ChangeAudit(PLAT_API):  # 資金配置管理
                        remark='AutoTester'
                        ):
         if plat_token != None:
-            self.ps.headers.update({"token": str(plat_token)})
-        response = self.ps.put(platform_host+"/v1/fund/change/audit/approve/second",
+            self.request_session.headers.update({"token": str(plat_token)})
+        response = self.request_session.put(platform_host+"/v1/fund/change/audit/approve/second",
                                json=KeywordArgument.body_data(),
                                params={}
                                )
-        self._printresponse(response)
+        self.print_response(response)
         return response.json()
 
     def approve_all(self,  #
@@ -106,7 +106,7 @@ class ChangeAudit(PLAT_API):  # 資金配置管理
                     status: bool = False,  # 审核结果：true 通过， false 不通过
                     ):
         if plat_token != None:
-            self.ps.headers.update({"token": str(plat_token)})
+            self.request_session.headers.update({"token": str(plat_token)})
         response = self.get_list(size=50, status=0, userName=userName)
         target = jsonpath.jsonpath(response, '$..records[*].id')
         if status is True:

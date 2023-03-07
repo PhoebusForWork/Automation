@@ -2,20 +2,22 @@ import os
 import json5
 import copy
 import configparser
-
+from utils.json_verification import validate_json
 
 config = configparser.ConfigParser()
 config.read('config/config.ini')
 
 
-class JsonReader:
+class TestDataReader:
+    __test__ = False
 
     def __init__(self):
 
-        self.file_path = os.path.join(os.path.dirname(
-            os.path.dirname(__file__)), 'resources/platform')
-        self.cs_file_path = os.path.join(os.path.dirname(
-            os.path.dirname(__file__)), 'resources/client_side')
+        self.file_path = os.path.join(
+            os.path.dirname(os.path.dirname(__file__)), 'resources/platform')
+        self.cs_file_path = os.path.join(
+            os.path.dirname(os.path.dirname(__file__)),
+            'resources/client_side')
         self.case = None
 
     def read_json5(self, json_file, file_side='plt') -> None:
@@ -42,8 +44,8 @@ class JsonReader:
                             for k2, v2 in l1.items():
                                 value2.append(v2)
                                 key2.append(k2)
-                            test_data.append(tuple(value1+value2))
-                            key_data.append(tuple(key1+key2))  # 之後可能會用到
+                            test_data.append(tuple(value1 + value2))
+                            key_data.append(tuple(key1 + key2))  # 之後可能會用到
             test_case = []
             for i in range(len(key_data)):
                 test_case.append(dict(zip(key_data[i], test_data[i])))
@@ -81,6 +83,7 @@ class JsonReader:
 
 
 class EnvReader:
+
     def __init__(self) -> None:
         self.__load_host()
         self.__load_postgres()
@@ -93,19 +96,27 @@ class EnvReader:
             self.PLATFORM_HOST = config['host']['platform_host']
             self.WEB_HOST = config["host"]['web_host']
             self.XXL_HOST = config["host"]['xxl_host']
+            self.CONTROL_HOST = config["host"]['control_host']
         else:
             self.PLATFORM_HOST = os.getenv('PLATFORM_HOST')
             self.WEB_HOST = os.getenv('WEB_HOST')
             self.XXL_HOST = os.getenv('XXL_HOST')
+            self.CONTROL_HOST = os.getenv('CONTROL_HOST')
 
     def __load_postgres(self):
         if os.getenv('MODE') is None:
-            self.POSTGRES_PLT_HOST = config['postgres_connection']['postgres_plt_host']
-            self.POSTGRES_CS_HOST = config['postgres_connection']['postgres_cs_host']
-            self.POSTGRES_PLT_PORT = config['postgres_connection']['postgres_plt_port']
-            self.POSTGRES_CS_PORT = config['postgres_connection']['postgres_cs_port']
-            self.POSTGRES_PLT_PASSWORD = config['postgres_connection']['postgres_plt_password']
-            self.POSTGRES_CS_PASSWORD = config['postgres_connection']['postgres_cs_password']
+            self.POSTGRES_PLT_HOST = config['postgres_connection'][
+                'postgres_plt_host']
+            self.POSTGRES_CS_HOST = config['postgres_connection'][
+                'postgres_cs_host']
+            self.POSTGRES_PLT_PORT = config['postgres_connection'][
+                'postgres_plt_port']
+            self.POSTGRES_CS_PORT = config['postgres_connection'][
+                'postgres_cs_port']
+            self.POSTGRES_PLT_PASSWORD = config['postgres_connection'][
+                'postgres_plt_password']
+            self.POSTGRES_CS_PASSWORD = config['postgres_connection'][
+                'postgres_cs_password']
         else:
             self.POSTGRES_PLT_HOST = os.getenv('POSTGRES_PLT_HOST')
             self.POSTGRES_CS_HOST = os.getenv('POSTGRES_CS_HOST')
@@ -130,7 +141,7 @@ class EnvReader:
             self.REDIS_SENTINEL_CS_PASSWORD = config['redis_connection']['redis_cs_sentinel_password']
         else:
             self.REDIS_PLT_HOST = os.getenv('REDIS_PLT_HOST')
-            self.REDIS_CS_HOSTcs_host = os.getenv('REDIS_CS_HOST')
+            self.REDIS_CS_HOST = os.getenv('REDIS_CS_HOST')
             self.REDIS_PLT_PORT = os.getenv('REDIS_PLT_PORT')
             self.REDIS_CS_PORT = os.getenv('REDIS_CS_PORT')
             self.REDIS_PLT_PASSWORD = os.getenv('REDIS_PLT_PASSWORD')
@@ -148,3 +159,13 @@ class EnvReader:
         self.PLT_HEADER = config['API_headers']['plt']
         self.XXL_HEADER = config['API_headers']['xxl']
         self.CS_HEADER = config['API_headers']['cs']
+
+
+class ResponseVerification:
+
+    @staticmethod
+    def basic_assert(response, test_data):
+        assert response.status_code == test_data['code_status'], response.text
+        assert test_data['keyword'] in response.text
+        if response.status_code == 200:
+            assert validate_json(response.json(), test_data['schema'])
