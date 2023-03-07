@@ -1,7 +1,7 @@
 from ..platform.platApiBase import PlatformAPI  # 執行RF時使用
 from ..client_side.wallet import Wallet
 from utils.api_utils import KeywordArgument
-from utils.redis_utils import Redis
+from utils.redis_utils import RedisSentinel
 from utils.xxl_job_utils import XxlJobs
 from utils.data_utils import EnvReader
 import time
@@ -271,14 +271,14 @@ class WalletGameTransferFailed(PlatformAPI):
         cs_wallet.wallet_game_transfer_withdraw_all()
         time.sleep(2)
         # 回收後進行redis MOCK配置
-        set_plt_result = Redis(platform='plt', select=3)
-        set_plt_result.conn.hset(
+        set_plt_result = RedisSentinel(platform='plt', select=3)
+        set_plt_result.master.hset(
             name='MOCK::AWC', key='recheckResult', value='"UNKNOWN"')
-        set_cs_result = Redis(platform='cs', select=12)
-        set_cs_result.conn.hset(
+        set_cs_result = RedisSentinel(platform='cs', select=12)
+        set_cs_result.master.hset(
             name='MOCK::AWC', key='transferResult', value='"UNKNOWN"')
-        set_plt_IrregularTransfer = Redis(platform='plt', select=4)
-        set_plt_IrregularTransfer.conn.set(
+        set_plt_IrregularTransfer = RedisSentinel(platform='plt', select=4)
+        set_plt_IrregularTransfer.master.set(
             name='IrregularTransfer::isTesting', value='true')
 
         retry_times = 6  # 目前case是消耗3以倍數定值
@@ -289,11 +289,11 @@ class WalletGameTransferFailed(PlatformAPI):
         XxlJobs.game_transfer_executor()
         time.sleep(2)
 
-        set_plt_result.conn.hdel(
+        set_plt_result.master.hdel(
             'MOCK::AWC', 'recheckResult')
-        set_cs_result.conn.hdel(
+        set_cs_result.master.hdel(
             'MOCK::AWC', 'transferResult')
-        set_plt_IrregularTransfer.conn.delete('IrregularTransfer::isTesting')
+        set_plt_IrregularTransfer.master.delete('IrregularTransfer::isTesting')
 
     def get_approver(self,  # 顯示所有異常處理人
                      plat_token=None,

@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
+import sys,os
+sys.path.append(os.path.abspath('.'))
 import redis
+from redis.sentinel import Sentinel
 from utils.data_utils import EnvReader
 
 
@@ -8,8 +11,12 @@ plt_host = env.REDIS_PLT_HOST
 cs_host = env.REDIS_CS_HOST
 plt_port = env.REDIS_PLT_PORT
 cs_port = env.REDIS_CS_PORT
+plt_sentinel_list = env.REDIS_PLT_SENTINEL_LIST
+cs_sentinel_list = env.REDIS_PLT_SENTINEL_LIST
 plt_password = env.REDIS_PLT_PASSWORD
 cs_password = env.REDIS_CS_PASSWORD
+plt_sentinel_password = env.REDIS_SENTINEL_PLT_PASSWORD
+cs_sentinel_password = env.REDIS_SENTINEL_CS_PASSWORD
 
 
 class Redis:
@@ -39,9 +46,26 @@ class Redis:
         return target
 
 
+class RedisSentinel:
+    def __init__(self, platform='plt', name='redis-master', select=None):
+        if platform == 'plt':
+            self.sentinel_list = plt_sentinel_list
+            self.sentinel_password = plt_sentinel_password
+        elif platform == 'cs':
+            self.sentinel_list = cs_sentinel_list
+            self.sentinel_password = cs_sentinel_password
+        else:
+            raise "Platform Error"
+        setting = {
+            'sentinels': self.sentinel_list,
+            'sentinel_kwargs': {'password': self.sentinel_password},
+            "socket_timeout": 60,
+            "password": self.sentinel_password,
+            "db": select
+        }
+        self.sentinel = Sentinel(**setting)
+        self.master = self.sentinel.master_for(service_name=name)
+
 if __name__ == '__main__':
-    set_result = Redis(platform='plt', select=3)
-    set_result.conn.hset(name='MOCK::AWC', key='recheckResult', value='"UNKNOWN"'
-                         )
-    target = set_result.conn.hget(name='MOCK::AWC', key='recheckResult')
-    print(target)
+    sentinel = RedisSentinel(platform='plt', select=0)
+    print(sentinel.master.keys('*'))
