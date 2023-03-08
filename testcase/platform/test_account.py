@@ -270,11 +270,33 @@ def test_edit_admin(test, get_platform_token):
 def test_admin_add_account(test, get_platform_token):
 
     json_replace = test_data.replace_json(test['json'], test['target'])
+
     if test['scenario'] == "正常新增帳號":
         json_replace['phone'] = Make.mobile()
         new_name = Make.name()
         json_replace['account'] = new_name
         json_replace['displayName'] = new_name
+    if "[sipNum]" in test["scenario"]:
+        json_replace['phone'] = Make.mobile()
+        new_name = Make.name()
+        json_replace['account'] = new_name
+        json_replace['displayName'] = new_name
+    if "[fixSipNum]" in test["scenario"]:
+        json_replace['phone'] = Make.mobile()
+        new_name = Make.name()
+        json_replace['account'] = new_name
+        json_replace['displayName'] = new_name
+    if "[phone]" in test["scenario"]:
+        new_name = Make.name()
+        json_replace['account'] = new_name
+        json_replace['displayName'] = new_name
+    if "[account]" in test['scenario']:
+        json_replace['displayName'] = Make.name()
+    if "[displayName]" in test['scenario']:
+        json_replace['account'] = Make.name()
+        json_replace['phone'] = Make.mobile()
+
+
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                             test['params'], token=get_platform_token)

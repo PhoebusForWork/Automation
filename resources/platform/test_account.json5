@@ -258,24 +258,65 @@
         "req_method": "post",
         "req_url": "/v1/account/admin",
         "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
-        "json" : {  "phone": "15279277599", "sipNum": "001", "fixSipNum": "131456574334556", "isLeader": true, "deptId": 2, "roleIds": [2], "expiredTime": "", "account": "charlieadmin004", "password": "abc123456", "displayName": "charlie004"},
+        "json" : {  "phone": "15279277599", "sipNum": "001", "fixSipNum": "131456574334556", "isLeader": true, "deptId": 2, "roleIds": [2], "expiredTime": "2052-11-16T15:59:59.999Z", "account": "charlieadmin004", "password": "abc123456", "displayName": "charlie004"},
         "test_item": [
             {"scenario":"正常新增帳號","target": {},"params": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"帳號重複","target": {"account": "charlieadmin002"},"params": {},"code_status": 400,"keyword": "帳號重複"},
-            {"scenario":"暱稱重複","target": {"account": "charlieadmingg1","displayName": "charlie002"},"params": {},"code_status": 400,"keyword": "暱稱重複"},
-            {"scenario":"電話重複","target": {"phone": "15279287599"},"params": {},"code_status": 400,"keyword": "電話重複"}
-        ]
-    },
-
-    {
-        "test_case": "test_delete_admin",
-        "req_method": "delete",
-        "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
-        "json" : {},
-        "test_item": [
-            {"req_url": "/v1/account/admin/未登入帳號","scenario":"正常刪除","target": {},"params": {},"code_status": 200,"keyword": "success"},
-            {"req_url": "/v1/account/admin/51","scenario":"[正常刪除]已登录过的账号不能删除","target": {},"params": {},"code_status": 400,"keyword": "已登录过的账号不能删除"},
-            {"req_url": "/v1/account/admin/9999","scenario":"沒有此資料","target": {},"params": {},"code_status": 400,"keyword": "資料不存在"}
+            {"scenario":"[phone]電話重複","target": {"phone": "15279287599"},"params": {},"code_status": 400,"keyword": "電話重複"},
+            {"scenario":"[phone]null","target": {"phone": null},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[phone] 錯誤格式","target": {"phone": "11279287599"},"params": {},"code_status": 400,"keyword": "手機號碼格式不正確"},
+            {"scenario":"[sipNum]20字","target": {"sipNum": "12345678901234567890"},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[sipNum]空字串","target": {"sipNum": ""},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[sipNum]null","target": {"sipNum": null},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[sipNum]21字","target": {"sipNum": "123456789012345678901"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[fixSipNum]21字","target": {"fixSipNum": "123456789012345678901"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[fixSipNum]20字","target": {"fixSipNum": "12345678901234567890"},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[fixSipNum]空字串","target": {"fixSipNum": ""},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[fixSipNum]null","target": {"fixSipNum": null},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[isLeader]true","target": {"isLeader": true},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[isLeader]false","target": {"isLeader": false},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[isLeader]null","target": {"isLeader": null},"params": {},"code_status": 400,"keyword": "是否負責人不能為空"},
+            {"scenario":"[isLeader]空字串","target": {"isLeader": ""},"params": {},"code_status": 400,"keyword": "是否負責人不能為空"},
+            {"scenario":"[deptId]空字串","target": {"deptId": ""},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[deptId]null","target": {"deptId": null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[deptId]部門不存在此角色","target": {"deptId": 1},"params": {},"code_status": 400,"keyword": "角色不存在部門"},
+            {"scenario":"[deptId]部門存在此角色","target": {"deptId": 2},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[roleIds]部門不存在此角色","target": {"roleIds": [3]},"params": {},"code_status": 400,"keyword": "角色不存在部門"},
+            {"scenario":"[roleIds]部門存在此角色","target": {"roleIds": [2]},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[roleIds]部門內多角色","target": {"roleIds": [2,85,99]},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[roleIds]null","target": {"roleIds": null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[roleIds]空字串","target": {"roleIds": []},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[expiredTime]null","target": {"expiredTime": null},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[expiredTime]字串","target": {"expiredTime": "abc"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[expiredTime]空值","target": {"expiredTime": ""},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[account]空值","target": {"account": ""},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[account]null","target": {"account": null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[account]低於4字(3字)","target": {"account": "abc"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[account]多於16字(17字)","target": {"account": "abcdeABCDEabcdeAB"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[account]帳號重複","target": {"account": "charlieadmin002"},"params": {},"code_status": 400,"keyword": "帳號重複"},
+            {"scenario":"[displayName]暱稱重複","target": {"displayName": "charlie002"},"params": {},"code_status": 400,"keyword": "暱稱重複"},
+            {"scenario":"[displayName]多於16字(17字)","target": {"displayName": "abcdeABCDEabcdeAB"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[displayName]null","target": {"displayName": null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[displayName]空值","target": {"displayName": ""},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[password]少於6字","target": {"password": "a1234"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[password]多於18字","target": {"password": "a123456789012345678"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[password]至少要一個字符","target": {"password": "1234567"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[password]至少要一個數字","target": {"password": "abcdefg"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[password]不允許有其他特殊符號","target": {"password": "a123456&"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[password]null","target": {"password": null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[password]空值","target": {"password": ""},"params": {},"code_status": 400,"keyword": "无效的请求参数"}
+//
+//        ]
+//    },
+//
+//    {
+//        "test_case": "test_delete_admin",
+//        "req_method": "delete",
+//        "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
+//        "json" : {},
+//        "test_item": [
+//            {"req_url": "/v1/account/admin/未登入帳號","scenario":"正常刪除","target": {},"params": {},"code_status": 200,"keyword": "success"},
+//            {"req_url": "/v1/account/admin/51","scenario":"[正常刪除]已登录过的账号不能删除","target": {},"params": {},"code_status": 400,"keyword": "已登录过的账号不能删除"},
+//            {"req_url": "/v1/account/admin/9999","scenario":"沒有此資料","target": {},"params": {},"code_status": 400,"keyword": "資料不存在"}
         ]
     },
 
@@ -318,7 +359,7 @@
         "test_case": "test_admin_quick_search",
         "req_method": "get",
         "req_url": "/v1/account/admin/quick/search",
-        "schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "account": {"type": "string"}, "displayName": {"type": "string"}, "phone": {"type": "string"}, "sipNum": {"type": "string"}, "fixSipNum": {"type": "string"}, "isLeader": {"type": "boolean"}, "deptId": {"type": "integer"}, "department": {"type": ["string","null"]}, "roleIds": {"type": ["array","null"], "items": {"type": ["integer","null"]}}, "role": {"type": ["string","null"]}, "expiration": {"type": ["string","null"]}, "status": {"type": "integer"}, "lastLoginTime": {"type": ["string","null"]}}, "required": ["account", "department", "deptId", "displayName", "expiration", "fixSipNum", "id", "isLeader", "lastLoginTime", "phone", "role", "roleIds", "sipNum", "status"]}}}, "required": ["data"]},
+        "schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "account": {"type": "string"}, "displayName": {"type": "string"}, "phone": {"type": "string"}, "sipNum": {"type": ["string","null"]}, "fixSipNum": {"type": ["string","null"]}, "isLeader": {"type": "boolean"}, "deptId": {"type": "integer"}, "department": {"type": ["string", "null"]}, "roleIds": {"type": ["array", "null"], "items": {"type": ["integer", "null"]}}, "role": {"type": ["string", "null"]}, "expiration": {"type": ["string", "null"]}, "status": {"type": "integer"}, "lastLoginTime": {"type": ["string", "null"]}}, "required": ["account", "department", "deptId", "displayName", "expiration", "fixSipNum", "id", "isLeader", "lastLoginTime", "phone", "role", "roleIds", "sipNum", "status"]}}}, "required": ["data"]},
         "json" : {},
         "test_item": [
             {"scenario":"正常查詢","target": {},"params": {"nickName": "charlieadmin002"},"code_status": 200,"keyword": "data"},
