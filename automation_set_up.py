@@ -47,9 +47,10 @@ login_account.login
 plt_account = Postgresql(database='plt_account')
 plt_account.run_sql('''
     UPDATE plt_account.vs_admin SET last_login_time = '2023-03-06 04:01:21.203101 +00:00', last_login_device_id = '3263782594', last_login_ip = '61.220.72.61', last_modified_admin_id = 1, last_modified_admin = 'superAdmin' WHERE id = 2;
-    INSERT INTO plt_account.vs_department (id, department, pid, status, creator_id, creator, create_time, last_modified_admin_id, last_modified_admin, last_modified_time) VALUES (6, '測試用部門', 0, 1, 1, 'admin', DEFAULT, null, null, DEFAULT);
-    INSERT INTO plt_account.vs_department (id, department, pid, status, creator_id, creator, create_time, last_modified_admin_id, last_modified_admin, last_modified_time) VALUES (7, '刪除用部門', 0, 1, 1, 'admin', DEFAULT, null, null, DEFAULT);
-    INSERT INTO plt_account.vs_role (id, role, status, num_of_total_admin, remark, creator_id, creator, create_time, last_modified_admin_id, last_modified_admin, last_modified_time) VALUES (6, '測試用權限', 1, 0, null, 1, '超级管理员', DEFAULT, null, null, DEFAULT);
-    INSERT INTO plt_account.vs_dept_role (id, dept_id, role_id, create_time, last_modified_time) VALUES (5, 6, 6, DEFAULT, DEFAULT);
-    INSERT INTO plt_account.vs_dept_role (id, dept_id, role_id, create_time, last_modified_time) VALUES (6, 3, 6, DEFAULT, DEFAULT);
+    INSERT INTO plt_account.vs_department (department, pid, status, creator_id, creator, create_time, last_modified_admin_id, last_modified_admin, last_modified_time) VALUES ('測試用部門', 0, 1, 1, 'admin', DEFAULT, null, null, DEFAULT);
+    INSERT INTO plt_account.vs_department (department, pid, status, creator_id, creator, create_time, last_modified_admin_id, last_modified_admin, last_modified_time) VALUES ('刪除用部門', 0, 1, 1, 'admin', DEFAULT, null, null, DEFAULT);
+    INSERT INTO plt_account.vs_role (role, status, num_of_total_admin, remark, creator_id, creator, create_time, last_modified_admin_id, last_modified_admin, last_modified_time) VALUES ('測試用權限', 1, 0, null, 1, '超级管理员', DEFAULT, null, null, DEFAULT);
+    INSERT INTO plt_account.vs_role (role, status, num_of_total_admin, remark, creator_id, creator, create_time, last_modified_admin_id, last_modified_admin, last_modified_time) VALUES ('編輯用角色', 1, 0, null, 1, '超级管理员', DEFAULT, null, null, DEFAULT);
+    INSERT INTO plt_account.vs_dept_role (dept_id, role_id, create_time, last_modified_time) VALUES (6, 6, DEFAULT, DEFAULT);
+    INSERT INTO plt_account.vs_dept_role (dept_id, role_id, create_time, last_modified_time) VALUES (3, 6, DEFAULT, DEFAULT);
     ''')

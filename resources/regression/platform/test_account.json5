@@ -54,9 +54,9 @@
         "json" : {"adminId":"2","isLeader":"true"},
         "test_item": [
             {"scenario":"不帶任何參數","target": {"adminId": "","isLeader": ""},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            // {"scenario":"[isLeader]不帶參數","target": {"isLeader": ""},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            // {"scenario":"[isLeader]true","target": {},"params": {},"code_status": 200,"keyword": "success"},
-            // {"scenario":"[isLeader]false","target": {"isLeader": "false"},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[isLeader]不帶參數","target": {"isLeader": ""},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[isLeader]true","target": {},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[isLeader]false","target": {"isLeader": "false"},"params": {},"code_status": 200,"keyword": "success"},
         ]
     },
 
@@ -69,7 +69,7 @@
         "test_item": [
             {"scenario":"不帶任何參數","target": {"adminIdList": "","departmentId": ""},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"正確帶入參數","target": {"adminIdList":["2"],"departmentId":"2"},"params": {},"code_status": 200,"keyword": "success"},
-            {"scenario":"[adminIdList]複數參數","target": {"adminIdList":["40","48"],"departmentId":"2"},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[adminIdList]複數參數","target": {"adminIdList":["2","3"]},"params": {},"code_status": 200,"keyword": "success"},
         ]
     },
 
@@ -89,8 +89,8 @@
         "schema": {"$schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"data":{"type":"string"}},"required":["data"]                },
         "test_item": [
             {"req_url": "/v1/account/dept/","scenario":"不帶departmentId參數","json": {},"target": {},"params": {},"code_status": 405,"keyword": "不允许使用的HTTP方法"},
-            {"req_url": "/v1/account/dept/49","scenario":"不帶department參數","json": {},"target": {},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"req_url": "/v1/account/dept/49","scenario":"正確帶入參數","json": {"department": "向日葵小班"},"target": {},"params": {},"code_status": 200,"keyword": "success"},
+            {"req_url": "/v1/account/dept/6","scenario":"不帶department參數","json": {},"target": {},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/account/dept/6","scenario":"正確帶入參數","json": {"department": "編輯部門名稱測試"},"target": {},"params": {},"code_status": 200,"keyword": "success"},
         ]
     },
 
@@ -100,7 +100,9 @@
         "schema": {"$schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"data":{"type":"string"}},"required":["data"]                },
         "test_item": [
             {"req_url": "/v1/account/dept/","scenario":"不帶departmentId參數","json": {},"target": {},"params": {},"code_status": 405,"keyword": "不允许使用的HTTP方法"},
-            {"req_url": "/v1/account/dept/要刪除的節點","scenario":"正確帶入參數","json": {},"target": {},"params": {},"code_status": 200,"keyword": "success"},
+            {"req_url": "/v1/account/dept/999","scenario":"[departmentId]不存在id","json": {},"target": {},"params": {},"code_status": 400,"keyword": "資料不存在"},
+            {"req_url": "/v1/account/dept/7","scenario":"[departmentId]存在id","json": {},"target": {},"params": {},"code_status": 200,"keyword": "success"},
+            {"req_url": "/v1/account/dept/7","scenario":"[departmentId]已刪除id","json": {},"target": {},"params": {},"code_status": 400,"keyword": "資料不存在"},
         ]
     },
 
@@ -137,23 +139,45 @@
         "req_method": "post",
         "req_url": "/v1/account/role",
         "schema": {"$schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"data":{"type":"string"}},"required":["data"]                },
-        "json" : {"role":"浣熊","remark":"可以空白","authorityIds": ["1"],"departmentIds": ["49"]},
+        "json" : {"role":"auto","remark":"","authorityIds": ["1"],"departmentIds": ["3"]},
         "test_item": [
-            {"scenario":"創建角色","target": {"role":"auto","remark":"可以空白","authorityIds": ["2"],"departmentIds": ["2"]},"params": {},"code_status": 200,"keyword": "success"},
-            {"scenario":"重複創建角色","target": {"role":"abc","remark":"可以空白","authorityIds": ["1"],"departmentIds": ["49"]},"params": {},"code_status": 400,"keyword": "角色名稱已存在其中一個部門中"},
-            {"scenario":"[創建角色]null","target": {"role":"","remark":"可以空白","authorityIds": ["1"],"departmentIds": ["49"]},"params": {},"code_status": 400,"keyword": "parameter 'role' 角色不能为空"},
-        ]
+            {"scenario":"創建角色","target": {},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[role]重複","target": {"role":"测试员"},"params": {},"code_status": 400,"keyword": "角色名稱已存在其中一個部門中"},
+            {"scenario":"[role]空字串","target": {"role":""},"params": {},"code_status": 400,"keyword": "parameter 'role' 角色不能为空"},
+            {"scenario":"[role]null","target": {"role":null},"params": {},"code_status": 400,"keyword": "parameter 'role' 角色不能为空"},
+            {"scenario":"[remark]空字串","target": {"remark":""},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[remark]200字","target": {"remark":"一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十"},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[remark]201字","target": {"remark":"123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[authorityIds]null","target": {"authorityIds":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[authorityIds]空陣列","target": {"authorityIds":[]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[authorityIds]型別不符","target": {"authorityIds":"string"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[departmentIds]null","target": {"departmentIds":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[departmentIds]空陣列","target": {"departmentIds":[]},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[departmentIds]型別不符","target": {"departmentIds":"string"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            ]
     },
 
     {
         "test_case": "test_put_role",
         "req_method": "put",
         "schema": {"$schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"data":{"type":"string"}},"required":["data"]                },
-        "json": {"role":"浣熊","remark":"可以空白","authorityIds": ["1"],"departmentIds": ["49"]},
+        "json": {"role":"編輯角色","remark":"","authorityIds": ["1"],"departmentIds": ["3"]},
         "test_item": [
-            {"req_url": "/v1/account/role/","scenario":"不帶入roleId參數","target": {"role":"浣熊","remark":"可以空白","authorityIds": ["1"],"departmentIds": ["49"]},"params": {},"code_status": 405,"keyword": "不允许使用的HTTP方法"},
-            {"req_url": "/v1/account/role/33","scenario":"正確修改","target": {"role":"39","remark":"可以空白","authorityIds": ["1"],"departmentIds": ["40"]},"params": {},"code_status": 200,"keyword": "success"},
-        ]
+            {"req_url": "/v1/account/role/","scenario":"[roleId]null","target": {},"params": {},"code_status": 405,"keyword": "不允许使用的HTTP方法"},
+            {"req_url": "/v1/account/role/7","scenario":"[role]不變","target": {"role":"編輯用權限"},"params": {},"code_status": 200,"keyword": "success"},
+            {"req_url": "/v1/account/role/7","scenario":"[role]null","target": {"role":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/account/role/7","scenario":"[role]空字串","target": {"role":""},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/account/role/7","scenario":"[role]重複","target": {"role":"测试员"},"params": {},"code_status": 400,"keyword": "角色名稱已存在其中一個部門中"},
+            {"req_url": "/v1/account/role/7","scenario":"[remark]空字串","target": {"remark":""},"params": {},"code_status": 200,"keyword": "success"},
+            {"req_url": "/v1/account/role/7","scenario":"[remark]200字","target": {"remark":"一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十"},"params": {},"code_status": 200,"keyword": "success"},
+            {"req_url": "/v1/account/role/7","scenario":"[remark]201字","target": {"remark":"123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/account/role/7","scenario":"[authorityIds]null","target": {"authorityIds":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/account/role/7","scenario":"[authorityIds]空陣列","target": {"authorityIds":[]},"params": {},"code_status": 200,"keyword": "success"},
+            {"req_url": "/v1/account/role/7","scenario":"[authorityIds]型別不符","target": {"authorityIds":"string"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/account/role/7","scenario":"[departmentIds]null","target": {"departmentIds":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/account/role/7","scenario":"[departmentIds]空陣列","target": {"departmentIds":[]},"params": {},"code_status": 200,"keyword": "success"},
+            {"req_url": "/v1/account/role/7","scenario":"[departmentIds]型別不符","target": {"departmentIds":"string"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            ]
     },
 
     {
@@ -162,8 +186,8 @@
         "schema": {"$schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"data":{"type":"string"}},"required":["data"]                },
         "json" : {"status": "0"},
         "test_item": [
-            {"req_url": "/v1/account/role/44/status","scenario":"禁用","target": {"status": "0"},"params": {},"code_status": 200,"keyword": "success"},
-            {"req_url": "/v1/account/role/44/status","scenario":"啟用","target": {"status": "1"},"params": {},"code_status": 200,"keyword": "success"},
+            {"req_url": "/v1/account/role/6/status","scenario":"禁用","target": {"status": "0"},"params": {},"code_status": 200,"keyword": "success"},
+            {"req_url": "/v1/account/role/6/status","scenario":"啟用","target": {"status": "1"},"params": {},"code_status": 200,"keyword": "success"},
             {"req_url": "/v1/account/role/更換role_id/status","scenario":"軟刪","target": {"status": "2"},"params": {},"code_status": 200,"keyword": "success"}
         ]
     },
@@ -172,23 +196,23 @@
         "test_case": "test_get_role_status",
         "req_method": "get",
         "schema": {"$schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"authority":{"type":"string"},"pid":{"type":"integer"},"selected":{"type":"boolean"}},"required":["authority","id","pid","selected"]}}},"required":["data"]},
-
         "json" : {},
         "test_item": [
-            {"req_url": "/v1/account/role/31/authorities","scenario":"正常查詢","target": {},"params": {},"code_status": 200,"keyword": "data"},
-        ]
+            {"req_url": "/v1/account/role/3/authorities","scenario":"[roleId]存在","target": {},"params": {},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/account/role/99/authorities","scenario":"[roleId]不存在","target": {},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            ]
     },
 
     {
         "test_case": "test_role_list",
         "req_method": "get",
         "req_url": "/v1/account/role/list",
-        "schema": {"$schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"data":{"type":"object","properties":{"total":{"type":"integer"},"size":{"type":"integer"},"current":{"type":"integer"},"pages":{"type":"integer"},"records":{"type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"role":{"type":"string"},"numOfTotalAdmin":{"type":"integer"},"departments":{"type":"string"},"status":{"type":"integer"},"remark":{"type":"string"},"canDelete":{"type":"boolean"}},"required":["canDelete","departments","id","numOfTotalAdmin","remark","role","status"]}}},"required":["current","pages","records","size","total"]}},"required":["data"]                },
-        "json" : {},
+        "schema": {"$schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"data":{"type":"object","properties":{"total":{"type":"integer"},"size":{"type":"integer"},"current":{"type":"integer"},"pages":{"type":"integer"},"records":{"type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"role":{"type":"string"},"numOfTotalAdmin":{"type":"integer"},"departments":{"type":"string"},"status":{"type":"integer"},"remark":{"type":"string"},"canDelete":{"type":"boolean"}},"required":["canDelete","departments","id","numOfTotalAdmin","remark","role","status"]}}},"required":["current","pages","records","size","total"]}},"required":["data"]},
+        "params": {"role": "测试员","authorityId": "","departmentId": "","page": "1","size": "10"},
         "test_item": [
-            {"scenario":"[role]帶入參數","target": {},"params": {"role": "浣熊","authorityId": "","departmentId": "","page": "1","size": "100"},"code_status": 200,"keyword": "data"},
-            {"scenario":"[authorityId]字串","target": {},"params": {"role": "浣熊","authorityId": "dd","departmentId": "","page": "1","size": "100"},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[departmentId]字串","target": {},"params": {"role": "浣熊","authorityId": "","departmentId": "dd","page": "1","size": "100"},"code_status": 400,"keyword": "无效的请求参数"}
+            {"scenario":"[role]存在名稱","target": {},"json" : {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[role]null","target": {"role":null},"json" : {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[authorityId]字串","target": {"authorityId": "string"},"json" : {},"code_status": 400,"keyword": "无效的请求参数"},
         ]
     },
 
@@ -196,8 +220,8 @@
     {
         "test_case": "test_admin",
         "req_method": "get",
-        "req_url": "/v1/account/admin/40",
-        "schema": {"$schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"data":{"type":"object","properties":{"id":{"type":"integer"},"account":{"type":"string"},"displayName":{"type":"string"},"phone":{"type":["string","null"]},"sipNum":{"type":["string","null"]},"fixSipNum":{"type":["string","null"]},"isLeader":{"type":"boolean"},"deptId":{"type":"integer"},"roleIds":{"type":"array","items":{"type":"integer"}},"expiration":{"type":["string","null"]},"status":{"type":"integer"},"lastLoginTime":{"type":"string"}},"required":["account","deptId","displayName","expiration","fixSipNum","id","isLeader","lastLoginTime","phone","roleIds","sipNum","status"]}},"required":["data"]},
+        "req_url": "/v1/account/admin/2",
+        "schema": {"$schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"data":{"type":"object","properties":{"id":{"type":"integer"},"account":{"type":"string"},"displayName":{"type":"string"},"phone":{"type":["string","null"]},"sipNum":{"type":["string","null"]},"fixSipNum":{"type":["string","null"]},"isLeader":{"type":"boolean"},"deptId":{"type":"integer"},"roleIds":{"type":"array","items":{"type":"integer"}},"expiration":{"type":["string","null"]},"status":{"type":"integer"},"lastLoginTime":{"type":["string","null"]}},"required":["account","deptId","displayName","expiration","fixSipNum","id","isLeader","lastLoginTime","phone","roleIds","sipNum","status"]}},"required":["data"]},
         "json" : {},
         "test_item": [
             {"scenario":"正常查詢","target": {},"params": {},"code_status": 200,"keyword": "data"},
@@ -207,18 +231,30 @@
     {
         "test_case": "test_edit_admin",
         "req_method": "put",
-        "req_url": "/v1/account/admin/31",
+        "req_url": "/v1/account/admin/2",
         "schema": {"$schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"data":{"type":"string"}},"required":["data"]                },
-        "json" : {  "phone": "",
-                    "sipNum": "",
-                    "fixSipNum": "080449",
-                    "isLeader": false,
-                    "deptId": 2,
-                    "roleIds": [2],
-                    "expiredTime": ""},
+        "json" : {"phone":"","sipNum":"","fixSipNum":"","isLeader":false,"deptId":3,"roleIds":[3],"expiredTime":""},
         "test_item": [
-            {"scenario":"正常編輯","target": {},"params": {},"code_status": 200,"keyword": "data"},
-        ]
+            {"scenario":"[phone]null","target": {"phone":null},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[phone]格式不正確","target": {"phone":"12345678901"},"params": {},"code_status": 400,"keyword": "'phone' 手機號碼格式不正確"},
+            {"scenario":"[phone]正常11碼","target": {"phone":"18756784756"},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[phone]超出11碼","target": {"phone":"187567847562"},"params": {},"code_status": 400,"keyword": "'phone' 手機號碼格式不正確"},
+            {"scenario":"[sipNum]20字","target": {"sipNum":"12345678901234567890"},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[sipNum]21字","target": {"sipNum":"123456789012345678901"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[sipNum]null","target": {"sipNum":null},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[fixSipNum]20字","target": {"fixSipNum":"12345678901234567890"},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[fixSipNum]21字","target": {"fixSipNum":"123456789012345678901"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[fixSipNum]null","target": {"fixSipNum":null},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[isLeader]null","target": {"isLeader":null},"params": {},"code_status": 400,"keyword": "'isLeader' 是否負責人不能為空"},
+            {"scenario":"[isLeader]true","target": {"isLeader":true},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[isLeader]false","target": {"isLeader":false},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[deptId]不存在的id","target": {"deptId":999},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[deptId]null","target": {"deptId":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[roleIds]不存在","target": {"roleIds":[99]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[roleIds]null","target": {"roleIds":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[roleIds]空陣列","target": {"roleIds":[]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            // 需要再研究一下 //{"scenario":"[expiredTime]null","target": {"expiredTime":[]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            ]
     },
 
     {
@@ -227,21 +263,55 @@
         "req_url": "/v1/account/admin",
         "schema": {"$schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"data":{"type":"string"}},"required":["data"]                },
         "json" : {  "phone": "15279277599",
-                    "sipNum": "001",
-                    "fixSipNum": "131456574334556",
-                    "isLeader": true,
-                    "deptId": 2,
-                    "roleIds": [2],
+                    "sipNum": "",
+                    "fixSipNum": "",
+                    "isLeader": false,
+                    "deptId": 3,
+                    "roleIds": [3],
                     "expiredTime": "",
-                    "account": "charlieadmin004",
+                    "account": "AutoTest",
                     "password": "abc123456",
-                    "displayName": "charlie004"},
+                    "displayName": "AutoTest"},
         "test_item": [
-            {"scenario":"正常新增帳號","target": {},"params": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"帳號重複","target": {"account": "charlieadmin002"},"params": {},"code_status": 400,"keyword": "帳號重複"},
-            {"scenario":"帳號重複","target": {"account": "charlieadmingg1","displayName": "charlie002"},"params": {},"code_status": 400,"keyword": "暱稱重複"},
-            {"scenario":"帳號重複","target": {"phone": "15279287599"},"params": {},"code_status": 400,"keyword": "電話重複"}
-        ]
+            {"scenario":"[phone]null","target": {"phone":null},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[phone]格式不符","target": {"phone":"12345678901"},"params": {},"code_status": 400,"keyword": "'phone' 手機號碼格式不正確"},
+            {"scenario":"[sipNum]20字","target": {"sipNum":"12345678901234567890"},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[sipNum]21字","target": {"sipNum":"123456789012345678901"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[sipNum]null","target": {"sipNum":null},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[fixSipNum]20字","target": {"fixSipNum":"12345678901234567890"},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[fixSipNum]21字","target": {"fixSipNum":"123456789012345678901"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[fixSipNum]null","target": {"fixSipNum":null},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[isLeader]null","target": {"isLeader":null},"params": {},"code_status": 400,"keyword": "'isLeader' 是否負責人不能為空"},
+            {"scenario":"[isLeader]true","target": {"isLeader":true},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[isLeader]false","target": {"isLeader":false},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[deptId]null","target": {"deptId":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[deptId]不存在id","target": {"deptId":999},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[deptId]字串","target": {"deptId":"string"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[roleIds]空陣列","target": {"roleIds":[]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[roleIds]null","target": {"roleIds":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[roleIds]多個參數","target": {"roleIds":[3,6]},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[roleIds]不存在部門的角色","target": {"roleIds":[1]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[expiredTime]null","target": {"expiredTime":null},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[expiredTime]非時間字串","target": {"expiredTime":"string"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[expiredTime]過去時間","target": {"expiredTime":"2000-01-01T00:00:00Z"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[expiredTime]未來去時間","target": {"expiredTime":"3023-01-01T00:00:00Z"},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[account]帳號重複","target": {"account":"account001"},"params": {},"code_status": 400,"keyword": "帳號重複"},
+            {"scenario":"[account]null","target": {"account":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[account]少於四字","target": {"account":"abc"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[account]多於16字","target": {"account":"12345678901234567"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[password]空字串","target": {"password":""},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[password]null","target": {"password":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[password]少於6碼","target": {"password":"abc45"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[password]大於18碼","target": {"password":"abc4567890123456789"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[password]純數字","target": {"password":"1234567890123456"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[password]6碼-符合格式","target": {"password":"a23456"},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[password]18碼-符合格式","target": {"password":"a23456789012345678"},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[displayName]帳號重複","target": {"displayName":"account001"},"params": {},"code_status": 400,"keyword": "暱稱重複"},
+            {"scenario":"[displayName]null","target": {"displayName":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[displayName]空字串","target": {"displayName":""},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[displayName]多於16字","target": {"displayName":"12345678901234567"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[displayName]中文暱稱","target": {"displayName":"測試暱稱"},"params": {},"code_status": 200,"keyword": "success"},
+            ]
     },
 
     {
@@ -250,8 +320,9 @@
         "schema": {"$schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"data":{"type":"string"}},"required":["data"]                },
         "json" : {},
         "test_item": [
-            {"req_url": "/v1/account/admin/未登入帳號","scenario":"正常刪除","target": {},"params": {},"code_status": 200,"keyword": "success"},
-            {"req_url": "/v1/account/admin/51","scenario":"[正常刪除]已登录过的账号不能删除","target": {},"params": {},"code_status": 400,"keyword": "已登录过的账号不能删除"},
+            {"req_url": "/v1/account/admin/5","scenario":"正常刪除","target": {},"params": {},"code_status": 200,"keyword": "success"},
+            {"req_url": "/v1/account/admin/5","scenario":"已刪除的帳號","target": {},"params": {},"code_status": 400,"keyword": "資料不存在"},
+            {"req_url": "/v1/account/admin/2","scenario":"[正常刪除]已登录过的账号不能删除","target": {},"params": {},"code_status": 400,"keyword": "已登录过的账号不能删除"},
             {"req_url": "/v1/account/admin/9999","scenario":"沒有此資料","target": {},"params": {},"code_status": 400,"keyword": "資料不存在"}
         ]
     },
@@ -259,7 +330,7 @@
      {
         "test_case": "test_admin_status",
         "req_method": "put",
-        "req_url": "/v1/account/admin/40/status",
+        "req_url": "/v1/account/admin/2/status",
         "schema": {"$schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"data":{"type":"string"}},"required":["data"]                },
         "json" : {},
         "test_item": [
@@ -271,7 +342,7 @@
     {
         "test_case": "test_admin_reset_password",
         "req_method": "put",
-        "req_url": "/v1/account/admin/40/resetPassword",
+        "req_url": "/v1/account/admin/2/resetPassword",
         "schema": {"$schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"data":{"type":"string"}},"required":["data"]                },
         "json" : {},
         "test_item": [
@@ -295,10 +366,10 @@
         "test_case": "test_admin_quick_search",
         "req_method": "get",
         "req_url": "/v1/account/admin/quick/search",
-        "schema": {"$schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"account":{"type":"string"},"displayName":{"type":"string"},"phone":{"type":"string"},"sipNum":{"type":"string"},"fixSipNum":{"type":"string"},"isLeader":{"type":"boolean"},"deptId":{"type":"integer"},"department":{"type":["string","null"]},"roleIds":{"type":["array","null"],"items":{"type":["integer","null"]}},"role":{"type":["string","null"]},"expiration":{"type":["string","null"]},"status":{"type":"integer"},"lastLoginTime":{"type":["string","null"]}},"required":["account","department","deptId","displayName","expiration","fixSipNum","id","isLeader","lastLoginTime","phone","role","roleIds","sipNum","status"]}}},"required":["data"]                },
+        "schema": {"$schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"account":{"type":"string"},"displayName":{"type":"string"},"phone":{"type":"string"},"sipNum":{"type":["string","null"]},"fixSipNum":{"type":["string","null"]},"isLeader":{"type":"boolean"},"deptId":{"type":"integer"},"department":{"type":["string","null"]},"roleIds":{"type":["array","null"],"items":{"type":["integer","null"]}},"role":{"type":["string","null"]},"expiration":{"type":["string","null"]},"status":{"type":"integer"},"lastLoginTime":{"type":["string","null"]}},"required":["account","department","deptId","displayName","expiration","fixSipNum","id","isLeader","lastLoginTime","phone","role","roleIds","sipNum","status"]}}},"required":["data"]},
         "json" : {},
         "test_item": [
-            {"scenario":"正常查詢","target": {},"params": {"nickName": "charlieadmin002"},"code_status": 200,"keyword": "data"},
+            {"scenario":"正常查詢","target": {},"params": {"nickName": "account001"},"code_status": 200,"keyword": "data"},
             {"scenario":"[nickName]null","target": {},"params": {"nickName": null},"code_status": 400,"keyword": "无效的请求参数"}
         ]
     },
@@ -307,20 +378,53 @@
         "test_case": "test_get_admin",
         "req_method": "get",
         "req_url": "/v1/account/admin",
-        "schema": {"$schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"data":{"type":"object","properties":{"total":{"type":"integer"},"size":{"type":"integer"},"current":{"type":"integer"},"pages":{"type":"integer"},"records":{"type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"account":{"type":"string"},"displayName":{"type":"string"},"phone":{"type":"string"},"sipNum":{"type":"string"},"fixSipNum":{"type":"string"},"isLeader":{"type":"boolean"},"department":{"type":"string"},"role":{"type":"string"},"status":{"type":"integer"},"lastLoginTime":{"type":["string","null"]}},"required":["account","department","displayName","fixSipNum","id","isLeader","lastLoginTime","phone","role","sipNum","status"]}}},"required":["current","pages","records","size","total"]}},"required":["data"]                },
+        "schema": {"$schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"data":{"type":"object","properties":{"total":{"type":"integer"},"size":{"type":"integer"},"current":{"type":"integer"},"pages":{"type":"integer"},"records":{"type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"account":{"type":"string"},"displayName":{"type":"string"},"phone":{"type":"string"},"sipNum":{"type":["string","null"]},"fixSipNum":{"type":["string","null"]},"isLeader":{"type":"boolean"},"department":{"type":"string"},"role":{"type":"string"},"status":{"type":"integer"},"lastLoginTime":{"type":["string","null"]}},"required":["account","department","displayName","fixSipNum","id","isLeader","lastLoginTime","phone","role","sipNum","status"]}}},"required":["current","pages","records","size","total"]}},"required":["data"]},
+        "json": {},
+        "params" : {"account": "", "displayName": "", "phone": "", "isLeader": "", "deptId": "", "status": "", "deptIdList": "", "roleIdList": "", "startLoginTime": "", "endLoginTime": "", "isNonDept": "","page": "", "size": ""},
         "test_item": [
-            {"scenario":"正常查詢","target": {},"json": {},"params" : {"account": "charlieadmin001", "displayName": "charlie", "phone": "", "isLeader": "", "deptId": "", "status": "", "deptIdList": "", "roleIdList": "", "startLoginTime": "", "endLoginTime": "", "isNonDept": "","page": "", "size": ""},"code_status": 200,"keyword": "data"},
-            {"scenario":"[isLeader]字串","target": {},"json": {},"params" : {"account": "", "displayName": "", "phone": "", "isLeader": "abc", "deptId": "", "status": "", "deptIdList": "", "roleIdList": "", "startLoginTime": "", "endLoginTime": "", "isNonDept": "","page": "", "size": ""},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[deptId]字串","target": {},"json": {},"params" : {"account": "", "displayName": "", "phone": "", "isLeader": "", "deptId": "abc", "status": "", "deptIdList": "", "roleIdList": "", "startLoginTime": "", "endLoginTime": "", "isNonDept": "","page": "", "size": ""},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[status]字串","target": {},"json": {},"params" : {"account": "", "displayName": "", "phone": "", "isLeader": "", "deptId": "", "status": "abc", "deptIdList": "", "roleIdList": "", "startLoginTime": "", "endLoginTime": "", "isNonDept": "","page": "", "size": ""},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[deptIdList]字串","target": {},"json": {},"params" : {"account": "", "displayName": "", "phone": "", "isLeader": "", "deptId": "", "status": "", "deptIdList": "abc", "roleIdList": "", "startLoginTime": "", "endLoginTime": "", "isNonDept": "","page": "", "size": ""},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[roleIdList]字串","target": {},"json": {},"params" : {"account": "", "displayName": "", "phone": "", "isLeader": "", "deptId": "", "status": "", "deptIdList": "", "roleIdList": "abc", "startLoginTime": "", "endLoginTime": "", "isNonDept": "","page": "", "size": ""},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[startLoginTime]字串","target": {},"json": {},"params" : {"account": "", "displayName": "", "phone": "", "isLeader": "", "deptId": "", "status": "", "deptIdList": "", "roleIdList": "", "startLoginTime": "abc", "endLoginTime": "", "isNonDept": "","page": "", "size": ""},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[endLoginTime]字串","target": {},"json": {},"params" : {"account": "", "displayName": "", "phone": "", "isLeader": "", "deptId": "", "status": "", "deptIdList": "", "roleIdList": "", "startLoginTime": "", "endLoginTime": "abc", "isNonDept": "","page": "", "size": ""},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[isNonDept]字串","target": {},"json": {},"params" : {"account": "", "displayName": "", "phone": "", "isLeader": "", "deptId": "", "status": "", "deptIdList": "", "roleIdList": "", "startLoginTime": "", "endLoginTime": "", "isNonDept": "abc","page": "", "size": ""},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[page]字串","target": {},"json": {},"params" : {"account": "", "displayName": "", "phone": "", "isLeader": "", "deptId": "", "status": "", "deptIdList": "", "roleIdList": "", "startLoginTime": "", "endLoginTime": "", "isNonDept": "","page": "abc", "size": ""},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[size]字串","target": {},"json": {},"params" : {"account": "", "displayName": "", "phone": "", "isLeader": "", "deptId": "", "status": "", "deptIdList": "", "roleIdList": "", "startLoginTime": "", "endLoginTime": "", "isNonDept": "","page": "", "size": "abc"},"code_status": 400,"keyword": "无效的请求参数"}
-        ]
+            {"scenario":"正常查詢","target": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[account]存在","target": {"account":"account001"},"code_status": 200,"keyword": "account001"},
+            {"scenario":"[account]不存在","target": {"account":"nothisone"},"code_status": 200,"keyword": "\"total\":0"},
+            {"scenario":"[account]20字","target": {"account":"12345678901234567890"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[account]21字","target": {"account":"123456789012345678901"},"code_status": 400,"keyword": "'account' size must be between 0 and 20"},
+            {"scenario":"[displayName]存在","target": {"displayName":"account001"},"code_status": 200,"keyword": "account001"},
+            {"scenario":"[displayName]不存在","target": {"displayName":"nothisone"},"code_status": 200,"keyword": "\"total\":0"},
+            {"scenario":"[displayName]20字","target": {"displayName":"12345678901234567890"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[displayName]21字","target": {"displayName":"123456789012345678901"},"code_status": 400,"keyword": "'displayName' size must be between 0 and 20"},
+            {"scenario":"[phone]存在","target": {"phone":"1"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[phone]不存在","target": {"phone":"98765432101"},"code_status": 200,"keyword": "\"total\":0"},
+            {"scenario":"[isLeader]true","target": {"isLeader": 1},"code_status": 200,"keyword": "data"},
+            {"scenario":"[isLeader]false","target": {"isLeader": 0},"code_status": 200,"keyword": "data"},
+            {"scenario":"[isLeader]字串","target": {"isLeader": "string"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[deptId]字串","target": {"deptId": "string"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[deptId]存在","target": {"deptId": 3},"code_status": 200,"keyword": '"測試部"'},
+            {"scenario":"[deptId]不存在","target": {"deptId": 9999},"code_status": 200,"keyword": "\"total\":0"},
+            {"scenario":"[status]全部","target": {"status": null},"code_status": 200,"keyword": "data"},
+            {"scenario":"[status]無效","target": {"status": 0},"code_status": 200,"keyword": "data"},
+            {"scenario":"[status]有效","target": {"status": 1},"code_status": 200,"keyword": "data"},
+            {"scenario":"[status]刪除","target": {"status": 2},"code_status": 200,"keyword": "data"},
+            {"scenario":"[deptIdList]全部","target": {"deptIdList": null},"code_status": 200,"keyword": "data"},
+            {"scenario":"[deptIdList]空陣列","target": {"deptIdList": []},"code_status": 200,"keyword": "data"},
+            {"scenario":"[deptIdList]3","target": {"deptIdList": [3]},"code_status": 200,"keyword": "\"department\":\"測試部\""},
+            {"scenario":"[deptIdList]不存在","target": {"deptIdList": [9999]},"code_status": 200,"keyword": "\"total\":0"},
+            {"scenario":"[roleIdList]全部","target": {"roleIdList": null},"code_status": 200,"keyword": "data"},
+            {"scenario":"[roleIdList]空陣列","target": {"roleIdList": []},"code_status": 200,"keyword": "data"},
+            {"scenario":"[roleIdList]3","target": {"roleIdList": [3]},"code_status": 200,"keyword": "\"role\":\"测试员\""},
+            {"scenario":"[roleIdList]不存在","target": {"roleIdList": [9999]},"code_status": 200,"keyword": "\"total\":0"},
+            {"scenario":"[startLoginTime]正確時間格式","target": {"startLoginTime": "2023-01-01T00:00:00Z"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[startLoginTime]字串","target": {"startLoginTime": "string"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[endLoginTime]正確時間格式","target": {"endLoginTime": "2030-01-01T00:00:00Z"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[endLoginTime]字串","target": {"endLoginTime": "string"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[startLoginTime,endLoginTime]開始時間不可大於結束時間","target": {"startLoginTime": "2030-01-01T00:00:00Z","endLoginTime": "2023-01-01T00:00:00Z"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[isNonDept]null","target": {"isNonDept": null},"code_status": 200,"keyword": "data"},
+            {"scenario":"[isNonDept]true","target": {"isNonDept": true},"code_status": 200,"keyword": "data"},
+            {"scenario":"[isNonDept]false","target": {"isNonDept": false},"code_status": 200,"keyword": "data"},
+            {"scenario":"[isNonDept]字串","target": {"isNonDept": "string"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[page]null","target": {"page": null},"code_status": 200,"keyword": "\"current\":1"},
+            {"scenario":"[page]3","target": {"page": 3},"code_status": 200,"keyword": "\"current\":3"},
+            {"scenario":"[size]null","target": {"size": null},"code_status": 200,"keyword": "\"size\":10"},
+            {"scenario":"[size]5","target": {"size": 5},"code_status": 200,"keyword": "\"size\":5"},
+            ]
     },
 
     {
@@ -328,10 +432,13 @@
         "req_method": "put",
         "req_url": "/v1/account/admin/language",
         "schema": {"$schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"data":{"type":"string"}},"required":["data"]                },
+        "json": {},
+        "params" : {"language": "ZH"},
         "test_item": [
-            {"scenario":"切換為EN","target": {},"json": {},"params" : {"language": "EN"},"code_status": 200,"keyword": "data"},
-            {"scenario":"切換為ZH","target": {},"json": {},"params" : {"language": "ZH"},"code_status": 200,"keyword": "data"},
-            {"scenario":"不給值","target": {},"json": {},"params" : {"language": null},"code_status": 400,"keyword": "无效的请求参数"}
+            {"scenario":"[language]EN","target": {"language": "EN"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[language]ZH","target": {"language": "ZH"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[language]不存在","target": {"language": "ABC"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[language]null","target": {"language": null},"code_status": 400,"keyword": "无效的请求参数"}
         ]
     },
 
@@ -340,12 +447,15 @@
         "req_method": "put",
         "req_url": "/v1/account/admin/currency",
         "schema": {"$schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"data":{"type":"string"}},"required":["data"]                },
+        "json": {},
+        "params" : {"currency": "USDT_TRC20"},
         "test_item": [
-            {"scenario":"切換為USDT_TRC20","target": {},"json": {},"params" : {"currency": "USDT_TRC20"},"code_status": 200,"keyword": "data"},
-            {"scenario":"切換為USD","target": {},"json": {},"params" : {"currency": "USD"},"code_status": 200,"keyword": "data"},
-            {"scenario":"切換為USDT_ERC20","target": {},"json": {},"params" : {"currency": "USDT_ERC20"},"code_status": 200,"keyword": "data"},
-            {"scenario":"切換為CNY","target": {},"json": {},"params" : {"currency": "CNY"},"code_status": 200,"keyword": "data"},
-            {"scenario":"不給值","target": {},"json": {},"params" : {"currency": null},"code_status": 400,"keyword": "无效的请求参数"}
+            {"scenario":"[currency]USDT_TRC20","target": {"currency":"USDT_TRC20"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]USD","target": {"currency":"USD"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]USDT_ERC20","target": {"currency":"USDT_ERC20"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]CNY","target": {"currency":"CNY"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]null","target": {"currency":null},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[currency]不存在","target": {"currency":"ABC"},"code_status": 400,"keyword": "无效的请求参数"}
         ]
     },
 
@@ -354,9 +464,10 @@
         "req_method": "get",
         "req_url": "/v1/account/authority/permission",
         "schema": {"$schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"data":{"type":"array","items":{"type":"string"}}},"required":["data"]                },
-
+        "json": {},
+        "params": {},
         "test_item": [
-            {"scenario":"基本查詢","json": {},"params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"基本查詢","code_status": 200,"keyword": "data"},
         ]
     },
 
@@ -365,8 +476,10 @@
         "req_method": "get",
         "req_url": "/v1/account/authority/list",
         "schema": {"$schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"name":{"type":"string"},"authority":{"type":"string"},"pid":{"type":"integer"},"type":{"type":"integer"},"sort":{"type":["integer","null"]}},"required":["authority","id","name","pid","sort","type"]}}},"required":["data"]                },
+        "json": {},
+        "params": {},
         "test_item": [
-            {"scenario":"基本查詢","json": {},"params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"基本查詢","code_status": 200,"keyword": "data"},
         ]
     },
 
@@ -375,8 +488,10 @@
         "req_method": "get",
         "req_url": "/v1/account/authority/menu",
         "schema": {"$schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"name":{"type":"string"},"authority":{"type":"string"},"pid":{"type":"integer"},"type":{"type":"integer"},"sort":{"type":["integer","null"]}},"required":["authority","id","name","pid","sort","type"]}}},"required":["data"]                },
+        "json": {},
+        "params": {},
         "test_item": [
-            {"scenario":"基本查詢","json": {},"params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"基本查詢","code_status": 200,"keyword": "data"},
         ]
     },
 
@@ -385,8 +500,10 @@
         "req_method": "get",
         "req_url": "/v1/platform",
         "schema": {"$schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"data":{"type":"object","properties":{"language":{"type":"string"},"currency":{"type":"string"},"timeZone":{"type":"integer"},"supportLanguages":{"type":"object","patternProperties":{"[A-Z]":{"type":"array","items":{"type":"object","properties":{"code":{"type":"string"},"name":{"type":"string"}},"required":["code","name"]}}}},"supportCurrencies":{"type":"object","patternProperties":{"[A-Z]":{"type":"array","items":{"type":"object","properties":{"code":{"type":"string"},"name":{"type":"string"},"currencyType":{"type":"string"},"icon":{"type":"string"},"cnyExchangeRate":{"type":"number"}},"required":["cnyExchangeRate","code","currencyType","icon","name"]}}}}},"required":["currency","language","supportCurrencies","supportLanguages","timeZone"]}},"required":["data"]                },
+        "json": {},
+        "params": {},
         "test_item": [
-            {"scenario":"基本查詢","json": {},"params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"基本查詢","code_status": 200,"keyword": "data"},
         ]
     },
 
@@ -395,11 +512,11 @@
         "req_method": "put",
         "req_url": "/v1/account/login/resetPassword",
         "schema": {"$schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"data":{"type":"string"}},"required":["data"]                },
-        "json" : {"account":"建立新帳號","oldPassword":"abc123456","newPassword":"abc12345","loginIp":"61.220.72.61"},//IP可不填
+        "json" : {"account":"建立新帳號","oldPassword":"abc1234567","newPassword":"abc123456","loginIp":""},//IP可不填
         "test_item": [
-            {"scenario":"正確更換","target":{},"params": {},"code_status": 200,"keyword": "success"},
-            {"scenario":"用戶名錯誤","target":{"account":"charlieggyy"},"params": {},"code_status": 400,"keyword": "用户名或密码不正确"},
-            {"scenario":"密碼錯誤","target":{"oldPassword":"abc111111"},"params": {},"code_status": 400,"keyword": "用户名或密码不正确"}
+            {"scenario":"正確更換","target":{"account":"account002"},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"用戶名錯誤","target":{"account":"nothisaccount"},"params": {},"code_status": 400,"keyword": "用户名或密码不正确"},
+            {"scenario":"密碼錯誤","target":{"account":"account003","oldPassword":"abc111111"},"params": {},"code_status": 400,"keyword": "用户名或密码不正确"}
         ]
     },
 
