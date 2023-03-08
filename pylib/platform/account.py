@@ -205,7 +205,8 @@ class AccountAdmin(PlatformAPI):
         if total >= size:
             add_size = size + total
             response = self.search_admin_list(plat_token=plat_token, size=add_size)
-        admin_id = jsonpath.jsonpath(response, "$..id")
+        check_resp = "$.data.records[?(@.lastLoginTime == None).id]"
+        admin_id = jsonpath.jsonpath(response, check_resp)
         return str(admin_id[-1])
 
 

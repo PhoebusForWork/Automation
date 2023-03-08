@@ -304,19 +304,19 @@
             {"scenario":"[password]不允許有其他特殊符號","target": {"password": "a123456&"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[password]null","target": {"password": null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[password]空值","target": {"password": ""},"params": {},"code_status": 400,"keyword": "无效的请求参数"}
-//
-//        ]
-//    },
-//
-//    {
-//        "test_case": "test_delete_admin",
-//        "req_method": "delete",
-//        "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
-//        "json" : {},
-//        "test_item": [
-//            {"req_url": "/v1/account/admin/未登入帳號","scenario":"正常刪除","target": {},"params": {},"code_status": 200,"keyword": "success"},
-//            {"req_url": "/v1/account/admin/51","scenario":"[正常刪除]已登录过的账号不能删除","target": {},"params": {},"code_status": 400,"keyword": "已登录过的账号不能删除"},
-//            {"req_url": "/v1/account/admin/9999","scenario":"沒有此資料","target": {},"params": {},"code_status": 400,"keyword": "資料不存在"}
+
+        ]
+    },
+
+    {
+        "test_case": "test_delete_admin",
+        "req_method": "delete",
+        "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
+        "json" : {},
+        "test_item": [
+            {"req_url": "/v1/account/admin/未登入帳號","scenario":"正常刪除","target": {},"params": {},"code_status": 200,"keyword": "success"},
+            {"req_url": "/v1/account/admin/51","scenario":"[正常刪除]已登录过的账号不能删除","target": {},"params": {},"code_status": 400,"keyword": "已登录过的账号不能删除"},
+            {"req_url": "/v1/account/admin/9999","scenario":"沒有此資料","target": {},"params": {},"code_status": 400,"keyword": "資料不存在"}
         ]
     },
 

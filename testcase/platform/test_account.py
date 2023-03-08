@@ -286,6 +286,26 @@ def test_admin_add_account(test, get_platform_token):
         new_name = Make.name()
         json_replace['account'] = new_name
         json_replace['displayName'] = new_name
+    if "[isLeader]" in test["scenario"]:
+        json_replace['phone'] = Make.mobile()
+        new_name = Make.name()
+        json_replace['account'] = new_name
+        json_replace['displayName'] = new_name
+    if "[deptId]" in test["scenario"]:
+        json_replace['phone'] = Make.mobile()
+        new_name = Make.name()
+        json_replace['account'] = new_name
+        json_replace['displayName'] = new_name
+    if "[roleIds]" in test["scenario"]:
+        json_replace['phone'] = Make.mobile()
+        new_name = Make.name()
+        json_replace['account'] = new_name
+        json_replace['displayName'] = new_name
+    if "[expiredTime]" in test["scenario"]:
+        json_replace['phone'] = Make.mobile()
+        new_name = Make.name()
+        json_replace['account'] = new_name
+        json_replace['displayName'] = new_name
     if "[phone]" in test["scenario"]:
         new_name = Make.name()
         json_replace['account'] = new_name
