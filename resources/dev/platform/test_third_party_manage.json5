@@ -3,12 +3,13 @@
         "test_case": "get_third_party_manage",
         "req_method": "get",
         "req_url": "/v1/thirdPartyManage",
+        "schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "name": {"type": "string"}, "type": {"type": "integer"}, "template": {"type": ["string", "null"]}, "weighting": {"type": "integer"}, "isEnabled": {"type": "boolean"}}, "required": ["id", "isEnabled", "name", "template", "type", "weighting"]}}}, "required": ["data"]},
         "json" : {},
         "test_item": [
             {"scenario":"[id=9999999]不存在","target":{},"params": {"type": "9999999"},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[id=0]不存在","target":{},"params": {"type": 0},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[id=5]不存在","target":{},"params": {"type": 5},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[id=null]所有資料","target":{},"params": {"type": null},"code_status": 200,"keyword": [1,2,3,4] },
+            {"scenario":"[id=null]所有資料","target":{},"params": {},"code_status": 200,"keyword": [1,2,3,4] },
             {"scenario":"[id=test]不存在","target":{},"params": {"type": "test"},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[id=1]存在","target":{},"params": {"type": "1"},"code_status": 200,"keyword":'"type":1,'},
             {"scenario":"[id=2]存在","target":{},"params": {"type": "2"},"code_status": 200,"keyword":'"type":2,'},
@@ -27,6 +28,7 @@
                   "isEnabled": true
                 }  ],
         "req_url": "/v1/thirdPartyManage",
+        "schema": {"type": "object", "properties": {"data": {"type": "string", "const": "success"}}, "required": ["data"]},
         "test_item": [
             {"scenario":"[id]null","target":{"id":"null"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[name]null","target":{"name":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},

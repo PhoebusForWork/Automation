@@ -5,6 +5,7 @@ import jsonpath
 from pylib.platform.thirdPartyManage import ThirdPartyManage
 from utils.data_utils import TestDataReader
 from utils.api_utils import API_Controller
+from utils.json_verification import validate_json
 
 test_data = TestDataReader()
 test_data.read_json5('test_third_party_manage.json5')
@@ -36,6 +37,9 @@ class TestThirdPartyManage:
         else:
             assert test['keyword'] in resp.text
 
+        if resp.status_code == 200:
+            assert validate_json(resp.json(), test['schema'])
+
     @staticmethod
     @allure.feature("三方接口管理")
     @allure.story("保存三方接口列表")
@@ -51,6 +55,7 @@ class TestThirdPartyManage:
         assert test['keyword'] in resp.text
         # query and check data after editing
         if resp.status_code == 200:
+            assert validate_json(resp.json(), test['schema'])
             id = str(json_replace[0]['id'])
             req = jsonpath.jsonpath(ThirdPartyManage().getThirdInterface(plat_token=get_platform_token),
                                     f'$.data[?(@.id == {id} )]')
