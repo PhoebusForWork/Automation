@@ -6,3 +6,5 @@ include:
   project: bbc/devops/gitlab-pipeline/cicd-pipeline
   ref: master
   file: 'qa-automaion-pipeline.yml'
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
