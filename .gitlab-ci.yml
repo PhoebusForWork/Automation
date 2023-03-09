@@ -11,3 +11,5 @@ include:
   - project: bbc/devops/gitlab-pipeline/cicd-pipeline
     ref: master
     file: 'qa-manual-test.yml'
+    rules:
+      - if: $CI_COMMIT_BRANCH != "master"
