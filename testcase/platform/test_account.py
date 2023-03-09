@@ -2,8 +2,8 @@ import pytest
 import allure
 import time
 from pylib.platform.platApiBase import PlatformAPI
-from pylib.platform.account import AccountAdmin, AccountDept, AccountRole 
-from utils.data_utils import TestDataReader
+from pylib.platform.account import AccountAdmin, AccountDept, AccountRole
+from utils.data_utils import TestDataReader, ResponseVerification
 from utils.api_utils import API_Controller
 from utils.generate_utils import Make
 
@@ -43,9 +43,7 @@ def test_account_login(test, ):
     api = API_Controller()
     resp = api.send_request(test["req_method"], test["req_url"], json_replace,
                             test["params"])
-
-    assert resp.status_code == test["code_status"], resp.text
-    assert test['keyword'] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("組織結構")  # roleId參數會影響resp selected的值(true/false)
@@ -65,7 +63,7 @@ def test_dept_list(test, get_platform_token):
             if d['id'] == test['params']['roleId']:
                 assert d["selected"] is True
     else:
-        assert test['keyword'] in resp.text
+        ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("組織結構")
@@ -81,8 +79,7 @@ def test_dept(test, get_platform_token):
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                             test['params'], token=get_platform_token)
-    assert resp.status_code == test['code_status'], resp.text
-    assert test['keyword'] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("組織結構")
@@ -95,8 +92,7 @@ def test_dept_leader(test, get_platform_token):
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                             test['params'], token=get_platform_token)
-    assert resp.status_code == test['code_status'], resp.text
-    assert test['keyword'] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("組織結構")
@@ -109,8 +105,7 @@ def test_dept_admin(test, get_platform_token):
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                             test['params'], token=get_platform_token)
-    assert resp.status_code == test['code_status'], resp.text
-    assert test['keyword'] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("組織結構")
@@ -122,8 +117,7 @@ def test_dept_delete_admin_id(test, get_platform_token):
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                             test['params'], token=get_platform_token)
-    assert resp.status_code == test['code_status'], resp.text
-    assert test['keyword'] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("組織結構")
@@ -136,8 +130,7 @@ def test_dept_put_department_id(test, get_platform_token):
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                             test['params'], token=get_platform_token)
-    assert resp.status_code == test['code_status'], resp.text
-    assert test['keyword'] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("組織結構")
@@ -155,8 +148,7 @@ def test_dept_delete_department_id(test, get_platform_token):
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                             test['params'], token=get_platform_token)
-    assert resp.status_code == test['code_status'], resp.text
-    assert test['keyword'] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("組織結構")
@@ -164,12 +156,11 @@ def test_dept_delete_department_id(test, get_platform_token):
 @allure.title("{test[scenario]}")
 @pytest.mark.parametrize("test", test_data.get_case('test_dept_admin_list'))
 def test_dept_admin_list(test, get_platform_token):
-    json_replace = test_data.replace_json(test['json'], test['target'])
+    params_replace = test_data.replace_json(test['params'], test['target'])
     api = API_Controller()
-    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
-                            test['params'], token=get_platform_token)
-    assert resp.status_code == test['code_status'], resp.text
-    assert test['keyword'] in resp.text
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            params_replace, token=get_platform_token)
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("角色管理")
@@ -185,8 +176,7 @@ def test_role(test, get_platform_token):
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                             test['params'], token=get_platform_token)
-    assert resp.status_code == test['code_status'], resp.text
-    assert test['keyword'] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("角色管理")
@@ -199,8 +189,7 @@ def test_put_role(test, get_platform_token):
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                             test['params'], token=get_platform_token)
-    assert resp.status_code == test['code_status'], resp.text
-    assert test['keyword'] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("角色管理")
@@ -218,8 +207,7 @@ def test_put_role_status(test, get_platform_token):
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                             test['params'], token=get_platform_token)
-    assert resp.status_code == test['code_status'], resp.text
-    assert test['keyword'] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("角色管理")
@@ -232,8 +220,7 @@ def test_get_role_status(test, get_platform_token):
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                             test['params'], token=get_platform_token)
-    assert resp.status_code == test['code_status'], resp.text
-    assert test['keyword'] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("角色管理")
@@ -242,12 +229,11 @@ def test_get_role_status(test, get_platform_token):
 @pytest.mark.parametrize("test", test_data.get_case('test_role_list'))
 def test_role_list(test, get_platform_token):
 
-    json_replace = test_data.replace_json(test['json'], test['target'])
+    params_replace = test_data.replace_json(test['params'], test['target'])
     api = API_Controller()
-    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
-                            test['params'], token=get_platform_token)
-    assert resp.status_code == test['code_status'], resp.text
-    assert test['keyword'] in resp.text
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            params_replace, token=get_platform_token)
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("帳號列表")
@@ -260,8 +246,7 @@ def test_admin(test, get_platform_token):
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                             test['params'], token=get_platform_token)
-    assert resp.status_code == test['code_status'], resp.text
-    assert test['keyword'] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("帳號列表")
@@ -274,8 +259,8 @@ def test_edit_admin(test, get_platform_token):
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                             test['params'], token=get_platform_token)
-    assert resp.status_code == test['code_status'], resp.text
-    assert test['keyword'] in resp.text
+
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("帳號列表")
@@ -285,16 +270,57 @@ def test_edit_admin(test, get_platform_token):
 def test_admin_add_account(test, get_platform_token):
 
     json_replace = test_data.replace_json(test['json'], test['target'])
+
     if test['scenario'] == "正常新增帳號":
         json_replace['phone'] = Make.mobile()
         new_name = Make.name()
         json_replace['account'] = new_name
         json_replace['displayName'] = new_name
+    if "[sipNum]" in test["scenario"]:
+        json_replace['phone'] = Make.mobile()
+        new_name = Make.name()
+        json_replace['account'] = new_name
+        json_replace['displayName'] = new_name
+    if "[fixSipNum]" in test["scenario"]:
+        json_replace['phone'] = Make.mobile()
+        new_name = Make.name()
+        json_replace['account'] = new_name
+        json_replace['displayName'] = new_name
+    if "[isLeader]" in test["scenario"]:
+        json_replace['phone'] = Make.mobile()
+        new_name = Make.name()
+        json_replace['account'] = new_name
+        json_replace['displayName'] = new_name
+    if "[deptId]" in test["scenario"]:
+        json_replace['phone'] = Make.mobile()
+        new_name = Make.name()
+        json_replace['account'] = new_name
+        json_replace['displayName'] = new_name
+    if "[roleIds]" in test["scenario"]:
+        json_replace['phone'] = Make.mobile()
+        new_name = Make.name()
+        json_replace['account'] = new_name
+        json_replace['displayName'] = new_name
+    if "[expiredTime]" in test["scenario"]:
+        json_replace['phone'] = Make.mobile()
+        new_name = Make.name()
+        json_replace['account'] = new_name
+        json_replace['displayName'] = new_name
+    if "[phone]" in test["scenario"]:
+        new_name = Make.name()
+        json_replace['account'] = new_name
+        json_replace['displayName'] = new_name
+    if "[account]" in test['scenario']:
+        json_replace['displayName'] = Make.name()
+    if "[displayName]" in test['scenario']:
+        json_replace['account'] = Make.name()
+        json_replace['phone'] = Make.mobile()
+
+
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                             test['params'], token=get_platform_token)
-    assert resp.status_code == test['code_status'], resp.text
-    assert test['keyword'] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("帳號列表")
@@ -310,8 +336,7 @@ def test_delete_admin(test, get_platform_token):
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                             test['params'], token=get_platform_token)
-    assert resp.status_code == test['code_status'], resp.text
-    assert test['keyword'] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("帳號列表")
@@ -324,8 +349,7 @@ def test_admin_status(test, get_platform_token):
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                             test['params'], token=get_platform_token)
-    assert resp.status_code == test['code_status'], resp.text
-    assert test['keyword'] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("帳號列表")
@@ -338,8 +362,7 @@ def test_admin_reset_password(test, get_platform_token):
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                             test['params'], token=get_platform_token)
-    assert resp.status_code == test['code_status'], resp.text
-    assert test['keyword'] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("帳號列表")
@@ -357,9 +380,7 @@ def test_admin_password(test, get_platform_token, re_password_default):
     json_replace = test_data.replace_json(test['json'], test['target'])
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], json_replace, test['params'], token=admin_token)
-
-    assert resp.status_code == test['code_status'], resp.text
-    assert test['keyword'] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("帳號列表")
@@ -372,8 +393,7 @@ def test_admin_quick_search(test, get_platform_token):
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                             test['params'], token=get_platform_token)
-    assert resp.status_code == test['code_status'], resp.text
-    assert test['keyword'] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("帳號列表")
@@ -381,13 +401,37 @@ def test_admin_quick_search(test, get_platform_token):
 @allure.title("{test[scenario]}")
 @pytest.mark.parametrize("test", test_data.get_case('test_get_admin'))
 def test_get_admin(test, get_platform_token):
+    params_replace = test_data.replace_json(test['params'], test['target'])
+    api = API_Controller()
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            params_replace, token=get_platform_token)
+    ResponseVerification.basic_assert(resp, test)
+
+
+@allure.feature("帳號列表")
+@allure.story("修改偏好語言")
+@allure.title("{test[scenario]}")
+@pytest.mark.parametrize("test", test_data.get_case('test_put_admin_language'))
+def test_put_admin_language(test, get_platform_token):
 
     json_replace = test_data.replace_json(test['json'], test['target'])
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                             test['params'], token=get_platform_token)
-    assert resp.status_code == test['code_status'], resp.text
-    assert test['keyword'] in resp.text
+    ResponseVerification.basic_assert(resp, test)
+
+
+@allure.feature("帳號列表")
+@allure.story("修改偏好貨幣")
+@allure.title("{test[scenario]}")
+@pytest.mark.parametrize("test", test_data.get_case('test_put_admin_currency'))
+def test_put_admin_currency(test, get_platform_token):
+
+    json_replace = test_data.replace_json(test['json'], test['target'])
+    api = API_Controller()
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("頁面結構")
@@ -399,8 +443,7 @@ def test_authority_permission(test, get_platform_token):
     api = API_Controller()
     resp = api.send_request(test["req_method"], test["req_url"], test["json"],
                             test["params"], token=get_platform_token)
-    assert resp.status_code == test["code_status"], resp.text
-    assert test["keyword"] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("頁面結構")
@@ -412,8 +455,7 @@ def test_authority_list(test, get_platform_token):
     api = API_Controller()
     resp = api.send_request(test["req_method"], test["req_url"], test["json"],
                             test["params"], token=get_platform_token)
-    assert resp.status_code == test["code_status"], resp.text
-    assert test["keyword"] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("頁面結構")
@@ -425,8 +467,7 @@ def test_authority_menu(test, get_platform_token):
     api = API_Controller()
     resp = api.send_request(test["req_method"], test['req_url'], test["json"],
                             test["params"], token=get_platform_token)
-    assert resp.status_code == test["code_status"], resp.text
-    assert test["keyword"] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("平台模組")
@@ -438,8 +479,7 @@ def test_platform(test, get_platform_token):
     api = API_Controller()
     resp = api.send_request(test["req_method"], test["req_url"], test["json"],
                             test["params"], token=get_platform_token)
-    assert resp.status_code == test["code_status"], resp.text
-    assert test["keyword"] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("帳號登入登出模組")
@@ -455,8 +495,7 @@ def test_account_login_reset_password(test, get_platform_token):
     api = API_Controller()
     resp = api.send_request(test["req_method"], test["req_url"], json_replace,
                             test["params"], token=get_platform_token)
-    assert resp.status_code == test["code_status"], resp.text
-    assert test["keyword"] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("帳號登入登出模組")
@@ -468,8 +507,7 @@ def test_account_logout(test, get_platform_token):
     api = API_Controller()
     resp = api.send_request(test["req_method"], test["req_url"], test["json"],
                             test["params"], token=get_platform_token)
-    assert resp.status_code == test["code_status"], resp.text
-    assert test["keyword"] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("帳號登入登出模組")
@@ -481,5 +519,7 @@ def test_login_img_code(test, get_platform_token):
     api = API_Controller()
     resp = api.send_request(test["req_method"], test["req_url"], test["json"],
                             test["params"], token=get_platform_token)
-    assert resp.status_code == test["code_status"], resp.text
-    assert test["keyword"] in resp.text
+    ResponseVerification.basic_assert(resp, test)
+
+
+
