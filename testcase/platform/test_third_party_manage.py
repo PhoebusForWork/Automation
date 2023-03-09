@@ -61,7 +61,7 @@ class TestThirdPartyManage:
                 pass
             else:
                 id = str(json_replace[0]['id'])
-                req = jsonpath.jsonpath(ThirdPartyManage().getThirdInterface(plat_token=get_platform_token),
+                req = jsonpath.jsonpath(ThirdPartyManage().get_third_interface(plat_token=get_platform_token),
                                         f'$.data[?(@.id == {id} )]')
                 if req is not False:
                     assert set(test['target'].items()).issubset(req[0].items())
