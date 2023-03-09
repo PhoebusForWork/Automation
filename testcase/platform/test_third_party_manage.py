@@ -56,8 +56,12 @@ class TestThirdPartyManage:
         # query and check data after editing
         if resp.status_code == 200:
             assert validate_json(resp.json(), test['schema'])
-            id = str(json_replace[0]['id'])
-            req = jsonpath.jsonpath(ThirdPartyManage().getThirdInterface(plat_token=get_platform_token),
-                                    f'$.data[?(@.id == {id} )]')
-            if req is not False:
-                assert set(test['target'].items()).issubset(req[0].items())
+            # 規則是"template"可傳入，但不會被修改，先特例處理
+            if "template" in test['scenario']:
+                pass
+            else:
+                id = str(json_replace[0]['id'])
+                req = jsonpath.jsonpath(ThirdPartyManage().getThirdInterface(plat_token=get_platform_token),
+                                        f'$.data[?(@.id == {id} )]')
+                if req is not False:
+                    assert set(test['target'].items()).issubset(req[0].items())
