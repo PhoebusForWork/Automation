@@ -2,6 +2,9 @@ variables:
   IMAGE_PATH: qa
   IMAGE_NAME: ${CI_PROJECT_NAME}
 
+stages: 
+  - pre
+
 include:
   - project: bbc/devops/gitlab-pipeline/cicd-pipeline
     ref: master
@@ -11,3 +14,8 @@ include:
   - project: bbc/devops/gitlab-pipeline/cicd-pipeline
     ref: master
     file: 'qa-manual-test.yml'
+
+test:
+  stage: pre
+  script:
+    - env
