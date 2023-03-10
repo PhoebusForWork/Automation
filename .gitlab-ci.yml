@@ -1,14 +1,14 @@
-default:
-  image: alpine:3.14
-  tags: 
-    - qa-auto-runner
+# default:
+#   image: alpine:3.14
+#   tags: 
+#     - qa-auto-runner
 
 variables:
   IMAGE_PATH: qa
   IMAGE_NAME: ${CI_PROJECT_NAME}
 
-stages: 
-  - pre
+# stages: 
+#   - pre
 
 include:
   - project: bbc/devops/gitlab-pipeline/cicd-pipeline
@@ -22,7 +22,7 @@ include:
     rules:
       - if: $CI_COMMIT_REF_NAME =~ /main/
 
-test:
-  stage: pre
-  script:
-    - env
+# test:
+#   stage: pre
+#   script:
+#     - env
