@@ -7,9 +7,9 @@ include:
     ref: master
     file: 'qa-automaion-pipeline.yml'
     rules:
-      - if: $CI_COMMIT_REF_NAME =~ /master/
+      - if: $CI_COMMIT_BRANCH =~ /master/
   - project: bbc/devops/gitlab-pipeline/cicd-pipeline
     ref: master
     file: 'qa-manual-test.yml'
     rules:
-      - if: $CI_COMMIT_REF_NAME =~ /main/
+      - if: $CI_COMMIT_BRANCH =~ /main/
