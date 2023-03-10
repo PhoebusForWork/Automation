@@ -3,17 +3,18 @@
         "test_case": "get_third_party_manage",
         "req_method": "get",
         "req_url": "/v1/thirdPartyManage",
+        "schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "name": {"type": "string"}, "type": {"type": "integer"}, "template": {"type": ["string", "null"]}, "weighting": {"type": "integer"}, "isEnabled": {"type": "boolean"}}, "required": ["id", "isEnabled", "name", "template", "type", "weighting"]}}}, "required": ["data"]},
         "json" : {},
         "test_item": [
-            {"scenario":"[id=9999999]不存在","target":{},"params": {"type": "9999999"},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[id=0]不存在","target":{},"params": {"type": 0},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[id=5]不存在","target":{},"params": {"type": 5},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[id=null]所有資料","target":{},"params": {"type": null},"code_status": 200,"keyword": [1,2,3,4] },
-            {"scenario":"[id=test]不存在","target":{},"params": {"type": "test"},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[id=1]存在","target":{},"params": {"type": "1"},"code_status": 200,"keyword":'"type":1,'},
-            {"scenario":"[id=2]存在","target":{},"params": {"type": "2"},"code_status": 200,"keyword":'"type":2,'},
-            {"scenario":"[id=3]存在","target":{},"params": {"type": "3"},"code_status": 200,"keyword":'"type":3,'},
-            {"scenario":"[id=4]存在","target":{},"params": {"type": "4"},"code_status": 200,"keyword":'"type":4,'}
+            {"scenario":"[type=9999999]不存在","target":{},"params": {"type": "9999999"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[type=0]不存在","target":{},"params": {"type": 0},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[type=5]不存在","target":{},"params": {"type": 5},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[type=null]所有資料","target":{},"params": {"type": null},"code_status": 200,"keyword": [1,2,3,4] },
+            {"scenario":"[type=test]不存在","target":{},"params": {"type": "test"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[type=1]存在","target":{},"params": {"type": "1"},"code_status": 200,"keyword":'"type":1,'},
+            {"scenario":"[type=2]存在","target":{},"params": {"type": "2"},"code_status": 200,"keyword":'"type":2,'},
+            {"scenario":"[type=3]存在","target":{},"params": {"type": "3"},"code_status": 200,"keyword":'"type":3,'},
+            {"scenario":"[type=4]存在","target":{},"params": {"type": "4"},"code_status": 200,"keyword":'"type":4,'}
         ]
     },
     {
@@ -27,6 +28,7 @@
                   "isEnabled": true
                 }  ],
         "req_url": "/v1/thirdPartyManage",
+        "schema": {"type": "object", "properties": {"data": {"type": "string", "const": "success"}}, "required": ["data"]},
         "test_item": [
             {"scenario":"[id]null","target":{"id":"null"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[name]null","target":{"name":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
@@ -34,14 +36,12 @@
             {"scenario":"[weighting]低於下限1","target":{"weighting":0},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[weighting]999","target":{"weighting":999},"params": {},"code_status": 200,"keyword": "success"},
             {"scenario":"[weighting]超出上限","target":{"weighting":1000},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[template]無法修改","target":{"template":"這是一條測試訊息"},"params": {},"code_status": 200,"keyword": "success"},
             {"scenario":"[isEnabled]null","target":{"isEnabled":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[isEnabled]false","target":{"isEnabled":false},"params": {},"code_status": 200,"keyword": "success"},
             {"scenario":"[isEnabled]true","target": {"isEnabled":true},"params": {},"code_status": 200,"keyword": "success"},
             {"scenario":"[isEnabled,weighting]false,9","target": {"isEnabled":false,"weighting":9},"params": {},"code_status": 200,"keyword": "success"},
             {"scenario":"[isEnabled,weighting]true,10","target": {"isEnabled":true,"weighting":10},"params": {},"code_status": 200,"keyword": "success"}
-
         ]
     }
-
-
 ]

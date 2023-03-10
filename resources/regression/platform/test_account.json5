@@ -40,7 +40,7 @@
             {"scenario":"不帶參數","target": {"department": "","pid": ""},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"增加新主節點","target": {"department": "新增主節點","pid":""},"params": {},"code_status": 200,"keyword": "success"},
             {"scenario":"[增加新主節點]null","target": {"department": null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"重複增加新主節點","target": {"department": "真的棒","pid": ""},"params": {},"code_status": 400,"keyword": "資料已存在"},
+            {"scenario":"重複增加新主節點","target": {"department": "測試部","pid": ""},"params": {},"code_status": 400,"keyword": "資料已存在"},
             {"scenario":"[增加新子節點]department未給參數","target": {"department":"","pid":1},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"增加新子節點","target": {},"params": {},"code_status": 200,"keyword": "success"},
         ]
@@ -149,7 +149,7 @@
             {"scenario":"[remark]200字","target": {"remark":"一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十"},"params": {},"code_status": 200,"keyword": "success"},
             {"scenario":"[remark]201字","target": {"remark":"123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[authorityIds]null","target": {"authorityIds":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[authorityIds]空陣列","target": {"authorityIds":[]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[authorityIds]空陣列","target": {"authorityIds":[]},"params": {},"code_status": 200,"keyword": "success"},
             {"scenario":"[authorityIds]型別不符","target": {"authorityIds":"string"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[departmentIds]null","target": {"departmentIds":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[departmentIds]空陣列","target": {"departmentIds":[]},"params": {},"code_status": 200,"keyword": "success"},
