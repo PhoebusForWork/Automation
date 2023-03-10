@@ -5,5 +5,4 @@ variables:
 include:
   - project: bbc/devops/gitlab-pipeline/cicd-pipeline
     ref: master
-    file: ${ENV_YML_FILE}
-    
+    file: qa-${CI_COMMIT_BRANCH}.yaml
