@@ -12,4 +12,10 @@ include:
     ref: master
     file: 'qa-manual-test.yml'
     rules:
-      - if: $CI_COMMIT_REF_NAME =~ /main/ || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME =~ /main/
+      - if: $CI_COMMIT_REF_NAME !~ /master/ || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME !~ /master/
+
+test:
+  stage: .post
+  script: 
+    - env
+    - exit 0
