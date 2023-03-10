@@ -19,3 +19,5 @@ test:
   script: 
     - env
     - exit 0
+  tags: 
+      - qa-auto-runner
