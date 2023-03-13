@@ -1,0 +1,157 @@
+[
+    {
+        "test_case": "get_user_wallets",
+        "req_method": "get",
+        "test_item": [
+            {"req_url": "/v1/wallet/user/99999/wallets","scenario":"不存在的userId","json": {},"params": {},"code_status": 400,"keyword": "该用户不存在"},
+            {"req_url": "/v1/wallet/user/31/wallets","scenario":"存在的userId","json": {},"params": {},"code_status": 200,"keyword": "gameWallets"},
+            ]
+    },
+    {
+        "test_case": "get_user_trade_info",
+        "req_method": "get",
+        "params" : {"from":"2022-01-01T00:00:00+08:00","to":"2023-01-01T00:00:00+08:00","types":[0],"status":null,"page":null,"size":null},
+        "test_item": [
+            {"req_url": "/v1/wallet/user/99999/trade/info","scenario":"用戶不存在","target":{"null":null},"json": {},"code_status": 200,"keyword": '"records":[]'},
+            {"req_url": "/v1/wallet/user/35/trade/info","scenario":"用戶存在","target":{"null":null},"json": {},"code_status": 200,"keyword": "data"},
+            ]
+    },
+    {
+        "test_case": "get_user_fund",
+        "req_method": "get",
+        "params" : {"from":"2022-01-01T00:00:00+08:00","to":"2023-01-01T00:00:00+08:00"},
+        "test_item": [
+            {"req_url": "/v1/wallet/user/99999/fund","scenario":"用戶不存在","target":{"null":null},"json": {},"code_status": 200,"keyword": '"data":{"totalBonus":0,"totalRebate":0,"totalRecharge":0,"rechargeCount":0,"totalWithdraw":0,"withdrawCount":0,"totalExtraSum":0,"totalBet":0,"totalPayout":0,"totalProfit":0}'},
+            {"req_url": "/v1/wallet/user/35/fund","scenario":"[from]null","target":{"from":null},"json": {},"code_status": 400,"keyword": "parameter 'from' must not be null"},
+            {"req_url": "/v1/wallet/user/35/fund","scenario":"[from]string","target":{"from":"string"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/wallet/user/35/fund","scenario":"[to]null","target":{"to":null},"json": {},"code_status": 400,"keyword": "parameter 'to' must not be null"},
+            {"req_url": "/v1/wallet/user/35/fund","scenario":"[to]string","target":{"to":"string"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/wallet/user/35/fund","scenario":"正常查詢","target":{"null":null},"json": {},"code_status": 200,"keyword": "data"},
+            ]
+    },
+    {
+        "test_case": "get_game_transfer",
+        "req_method": "get",
+        "params" : {"timeType":1,"startTime":"2022-01-01T00:00:00+08:00","endTime":"2023-01-01T00:00:00+08:00","username":null,"minAmount":null,"maxAmount":null,"transactionStatus":null,"fromChannelCode":null,"toChannelCode":null,"tradeId":null,"page":null,"size":null},
+        "req_url": "/v1/wallet/game/transfer",
+        "test_item": [
+            {"scenario":"正常查詢","target":{"null":null},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[timeType]2","target":{"timeType":2},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[timeType]3","target":{"timeType":3},"json": {},"code_status": 400,"keyword": "timeType' must be between 1 and 2"},
+            {"scenario":"[startTime]null","target":{"startTime":null},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[startTime]string","target":{"startTime":"null"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[endTime]null","target":{"endTime":null},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[endTime]string","target":{"endTime":"null"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[username]存在","target":{"username":"qwe220930"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[username]不存在","target":{"username":"unknown"},"json": {},"code_status": 200,"keyword": '"records":[]'},
+            {"scenario":"[minAmount]string","target":{"minAmount":"string"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[minAmount]100","target":{"minAmount":100},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[minAmount]string","target":{"minAmount":"string"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[maxAmount]100","target":{"maxAmount":100},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[maxAmount]string","target":{"maxAmount":"string"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[transactionStatus]0","target":{"transactionStatus":0},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[transactionStatus]1","target":{"transactionStatus":1},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[transactionStatus]2","target":{"transactionStatus":2},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[transactionStatus]3","target":{"transactionStatus":3},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[transactionStatus]4","target":{"transactionStatus":4},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[transactionStatus]string","target":{"transactionStatus":"string"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[fromChannelCode]SELF","target":{"fromChannelCode":"SELF"},"json": {},"code_status": 200,"keyword": '"fromChannelCode":"SELF"'},
+            {"scenario":"[fromChannelCode]AWC","target":{"fromChannelCode":"AWC"},"json": {},"code_status": 200,"keyword": '"fromChannelCode":"AWC"'},
+            {"scenario":"[fromChannelCode]YB","target":{"fromChannelCode":"YB"},"json": {},"code_status": 200,"keyword": '"fromChannelCode":"YB"'},
+            {"scenario":"[toChannelCode]SELF","target":{"toChannelCode":"SELF"},"json": {},"code_status": 200,"keyword": '"toChannelCode":"SELF"'},
+            {"scenario":"[toChannelCode]AWC","target":{"toChannelCode":"AWC"},"json": {},"code_status": 200,"keyword": '"toChannelCode":"AWC"'},
+            {"scenario":"[toChannelCode]YB","target":{"toChannelCode":"YB"},"json": {},"code_status": 200,"keyword": '"toChannelCode":"YB"'},
+            {"scenario":"[toChannelCode]YB","target":{"toChannelCode":"YB"},"json": {},"code_status": 200,"keyword": '"toChannelCode":"YB"'},
+            {"scenario":"[tradeId]存在","target":{"tradeId":"635523699451183107"},"json": {},"code_status": 200,"keyword": 'data'},
+            {"scenario":"[tradeId]不存在","target":{"tradeId":"123"},"json": {},"code_status": 200,"keyword": '"records":[]'},
+            {"scenario":"[page]2","target":{"page":"2"},"json": {},"code_status": 200,"keyword": '"current":2'},
+            {"scenario":"[page]null","target":{"page":null},"json": {},"code_status": 200,"keyword": '"current":1'},
+            {"scenario":"[size]2","target":{"size":"2"},"json": {},"code_status": 200,"keyword": '"size":2'},
+            {"scenario":"[size]null","target":{"size":null},"json": {},"code_status": 200,"keyword": '"size":10'},
+            ]
+    },
+    {
+        "test_case": "update_balance_all",
+        "req_method": "put",
+        "test_item": [
+            {"req_url": "/v1/wallet/game/transfer/user/99999/update/balance/all","scenario":"不存在的userId","json": {},"params": {},"code_status": 500,"keyword": "该用户无任何子钱包"},
+            {"req_url": "/v1/wallet/game/transfer/user/35/update/balance/all","scenario":"存在的userId","json": {},"params": {},"code_status": 200,"keyword": "data"},
+            ]
+    },
+    {
+        "test_case": "user_withdraw_all",
+        "req_method": "post",
+        "test_item": [
+            {"req_url": "/v1/wallet/game/transfer/user/99999/withdraw/all","scenario":"不存在的userId","json": {},"params": {},"code_status": 400,"keyword": "该用户不存在"},
+            {"req_url": "/v1/wallet/game/transfer/user/35/withdraw/all","scenario":"存在的userId","json": {},"params": {},"code_status": 200,"keyword": "data"},
+            ]
+    },
+    {
+        "test_case": "user_deposit",
+        "req_method": "post",
+        "test_item": [
+            {"req_url": "/v1/wallet/game/transfer/user/99999/deposit","scenario":"不存在的userId","json": {"channelCode":"AWC","amount":10},"params": {},"code_status": 400,"keyword": "该用户不存在"},
+            {"req_url": "/v1/wallet/game/transfer/user/35/deposit","scenario":"[amount]0","json": {"channelCode":"AWC","amount":0},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/wallet/game/transfer/user/35/deposit","scenario":"[amount]超出錢包金額","json": {"channelCode":"AWC","amount":99999999999},"params": {},"code_status": 500,"keyword": "中心钱包余额不足"},
+            {"req_url": "/v1/wallet/game/transfer/user/35/deposit","scenario":"[amount]null","json": {"channelCode":"AWC","amount":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/wallet/game/transfer/user/35/deposit","scenario":"[amount]非數字","json": {"channelCode":"AWC","amount":"string"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/wallet/game/transfer/user/35/deposit","scenario":"[channelCode]不存在的通道","json": {"channelCode":"unknow","amount":"10"},"params": {},"code_status": 400,"keyword": "資料不存在"},
+            {"req_url": "/v1/wallet/game/transfer/user/35/deposit","scenario":"[channelCode]YB","json": {"channelCode":"YB","amount":"10"},"params": {},"code_status": 200,"keyword": "success"},
+            {"req_url": "/v1/wallet/game/transfer/user/35/deposit","scenario":"[channelCode]AWC","json": {"channelCode":"AWC","amount":"10"},"params": {},"code_status": 200,"keyword": "success"},
+            ]
+    },
+    {
+        "test_case": "get_fail_approver",
+        "req_method": "get",
+        "req_url": "/v1/wallet/game/transfer/failed/approver",
+        "test_item": [
+            {"scenario":"正常查詢","json": {},"params": {},"code_status": 200,"keyword": "data"},
+            ]
+    },
+    {
+        "test_case": "get_game_transfer_fail_list",
+        "req_method": "get",
+        "params" : {"timeType":1,"startTime":"2022-01-01T00:00:00+08:00","endTime":"2023-01-01T00:00:00+08:00","failedTransferStatus":null,"operator":null,"fromChannelCode":null,"toChannelCode":null,"tradeId":null,"page":null,"size":null},
+        "req_url": "/v1/wallet/game/transfer/failed",
+        "test_item": [
+            {"scenario":"[timeType]null","target":{"timeType":null},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[timeType]1","target":{"timeType":1},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[timeType]2","target":{"timeType":2},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[timeType]3","target":{"timeType":3},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[startTime]null","target":{"startTime":null},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[startTime]不符格式","target":{"startTime":"string"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[endTime]null","target":{"endTime":null},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[endTime]不符格式","target":{"endTime":"string"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[failedTransferStatus]0","target":{"failedTransferStatus":0},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[failedTransferStatus]1","target":{"failedTransferStatus":1},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[failedTransferStatus]2","target":{"failedTransferStatus":2},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            // #缺測試資料{"scenario":"[operator]存在帳號","target":{"operator":"superAdmin"},"json": {},"code_status": 200,"keyword": "data"},
+            // #缺測試資料{"scenario":"[operator]不存在帳號","target":{"operator":"unknow"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[fromChannelCode]SELF","target":{"fromChannelCode":"SELF"},"json": {},"code_status": 200,"keyword": "data"},
+            // #缺測試資料{"scenario":"[fromChannelCode]YB","target":{"fromChannelCode":"YB"},"json": {},"code_status": 200,"keyword": "data"},
+            // #缺測試資料{"scenario":"[fromChannelCode]AWC","target":{"fromChannelCode":"AWC"},"json": {},"code_status": 200,"keyword": "data"},
+            // #缺測試資料{"scenario":"[toChannelCode]SELF","target":{"toChannelCode":"SELF"},"json": {},"code_status": 200,"keyword": "data"},
+            // #缺測試資料{"scenario":"[toChannelCode]YB","target":{"toChannelCode":"YB"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[toChannelCode]AWC","target":{"toChannelCode":"AWC"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[tradeId]存在ID","target":{"tradeId":"存在ID"},"json": {},"code_status": 200,"keyword": "636149390286880769"},
+            {"scenario":"[tradeId]不存在ID","target":{"tradeId":"123"},"json": {},"code_status": 200,"keyword": '"records":[]'},
+            {"scenario":"[page]null","target":{"page":null},"json": {},"code_status": 200,"keyword": '"current":1'},
+            {"scenario":"[page]2","target":{"page":2},"json": {},"code_status": 200,"keyword": '"current":2'},
+            {"scenario":"[size]null","target":{"size":null},"json": {},"code_status": 200,"keyword": '"size":10'},
+            {"scenario":"[size]2","target":{"size":2},"json": {},"code_status": 200,"keyword": '"size":2'},
+            ]
+    },
+    {
+        "test_case": "trade_manual_result",
+        "req_method": "post",
+        "json" : {"result": 0,"remark": "string"},
+        "test_item": [
+            {"req_url": "/v1/wallet/game/transfer/failed/tradeId/0001/manual/result","scenario":"[tradeId]不存在","target":{"null":null},"params": {},"code_status": 400,"keyword": "資料不存在"},
+            {"req_url": "/v1/wallet/game/transfer/failed/tradeId/存在ID/manual/result","scenario":"[result]null","target":{"result":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/wallet/game/transfer/failed/tradeId/存在ID/manual/result","scenario":"[result]1","target":{"result":1},"params": {},"code_status": 200,"keyword": "success"},
+            {"req_url": "/v1/wallet/game/transfer/failed/tradeId/存在ID/manual/result","scenario":"[result]0","target":{"result":0},"params": {},"code_status": 200,"keyword": "success"},
+            {"req_url": "/v1/wallet/game/transfer/failed/tradeId/存在ID/manual/result","scenario":"[remark]201字","target":{"remark":'123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901'},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/wallet/game/transfer/failed/tradeId/存在ID/manual/result","scenario":"[remark]200字","target":{"remark":'12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890'},"params": {},"code_status": 200,"keyword": "success"},
+            ]
+    }
+]
