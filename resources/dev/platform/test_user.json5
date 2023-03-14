@@ -52,7 +52,7 @@
             {"scenario":"修改VIP層級_存在id","target":{},"req_url": "/v1/user/vip/config/存在vip_id","params": {},"code_status": 200,"keyword": "success"},
             {"scenario":"修改VIP層級_存在id_[name]null","target":{"name":null},"req_url": "/v1/user/vip/config/存在vip_id","params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"修改VIP層級_存在id_[name]超過20字","target":{"name":"123456789012345678901"},"req_url": "/v1/user/vip/config/存在vip_id","params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            //#bug{"scenario":"修改VIP層級_存在id_[from,to]開始時間大於結束時間","target":{"regStartTime":"2023-12-31T23:59:59Z","regEndTime":"2023-01-01T00:00:00Z"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"修改VIP層級_存在id_[from,to]開始時間大於結束時間","target":{"regStartTime":"2023-12-31T23:59:59Z","regEndTime":"2023-01-01T00:00:00Z"},"req_url": "/v1/user/vip/config/存在vip_id","params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"修改VIP層級_存在id_[from,to]from,null","target":{"regStartTime":"2023-01-01T00:00:00Z","regEndTime":null},"req_url": "/v1/user/vip/config/存在vip_id","params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"修改VIP層級_存在id_[from,to]null,to","target":{"regStartTime":null,"regEndTime":"2023-12-31T23:59:59Z"},"req_url": "/v1/user/vip/config/存在vip_id","params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"修改VIP層級_存在id_[rechargeTotal]null","target":{"rechargeTotal":null},"req_url": "/v1/user/vip/config/存在vip_id","params": {},"code_status": 400,"keyword": "无效的请求参数"},
