@@ -213,7 +213,7 @@
     {
         "test_case": "proxy_commission_template",
         "req_method": "get",
-        "schema":{"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"name":{"type":"string"},"isEnabled":{"type":"boolean"},"isNeedToVerify":{"type":"boolean"},"createdTime":{"type":"string"},"lastModifiedTime":{"type":"string"}},"required":["createdTime","id","isEnabled","isNeedToVerify","lastModifiedTime","name"]}}},"required":["data"]},
+        "schema":{"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"name":{"type":"string"},"isEnabled":{"type":"boolean"},"isNeedToVerify":{"type":"boolean"},"createdTime":{"type":"string"},"lastModifiedTime":{"type":["string","null"]}},"required":["createdTime","id","isEnabled","isNeedToVerify","lastModifiedTime","name"]}}},"required":["data"]},
         "req_url": "/v1/proxy/commission/template",
         "params": {},
         "test_item": [
