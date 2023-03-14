@@ -481,7 +481,7 @@
         "schema":{"type":"object","properties":{"data":{"type":"object","properties":{"birthday":{"type":["null","string"]},"email":{"type":["null","string"]},"lastLoginTime":{"type":"string"},"lockStatus":{"type":"array","items":{"type":"object","properties":{"lock":{"type":"boolean"},"type":{"type":"integer"}},"required":["lock","type"]}},"parentProxyAccount":{"type":"string"},"reallyName":{"type":["null","string"]},"registerIp":{"type":"string"},"registerTime":{"type":"string"},"sex":{"type":"integer"},"telephone":{"type":"string"},"userId":{"type":"integer"},"username":{"type":"string"}},"required":["birthday","email","lastLoginTime","lockStatus","parentProxyAccount","reallyName","registerIp","registerTime","sex","telephone","userId","username"]}},"required":["data"]},
         "test_item" : [
             {"req_url" : "/v1/proxy/1/detail/edit","scenario":"存在的id","json":{},"params": {},"code_status": 200,"keyword": "account001"},
-            {"req_url" : "/v1/proxy/99999/detail/edit","scenario":"不存在的id","json":{},"params": {},"code_status": 400,"keyword": "資料不存在"},
+            {"req_url" : "/v1/proxy/99999/detail/edit","scenario":"不存在的id","json":{},"params": {},"code_status": 400,"keyword": "该用户不存在"},
             ]
     },
     {
