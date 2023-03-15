@@ -30,6 +30,19 @@ class TestUserVipConfig:
     @allure.story("VIP層級")
     @allure.title("{test[scenario]}")
     @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('add_vip_config'))
+    def test_add_vip_config(test, get_platform_token):
+        json_replace = test_data.replace_json(test['json'], test['target'])
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                                test['params'], token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("客戶管理")
+    @allure.story("VIP層級")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_vip_config'))
     def test_get_vip_config(test, get_platform_token):
         api = API_Controller()
@@ -46,19 +59,6 @@ class TestUserVipConfig:
     def test_get_vip_config_mapList(test, get_platform_token):
         api = API_Controller()
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
-                                test['params'], token=get_platform_token)
-        ResponseVerification.basic_assert(resp, test)
-
-    @staticmethod
-    @allure.feature("客戶管理")
-    @allure.story("VIP層級")
-    @allure.title("{test[scenario]}")
-    @pytest.mark.regression
-    @pytest.mark.parametrize("test", test_data.get_case('add_vip_config'))
-    def test_add_vip_config(test, get_platform_token):
-        json_replace = test_data.replace_json(test['json'], test['target'])
-        api = API_Controller()
-        resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                                 test['params'], token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)
 
