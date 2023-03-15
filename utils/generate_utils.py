@@ -1,19 +1,24 @@
 import random
 import time
 import string
+import base64
+import hashlib
+import datetime
 
 
 class Make:
 
     @staticmethod
     def name(namelen=8):
-        return ''.join(random.choice(string.ascii_letters + string.digits)
-                       for _ in range(namelen))
+        return ''.join(
+            random.choice(string.ascii_letters + string.digits)
+            for _ in range(namelen))
 
     @staticmethod
     def mobile():
-        return "1{}{}".format(random.choice('589'), ''.join(
-            random.choice(string.digits) for x in range(9)))
+        return "1{}{}".format(
+            random.choice('589'),
+            ''.join(random.choice(string.digits) for x in range(9)))
 
     @staticmethod
     def date(status):
@@ -25,3 +30,12 @@ class Make:
 
         else:
             return time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
+
+    @staticmethod
+    def sign(os_type, SECRET, device_id=3263782594) -> dict:
+        timestamp = str(int(datetime.datetime.now().timestamp()))
+        pre_sign = f'device-id={device_id}&os-type={os_type}&timestamp={timestamp}{SECRET}'
+        md5_sign = hashlib.md5(pre_sign.encode()).hexdigest()
+        after_sign = base64.b64encode(md5_sign.encode('utf-8'))
+        dict_of_sign = {"timestamp": timestamp, "sign": after_sign}
+        return dict_of_sign
