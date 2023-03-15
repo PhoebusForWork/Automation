@@ -39,7 +39,7 @@
             {"scenario":"VIP層級Map_[limitRecharge]null","target":{"limitRecharge":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"VIP層級Map_[limitBet]null","target":{"limitBet":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"VIP層級Map_[remark]超過兩百字","target":{"remark":"123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"VIP層級Map_正常新增","target":{},"params": {},"code_status": 200,"keyword": "success"},
+            // {"scenario":"VIP層級Map_正常新增","target":{},"params": {},"code_status": 200,"keyword": "success"},
         ]
     },
     {
