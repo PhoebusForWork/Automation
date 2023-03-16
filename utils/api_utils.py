@@ -4,6 +4,7 @@ import json
 import inspect
 import datetime
 from utils.data_utils import EnvReader
+from utils.generate_utils import Make
 
 env = EnvReader()
 platform_host = env.PLATFORM_HOST
@@ -12,6 +13,7 @@ cs_host = env.WEB_HOST
 control_host = env.CONTROL_HOST
 cs_header = env.CS_HEADER
 xxl_host = env.XXL_HOST
+secret = env.SECRET
 
 
 class API_Controller:
@@ -50,10 +52,16 @@ class API_Controller:
                        ensure_ascii=False))
         print('--------------HTTPS response  *  end ------------------\n\n')
 
+    def __update_sign(self):
+        device_id = self.request_session.headers.get("device-id", "")
+        os_type = self.request_session.headers.get("os-type", "")
+        sign = Make.sign(device_id=device_id, SECRET=secret, os_type=os_type)
+        self.request_session.headers.update(sign)
+
     def send_request(self, method, url, json, params, token=None, files=None):
         if token:
             self.request_session.headers.update({"token": str(token)})
-
+        self.__update_sign()
         request_body = {
             "url": self.host + url,
             "json": json,

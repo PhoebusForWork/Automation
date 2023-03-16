@@ -140,14 +140,18 @@ class EnvReader:
             self.REDIS_CS_HOST = config['redis_connection']['redis_cs_host']
             self.REDIS_PLT_PORT = config['redis_connection']['redis_plt_port']
             self.REDIS_CS_PORT = config['redis_connection']['redis_cs_port']
-            self.REDIS_PLT_PASSWORD = config['redis_connection']['redis_plt_password']
-            self.REDIS_CS_PASSWORD = config['redis_connection']['redis_cs_password']
+            self.REDIS_PLT_PASSWORD = config['redis_connection'][
+                'redis_plt_password']
+            self.REDIS_CS_PASSWORD = config['redis_connection'][
+                'redis_cs_password']
             self.REDIS_PLT_SENTINEL_LIST = eval(
                 config['redis_connection']['redis_plt_sentinel_list'])
             self.REDIS_CS_SENTINEL_LIST = eval(
                 config['redis_connection']['redis_cs_sentinel_list'])
-            self.REDIS_SENTINEL_PLT_PASSWORD = config['redis_connection']['redis_plt_sentinel_password']
-            self.REDIS_SENTINEL_CS_PASSWORD = config['redis_connection']['redis_cs_sentinel_password']
+            self.REDIS_SENTINEL_PLT_PASSWORD = config['redis_connection'][
+                'redis_plt_sentinel_password']
+            self.REDIS_SENTINEL_CS_PASSWORD = config['redis_connection'][
+                'redis_cs_sentinel_password']
         else:
             self.REDIS_PLT_HOST = os.getenv('REDIS_PLT_HOST')
             self.REDIS_CS_HOST = os.getenv('REDIS_CS_HOST')
@@ -157,8 +161,10 @@ class EnvReader:
             self.REDIS_CS_PASSWORD = os.getenv('REDIS_CS_PASSWORD')
             self.REDIS_PLT_SENTINEL_LIST = os.getenv('REDIS_PLT_SENTINEL_LIST')
             self.REDIS_CS_SENTINEL_LIST = os.getenv('REDIS_CS_SENTINEL_LIST')
-            self.REDIS_SENTINEL_PLT_PASSWORD = os.getenv('REDIS_SENTINEL_PLT_PASSWORD')
-            self.REDIS_SENTINEL_CS_PASSWORD = os.getenv('REDIS_SENTINEL_CS_PASSWORD')
+            self.REDIS_SENTINEL_PLT_PASSWORD = os.getenv(
+                'REDIS_SENTINEL_PLT_PASSWORD')
+            self.REDIS_SENTINEL_CS_PASSWORD = os.getenv(
+                'REDIS_SENTINEL_CS_PASSWORD')
 
     def __load_cs_test_account(self):
         self.CS_ACCOUNT = config['cs_account']['account']
@@ -168,6 +174,7 @@ class EnvReader:
         self.PLT_HEADER = config['API_headers']['plt']
         self.XXL_HEADER = config['API_headers']['xxl']
         self.CS_HEADER = config['API_headers']['cs']
+        self.SECRET = config['secret']['secret']
 
 
 class ResponseVerification:
