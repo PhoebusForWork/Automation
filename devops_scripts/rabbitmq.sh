@@ -6,7 +6,7 @@ run() {
   ################
   # QUEUES
   ################
-  echo " ###### All queues ######" && $(curl -X GET -u "$RABBITMQ_USER:$RABBITMQ_PASSWORD" --url http://$1:$RABBITMQ_PORT/api/queues/%2f/ | jq '.[].name') && echo "It's running done"
+  echo " ###### All queues ######" && curl -X GET -u "$RABBITMQ_USER:$RABBITMQ_PASSWORD" --url http://$1:$RABBITMQ_PORT/api/queues/%2f/ | jq '.[].name' && echo "It's running done"
   echo "Delete queues"
   for i in $(curl -X GET -u $RABBITMQ_USER:$RABBITMQ_PASSWORD --url http://$1:$RABBITMQ_PORT/api/queues/%2f/ | jq -r '.[].name');
   do
