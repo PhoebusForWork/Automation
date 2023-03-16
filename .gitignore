@@ -1,9 +1,3 @@
 #共用資料
 *__pycache__
-/test_report
-
-
-#Phoebus
-/123.py
-/testcode.py
-/avatar
+/test_report*
