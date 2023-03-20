@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from ..platform.platApiBase import PlatformAPI
 from utils.data_utils import EnvReader
 import jsonpath
