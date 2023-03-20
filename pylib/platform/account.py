@@ -10,6 +10,21 @@ env = EnvReader()
 platform_host = env.PLATFORM_HOST
 
 
+class PlatformInfo(PlatformAPI):
+    # 取得平台資訊
+    def get_platform_info(self, plat_token=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "get",
+            "url": "/v1/platform"
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+
 class AccountAdmin(PlatformAPI):
     # 搜索帳號列表
     def search_admin_list(
