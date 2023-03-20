@@ -5,7 +5,7 @@ check_project() {
 
     DATE=$(date +'[%Y-%m-%d] %H:%M:%S')
 
-    state=$(ARGOCD_AUTH_TOKEN=$ARGOCD_TOKEN argocd app list --grpc-web | grep $ARGOCD_APPNAME)
+    state=$(ARGOCD_AUTH_TOKEN=$ARGOCD_TOKEN argocd app list --insecure --grpc-web | grep $ARGOCD_APPNAME)
     
     # $? > 0 = true otherwise false
     # echo state: $? 
@@ -17,9 +17,8 @@ check_project() {
     fi
 }
 
-
 run() {
-  ARGOCD_AUTH_TOKEN=$ARGOCD_TOKEN argocd app delete $ARGOCD_APPNAME -y --grpc-web
+  ARGOCD_AUTH_TOKEN=$ARGOCD_TOKEN argocd app delete $ARGOCD_APPNAME -y --insecure --grpc-web
 
   while true
   do
