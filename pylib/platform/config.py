@@ -9,7 +9,7 @@ platform_host = env.PLATFORM_HOST
 
 class File(PlatformAPI):
     # 上傳影片
-    def upload_video(self, plat_token=None, file=None, video_path_type=None):
+    def upload_video(self, plat_token=None, file=None, videoPathType=None):
         self.request_session.headers.update({"Content-Type": None})
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
@@ -17,7 +17,7 @@ class File(PlatformAPI):
         request_body = {
             "method": "post",
             "url": "/v1/file/video",
-            "params": {"videoPathType": video_path_type},
+            "params": {"videoPathType": videoPathType},
             "files": file
         }
 
@@ -25,7 +25,7 @@ class File(PlatformAPI):
         return response.json()
 
     # 上傳圖片, imagePathType: 1:game|2:activity|3:avatar
-    def upload_image(self, plat_token=None, file=None, image_path_type=None):
+    def upload_image(self, plat_token=None, file=None, imagePathType=None):
         self.request_session.headers.update({"Content-Type": None})
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
@@ -33,7 +33,7 @@ class File(PlatformAPI):
         request_body = {
             "method": "post",
             "url": "/v1/file/image",
-            "params": {"imagePathType": image_path_type},
+            "params": {"imagePathType": imagePathType},
             "files": file
         }
 

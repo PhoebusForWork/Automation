@@ -13,21 +13,11 @@ platform_host = env.PLATFORM_HOST
 class AccountAdmin(PlatformAPI):
     # 搜索帳號列表
     def search_admin_list(
-            self,
-            plat_token=None,
-            account=None,
-            display_name=None,
-            phone=None,
-            is_leader=None,
-            dept_id=None,
-            status=None,
-            dept_id_list=None,
-            role_id_list=None,
-            start_login_time=None,
-            end_login_time=None,
-            is_non_dept=None,
-            page=None,
-            size=None
+            self, plat_token=None, account=None,
+            displayName=None, phone=None, isLeader=None,
+            deptId=None, status=None, deptIdList=None,
+            roleIdList=None, startLoginTime=None, endLoginTime=None,
+            isNonDept=None, page=None, size=None
     ):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
@@ -35,21 +25,7 @@ class AccountAdmin(PlatformAPI):
         request_body = {
             "method": "get",
             "url": "/v1/account/admin",
-            "params": {
-                "account": account,
-                "displayName": display_name,
-                "phone": phone,
-                "isLeader": is_leader,
-                "deptId": dept_id,
-                "status": status,
-                "deptIdList": dept_id_list,
-                "roleIdList": role_id_list,
-                "startLoginTime": start_login_time,
-                "endLoginTime": end_login_time,
-                "isNonDept": is_non_dept,
-                "page": page,
-                "size": size
-            }
+            "params": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
@@ -57,18 +33,10 @@ class AccountAdmin(PlatformAPI):
 
     # 新增帳號
     def add_admin(
-            self,
-            plat_token=None,
-            account=None,
-            password=None,
-            phone=None,
-            sip_num=None,
-            fix_sip_num=None,
-            is_leader=None,
-            dept_id=None,
-            role_ids=None,
-            expired_time=None,
-            display_name=None
+            self, plat_token=None,
+            account=None, password=None, phone=None,
+            sipNum=None, fixSipNum=None, isLeader=None,
+            deptId=None, roleIds=None, expiredTime=None, displayName=None
     ):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
@@ -76,32 +44,21 @@ class AccountAdmin(PlatformAPI):
         request_body = {
             "method": "post",
             "url": "/v1/account/admin",
-            "json": {
-                "phone": phone,
-                "sipNum": sip_num,
-                "fixSipNum": fix_sip_num,
-                "isLeader": is_leader,
-                "deptId": dept_id,
-                "roleIds": role_ids,
-                "expiredTime": expired_time,
-                "account": account,
-                "password": password,
-                "displayName": display_name
-            }
+            "json": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
         return response.json()
 
     # 帳號詳情
-    def admin_info(self, plat_token=None, admin_id=None):
+    def admin_info(self, plat_token=None, adminId=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
         request_body = {
             "method": "get",
-            "url": f"/v1/account/admin/{format(admin_id)}",
-            "params": {"adminId": admin_id}
+            "url": f"/v1/account/admin/{format(adminId)}",
+            "params": {"adminId": adminId}
         }
 
         response = self.send_request(**request_body)
@@ -109,61 +66,55 @@ class AccountAdmin(PlatformAPI):
 
     # 編輯帳號
     def edit_admin(
-            self,
-            plat_token=None,
-            admin_id=None,
-            phone=None,
-            sip_num=None,
-            fix_sip_num=None,
-            is_leader=None,
-            dept_id=None,
-            role_ids=None,
-            expired_time=None
+            self, plat_token=None, adminId=None,
+            phone=None, sipNum=None,
+            fixSipNum=None, isLeader=None,
+            deptId=None, roleIds=None, expiredTime=None
     ):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
         request_body = {
             "method": "put",
-            "url": f"/v1/account/admin/{format(admin_id)}",
+            "url": f"/v1/account/admin/{format(adminId)}",
             "json": {
                 "phone": phone,
-                "sipNum": sip_num,
-                "fixSipNum": fix_sip_num,
-                "isLeader": is_leader,
-                "deptId": dept_id,
-                "roleIds": role_ids,
-                "expiredTime": expired_time
+                "sipNum": sipNum,
+                "fixSipNum": fixSipNum,
+                "isLeader": isLeader,
+                "deptId": deptId,
+                "roleIds": roleIds,
+                "expiredTime": expiredTime
             },
-            "params": {"adminId": admin_id}
+            "params": {"adminId": adminId}
         }
 
         response = self.send_request(**request_body)
         return response.json()
 
     # 刪除帳號
-    def delete_admin(self, plat_token=None, admin_id=None, ):
+    def delete_admin(self, plat_token=None, adminId=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
         request_body = {
             "method": "delete",
-            "url": f"/v1/account/admin/{format(admin_id)}",
-            "params": {"adminId": admin_id}
+            "url": f"/v1/account/admin/{format(adminId)}",
+            "params": {"adminId": adminId}
         }
 
         response = self.send_request(**request_body)
         return response.json()
 
     # 帳號狀態修改, status: 0停用;1啟用;2刪除
-    def admin_status(self, plat_token=None, admin_id=None, status=None):
+    def admin_status(self, plat_token=None, adminId=None, status=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
         request_body = {
             "method": "put",
-            "url": f"/v1/account/admin/{format(admin_id)}/status",
-            "params": {"adminId": admin_id, "status": status}
+            "url": f"/v1/account/admin/{format(adminId)}/status",
+            "params": {"adminId": adminId, "status": status}
         }
 
         response = self.send_request(**request_body)
@@ -171,14 +122,14 @@ class AccountAdmin(PlatformAPI):
         return response.json()
 
     # 修改密碼
-    def edit_password(self, plat_token=None, old_password=None, new_password=None):
+    def edit_password(self, plat_token=None, oldPassword=None, newPassword=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
         request_body = {
             "method": "put",
             "url": "/v1/account/admin/password",
-            "json": {"oldPassword": old_password, "newPassword": new_password}
+            "json": {"oldPassword": oldPassword, "newPassword": newPassword}
         }
 
         response = self.send_request(**request_body)
@@ -186,14 +137,14 @@ class AccountAdmin(PlatformAPI):
         return response.json()
 
     # 重置密碼
-    def reset_password(self, plat_token=None, admin_id=None, ):
+    def reset_password(self, plat_token=None, adminId=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
         request_body = {
             "method": "put",
-            "url": f"/v1/account/admin/{format(admin_id)}/resetPassword",
-            "params": {"adminId": admin_id}
+            "url": f"/v1/account/admin/{format(adminId)}/resetPassword",
+            "params": {"adminId": adminId}
         }
 
         response = self.send_request(**request_body)
@@ -203,7 +154,7 @@ class AccountAdmin(PlatformAPI):
         now = time.time()
         auto_account = "auto" + str(int(now * 10))
         resp = self.add_admin(plat_token=plat_token, account=auto_account, password="abc123456",
-                              is_leader=True, dept_id='6', role_ids=['5'], display_name=auto_account)
+                              isLeader=True, deptId='6', roleIds=['5'], displayName=auto_account)
         if resp["data"] == "success":
             return auto_account
         else:
@@ -223,7 +174,7 @@ class AccountAdmin(PlatformAPI):
 
 class AccountAuthority(PlatformAPI):
     # 權限總列表
-    def authority_list(self, plat_token=None,):
+    def authority_list(self, plat_token=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
@@ -236,7 +187,7 @@ class AccountAuthority(PlatformAPI):
         return response.json()
 
     # 選單樹列表
-    def authority_menu(self, plat_token=None,):
+    def authority_menu(self, plat_token=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
@@ -249,7 +200,7 @@ class AccountAuthority(PlatformAPI):
         return response.json()
 
     # 權限列表
-    def authority_permission(self, plat_token=None,):
+    def authority_permission(self, plat_token=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
@@ -264,14 +215,14 @@ class AccountAuthority(PlatformAPI):
 
 class AccountDept(PlatformAPI):
     # 結點列表
-    def dept_list(self, plat_token=None, role_id=None, department_status=None):
+    def dept_list(self, plat_token=None, roleId=None, departmentStatus=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
         request_body = {
             "method": "get",
             "url": "/v1/account/dept/list",
-            "params": {"roleId": role_id, "departmentStatus": department_status}
+            "params": {"roleId": roleId, "departmentStatus": departmentStatus}
         }
 
         response = self.send_request(**request_body)
@@ -279,25 +230,12 @@ class AccountDept(PlatformAPI):
 
     # 人員關係列表
     def admin_list(
-            self,
-            plat_token=None,
-            account=None,
-            password=None,
-            phone=None,
-            sipNum=None,
-            fixSipNum=None,
-            isLeader=None,
-            deptId=None,
-            status=None,
-            deptIdList=None,
-            roleIdList=None,
-            startLoginTime=None,
-            endLoginTime=None,
-            isNonDept=None,
-            expiredTime=None,
-            displayName=None,
-            page=None,
-            size=None,
+            self, plat_token=None, account=None,
+            password=None, phone=None, sipNum=None,
+            fixSipNum=None, isLeader=None, deptId=None,
+            status=None, deptIdList=None, roleIdList=None,
+            startLoginTime=None, endLoginTime=None, isNonDept=None,
+            expiredTime=None, displayName=None, page=None, size=None
     ):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
@@ -312,7 +250,7 @@ class AccountDept(PlatformAPI):
         return response.json()
 
     # 新增節點
-    def add_dept(self, plat_token=None, department=None, pid=None,):
+    def add_dept(self, plat_token=None, department=None, pid=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
@@ -326,71 +264,71 @@ class AccountDept(PlatformAPI):
         return response.json()
 
     # 修改節點
-    def edit_dept(self, plat_token=None, department_id=None, department=None):
+    def edit_dept(self, plat_token=None, departmentId=None, department=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
         request_body = {
             "method": "put",
-            "url": f"/v1/account/dept/{format(department_id)}",
+            "url": f"/v1/account/dept/{format(departmentId)}",
             "json": {"department": department},
-            "params": {"departmentId": department_id}
+            "params": {"departmentId": departmentId}
         }
 
         response = self.send_request(**request_body)
         return response.json()
 
     # 刪除節點
-    def delete_dept(self, plat_token=None, department_id=None, ):
+    def delete_dept(self, plat_token=None, departmentId=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
         request_body = {
             "method": "delete",
-            "url": f"/v1/account/dept/{format(department_id)}",
-            "params": {"departmentId": department_id}
+            "url": f"/v1/account/dept/{format(departmentId)}",
+            "params": {"departmentId": departmentId}
         }
 
         response = self.send_request(**request_body)
         return response.json()
 
     # 設置負責人
-    def dept_leader(self, plat_token=None, admin_id=None, is_leader=None):
+    def dept_leader(self, plat_token=None, adminId=None, isLeader=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
         request_body = {
             "method": "put",
             "url": "/v1/account/dept/leader",
-            "json": {"adminId": admin_id, "isLeader": is_leader}
+            "json": {"adminId": adminId, "isLeader": isLeader}
         }
 
         response = self.send_request(**request_body)
         return response.json()
 
     # 關聯已存在帳號
-    def dept_admin(self, plat_token=None, admin_id_list=None, department_id=None):
+    def dept_admin(self, plat_token=None, adminIdList=None, departmentId=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
         request_body = {
             "method": "put",
             "url": "/v1/account/dept/admin",
-            "json": {"adminIdList": admin_id_list, "departmentId": department_id}
+            "json": {"adminIdList": adminIdList, "departmentId": departmentId}
         }
 
         response = self.send_request(**request_body)
         return response.json()
 
     # 解除關聯
-    def delete_dept_admin(self, plat_token=None, admin_id=None, ):
+    def delete_dept_admin(self, plat_token=None, adminId=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
         request_body = {
             "method": "put",
             "url": "/v1/account/dept/leader",
-            "params": {"adminId": admin_id}
+            "params": {"adminId": adminId}
         }
 
         response = self.send_request(**request_body)
@@ -404,39 +342,28 @@ class AccountDept(PlatformAPI):
 
 class AccountRole(PlatformAPI):
     # 角色列表
-    def role_list(self, plat_token=None, role=None, authority_id=None, department_id=None, page=None, size=None):
+    def role_list(self, plat_token=None, role=None, authorityId=None, departmentId=None, page=None, size=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
         request_body = {
             "method": "get",
             "url": "/v1/account/role/list",
-            "params": {
-                "role": role,
-                "authorityId": authority_id,
-                "departmentId": department_id,
-                "page": page,
-                "size": size
-            }
+            "params": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
         return response.json()
 
     # 創建角色
-    def add_role(self, plat_token=None, role=None, remark=None, authority_ids=None, department_ids=None):
+    def add_role(self, plat_token=None, role=None, remark=None, authorityIds=None, departmentIds=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
         request_body = {
             "method": "post",
             "url": "/v1/account/role",
-            "json": {
-                "role": role,
-                "remark": remark,
-                "authorityIds": authority_ids,
-                "departmentIds": department_ids,
-            }
+            "json": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
@@ -444,13 +371,8 @@ class AccountRole(PlatformAPI):
 
     # 編輯角色
     def edit_role(
-            self,
-            plat_token=None,
-            role_id=None,
-            role=None,
-            remark=None,
-            authority_ids=None,
-            department_ids=None,
+            self, plat_token=None, role_id=None, role=None,
+            remark=None, authorityIds=None, departmentIds=None
     ):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
@@ -461,8 +383,8 @@ class AccountRole(PlatformAPI):
             "json": {
                 "role": role,
                 "remark": remark,
-                "authorityIds": authority_ids,
-                "departmentIds": department_ids,
+                "authorityIds": authorityIds,
+                "departmentIds": departmentIds,
             }
         }
 
@@ -484,14 +406,14 @@ class AccountRole(PlatformAPI):
         return response.json()
 
     # 顯示角色權限
-    def role_authorities(self, plat_token=None, role_id=None):
+    def role_authorities(self, plat_token=None, roleId=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
         request_body = {
             "method": "get",
-            "url": f"/v1/account/role/{format(role_id)}/authorities",
-            "params": {"roleId": role_id}
+            "url": f"/v1/account/role/{format(roleId)}/authorities",
+            "params": {"roleId": roleId}
         }
 
         response = self.send_request(**request_body)

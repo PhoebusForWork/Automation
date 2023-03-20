@@ -13,14 +13,14 @@ platform_host = env.PLATFORM_HOST
 
 class Game(PlatformAPI):
     # 獲取遊戲列表
-    def get_game_list(self, plat_token=None, game_type=None):
+    def get_game_list(self, plat_token=None, gameType=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
         request_body = {
             "method": "get",
             "url": "/v1/game",
-            "params": {"gameType": game_type}
+            "params": {"gameType": gameType}
         }
 
         response = self.send_request(**request_body)
@@ -67,14 +67,14 @@ class Game(PlatformAPI):
         return response.json()
 
     # 遊戲開啟/關閉狀態
-    def edit_game_isTesting(self, plat_token=None, game_code=None, is_testing=None):
+    def edit_game_isTesting(self, plat_token=None, game_code=None, isTesting=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
         request_body = {
             "method": "put",
             "url": f"/v1/game/{format(game_code)}/isTesting",
-            "params": {"isTesting": is_testing}
+            "params": {"isTesting": isTesting}
         }
 
         response = self.send_request(**request_body)
