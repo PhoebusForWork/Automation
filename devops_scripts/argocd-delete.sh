@@ -17,9 +17,8 @@ check_project() {
     fi
 }
 
-
 run() {
-  ARGOCD_AUTH_TOKEN=$ARGOCD_TOKEN argocd app delete $ARGOCD_APPNAME -y --grpc-web
+  ARGOCD_AUTH_TOKEN=$ARGOCD_TOKEN argocd app delete $ARGOCD_APPNAME -y --insecure --grpc-web
 
   while true
   do
