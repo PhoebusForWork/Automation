@@ -26,8 +26,8 @@ def re_password_default(get_platform_token):
     admin_token = resp.json()['data']['token']
     reapi = AccountAdmin()
     reapi.edit_password(plat_token=admin_token,
-                        oldPassword='abc12345',
-                        newPassword='abc123456')
+                        old_password='abc12345',
+                        new_password='abc123456')
 
 
 #############

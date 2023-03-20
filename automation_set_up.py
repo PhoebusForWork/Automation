@@ -24,7 +24,7 @@ code = accountAdmin.imgcode()
 token = accountAdmin.login(username="superAdmin",
                            password="abc1234567",
                            imgCode=code).json()['data']['token']
-accountAdmin.edit_password(oldPassword='abc1234567', newPassword='abc123456')
+accountAdmin.edit_password(old_password='abc1234567', new_password='abc123456')
 code = accountAdmin.imgcode()
 token = accountAdmin.login(username="superAdmin",
                            password="abc123456",
@@ -33,12 +33,12 @@ token = accountAdmin.login(username="superAdmin",
 account_list = ['account001', 'account002', 'account003', 'deltest001']
 for account_name in account_list:
     accountAdmin.add_admin(account=account_name,
-                           deptId=3,
-                           displayName=account_name,
+                           dept_id=3,
+                           display_name=account_name,
                            phone=Make.mobile(),
                            password='abc1234567',
-                           isLeader=1,
-                           roleIds=[3])
+                           is_leader=1,
+                           role_ids=[3])
 
 login_account = AccountAdmin()
 login_account.login
