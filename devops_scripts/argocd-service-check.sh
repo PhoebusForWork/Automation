@@ -11,7 +11,7 @@ check_health() {
 
     if [ $state != "Healthy" ]; then
       sleep 10 && echo "$DATE - Wait 10 second then continue detect, SECONDS: $SECONDS"
-    elif [ $record_time == "300" ]; then
+    elif [ $SECONDS == "300" ]; then
       SECONDS=0
       echo "SECONDS = 300 force restart service"
       for item in $(ARGOCD_AUTH_TOKEN=$ARGOCD_TOKEN argocd app get $ARGOCD_APPNAME --show-operation --grpc-web | grep "Progressing" | awk '{print $4}'); do
