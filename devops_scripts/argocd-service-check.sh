@@ -1,22 +1,21 @@
 #!/bin/bash
 
-record_time=0
+SECONDS=0
 
 check_health() {
   while true
   do
     
     DATE=$(date +'[%Y-%m-%d] %H:%M:%S')
-    state=$(ARGOCD_AUTH_TOKEN=$ARGOCD_TOKEN argocd app get $ARGOCD_APPNAME --show-operation --insecure --server $ARGOCD_SERVER | grep "Health Status" | awk '{print $3}')
+    state=$(ARGOCD_AUTH_TOKEN=$ARGOCD_TOKEN argocd app get $ARGOCD_APPNAME --show-operation --insecure --server $ARGOCD_SERVER --grpc-web | grep "Health Status" | awk '{print $3}')
 
     if [ $state != "Healthy" ]; then
-      ((record_time=record_time+1))
-      sleep 10 && echo "$DATE - Wait 10 second then continue detect, record_time: $record_time"
+      sleep 10 && echo "$DATE - Wait 10 second then continue detect, SECONDS: $SECONDS"
     elif [ $record_time == "300" ]; then
-      record_time=0
-      echo "record_time = 300 force restart service"
+      SECONDS=0
+      echo "SECONDS = 300 force restart service"
       for item in $(ARGOCD_AUTH_TOKEN=$ARGOCD_TOKEN argocd app get $ARGOCD_APPNAME --show-operation --grpc-web | grep "Progressing" | awk '{print $4}'); do
-        ARGOCD_AUTH_TOKEN=$ARGOCD_TOKEN argocd app actions run $ARGOCD_APPNAME restart --resource-name $item --kind $ARGOCD_KIND --insecure --server $ARGOCD_SERVER && echo "Restart Pod '$item'"
+        ARGOCD_AUTH_TOKEN=$ARGOCD_TOKEN argocd app actions run $ARGOCD_APPNAME restart --resource-name $item --kind $ARGOCD_KIND --insecure --server $ARGOCD_SERVER --grpc-web && echo "Restart Pod '$item'"
       done;
     else
       echo "All Pod is health state !" && break
@@ -27,7 +26,6 @@ check_health() {
 run() {
   echo "###### Detech Pod State ######"
   check_health
-
 }
 
 run
