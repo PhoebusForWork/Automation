@@ -8,9 +8,9 @@ check_health() {
     
     DATE=$(date +'[%Y-%m-%d] %H:%M:%S')
     state=$(ARGOCD_AUTH_TOKEN=$ARGOCD_TOKEN argocd app get $ARGOCD_APPNAME --show-operation --insecure --server $ARGOCD_SERVER | grep "Health Status" | awk '{print $3}')
-    item=$()
 
     if [ $state != "Healthy" ]; then
+      ((record_time=record_time+1))
       sleep 10 && echo "$DATE - Wait 10 second then continue detect, record_time: $record_time"
     elif [ $record_time == "300" ]; then
       record_time=0
@@ -21,9 +21,6 @@ check_health() {
     else
       echo "All Pod is health state !" && break
     fi
-
-    ((record_time=record_time+1))
-
   done
 }
 
