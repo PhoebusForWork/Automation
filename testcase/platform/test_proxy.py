@@ -303,7 +303,7 @@ class TestProxyCommission:
     @pytest.mark.regression
     @pytest.mark.parametrize(
         "test",
-        test_data.get_case("proxy_get_commission_template_subCommissionConditions"),
+        test_data.get_case("proxy_get_commission_template_sub_commission_conditions"),
     )
     def test_proxy_get_commission_template_subCommissionConditions(
         test, get_platform_token
@@ -325,7 +325,7 @@ class TestProxyCommission:
     @pytest.mark.regression
     @pytest.mark.parametrize(
         "test",
-        test_data.get_case("proxy_edit_commission_template_subCommissionConditions"),
+        test_data.get_case("proxy_edit_commission_template_sub_commission_conditions"),
     )
     def test_proxy_edit_commission_template_subCommissionConditions(
         test, get_platform_token
@@ -381,9 +381,7 @@ class TestProxyCommission:
     @allure.story("查詢結算分攤")
     @allure.title("{test[scenario]}")
     @pytest.mark.regression
-    @pytest.mark.parametrize(
-        "test", test_data.get_case("proxy_get_platform_fee_shares")
-    )
+    @pytest.mark.parametrize("test", test_data.get_case("proxy_get_settlement_shares"))
     def test_proxy_get_commission(test, get_platform_token):
         api = API_Controller()
         resp = api.send_request(
@@ -457,7 +455,7 @@ class TestProxyCommission:
     @allure.title("{test[scenario]}")
     @pytest.mark.regression
     @pytest.mark.parametrize(
-        "test", test_data.get_case("proxy_get_commissionConditions")
+        "test", test_data.get_case("proxy_get_commission_conditions")
     )
     def test_proxy_get_commissionConfig(test, get_platform_token):
         api = API_Controller()
@@ -476,7 +474,7 @@ class TestProxyCommission:
     @allure.title("{test[scenario]}")
     @pytest.mark.regression
     @pytest.mark.parametrize(
-        "test", test_data.get_case("proxy_edit_commissionConditions")
+        "test", test_data.get_case("proxy_edit_commission_conditions")
     )
     def test_proxy_edit_commissionConfig(test, get_platform_token):
         api = API_Controller()

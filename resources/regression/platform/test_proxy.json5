@@ -169,7 +169,7 @@
         ]
     },
     {
-        "test_case": "proxy_get_commission_template_subCommissionConditions",
+        "test_case": "proxy_get_commission_template_sub_commission_conditions",
         "req_method": "get",
         "json":{},
         "params": {},
@@ -180,7 +180,7 @@
             ]
     },
     {
-        "test_case": "proxy_edit_commission_template_subCommissionConditions",
+        "test_case": "proxy_edit_commission_template_sub_commission_conditions",
         "req_method": "put",
         "schema":{"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
         "params":{},
@@ -295,7 +295,7 @@
     {
         "test_case": "proxy_get_platform_fee_shares",
         "req_method": "get",
-        "schema":{"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"channelCode":{"type":"string"},"channelName":{"type":"string"},"platformFee":{"type":"array","items":{"type":"object","properties":{"gameType":{"type":"integer"},"fee":{"type":"integer"}},"required":["fee","gameType"]}},"platformFeeLimit":{"type":"integer"}},"required":["channelCode","channelName","platformFee","platformFeeLimit"]}}},"required":["data"]},
+        "schema":{"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"channelCode":{"type":"string"},"channelName":{"type":"string"},"platformFee":{"type":"array","items":{"type":"object","properties":{"gameType":{"type":"integer"},"fee":{"type":["integer","null"]}},"required":["fee","gameType"]}},"platformFeeLimit":{"type":"integer"}},"required":["channelCode","channelName","platformFee","platformFeeLimit"]}}},"required":["data"]},
         "json":{},
         "params": {},
         "test_item": [
@@ -335,9 +335,9 @@
             ]
     },
     {
-        "test_case": "proxy_get_commissionConditions",
+        "test_case": "proxy_get_commission_conditions",
         "req_method": "get",
-        "schema":{"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"conditions":{"type":"array","items":{"type":"object","properties":{"commission":{"type":"integer"},"commissionLimit":{"type":"integer"},"profit":{"type":"integer"},"validUserCount":{"type":"integer"}},"required":["commission","commissionLimit","profit","validUserCount"]}},"currency":{"type":"string"}},"required":["conditions","currency"]}}},"required":["data"]},
+        "schema":{"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"profit":{"type":"integer"},"commissionLimit":{"type":"integer"},"commission":{"type":"integer"},"validUserCount":{"type":"integer"}},"required":["commission","commissionLimit","profit","validUserCount"]}}},"required":["data"]},
         "json":{},"params": {},
         "test_item": [
             {"req_url": "/v1/proxy/commission/template/2/commissionConditions","scenario":"存在的ID","code_status": 200,"keyword": "data"},
@@ -345,7 +345,7 @@
         ]
     },
     {
-        "test_case": "proxy_edit_commissionConditions",
+        "test_case": "proxy_edit_commission_conditions",
         "req_method": "put",
         "schema":{"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
         "params": {},
@@ -541,7 +541,7 @@
         "test_case" : "proxy_get_manage_list",
         "req_method" : "get",
         "req_url" : "/v1/proxy/user/manage/list",
-        "schema":{"type":"object","properties":{"data":{"type":"object","properties":{"current":{"type":"integer"},"pages":{"type":"integer"},"records":{"type":"array","items":{"type":"object","properties":{"channel":{"type":["null","string"]},"createTime":{"type":"string"},"firstApprover":{"type":["string","null"]},"firstApproverId":{"type":["string","null"]},"firstRemark":{"type":["string","null"]},"firstTime":{"type":["string","null"]},"groupName":{"type":["null","string"]},"id":{"type":"integer"},"osType":{"type":"integer"},"parentProxyAccount":{"type":"string"},"parentProxyId":{"type":"integer"},"proxyAccount":{"type":"string"},"proxyChannelId":{"type":["integer","null"]},"proxyGroupId":{"type":["integer","null"]},"proxyManageStatus":{"type":"integer"},"proxyName":{"type":["null","string"]},"registerDomain":{"type":["null","string"]},"registerIp":{"type":"string"},"secondApprover":{"type":["null","string"]},"secondApproverId":{"type":["integer","null"]},"secondRemark":{"type":["null","string"]},"secondTime":{"type":["null","string"]},"telephone":{"type":"string"},"userId":{"type":["null","integer"]}},"required":["channel","createTime","firstApprover","firstApproverId","firstRemark","firstTime","groupName","id","osType","parentProxyAccount","parentProxyId","proxyAccount","proxyChannelId","proxyGroupId","proxyManageStatus","proxyName","registerDomain","registerIp","secondApprover","secondApproverId","secondRemark","secondTime","telephone","userId"]}},"size":{"type":"integer"},"total":{"type":"integer"}},"required":["current","pages","records","size","total"]}},"required":["data"]},
+        "schema":{"type":"object","properties":{"data":{"type":"object","properties":{"current":{"type":"integer"},"pages":{"type":"integer"},"records":{"type":"array","items":{"type":"object","properties":{"channel":{"type":["null","string"]},"createTime":{"type":"string"},"firstApprover":{"type":["string","null"]},"firstApproverId":{"type":["integer","null"]},"firstRemark":{"type":["string","null"]},"firstTime":{"type":["string","null"]},"groupName":{"type":["null","string"]},"id":{"type":"integer"},"osType":{"type":"integer"},"parentProxyAccount":{"type":"string"},"parentProxyId":{"type":"integer"},"proxyAccount":{"type":"string"},"proxyChannelId":{"type":["integer","null"]},"proxyGroupId":{"type":["integer","null"]},"proxyManageStatus":{"type":"integer"},"proxyName":{"type":["null","string"]},"registerDomain":{"type":["null","string"]},"registerIp":{"type":"string"},"secondApprover":{"type":["null","string"]},"secondApproverId":{"type":["integer","null"]},"secondRemark":{"type":["null","string"]},"secondTime":{"type":["null","string"]},"telephone":{"type":"string"},"userId":{"type":["null","integer"]}},"required":["channel","createTime","firstApprover","firstApproverId","firstRemark","firstTime","groupName","id","osType","parentProxyAccount","parentProxyId","proxyAccount","proxyChannelId","proxyGroupId","proxyManageStatus","proxyName","registerDomain","registerIp","secondApprover","secondApproverId","secondRemark","secondTime","telephone","userId"]}},"size":{"type":"integer"},"total":{"type":"integer"}},"required":["current","pages","records","size","total"]}},"required":["data"]},
         "json":{},
         "params": {"registerStartTime":"2023-01-01T00:00:00Z","registerEndTime":"2024-01-01T00:00:00Z"},
         "test_item" : [
