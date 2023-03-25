@@ -1,6 +1,6 @@
 import pytest
 import allure
-from utils.data_utils import TestDataReader
+from utils.data_utils import TestDataReader, ResponseVerification
 from utils.api_utils import API_Controller
 from pylib.platform.config import Avatar
 
@@ -29,9 +29,7 @@ def test_add_config_avatar(test, get_platform_token):
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                             test['params'], token=get_platform_token)
-
-    assert resp.status_code == test['code_status'], resp.text
-    assert test['keyword'] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("基本配置")
@@ -45,9 +43,7 @@ def test_edit_config_avatar(test, get_platform_token):
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                             test['params'], token=get_platform_token)
-
-    assert resp.status_code == test['code_status'], resp.text
-    assert test['keyword'] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("基本配置")
@@ -62,9 +58,7 @@ def test_delete_config_avatar(test, get_platform_token):
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                             test['params'], token=get_platform_token)
-
-    assert resp.status_code == test['code_status'], resp.text
-    assert test['keyword'] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("基本配置")
@@ -76,9 +70,7 @@ def test_get_config_avatars(test, get_platform_token):
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                             json_replace, token=get_platform_token)
-
-    assert resp.status_code == test['code_status'], resp.text
-    assert test['keyword'] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("基本配置")
@@ -93,9 +85,7 @@ def test_get_config_avatar_one(test, get_platform_token):
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                             test['params'], token=get_platform_token)
-
-    assert resp.status_code == test['code_status'], resp.text
-    assert test['keyword'] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("檔案上傳")
@@ -112,8 +102,7 @@ def test_file_image_upload(test, get_platform_token):
     api.request_session.headers.update({"Content-Type": None})
     resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                             test['params'], token=get_platform_token, files=files)
-    assert resp.status_code == test['code_status'], resp.text
-    assert test['keyword'] in resp.text
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("檔案上傳")
@@ -128,6 +117,17 @@ def test_file_video_upload(test, get_platform_token):
                            open('resources/upload_file/upload_video_realshort.mp4', 'rb'), 'application/octet-stream'))]
     api = API_Controller()
     api.request_session.headers.update({"Content-Type": None})
-    resp = api.send_request(test['req_method'], test['req_url'], test['json'], test['params'], token=get_platform_token, files=files)
-    assert resp.status_code == test['code_status'], resp.text
-    assert test['keyword'] in resp.text
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'], test['params'],
+                            token=get_platform_token, files=files)
+    ResponseVerification.basic_assert(resp, test)
+
+
+@allure.feature("幣別管理")
+@allure.story("站點幣別查詢")
+@allure.title("{test[scenario]}")
+@pytest.mark.parametrize("test", test_data.get_case('get_platform_currency'))
+def test_get_platform_currency(test, get_platform_token):
+    api = API_Controller()
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
+    ResponseVerification.basic_assert(resp, test)
