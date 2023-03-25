@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from ..client_side.webApiBase import WebAPI  # 執行RF時使用
+from pylib.client_side.webApiBase import WebAPI
 from utils.data_utils import EnvReader
 
 env = EnvReader()
@@ -7,10 +7,10 @@ web_host = env.WEB_HOST
 
 
 class Game(WebAPI):
-
+    # 遊戲列表
     def get_game_list(self, web_token=None,
                       ignoreGameIds=[], os_type="WEB"  # (WEB/H5/ANDROID/IOS)
-                      ):  # 遊戲列表
+                      ):
         if web_token is not None:
             self.request_session.headers.update({"token": str(web_token)})
         response = self.request_session.get(web_host+"/v1/game/list",
