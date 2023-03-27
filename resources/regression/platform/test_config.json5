@@ -98,7 +98,7 @@
         "schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"code": {"type": "string"}, "name": {"type": "string"}, "currencyType": {"type": "string"}, "icon": {"type": "string"}, "cnyExchangeRate": {"type": "number"}, "lastModifiedTime": {"type": "string"}}, "required": ["cnyExchangeRate", "code", "currencyType", "icon", "lastModifiedTime", "name"]}}}, "required": ["data"]},
         "json" : {},
         "test_item": [
-            {"scenario":"普通查詢","files": "","target":{},"params": {},"code_status": 200,"keyword": "data"}
+            {"scenario":"普通查詢","params": {},"code_status": 200,"keyword": "data"}
         ]
     }
 ]
