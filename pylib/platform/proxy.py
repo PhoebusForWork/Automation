@@ -112,7 +112,7 @@ class ProxyChannel(PlatformAPI):
             response = self.send_request(**request_body)
             ret = jsonpath.jsonpath(response.json(), "$..id")
             # self.print_response(ret)
-            return ret[-1]
+        return ret[-1]
 
 
 class ProxyGroup(PlatformAPI):
