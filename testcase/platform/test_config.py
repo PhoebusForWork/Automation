@@ -125,6 +125,7 @@ def test_file_video_upload(test, get_platform_token):
 @allure.feature("幣別管理")
 @allure.story("站點幣別查詢")
 @allure.title("{test[scenario]}")
+@pytest.mark.regression
 @pytest.mark.parametrize("test", test_data.get_case('get_platform_currency'))
 def test_get_platform_currency(test, get_platform_token):
     api = API_Controller()
