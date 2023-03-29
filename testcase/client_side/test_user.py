@@ -4,7 +4,7 @@ import time
 from utils.data_utils import TestDataReader
 from utils.api_utils import API_Controller
 from pylib.client_side.user import Address
-from pylib.client_side.validation import validation
+from pylib.client_side.validation import Validation
 from pylib.client_side.user import Security
 from utils.generate_utils import Make
 
@@ -25,7 +25,7 @@ def clear_address(get_client_side_token):
 
 @pytest.fixture(scope="function")
 def re_password_default():
-    validation_api = validation()
+    validation_api = Validation()
     code = validation_api.valid_sms(device=18887827895, requestType=3)['data']
     validation_api.reset_pwd(username="CCuserpwd01", telephone=18887827895, newPwd="abc123456", code=code)
 
@@ -33,7 +33,7 @@ def re_password_default():
 @pytest.fixture(scope="class")
 def re_mobile_default():
 
-    sms_api = validation()
+    sms_api = Validation()
     resp_token = sms_api.login(username='changephone01').json()['data']['token']
     get_nm_code = sms_api.valid_sms(device='13847389803', requestType=6)
     get_om_code = sms_api.valid_sms(device='13947389803', requestType=5)
@@ -43,7 +43,7 @@ def re_mobile_default():
 
 @pytest.fixture(scope="class")
 def re_security_pwd_default():
-    validation_api = validation()
+    validation_api = Validation()
     resp = validation_api.login(username='changepwd01', password="abc12345")
     admin_token = resp.json()['data']['token']
     edit_api = Security(admin_token)
@@ -161,7 +161,7 @@ class TestUserDetail:
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", test_data.get_case('get_user_detail'))
     def test_get_user_detail(test, get_client_side_token):
-        validation_api = validation()
+        validation_api = Validation()
         resp = validation_api.login(username="charlie01")
         admin_token = resp.json()['data']['token']
         api = API_Controller(platform='cs')
@@ -176,7 +176,7 @@ class TestUserDetail:
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", test_data.get_case('put_user_detail'))
     def test_put_user_detail(test, get_client_side_token):
-        validation_api = validation()
+        validation_api = Validation()
         resp = validation_api.login(username="charlie01")
         admin_token = resp.json()['data']['token']
         json_replace = test_data.replace_json(test['json'], test['target'])
@@ -199,7 +199,7 @@ class TestUserOperation:
         make_mobile = Make()
         register_mobile = make_mobile.mobile()
         now = time.time()
-        api = validation()
+        api = Validation()
         resp = api.valid_sms(device=register_mobile, requestType=1)
         json_replace = test_data.replace_json(test['json'], test['target'])
 
@@ -226,7 +226,7 @@ class TestUserOperation:
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", test_data.get_case('user_logout'))
     def test_user_logout(test, get_client_side_token):
-        validation_api = validation()
+        validation_api = Validation()
         resp = validation_api.login(username='CCheartbeat01')
         admin_token = resp.json()['data']['token']
         api = API_Controller(platform='cs')
@@ -254,7 +254,7 @@ class TestUserOperation:
     def test_user_login_by_mobile(test):
         json_replace = test_data.replace_json(test['json'], test['target'])
         if test["scenario"] == "手機快捷登入":
-            api = validation()
+            api = Validation()
             code = api.valid_sms(device=json_replace['telephone'], requestType=2)
             json_replace["code"] = code['data']
         api = API_Controller(platform='cs')
@@ -272,7 +272,7 @@ class TestUserOperation:
         if test['scenario'] == '驗證碼錯誤':
             json_replace['code'] = '123456'
         else:
-            validation_api = validation()
+            validation_api = Validation()
             code = validation_api.valid_sms(device=json_replace['telephone'], requestType=3)
             json_replace['code'] = code['data']
         api = API_Controller(platform='cs')
@@ -324,7 +324,7 @@ class TestUserSecurityCenter:
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", test_data.get_case('user_security_email_binding'))
     def test_user_security_email_binding(test):
-        validation_api = validation()
+        validation_api = Validation()
         token_resp = validation_api.login(username='CCemail01')
         admin_token = token_resp.json()['data']['token']
         json_replace = test_data.replace_json(test['json'], test['target'])
@@ -343,7 +343,7 @@ class TestUserSecurityCenter:
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", test_data.get_case('user_security_email_unbind'))
     def test_user_security_email_unbind(test):
-        validation_api = validation()
+        validation_api = Validation()
         token_resp = validation_api.login(username='CCemail01')
         admin_token = token_resp.json()['data']['token']
         json_replace = test_data.replace_json(test['json'], test['target'])
@@ -362,7 +362,7 @@ class TestUserSecurityCenter:
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", test_data.get_case('user_security_mobile'))
     def test_user_security_mobile(test, re_mobile_default):
-        validation_api = validation()
+        validation_api = Validation()
         json_replace = test_data.replace_json(test['json'], test['target'])
         resp_token = validation_api.login(username='changephone01').json()['data']['token']
         if test['scenario'] == '正常更換手機號碼':
@@ -382,7 +382,7 @@ class TestUserSecurityCenter:
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", test_data.get_case('user_security_pwd'))
     def test_user_security_pwd(test, re_security_pwd_default):
-        validation_api = validation()
+        validation_api = Validation()
         resp = validation_api.login(username='changepwd01')
         admin_token = resp.json()['data']['token']
         json_replace = test_data.replace_json(test['json'], test['target'])
