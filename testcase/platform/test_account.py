@@ -506,6 +506,23 @@ def test_put_admin_currency(test, get_platform_token):
     ResponseVerification.basic_assert(resp, test)
 
 
+@allure.feature("帳號列表")
+@allure.story("查詢後台用戶登入日誌")
+@allure.title("{test[scenario]}")
+@pytest.mark.parametrize("test", test_data.get_case('get_login_log'))
+@pytest.mark.regression
+def test_get_login_log(test, get_platform_token):
+
+    params_replace = test_data.replace_json(test['params'], test['target'])
+    api = API_Controller()
+    resp = api.send_request(test['req_method'],
+                            test['req_url'],
+                            test['json'],
+                            params_replace,
+                            token=get_platform_token)
+    ResponseVerification.basic_assert(resp, test)
+
+
 @allure.feature("頁面結構")
 @allure.story("權限列表")
 @allure.title("{test[scenario]}")
