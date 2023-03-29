@@ -106,22 +106,6 @@ class TestUserTransfer:
 
     @staticmethod
     @allure.feature("客戶列表/資金往來")
-    @allure.story("後台一鍵收回")
-    @allure.title("{test[scenario]}")
-    # @pytest.mark.test
-    @pytest.mark.parametrize("test", test_data.get_case('user_withdraw_all'))
-    def test_user_withdraw_all(test, get_platform_token):
-
-        api = API_Controller()
-        resp = api.send_request(test['req_method'],
-                                test['req_url'],
-                                test['json'],
-                                test['params'],
-                                token=get_platform_token)
-        ResponseVerification.basic_assert(resp, test)
-
-    @staticmethod
-    @allure.feature("客戶列表/資金往來")
     @allure.story("後台轉入指定渠道")
     @allure.title("{test[scenario]}")
     # @pytest.mark.test
@@ -132,6 +116,22 @@ class TestUserTransfer:
         resp = api.send_request(test['req_method'],
                                 test['req_url'],
                                 json_replace,
+                                test['params'],
+                                token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("客戶列表/資金往來")
+    @allure.story("後台一鍵收回")
+    @allure.title("{test[scenario]}")
+    # @pytest.mark.test
+    @pytest.mark.parametrize("test", test_data.get_case('user_withdraw_all'))
+    def test_user_withdraw_all(test, get_platform_token):
+
+        api = API_Controller()
+        resp = api.send_request(test['req_method'],
+                                test['req_url'],
+                                test['json'],
                                 test['params'],
                                 token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)

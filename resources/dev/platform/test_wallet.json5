@@ -138,12 +138,12 @@
         "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
         "test_item": [
             {"req_url": "/v1/wallet/game/transfer/user/99999/withdraw/all","scenario":"不存在的userId","json": {},"params": {},"code_status": 400,"keyword": "该用户不存在"},
-            {"req_url": "/v1/wallet/game/transfer/user/35/withdraw/all","scenario":"存在的userId","json": {},"params": {"currency":null},"code_status": 200,"keyword": "data"},
-            {"req_url": "/v1/wallet/game/transfer/user/35/withdraw/all","scenario":"[currency]CNY","json": {},"params": {"currency":"CNY"},"code_status": 200,"keyword": "data"},
-            {"req_url": "/v1/wallet/game/transfer/user/35/withdraw/all","scenario":"[currency]USD","json": {},"params": {"currency":"USD"},"code_status": 200,"keyword": "data"},
-            {"req_url": "/v1/wallet/game/transfer/user/35/withdraw/all","scenario":"[currency]USDT_TRC20","json": {},"params": {"currency":"USDT_TRC20"},"code_status": 200,"keyword": "data"},
-            {"req_url": "/v1/wallet/game/transfer/user/35/withdraw/all","scenario":"[currency]USDT_ERC20","json": {},"params": {"currency":"USDT_ERC20"},"code_status": 200,"keyword": "data"},
-            {"req_url": "/v1/wallet/game/transfer/user/35/withdraw/all","scenario":"[currency]不存在","json": {},"params": {"currency":"ABC"},"code_status": 400,"keyword": "data"},
+            {"req_url": "/v1/wallet/game/transfer/user/266/withdraw/all","scenario":"存在的userId","json": {},"params": {"currency":null},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/wallet/game/transfer/user/266/withdraw/all","scenario":"[currency]USD","json": {},"params": {"currency":"USD"},"code_status": 200,"keyword": "data"},
+            // 目前尚無泰達幣
+            // {"req_url": "/v1/wallet/game/transfer/user/266/withdraw/all","scenario":"[currency]USDT_TRC20","json": {},"params": {"currency":"USDT_TRC20"},"code_status": 200,"keyword": "data"},
+            // {"req_url": "/v1/wallet/game/transfer/user/266/withdraw/all","scenario":"[currency]USDT_ERC20","json": {},"params": {"currency":"USDT_ERC20"},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/wallet/game/transfer/user/266/withdraw/all","scenario":"[currency]不存在","json": {},"params": {"currency":"ABC"},"code_status": 400,"keyword": "Unsupported Currency"},
             ]
     },
     {
