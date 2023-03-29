@@ -72,7 +72,7 @@ class AccountAdmin(PlatformAPI):
 
         request_body = {
             "method": "get",
-            "url": f"/v1/account/admin/{format(adminId)}",
+            "url": f"/v1/account/admin/{str(adminId)}",
             "params": {"adminId": adminId}
         }
 
@@ -91,17 +91,8 @@ class AccountAdmin(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/account/admin/{format(adminId)}",
-            "json": {
-                "phone": phone,
-                "sipNum": sipNum,
-                "fixSipNum": fixSipNum,
-                "isLeader": isLeader,
-                "deptId": deptId,
-                "roleIds": roleIds,
-                "expiredTime": expiredTime
-            },
-            "params": {"adminId": adminId}
+            "url": f"/v1/account/admin/{str(adminId)}",
+            "json": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
@@ -114,7 +105,7 @@ class AccountAdmin(PlatformAPI):
 
         request_body = {
             "method": "delete",
-            "url": f"/v1/account/admin/{format(adminId)}",
+            "url": f"/v1/account/admin/{str(adminId)}",
             "params": {"adminId": adminId}
         }
 
@@ -128,8 +119,8 @@ class AccountAdmin(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/account/admin/{format(adminId)}/status",
-            "params": {"adminId": adminId, "status": status}
+            "url": f"/v1/account/admin/{str(adminId)}/status",
+            "params": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
@@ -144,7 +135,7 @@ class AccountAdmin(PlatformAPI):
         request_body = {
             "method": "put",
             "url": "/v1/account/admin/password",
-            "json": {"oldPassword": oldPassword, "newPassword": newPassword}
+            "json": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
@@ -158,7 +149,7 @@ class AccountAdmin(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/account/admin/{format(adminId)}/resetPassword",
+            "url": f"/v1/account/admin/{str(adminId)}/resetPassword",
             "params": {"adminId": adminId}
         }
 
@@ -272,7 +263,7 @@ class AccountDept(PlatformAPI):
         request_body = {
             "method": "post",
             "url": "/v1/account/dept",
-            "json": {"department": department, "pid": pid}
+            "json": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
@@ -285,7 +276,7 @@ class AccountDept(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/account/dept/{format(departmentId)}",
+            "url": f"/v1/account/dept/{str(departmentId)}",
             "json": {"department": department},
             "params": {"departmentId": departmentId}
         }
@@ -300,7 +291,7 @@ class AccountDept(PlatformAPI):
 
         request_body = {
             "method": "delete",
-            "url": f"/v1/account/dept/{format(departmentId)}",
+            "url": f"/v1/account/dept/{str(departmentId)}",
             "params": {"departmentId": departmentId}
         }
 
@@ -329,7 +320,7 @@ class AccountDept(PlatformAPI):
         request_body = {
             "method": "put",
             "url": "/v1/account/dept/admin",
-            "json": {"adminIdList": adminIdList, "departmentId": departmentId}
+            "json": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
@@ -394,13 +385,8 @@ class AccountRole(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/account/role/{format(role_id)}",
-            "json": {
-                "role": role,
-                "remark": remark,
-                "authorityIds": authorityIds,
-                "departmentIds": departmentIds,
-            }
+            "url": f"/v1/account/role/{str(role_id)}",
+            "json": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
@@ -413,7 +399,7 @@ class AccountRole(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/account/role/{format(role_id)}/status",
+            "url": f"/v1/account/role/{str(role_id)}/status",
             "json": {"status": status}
         }
 
@@ -427,7 +413,7 @@ class AccountRole(PlatformAPI):
 
         request_body = {
             "method": "get",
-            "url": f"/v1/account/role/{format(roleId)}/authorities",
+            "url": f"/v1/account/role/{str(roleId)}/authorities",
             "params": {"roleId": roleId}
         }
 

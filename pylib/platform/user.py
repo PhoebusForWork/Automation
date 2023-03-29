@@ -47,7 +47,7 @@ class User(PlatformAPI):
 
         request_body = {
             "method": "get",
-            "url": f"/v1/user/{format(userId)}"
+            "url": f"/v1/user/{str(userId)}"
         }
 
         response = self.send_request(**request_body)
@@ -60,7 +60,7 @@ class User(PlatformAPI):
 
         request_body = {
             "method": "get",
-            "url": f"/v1/user/{format(userId)}/account"
+            "url": f"/v1/user/{str(userId)}/account"
         }
 
         response = self.send_request(**request_body)
@@ -73,7 +73,7 @@ class User(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/user/{format(userId)}/remark",
+            "url": f"/v1/user/{str(userId)}/remark",
             "json": {"remark": remark}
         }
 
@@ -87,7 +87,7 @@ class User(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/user/{format(userId)}/reallyName",
+            "url": f"/v1/user/{str(userId)}/reallyName",
             "json": {"reallyName": reallyName}
         }
 
@@ -101,7 +101,7 @@ class User(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/user/{format(userId)}/isWhiteList",
+            "url": f"/v1/user/{str(userId)}/isWhiteList",
             "params": {"isWhiteList": isWhiteList}
         }
 
@@ -166,7 +166,7 @@ class User(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/userVip/{format(userId)}",
+            "url": f"/v1/userVip/{str(userId)}",
             "params": {"userId": userId, "vipId": vipId}
         }
 
@@ -194,11 +194,8 @@ class User(PlatformAPI):
 
         request_body = {
             "method": "get",
-            "url": f"/v1/user/{format(userId)}/risk/analysis/same/ip",
-            "params": {
-                "page": page,
-                "size": size
-            }
+            "url": f"/v1/user/{str(userId)}/risk/analysis/same/ip",
+            "params": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
@@ -214,16 +211,8 @@ class User(PlatformAPI):
 
         request_body = {
             "method": "get",
-            "url": f"/v1/user/{format(id)}/risk/analysis/arbitrage",
-            "params": {
-                "from": From,
-                "to": to,
-                "username": username,
-                "userType": userType,
-                "reallyName": reallyName,
-                "page": page,
-                "size": size
-            }
+            "url": f"/v1/user/{str(id)}/risk/analysis/arbitrage",
+            "params": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
@@ -239,16 +228,8 @@ class User(PlatformAPI):
 
         request_body = {
             "method": "get",
-            "url": f"/v1/user/{format(id)}/login/info",
-            "params": {
-                "from": From,
-                "to": to,
-                "type": type,
-                "keyword": keyword,
-                "osType": osType,
-                "page": page,
-                "size": size
-            }
+            "url": f"/v1/user/{str(id)}/login/info",
+            "params": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
@@ -261,7 +242,7 @@ class User(PlatformAPI):
 
         request_body = {
             "method": "get",
-            "url": f"/v1/user/login/stat/{format(userId)}"
+            "url": f"/v1/user/login/stat/{str(userId)}"
         }
 
         response = self.send_request(**request_body)
@@ -317,15 +298,8 @@ class UserManage(PlatformAPI):
 
         request_body = {
             "method": "get",
-            "url": f"/v1/user/manage/log/{format(userId)}",
-            "params": {
-                "from": From,
-                "to": to,
-                "optType": optType,
-                "creator": creator,
-                "page": page,
-                "size": size
-            }
+            "url": f"/v1/user/manage/log/{str(userId)}",
+            "params": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
@@ -338,11 +312,8 @@ class UserManage(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/user/manage/{format(id)}/first/approval",
-            "json": {
-                "status": status,
-                "remark": remark
-            }
+            "url": f"/v1/user/manage/{str(id)}/first/approval",
+            "json": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
@@ -355,11 +326,8 @@ class UserManage(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/user/manage/{format(id)}/second/approval",
-            "json": {
-                "status": status,
-                "remark": remark
-            }
+            "url": f"/v1/user/manage/{str(id)}/second/approval",
+            "json": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
@@ -454,22 +422,8 @@ class UserVip(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/user/vip/config/{format(vipId)}",
-            "json": {
-                "name": name,
-                "regStartTime": regStartTime,
-                "regEndTime": regEndTime,
-                "rechargeTotal": rechargeTotal,
-                "betTotal": betTotal,
-                "levelGift": levelGift,
-                "birthdayGift": birthdayGift,
-                "festivalGift": festivalGift,
-                "redEnvelop": redEnvelop,
-                "limitBet": limitBet,
-                "limitRecharge": limitRecharge,
-                "isVip": isVip,
-                "remark": remark
-            }
+            "url": f"/v1/user/vip/config/{str(vipId)}",
+            "json": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
@@ -482,11 +436,8 @@ class UserVip(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/user/vip/config/{format(vipId)}/isVip",
-            "params": {
-                "vipId": vipId,
-                "isVip": isVip
-            }
+            "url": f"/v1/user/vip/config/{str(vipId)}/isVip",
+            "params": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from pylib.platform.platApiBase import PlatformAPI
+from utils.api_utils import KeywordArgument
 from utils.data_utils import EnvReader
 import jsonpath
 
@@ -64,7 +65,7 @@ class Avatar(PlatformAPI):
         request_body = {
             "method": "put",
             "url": "/v1/config/avatar",
-            "json": {"id": id, "title": title, "url": url}
+            "json": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
@@ -77,7 +78,7 @@ class Avatar(PlatformAPI):
 
         request_body = {
             "method": "delete",
-            "url": f"/v1/config/avatar/{format(id)}"
+            "url": f"/v1/config/avatar/{str(id)}"
         }
 
         response = self.send_request(**request_body)
@@ -90,7 +91,7 @@ class Avatar(PlatformAPI):
 
         request_body = {
             "method": "get",
-            "url": f"/v1/config/avatar/{format(id)}"
+            "url": f"/v1/config/avatar/{str(id)}"
         }
 
         response = self.send_request(**request_body)

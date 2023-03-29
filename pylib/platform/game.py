@@ -59,7 +59,7 @@ class Game(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/game/{format(game_code)}/status",
+            "url": f"/v1/game/{str(game_code)}/status",
             "params": {"status": status}
         }
 
@@ -73,7 +73,7 @@ class Game(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/game/{format(game_code)}/isTesting",
+            "url": f"/v1/game/{str(game_code)}/isTesting",
             "params": {"isTesting": isTesting}
         }
 
@@ -87,7 +87,7 @@ class Game(PlatformAPI):
 
         request_body = {
             "method": "post",
-            "url": f"/v1/game/sync/{format(game_code)}"
+            "url": f"/v1/game/sync/{str(game_code)}"
         }
 
         response = self.send_request(**request_body)
@@ -205,7 +205,7 @@ class RebateTemplate(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/rebate/template/{format(templateId)}/config",
+            "url": f"/v1/rebate/template/{str(templateId)}/config",
             "json": {"templateName": templateName, "gameType": gameType, "rebateConfig": [{"betAmount": betAmount, "vipLevelRebateConfig": [{"vipId": vipId, "vipName": vipName, "rebateRatio": rebateRatio}]}]}
         }
 
@@ -219,7 +219,7 @@ class RebateTemplate(PlatformAPI):
 
         request_body = {
             "method": "delete",
-            "url": f"/v1/rebate/template/{format(template_id)}/config"
+            "url": f"/v1/rebate/template/{str(template_id)}/config"
         }
 
         response = self.send_request(**request_body)
@@ -259,7 +259,7 @@ class GameRebate(PlatformAPI):
 
         request_body = {
             "method": "get",
-            "url": f"/v1/game/rebate/{format(game_type)}/config"
+            "url": f"/v1/game/rebate/{str(game_type)}/config"
         }
 
         response = self.send_request(**request_body)

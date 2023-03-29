@@ -34,7 +34,7 @@ class ProxyChannel(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/proxy/channel/{format(channelId)}",
+            "url": f"/v1/proxy/channel/{str(channelId)}",
             "json": {"channel": channel}
         }
 
@@ -48,7 +48,7 @@ class ProxyChannel(PlatformAPI):
 
         request_body = {
             "method": "delete",
-            "url": f"/v1/proxy/channel/{format(channelId)}"
+            "url": f"/v1/proxy/channel/{str(channelId)}"
         }
 
         response = self.send_request(**request_body)
@@ -137,7 +137,7 @@ class ProxyGroup(PlatformAPI):
             
         request_body = {
             "method": "put",
-            "url": f"/v1/proxy/group/{format(groupId)}",
+            "url": f"/v1/proxy/group/{str(groupId)}",
             "json": KeywordArgument.body_data()
         }
         
@@ -151,7 +151,7 @@ class ProxyGroup(PlatformAPI):
 
         request_body = {
             "method": "delete",
-            "url": f"/v1/proxy/group/{format(groupId)}"
+            "url": f"/v1/proxy/group/{str(groupId)}"
         }
 
         response = self.send_request(**request_body)
@@ -210,7 +210,7 @@ class ProxyCommissionTemplate(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/proxy/commission/template/{format(id)}",
+            "url": f"/v1/proxy/commission/template/{str(id)}",
             "json": {"name": name, "isEnabled": isEnabled, "isNeedToVerify": isNeedToVerify}
         }
 
@@ -250,7 +250,7 @@ class ProxyCommissionTemplate(PlatformAPI):
 
         request_body = {
             "method": "get",
-            "url": f"/v1/proxy/commission/template/{id}/subCommissionConfig"
+            "url": f"/v1/proxy/commission/template/{str(id)}/subCommissionConfig"
         }
 
         response = self.send_request(**request_body)
@@ -264,10 +264,7 @@ class ProxyCommissionTemplate(PlatformAPI):
         request_body = {
             "method": "put",
             "url": f"/v1/proxy/commission/template/{id}/subCommissionConfig",
-            "json": {
-                "subCommissionConfigList": subCommissionConfigList,
-                "subSubCommissionConfigList": subSubCommissionConfigList
-            }
+            "json": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
@@ -280,7 +277,7 @@ class ProxyCommissionTemplate(PlatformAPI):
 
         request_body = {
             "method": "get",
-            "url": f"/v1/proxy/commission/template/{id}/settlementShares"
+            "url": f"/v1/proxy/commission/template/{str(id)}/settlementShares"
         }
 
         response = self.send_request(**request_body)
@@ -296,15 +293,8 @@ class ProxyCommissionTemplate(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/proxy/commission/template/{id}/settlementShares",
-            "json": {
-                "activity": activity,
-                "activityLimit": activityLimit,
-                "rebate": rebate,
-                "rebateLimit": rebateLimit,
-                "bet": bet,
-                "betCount": betCount
-            }
+            "url": f"/v1/proxy/commission/template/{str(id)}/settlementShares",
+            "json": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
@@ -317,7 +307,7 @@ class ProxyCommissionTemplate(PlatformAPI):
 
         request_body = {
             "method": "get",
-            "url": f"/v1/proxy/commission/template/{id}/platformFeeShares"
+            "url": f"/v1/proxy/commission/template/{str(id)}/platformFeeShares"
         }
 
         response = self.send_request(**request_body)
@@ -344,7 +334,7 @@ class ProxyCommissionTemplate(PlatformAPI):
         #    ]
         request_body = {
             "method": "put",
-            "url": f"/v1/proxy/commission/template/{id}/platformFeeShares",
+            "url": f"/v1/proxy/commission/template/{str(id)}/platformFeeShares",
             "json": data,
             "params": {"currency": "USD"},
         }
@@ -359,7 +349,7 @@ class ProxyCommissionTemplate(PlatformAPI):
 
         request_body = {
             "method": "get",
-            "url": f"/v1/proxy/commission/template/{id}/commissionConfig"
+            "url": f"/v1/proxy/commission/template/{str(id)}/commissionConfig"
         }
 
         response = self.send_request(**request_body)
@@ -385,7 +375,7 @@ class ProxyCommissionTemplate(PlatformAPI):
         #    ]
         request_body = {
             "method": "put",
-            "url": f"/v1/proxy/commission/template/{id}/commissionConditions",
+            "url": f"/v1/proxy/commission/template/{str(id)}/commissionConditions",
             "json": json
         }
         
@@ -455,7 +445,7 @@ class Proxy(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/proxy/{format(proxyId)}/subCount",
+            "url": f"/v1/proxy/{str(proxyId)}/subCount",
             "json": {"subCount": subCount}
         }
 
@@ -469,7 +459,7 @@ class Proxy(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/proxy/{format(proxyId)}/commission",
+            "url": f"/v1/proxy/{str(proxyId)}/commission",
             "json": {"commissionId": commissionId}
         }
 
@@ -483,7 +473,7 @@ class Proxy(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/proxy/{format(proxyId)}/channel",
+            "url": f"/v1/proxy/{str(proxyId)}/channel",
             "json": {"channelId": channelId}
         }
 
@@ -497,7 +487,7 @@ class Proxy(PlatformAPI):
 
         request_body = {
             "method": "get",
-            "url": f"/v1/proxy/{format(userId)}/detail/edit"
+            "url": f"/v1/proxy/{str(userId)}/detail/edit"
         }
 
         response = self.send_request(**request_body)
@@ -510,7 +500,7 @@ class Proxy(PlatformAPI):
 
         request_body = {
             "method": "get",
-            "url": f"/v1/proxy/{format(userId)}/detail/display"
+            "url": f"/v1/proxy/{str(userId)}/detail/display"
         }
 
         response = self.send_request(**request_body)
@@ -523,7 +513,7 @@ class Proxy(PlatformAPI):
 
         request_body = {
             "method": "get",
-            "url": f"/v1/proxy/{format(proxyId)}/commission/avg"
+            "url": f"/v1/proxy/{str(proxyId)}/commission/avg"
         }
 
         response = self.send_request(**request_body)
@@ -605,11 +595,8 @@ class ProxyManage(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/proxy/user/manage/{format(id)}/first/approval",
-            "json": {
-                "isApprove": isApprove,
-                "remark": remark,
-            }
+            "url": f"/v1/proxy/user/manage/{str(id)}/first/approval",
+            "json": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
@@ -622,11 +609,8 @@ class ProxyManage(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/proxy/user/manage/{format(id)}/second/approval",
-            "json": {
-                "isApprove": isApprove,
-                "remark": remark,
-            }
+            "url": f"/v1/proxy/user/manage/{str(id)}/second/approval",
+            "json": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
@@ -651,7 +635,7 @@ class ProxyManage(PlatformAPI):
     def get_first_approval_id(self, token=None):
         jsdata = self.get_manage_list(plat_token=token, proxyManageStatus=0)
         ret = jsonpath.jsonpath(jsdata, "$..id")
-        if ret == False:
+        if ret is False:
             add = Proxy()
             add.add_proxy(plat_token=token, proxyAccount="AutoTestProxy"+str(random.randrange(99999)),
                           password="abc123456", telephone=str(random.randrange(10000000000, 19999999999)), commissionId=1)
@@ -846,11 +830,8 @@ class ProxyCommission(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/proxy/commission/{detailId}/firstApprove",
-            "json": {
-                "remark": remark,
-                "isPass": isPass
-            }
+            "url": f"/v1/proxy/commission/{str(detailId)}/firstApprove",
+            "json": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
@@ -863,11 +844,8 @@ class ProxyCommission(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/proxy/commission/{detailId}/secondApprove",
-            "json": {
-                "remark": remark,
-                "isPass": isPass
-            }
+            "url": f"/v1/proxy/commission/{str(detailId)}/secondApprove",
+            "json": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
