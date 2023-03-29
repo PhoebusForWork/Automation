@@ -16,7 +16,7 @@
     {
         "test_case": "edit_config_avatar",
         "req_method": "put",
-        "json" : {"title":"autoTest","url":"autoTest","id":2},
+        "json" : {"title":"autoTest","url":"autoTest","id":1},
         "req_url": "/v1/config/avatar",
         "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "test_item": [
