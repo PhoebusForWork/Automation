@@ -78,7 +78,7 @@ class Avatar(PlatformAPI):
 
         request_body = {
             "method": "delete",
-            "url": f"/v1/config/avatar/{str(id)}"
+            "url": f"/v1/config/avatar/{id}"
         }
 
         response = self.send_request(**request_body)
@@ -91,7 +91,7 @@ class Avatar(PlatformAPI):
 
         request_body = {
             "method": "get",
-            "url": f"/v1/config/avatar/{str(id)}"
+            "url": f"/v1/config/avatar/{id}"
         }
 
         response = self.send_request(**request_body)

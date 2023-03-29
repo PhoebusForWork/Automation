@@ -72,7 +72,7 @@ class AccountAdmin(PlatformAPI):
 
         request_body = {
             "method": "get",
-            "url": f"/v1/account/admin/{str(adminId)}",
+            "url": f"/v1/account/admin/{adminId}",
             "params": {"adminId": adminId}
         }
 
@@ -91,7 +91,7 @@ class AccountAdmin(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/account/admin/{str(adminId)}",
+            "url": f"/v1/account/admin/{adminId}",
             "json": KeywordArgument.body_data()
         }
 
@@ -105,7 +105,7 @@ class AccountAdmin(PlatformAPI):
 
         request_body = {
             "method": "delete",
-            "url": f"/v1/account/admin/{str(adminId)}",
+            "url": f"/v1/account/admin/{adminId}",
             "params": {"adminId": adminId}
         }
 
@@ -119,7 +119,7 @@ class AccountAdmin(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/account/admin/{str(adminId)}/status",
+            "url": f"/v1/account/admin/{adminId}/status",
             "params": KeywordArgument.body_data()
         }
 
@@ -149,7 +149,7 @@ class AccountAdmin(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/account/admin/{str(adminId)}/resetPassword",
+            "url": f"/v1/account/admin/{adminId}/resetPassword",
             "params": {"adminId": adminId}
         }
 
@@ -276,7 +276,7 @@ class AccountDept(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/account/dept/{str(departmentId)}",
+            "url": f"/v1/account/dept/{departmentId}",
             "json": {"department": department},
             "params": {"departmentId": departmentId}
         }
@@ -291,7 +291,7 @@ class AccountDept(PlatformAPI):
 
         request_body = {
             "method": "delete",
-            "url": f"/v1/account/dept/{str(departmentId)}",
+            "url": f"/v1/account/dept/{departmentId}",
             "params": {"departmentId": departmentId}
         }
 
@@ -385,7 +385,7 @@ class AccountRole(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/account/role/{str(role_id)}",
+            "url": f"/v1/account/role/{role_id}",
             "json": KeywordArgument.body_data()
         }
 
@@ -399,7 +399,7 @@ class AccountRole(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/account/role/{str(role_id)}/status",
+            "url": f"/v1/account/role/{role_id}/status",
             "json": {"status": status}
         }
 
@@ -413,7 +413,7 @@ class AccountRole(PlatformAPI):
 
         request_body = {
             "method": "get",
-            "url": f"/v1/account/role/{str(roleId)}/authorities",
+            "url": f"/v1/account/role/{roleId}/authorities",
             "params": {"roleId": roleId}
         }
 

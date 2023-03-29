@@ -126,7 +126,7 @@ class WalletUser(PlatformAPI):
 
         request_body = {
             "method": "get",
-            "url": f"/v1/wallet/user/{str(userId)}/wallets"
+            "url": f"/v1/wallet/user/{userId}/wallets"
         }
 
         response = self.send_request(**request_body)
@@ -144,7 +144,7 @@ class WalletUser(PlatformAPI):
 
         request_body = {
             "method": "get",
-            "url": f"/v1/wallet/user/{str(userId)}/trade/info",
+            "url": f"/v1/wallet/user/{userId}/trade/info",
             "params": KeywordArgument.body_data()
         }
 
@@ -158,7 +158,7 @@ class WalletUser(PlatformAPI):
 
         request_body = {
             "method": "get",
-            "url": f"/v1/wallet/user/{str(userId)}/fund",
+            "url": f"/v1/wallet/user/{userId}/fund",
             "params": KeywordArgument.body_data()
         }
 
@@ -174,7 +174,7 @@ class WalletGameTransfer(PlatformAPI):
 
         request_body = {
             "method": "put",
-            "url": f"/v1/wallet/game/transfer/user/{str(userId)}/update/balance/all"
+            "url": f"/v1/wallet/game/transfer/user/{userId}/update/balance/all"
         }
 
         response = self.send_request(**request_body)
@@ -187,7 +187,7 @@ class WalletGameTransfer(PlatformAPI):
 
         request_body = {
             "method": "post",
-            "url": f"/v1/wallet/game/transfer/user/{str(userId)}/withdraw/all",
+            "url": f"/v1/wallet/game/transfer/user/{userId}/withdraw/all",
         }
 
         response = self.send_request(**request_body)
@@ -200,7 +200,7 @@ class WalletGameTransfer(PlatformAPI):
 
         request_body = {
             "method": "post",
-            "url": f"/v1/wallet/game/transfer/user/{str(userId)}/deposit",
+            "url": f"/v1/wallet/game/transfer/user/{userId}/deposit",
             "json": KeywordArgument.body_data()
         }
 
@@ -294,7 +294,7 @@ class WalletGameTransferFailed(PlatformAPI):
 
         request_body = {
             "method": "post",
-            "url": f"/v1/wallet/game/transfer/failed/tradeId/{str(tradeId)}/manual/result",
+            "url": f"/v1/wallet/game/transfer/failed/tradeId/{tradeId}/manual/result",
             "json": KeywordArgument.body_data()
         }
 

@@ -146,7 +146,7 @@ class Address(WebAPI):
     def get_user_address_one(self, id=1):
         request_body = {
             "method": "get",
-            "url": f"/v1/user/address/{str(id)}"
+            "url": f"/v1/user/address/{id}"
         }
 
         response = self.send_request(**request_body)
@@ -182,7 +182,7 @@ class Address(WebAPI):
     def delete_user_address(self, id=1):
         request_body = {
             "method": "delete",
-            "url": f"/v1/user/address/{str(id)}"
+            "url": f"/v1/user/address/{id}"
         }
 
         response = self.send_request(**request_body)
@@ -202,7 +202,7 @@ class Address(WebAPI):
     def get_city(self, provinceId=None):
         request_body = {
             "method": "get",
-            "url": f"/v1/user/address/province/{str(provinceId)}/city"
+            "url": f"/v1/user/address/province/{provinceId}/city"
         }
 
         response = self.send_request(**request_body)
