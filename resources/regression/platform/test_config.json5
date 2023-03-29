@@ -3,6 +3,7 @@
         "test_case": "add_config_avatar",
         "req_method": "post",
         "req_url": "/v1/config/avatar",
+        "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "json" : {"title":"autoTest","url":"autoTest"},
         "test_item": [
             {"scenario":"[title]不存在","target":{"title":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
@@ -15,8 +16,9 @@
     {
         "test_case": "edit_config_avatar",
         "req_method": "put",
-        "json" : {"title":"修改頭像1","url":"autoTest","id":4},
+        "json" : {"title":"autoTest","url":"autoTest","id":1},
         "req_url": "/v1/config/avatar",
+        "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "test_item": [
             {"scenario":"[id]不存在","target":{"id":9827394287424},"params": {},"code_status": 400,"keyword": "資料不存在"},
             {"scenario":"[title]不存在","target":{"title":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
@@ -29,6 +31,7 @@
     {
         "test_case": "delete_config_avatar",
         "req_method": "delete",
+        "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "json" : {},
         "test_item": [
             {"req_url": "/v1/config/avatar/9945385938","scenario":"[id]不存在","target":{"null":null},"params": {},"code_status": 400,"keyword": "資料不存在"},
@@ -38,28 +41,32 @@
     {
         "test_case": "get_config_avatars",
         "req_method": "get",
-        "params" : {"title":"頭像1"},
+        "params" : {"title":"autoTest"},
         "req_url": "/v1/config/avatars",
+        "schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "title": {"type": "string"}, "url": {"type": "string"}, "lastModifier": {"type": ["string", "null"]}, "lastModifiedTime": {"type": "string"}}, "required": ["id", "lastModifiedTime", "lastModifier", "title", "url"]}}}, "required": ["data"]},
         "test_item": [
-            {"scenario":"[title]null","target":{"title":null},"json": {},"code_status": 200,"keyword": "頭像1"}, //應查詢所有資料
-            {"scenario":"[title]存在標題","target":{"title":"頭像1"},"json": {},"code_status": 200,"keyword": "頭像1"},
+            {"scenario":"[title]null","target":{"title":null},"json": {},"code_status": 200,"keyword": "autoTest"}, //應查詢所有資料
+            {"scenario":"[title]存在標題","target":{"title":"autoTest"},"json": {},"code_status": 200,"keyword": "autoTest"},
             {"scenario":"[title]31字","target":{"title":"1234567890123456789012345678901"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[title]不存在","target":{"title":"unnone"},"json": {},"code_status": 200,"keyword": "[]"},
+            {"scenario":"[title]不存在","target":{"title":"unnone"},"json": {},"code_status": 200,"keyword": "[]"}
             ]
     },
     {
         "test_case": "get_config_avatar_one",
         "req_method": "get",
+        "schema": {"type": "object", "properties": {"data": {"type": "object", "properties": {"id": {"type": "integer"}, "title": {"type": "string"}, "url": {"type": "string"}, "lastModifier": {"type": ["string", "null"]}, "lastModifiedTime": {"type": "string"}}, "required": ["id", "lastModifiedTime", "lastModifier", "title", "url"]}}, "required": ["data"]},
+
         "json" : {},
         "test_item": [
             {"req_url": "/v1/config/avatar/9945385938","scenario":"[id]不存在","target":{"null":null},"params": {},"code_status": 400,"keyword": "資料不存在"},
-            {"req_url": "/v1/config/avatar/存在id","scenario":"正常移除","target":{"null":null},"params": {},"code_status": 200,"keyword": "待刪除頭像"},
+            {"req_url": "/v1/config/avatar/存在id","scenario":"正常移除","target":{"null":null},"params": {},"code_status": 200,"keyword": "待刪除頭像"}
             ]
     },
     {
         "test_case": "file_image_upload",
         "req_method": "post",
         "req_url": "/v1/file/image",
+        "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "json" : {},
         "test_item": [
             {"scenario":"[上傳圖片]imagePathType=1","files": "","target":{},"params": {"imagePathType": "1"},"code_status": 200,"keyword": "data"},
@@ -74,6 +81,7 @@
         "test_case": "file_video_upload",
         "req_method": "post",
         "req_url": "/v1/file/video",
+        "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "json" : {},
         "test_item": [
             {"scenario":"[上傳影片]videoPathType=1","files": "","target":{},"params": {"videoPathType": "1"},"code_status": 200,"keyword": "data"},
@@ -82,5 +90,15 @@
             {"scenario":"[videoPathType]字串","files": "","target":{},"params": {"videoPathType": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[videoPathType]null","files": "","target":{},"params": {"videoPathType": null},"code_status": 400,"keyword": "无效的请求参数"},
             ]
+    },
+    {
+        "test_case": "get_platform_currency",
+        "req_method": "get",
+        "req_url": "/v1/platform/currency",
+        "schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"code": {"type": "string"}, "name": {"type": "string"}, "currencyType": {"type": "string"}, "icon": {"type": "string"}, "cnyExchangeRate": {"type": "number"}, "lastModifiedTime": {"type": "string"}}, "required": ["cnyExchangeRate", "code", "currencyType", "icon", "lastModifiedTime", "name"]}}}, "required": ["data"]},
+        "json" : {},
+        "test_item": [
+            {"scenario":"普通查詢","params": {},"code_status": 200,"keyword": "data"}
+        ]
     }
 ]
