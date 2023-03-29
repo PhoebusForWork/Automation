@@ -16,7 +16,7 @@
     {
         "test_case": "edit_config_avatar",
         "req_method": "put",
-        "json" : {"title":"修改頭像1","url":"autoTest","id":4},
+        "json" : {"title":"autoTest","url":"autoTest","id":2},
         "req_url": "/v1/config/avatar",
         "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "test_item": [
@@ -41,12 +41,12 @@
     {
         "test_case": "get_config_avatars",
         "req_method": "get",
-        "params" : {"title":"頭像1"},
+        "params" : {"title":"autoTest"},
         "req_url": "/v1/config/avatars",
         "schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "title": {"type": "string"}, "url": {"type": "string"}, "lastModifier": {"type": ["string", "null"]}, "lastModifiedTime": {"type": "string"}}, "required": ["id", "lastModifiedTime", "lastModifier", "title", "url"]}}}, "required": ["data"]},
         "test_item": [
-            {"scenario":"[title]null","target":{"title":null},"json": {},"code_status": 200,"keyword": "頭像1"}, //應查詢所有資料
-            {"scenario":"[title]存在標題","target":{"title":"頭像1"},"json": {},"code_status": 200,"keyword": "頭像1"},
+            {"scenario":"[title]null","target":{"title":null},"json": {},"code_status": 200,"keyword": "autoTest"}, //應查詢所有資料
+            {"scenario":"[title]存在標題","target":{"title":"autoTest"},"json": {},"code_status": 200,"keyword": "autoTest"},
             {"scenario":"[title]31字","target":{"title":"1234567890123456789012345678901"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[title]不存在","target":{"title":"unnone"},"json": {},"code_status": 200,"keyword": "[]"}
             ]

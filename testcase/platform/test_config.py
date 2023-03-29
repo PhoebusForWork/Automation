@@ -21,6 +21,7 @@ test_data.read_json5('test_config.json5')
 @allure.feature("基本配置")
 @allure.story("新增頭像")
 @allure.title("{test[scenario]}")
+@pytest.mark.regression
 @pytest.mark.parametrize("test", test_data.get_case('add_config_avatar'))
 def test_add_config_avatar(test, get_platform_token):
 
@@ -35,6 +36,7 @@ def test_add_config_avatar(test, get_platform_token):
 @allure.feature("基本配置")
 @allure.story("編輯頭像")
 @allure.title("{test[scenario]}")
+@pytest.mark.regression
 @pytest.mark.parametrize("test", test_data.get_case('edit_config_avatar'))
 def test_edit_config_avatar(test, get_platform_token):
 
@@ -49,6 +51,7 @@ def test_edit_config_avatar(test, get_platform_token):
 @allure.feature("基本配置")
 @allure.story("刪除頭像")
 @allure.title("{test[scenario]}")
+@pytest.mark.regression
 @pytest.mark.parametrize("test", test_data.get_case('delete_config_avatar'))
 def test_delete_config_avatar(test, get_platform_token):
     if "存在id" in test['req_url']:
@@ -64,6 +67,7 @@ def test_delete_config_avatar(test, get_platform_token):
 @allure.feature("基本配置")
 @allure.story("依照條件進行查詢")
 @allure.title("{test[scenario]}")
+@pytest.mark.regression
 @pytest.mark.parametrize("test", test_data.get_case('get_config_avatars'))
 def test_get_config_avatars(test, get_platform_token):
     json_replace = test_data.replace_json(test['params'], test['target'])
@@ -76,6 +80,7 @@ def test_get_config_avatars(test, get_platform_token):
 @allure.feature("基本配置")
 @allure.story("依頭像id進行查詢")
 @allure.title("{test[scenario]}")
+@pytest.mark.regression
 @pytest.mark.parametrize("test", test_data.get_case('get_config_avatar_one'))
 def test_get_config_avatar_one(test, get_platform_token):
     if "存在id" in test['req_url']:
@@ -91,6 +96,7 @@ def test_get_config_avatar_one(test, get_platform_token):
 @allure.feature("檔案上傳")
 @allure.story("上傳圖片")
 @allure.title("{test[scenario]}")
+@pytest.mark.regression
 @pytest.mark.parametrize("test", test_data.get_case('file_image_upload'))
 def test_file_image_upload(test, get_platform_token):
     if test['files'] == 'null':
@@ -108,6 +114,7 @@ def test_file_image_upload(test, get_platform_token):
 @allure.feature("檔案上傳")
 @allure.story("上傳影片")
 @allure.title("{test[scenario]}")
+@pytest.mark.regression
 @pytest.mark.parametrize("test", test_data.get_case('file_video_upload'))
 def test_file_video_upload(test, get_platform_token):
     if test['files'] == 'null':
