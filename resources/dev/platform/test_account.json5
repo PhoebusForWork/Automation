@@ -424,6 +424,21 @@
     },
 
     {
+        "test_case": "get_login_log",
+        "req_method": "get",
+        "req_url": "/v1/account/admin/login/log",
+        "schema": {"type": "object", "properties": {"data": {"type": "object", "properties": {"total": {"type": "integer"}, "size": {"type": "integer"}, "current": {"type": "integer"}, "pages": {"type": "integer"}, "records": {"type": "array", "items": {"type": "object", "properties": {"account": {"type": "string"}, "ip": {"type": "string"}, "place": {"type": ["string", "null"]}, "url": {"type": "string"}, "osType": {"type": "integer"}, "loginTime": {"type": "string"}}, "required": ["account", "ip", "loginTime", "osType", "place", "url"]}}}, "required": ["current", "pages", "records", "size", "total"]}}, "required": ["data"]},
+        "json": {},
+        "params" : {"account": null,"page": null,"size": null},
+        "test_item": [
+            {"scenario":"[account]tester001","target": {"account":"tester001"},"code_status": 200,"keyword": "\"account\":\"tester001\""},
+            {"scenario":"[account]null","target": {"account":null},"code_status": 200,"keyword": "data"},
+            {"scenario":"[page]null","target": {"page":null},"code_status": 200,"keyword": "data"},
+            {"scenario":"[size]null","target": {"size":null},"code_status": 200,"keyword": "data"}
+        ]
+    },
+
+    {
         "test_case": "test_authority_permission",
         "req_method": "get",
         "req_url": "/v1/account/authority/permission",
