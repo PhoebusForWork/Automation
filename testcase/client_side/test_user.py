@@ -38,7 +38,7 @@ def re_mobile_default():
     get_nm_code = sms_api.valid_sms(device='13847389803', requestType=6)
     get_om_code = sms_api.valid_sms(device='13947389803', requestType=5)
     edit_api = Security(resp_token)
-    edit_api.editMobile(newMobile=13847389803, nmCode=get_nm_code['data'], omCode=get_om_code['data'])
+    edit_api.edit_mobile(newMobile=13847389803, nmCode=get_nm_code['data'], omCode=get_om_code['data'])
 
 
 @pytest.fixture(scope="class")
@@ -47,7 +47,7 @@ def re_security_pwd_default():
     resp = validation_api.login(username='changepwd01', password="abc12345")
     admin_token = resp.json()['data']['token']
     edit_api = Security(admin_token)
-    edit_api.editPwd(newPwd="abc123456", oldPwd="abc12345")
+    edit_api.edit_pwd(newPwd="abc123456", oldPwd="abc12345")
 
 ######################
 #      testCase      #

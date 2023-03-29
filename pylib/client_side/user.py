@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-import configparser
 import jsonpath
-import os
-from ..client_side.webApiBase import WebAPI  # 執行RF時使用
+from ..client_side.webApiBase import WebAPI
+from utils.api_utils import KeywordArgument
 from utils.generate_utils import Make
 from utils.data_utils import EnvReader
 
@@ -11,216 +10,206 @@ env = EnvReader()
 web_host = env.WEB_HOST
 
 
-class Detail(WebAPI):  # 客戶詳細資料
+# 客戶詳細資料
+class Detail(WebAPI):
+    # 獲取用戶明細資料
+    def get_detail(self):
+        request_body = {
+            "method": "get",
+            "url": "/v1/user/detail"
+        }
 
-    def getDetail(self):  # 獲取用戶明細資料
-        response = self.request_session.get(web_host+"/v1/user/detail",
-                               data={},
-                               params={}
-                               )
-        self.print_response(response)
+        response = self.send_request(**request_body)
         return response.json()
 
-    def editDetail(self, avatar=None, nickname=None, birthday=None, sex=None):  # 編輯用戶明細資料
-        response = self.request_session.put(web_host+"/v1/user/detail",
-                               json={
-                                        "avatar": avatar,
-                                        "nickname": nickname,
-                                        "birthday": birthday,
-                                        "sex": sex
-                               },
-                               params={}
-                               )
-        self.print_response(response)
-        return response.json()
+    # 編輯用戶明細資料
+    def edit_detail(self, avatar=None, nickname=None, birthday=None, sex=None):
+        request_body = {
+            "method": "put",
+            "url": "/v1/user/detail",
+            "json": KeywordArgument.body_data()
+        }
 
-
-class Security(WebAPI):  # 用戶安全中心
-
-    def getSecurityInfo(self):  # 取得用戶安全中心資訊\
-        response = self.request_session.get(web_host+"/v1/user/security/info",
-                               json={},
-                               params={}
-                               )
-        self.print_response(response)
-        return response.json()
-
-    def emailBind(self, email=None, code=None):  # 綁定郵箱地址\
-        response = self.request_session.put(web_host+"/v1/user/security/email/binding",
-                               json={
-                                        "email": email,
-                                        "code": code
-                               },
-                               params={}
-                               )
-        self.print_response(response)
-        return response.json()
-
-    def emailUnbind(self, code=None):  # 解綁郵箱地址\
-        response = self.request_session.put(web_host+"/v1/user/security/email/unbind",
-                               json={
-                                        "code": code
-                               },
-                               params={}
-                               )
-        self.print_response(response)
-        return response.json()
-
-    def editMobile(self, newMobile=None, nmCode=None, omCode=None):  # 更換手機號\
-        response = self.request_session.put(web_host+"/v1/user/security/mobile",
-                               json={
-                                        "newMobile": newMobile,
-                                        "nmCode": nmCode,
-                                        "omCode": omCode
-                               },
-                               params={}
-                               )
-        self.print_response(response)
-        return response.json()
-
-    def editPwd(self, newPwd=None, oldPwd=None):  # 修改密碼
-        response = self.request_session.put(web_host+"/v1/user/security/pwd",
-                               json={
-                                        "newPwd": newPwd,
-                                        "oldPwd": oldPwd,
-                               },
-                               params={}
-                               )
-        self.print_response(response)
+        response = self.send_request(**request_body)
         return response.json()
 
 
-class Trade(WebAPI):  # 用戶-安全中心
+# 用戶安全中心
+class Security(WebAPI):
+    # 取得用戶安全中心資訊
+    def get_security_info(self):
+        request_body = {
+            "method": "get",
+            "url": "/v1/user/security/info"
+        }
 
-    def balanceHistory(self,  # 查詢資金明細
-                       webUid=None,
-                       web_token=None,
-                       orderType="",
-                       startTime="",
-                       endTime="",
-                       status="-1",
-                       page="",
-                       size="",
-                       ):
-        if webUid != None:
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 綁定郵箱地址
+    def bind_email(self, email=None, code=None):
+        request_body = {
+            "method": "put",
+            "url": "/v1/user/security/email/binding",
+            "json": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 解綁郵箱地址
+    def unbind_email(self, code=None):
+        request_body = {
+            "method": "put",
+            "url": "/v1/user/security/email/unbind",
+            "json": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 更換手機號
+    def edit_mobile(self, newMobile=None, nmCode=None, omCode=None):
+        request_body = {
+            "method": "put",
+            "url": "/v1/user/security/mobile",
+            "json": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 修改密碼
+    def edit_pwd(self, newPwd=None, oldPwd=None):
+        request_body = {
+            "method": "put",
+            "url": "/v1/user/security/pwd",
+            "json": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+
+# 用戶-安全中心
+class Trade(WebAPI):
+    # 查詢資金明細
+    def balance_history(
+            self, webUid=None, web_token=None, orderType="", startTime="",
+            endTime="", status="-1", page="", size=""
+    ):
+        if webUid is not None:
             self.request_session.headers.update({"uid": str(webUid)})
             self.request_session.headers.update({"token": str(web_token)})
-        response = self.request_session.post(web_host+"/api/gl/balance/history/v2",
-                                data={
-                                    "orderType": orderType,
-                                    "startTime": startTime,
-                                    "endTime": endTime,
-                                    "status": status,
-                                    "page": page,
-                                    "size": size,
-                                }
-                                )
-        self.print_response(response)
+
+        request_body = {
+            "method": "post",
+            "url": "/api/gl/balance/history/v2",
+            "json": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
         return response.json()
 
-    def historySportList(self,  # 獲取用戶體育注單列表
-                         webUid=None,
-                         web_token=None,
-                         endTime="2022-04-01 23:59:59",
-                         startTime="2022-04-01 23:59:59",
-                         channelId=None,
-                         gameId=None,
-                         page=None,
-                         size=None,
-                         status=None,
-                         ):
-        if webUid != None:
+    # 獲取用戶體育注單列表
+    def history_sport_list(
+            self, webUid=None, web_token=None, endTime="2022-04-01 23:59:59", startTime="2022-04-01 23:59:59",
+            channelId=None, gameId=None, page=None, size=None, status=None
+    ):
+        if webUid is not None:
             self.request_session.headers.update({"uid": str(webUid)})
             self.request_session.headers.update({"token": str(web_token)})
-        response = self.request_session.post(web_host+"/api/game/v2/history/sportList",
-                                data={
-                                    "channelId": channelId,
-                                    "gameId": gameId,
-                                    "startTime": startTime,
-                                    "endTime": endTime,
-                                    "status": status,
-                                    "page": page,
-                                    "size": size,
-                                }
-                                )
-        self.print_response(response)
+
+        request_body = {
+            "method": "post",
+            "url": "/api/game/v2/history/sportList",
+            "json": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
         return response.json()
 
 
-class Address(WebAPI):  # 用戶送貨地址
+# 用戶送貨地址
+class Address(WebAPI):
+    # 依使用者查詢地址
+    def get_user_address(self):
+        request_body = {
+            "method": "get",
+            "url": "/v1/user/address"
+        }
 
-    def get_user_address(self):  # 依使用者查詢地址
-        response = self.request_session.get(web_host+"/v1/user/address",
-                               json={},
-                               params={}
-                               )
-        self.print_response(response)
+        response = self.send_request(**request_body)
         return response.json()
 
-    def get_user_address_one(self, id=1):  # 查詢單筆地址
-        response = self.request_session.get(web_host+"/v1/user/address/{}".format(id),
-                               json={},
-                               params={}
-                               )
-        self.print_response(response)
+    # 查詢單筆地址
+    def get_user_address_one(self, id=1):
+        request_body = {
+            "method": "get",
+            "url": f"/v1/user/address/{str(id)}"
+        }
+
+        response = self.send_request(**request_body)
         return response.json()
 
-    def add_user_address(self, recipient=None, telephone=None, cityId=None, district=None, street=None, detailAddress=None):  # 新增地址
-        response = self.request_session.post(web_host+"/v1/user/address",
-                                json={
-                                    "recipient": recipient,
-                                    "telephone": telephone,
-                                    "cityId": cityId,
-                                    "district": district,
-                                    "street": street,
-                                    "detailAddress": detailAddress
-                                },
-                                params={}
-                                )
-        self.print_response(response)
+    # 新增地址
+    def add_user_address(
+            self, recipient=None, telephone=None, cityId=None, district=None, street=None, detailAddress=None
+    ):
+        request_body = {
+            "method": "post",
+            "url": "/v1/user/address",
+            "json": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
         return response.json()
 
-    def edit_user_address(self, recipient=None, telephone=None, cityId=None, district=None, street=None, detailAddress=None, id=None):  # 更新地址
-        response = self.request_session.put(web_host+"/v1/user/address",
-                               json={
-                                   "recipient": recipient,
-                                   "telephone": telephone,
-                                   "cityId": cityId,
-                                   "district": district,
-                                   "street": street,
-                                   "detailAddress": detailAddress,
-                                   "id": id
-                               },
-                               params={}
-                               )
-        self.print_response(response)
+    # 更新地址
+    def edit_user_address(
+            self, recipient=None, telephone=None, cityId=None, district=None, street=None, detailAddress=None, id=None
+    ):
+        request_body = {
+            "method": "put",
+            "url": "/v1/user/address",
+            "json": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
         return response.json()
 
-    def delete_user_address(self, id=1):  # 刪除用戶地址
-        response = self.request_session.delete(web_host+"/v1/user/address/{}".format(id),
-                                  json={},
-                                  params={}
-                                  )
-        self.print_response(response)
+    # 刪除用戶地址
+    def delete_user_address(self, id=1):
+        request_body = {
+            "method": "delete",
+            "url": f"/v1/user/address/{str(id)}"
+        }
+
+        response = self.send_request(**request_body)
         return response.json()
 
-    def get_provinces(self):  # 省列表
-        response = self.request_session.get(web_host+"/v1/user/address/provinces",
-                               json={},
-                               params={}
-                               )
-        self.print_response(response)
+    # 省列表
+    def get_provinces(self):
+        request_body = {
+            "method": "get",
+            "url": "/v1/user/address/provinces"
+        }
+
+        response = self.send_request(**request_body)
         return response.json()
 
-    def get_city(self, provinceId=None):  # 省下城市列表
-        response = self.request_session.get(web_host+"/v1/user/address/province/{}/city".format(provinceId),
-                               json={},
-                               params={}
-                               )
-        self.print_response(response)
+    # 省下城市列表
+    def get_city(self, provinceId=None):
+        request_body = {
+            "method": "get",
+            "url": f"/v1/user/address/province/{str(provinceId)}/city"
+        }
+
+        response = self.send_request(**request_body)
         return response.json()
 
-    def clear_user_address(self, web_token=None):  # 移除非默認地址
+    # 移除非默認地址
+    def clear_user_address(self, web_token=None):
         if web_token is not None:
             self.request_session.headers.update({"token": str(web_token)})
         resp = self.get_user_address()
@@ -229,7 +218,8 @@ class Address(WebAPI):  # 用戶送貨地址
             for i in ret:
                 self.delete_user_address(id=i)
 
-    def get_user_address_not_default(self, web_token=None):  # 獲取可刪除地址
+    # 獲取可刪除地址
+    def get_user_address_not_default(self, web_token=None):
         if web_token is not None:
             self.request_session.headers.update({"token": str(web_token)})
         resp = self.get_user_address()
