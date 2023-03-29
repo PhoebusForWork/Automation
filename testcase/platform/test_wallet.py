@@ -160,7 +160,7 @@ class TestGameTransferFail:
     @allure.feature("異常轉帳處理")
     @allure.story("異常轉帳處理列表")
     @allure.title("{test[scenario]}")
-    @pytest.mark.test
+    # @pytest.mark.test
     @pytest.mark.parametrize("test",
                              test_data.get_case('get_game_transfer_fail_list')
                              )
@@ -200,7 +200,7 @@ class TestGameTransferFail:
             test['req_url'] = test['req_url'].replace(
                 "存在ID",
                 str(failed_id.get_failed_id_unused(
-                plat_token=get_platform_token))
+                    plat_token=get_platform_token))
                 )
 
         api = API_Controller()
