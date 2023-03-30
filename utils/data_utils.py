@@ -96,6 +96,7 @@ class EnvReader:
     def __init__(self) -> None:
         self.__load_host()
         self.__load_postgres()
+        self.__load_elasticsearch()
         self.__load_redis()
         self.__load_cs_test_account()
         self.__load_API_headers()
@@ -133,6 +134,22 @@ class EnvReader:
             self.POSTGRES_CS_PORT = os.getenv('POSTGRES_CS_PORT')
             self.POSTGRES_PLT_PASSWORD = os.getenv('POSTGRES_PLT_PASSWORD')
             self.POSTGRES_CS_PASSWORD = os.getenv('POSTGRES_CS_PASSWORD')
+
+    def __load_elasticsearch(self):
+        if os.getenv('MODE') is None:
+            self.ELASTICSEARCH_HOST = config['elasticsearch_connection'][
+                'elasticsearch_host']
+            self.ELASTICSEARCH_PORT = config['elasticsearch_connection'][
+                'elasticsearch_port']
+            self.ELASTICSEARCH_USER = config['elasticsearch_connection'][
+                'elasticsearch_user']
+            self.ELASTICSEARCH_PASSWORD = config['elasticsearch_connection'][
+                'elasticsearch_password']
+        else:
+            self.ELASTICSEARCH_HOST = os.getenv('ELASTICSEARCH_HOST')
+            self.ELASTICSEARCH_PORT = os.getenv('ELASTICSEARCH_PORT')
+            self.ELASTICSEARCH_USER = os.getenv('ELASTICSEARCH_USER')
+            self.ELASTICSEARCH_PASSWORD = os.getenv('ELASTICSEARCH_PASSWORD')
 
     def __load_redis(self):
         if os.getenv('MODE') is None:
