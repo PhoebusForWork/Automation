@@ -3,8 +3,7 @@ import os
 import sys
 sys.path.append(os.path.abspath('.'))
 from utils.data_utils import EnvReader
-from elasticsearch import Elasticsearch
-from elasticsearch import helpers
+from elasticsearch import Elasticsearch, helpers
 import psycopg2
 import json
 
@@ -64,7 +63,7 @@ class Postgresql:
             self.db.close()
 
 
-class Elasticsearch_Tool:
+class ElasticsearchTool:
     def __init__(self):
         self.host = env.ELASTICSEARCH_HOST
         self.port = env.ELASTICSEARCH_PORT
@@ -101,7 +100,7 @@ if __name__ == '__main__':
         print(json.dumps(func, sort_keys=True, indent=4,
                          separators=(',', ':')))
 
-    test = Elasticsearch_Tool()
+    test = ElasticsearchTool()
     abc = {"match": {"user_id": "66"}}
     t = test.query(index='vs_wallet_log', query_json=abc, size=1)
     printJson(t)
