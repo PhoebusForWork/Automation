@@ -20,6 +20,7 @@ cryptography = "^38.0.4"
 psycopg2-binary = "^2.9.5"
 jsonschema = "^4.17.3"
 genson = "^1.2.2"
+elasticsearch = "7.17.7"
 
 
 [build-system]
