@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from .platApiBase import PlatformAPI  # 執行RF時使用
+from .platApiBase import PlatformAPI
 from utils.api_utils import KeywordArgument
 from utils.generate_utils import Make
 from utils.data_utils import EnvReader
@@ -10,9 +10,10 @@ env = EnvReader()
 platform_host = env.PLATFORM_HOST
 
 
-class Change(PlatformAPI):  # 資金配置管理
-
-    def change_apply(self,  # 申請變更
+# 資金配置管理
+class Change(PlatformAPI):
+    # 申請變更
+    def change_apply(self,  
                      plat_token=None,
                      # 0:玩家, 1:代理
                      userType=0,
@@ -26,32 +27,37 @@ class Change(PlatformAPI):  # 資金配置管理
                      water=None,
                      platformType=None, gameId=None, reason: str = 'string'
                      ):
-        if plat_token != None:
+        if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
-        response = self.request_session.post(platform_host+"/v1/fund/change/apply",
-                                json=KeywordArgument.body_data(),
-                                params={}
-                                )
-        self.print_response(response)
+
+        request_body = {
+            "method": "post",
+            "url": "/v1/fund/change/apply",
+            "json": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
         return response.json()
 
 
-class ChangeAudit(PlatformAPI):  # 資金配置管理
-
-    def get_applier_list(self,  # 查詢申請人列表
-                         plat_token=None,
-
-                         ):
-        if plat_token != None:
+# 資金配置管理
+class ChangeAudit(PlatformAPI):
+    # 查詢申請人列表
+    def get_applier_list(self, plat_token=None):
+        if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
-        response = self.request_session.get(platform_host+"/v1/fund/change/audit/applier/list",
-                               json=KeywordArgument.body_data(),
-                               params={}
-                               )
-        self.print_response(response)
+
+        request_body = {
+            "method": "get",
+            "url": "/v1/fund/change/audit/applier/list",
+            "json": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
         return response.json()
 
-    def get_list(self,  # 查詢資金審核列表
+    # 查詢資金審核列表
+    def get_list(self,
                  plat_token=None,
                  page=None, size=None,
                  id=None,
@@ -63,55 +69,66 @@ class ChangeAudit(PlatformAPI):  # 資金配置管理
                  status=None,  # 审核状态：0待审核，1一审通过，2一审拒绝，3二审通过，4二审拒绝
                  startTime=Make.date('start'), endTime=Make.date('end')
                  ):
-        if plat_token != None:
+        if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
-        response = self.request_session.post(platform_host+"/v1/fund/change/audit/list",
-                                json=KeywordArgument.body_data(),
-                                params={}
-                                )
-        self.print_response(response)
+
+        request_body = {
+            "method": "post",
+            "url": "/v1/fund/change/audit/list",
+            "json": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
         return response.json()
 
-    def approve_first(self,  # 一審
+    # 一審
+    def approve_first(self,
                       plat_token=None,
                       id=None, status=False,  # 审核结果：true 通过， false 不通过
                       remark='AutoTester'
                       ):
-        if plat_token != None:
+        if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
-        response = self.request_session.put(platform_host+"/v1/fund/change/audit/approve/first",
-                               json=KeywordArgument.body_data(),
-                               params={}
-                               )
-        self.print_response(response)
+
+        request_body = {
+            "method": "put",
+            "url": "/v1/fund/change/audit/approve/first",
+            "json": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
         return response.json()
 
-    def approve_second(self,  # 二審
+    # 二審
+    def approve_second(self,
                        plat_token=None,
                        id=None, status=False,  # 审核结果：true 通过， false 不通过
                        remark='AutoTester'
                        ):
-        if plat_token != None:
+        if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
-        response = self.request_session.put(platform_host+"/v1/fund/change/audit/approve/second",
-                               json=KeywordArgument.body_data(),
-                               params={}
-                               )
-        self.print_response(response)
+
+        request_body = {
+            "method": "put",
+            "url": "/v1/fund/change/audit/approve/second",
+            "json": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
         return response.json()
 
-    def approve_all(self,  #
+    def approve_all(self,
                     plat_token=None,
                     userName='AutoTester',
                     status: bool = False,  # 审核结果：true 通过， false 不通过
                     ):
-        if plat_token != None:
+        if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
         response = self.get_list(size=50, status=0, userName=userName)
         target = jsonpath.jsonpath(response, '$..records[*].id')
         if status is True:
             for i in target:
-                remark = '自動審合通過'
+                remark = '自動審核通過'
                 self.approve_first(id=i, status=status, remark=remark)
                 self.approve_second(id=i, status=status, remark=remark)
         else:

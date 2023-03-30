@@ -58,7 +58,7 @@ class API_Controller:
         sign = Make.sign(device_id=device_id, SECRET=secret, os_type=os_type)
         self.request_session.headers.update(sign)
 
-    def send_request(self, method, url, json, params, token=None, files=None):
+    def send_request(self, method, url, json=None, params=None, token=None, files=None):
         if token:
             self.request_session.headers.update({"token": str(token)})
         self.__update_sign()
