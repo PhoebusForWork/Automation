@@ -1,7 +1,7 @@
 import pytest
 import allure
 import random
-from pylib.platform.game import Game, Rebate_template
+from pylib.platform.game import Game, RebateTemplate
 from utils.data_utils import TestDataReader
 from utils.api_utils import API_Controller
 
@@ -18,7 +18,7 @@ test_data.read_json5('test_game.json5')
 def open_game(get_platform_token):
     game = Game()
     game.edit_game_status(plat_token=get_platform_token,
-                          gameCode="AWC_LIVE_SEXY", status=True)
+                          game_code="AWC_LIVE_SEXY", status=True)
 
 #############
 # test_case #
@@ -189,7 +189,7 @@ def test_add_rebate_template_config(test, get_platform_token):
 @pytest.mark.parametrize("test", test_data.get_case('edit_rebate_template_config'))
 def test_edit_rebate_template_config(test, get_platform_token):
     if "存在模板id" in test['req_url']:
-        template = Rebate_template()
+        template = RebateTemplate()
         test['req_url'] = test['req_url'].replace("存在模板id", str(
             template.get_exist_template_auto(plat_token=get_platform_token)))
 
@@ -212,7 +212,7 @@ def test_edit_rebate_template_config(test, get_platform_token):
 @pytest.mark.parametrize("test", test_data.get_case('delete_rebate_template_config'))
 def test_delete_rebate_template_config(test, get_platform_token):
     if "存在模板id" in test['req_url']:
-        template = Rebate_template()
+        template = RebateTemplate()
         test['req_url'] = test['req_url'].replace("存在模板id", str(
             template.get_exist_template_auto(plat_token=get_platform_token)))
     api = API_Controller()
