@@ -1,16 +1,16 @@
 variables:
   IMAGE_PATH: qa
   IMAGE_NAME: ${CI_PROJECT_NAME}
-  FILE_NAME: 'qa-auto-test.yml'
+  FILE_NAME: 'qa-automaion-pipeline.yml'
 
 include:
   - project: bbc/devops/gitlab-pipeline/cicd-pipeline
     ref: master
-    file: ${FILE_NAME}
+    file: 'qa-manual-test.yml'
     rules:
       - if: $CI_COMMIT_REF_NAME =~ "refs/heads/main"
   - project: bbc/devops/gitlab-pipeline/cicd-pipeline
     ref: master
-    file: 'qa-automaion-pipeline.yml'
+    file: ${FILE_NAME}
     rules:
       - if: $CI_COMMIT_REF_NAME =~ "refs/heads/master"
