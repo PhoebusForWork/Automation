@@ -25,7 +25,7 @@ class TestUserTransfer:
     @allure.feature("客戶列表/資金往來")
     @allure.story("取得所有錢包現狀")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_user_wallets'))
     def test_get_user_wallets(test, get_platform_token):
 
@@ -40,7 +40,7 @@ class TestUserTransfer:
     @allure.feature("客戶列表/資金往來")  # 查不到資料
     @allure.story("取得使用者交易信息")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_user_trade_info'))
     def test_get_user_trade_info(test, get_platform_token):
         params_replace = test_data.replace_json(test['params'], test['target'])
@@ -92,7 +92,7 @@ class TestUserTransfer:
     @allure.feature("客戶列表/資金往來")  # [issue]#25492
     @allure.story("刷新所有子錢包餘額")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('update_balance_all'))
     def test_update_balance_all(test, get_platform_token):
 
@@ -108,7 +108,7 @@ class TestUserTransfer:
     @allure.feature("客戶列表/資金往來")
     @allure.story("後台轉入指定渠道")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.test
     @pytest.mark.parametrize("test", test_data.get_case('user_deposit'))
     def test_user_deposit(test, get_platform_token):
         json_replace = test_data.replace_json(test['json'], test['target'])
