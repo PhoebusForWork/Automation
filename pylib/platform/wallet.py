@@ -231,6 +231,66 @@ class WalletGameTransfer(PlatformAPI):
         return response.json()
 
 
+class TestGameTransferMock(PlatformAPI):
+    #  後台從中心錢包轉錢至指定渠道
+    def mock_deposit(self, plat_token, userId,
+                     channelCode=None,
+                     gameCode=None,
+                     amount=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+        request_body = {
+            "method": "post",
+            "url": f"/v1/test/game/transfer/user/{userId}/deposit",
+            "json": KeywordArgument.body_data()
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    #  塞轉帳用的MOCK資料
+    def add_mock(self, plat_token, userId,
+                 channelCode=None,
+                 gameBalance=None,
+                 result=None,
+                 recheckResult=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+        request_body = {
+            "method": "post",
+            "url": f"/v1/test/game/transfer/mock/{channelCode}",
+            "json": KeywordArgument.body_data()
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    #  刪除轉帳用的MOCK資料
+    def delete_mock(self, plat_token,
+                    channelCode=None
+                    ):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+        request_body = {
+            "method": "post",
+            "url": f"/v1/test/game/transfer/mock/{channelCode}",
+            "json": KeywordArgument.body_data()
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    #  塞是否測試異常轉帳資料
+    def irregular_testing(self, plat_token,
+                          is_testing: bool = None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+        request_body = {
+            "method": "post",
+            "url": "/v1/test/game/transfer/irregular/transaction/isTesting",
+            "json": is_testing
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+
 class WalletGameTransferFailed(PlatformAPI):
     @staticmethod
     def _create_failed_transfer_record():
@@ -256,6 +316,33 @@ class WalletGameTransferFailed(PlatformAPI):
         set_plt_result.master.hdel('MOCK::AWC', 'recheckResult')
         set_cs_result.master.hdel('MOCK::AWC', 'transferResult')
         set_plt_irregular_transfer.master.delete('IrregularTransfer::isTesting')
+
+    # @staticmethod
+    # def _create_failed_transfer_record_v2():
+    #     cs_wallet = Wallet()
+    #     cs_wallet.login(deviceId="345",
+    #                     username='wallet001',
+    #                     password="abc123456").json()['data']
+    #     cs_wallet.wallet_game_transfer_withdraw_all()
+    #     time.sleep(2)
+    #     # 回收後進行redis MOCK配置
+    #     set_plt_result = RedisSentinel(platform='plt', select=3)
+    #     set_plt_result.master.hset(name='MOCK::AWC', key='recheckResult', value='"UNKNOWN"')
+    #     set_cs_result = RedisSentinel(platform='cs', select=12)
+    #     set_cs_result.master.hset(name='MOCK::AWC', key='transferResult', value='"UNKNOWN"')
+    #     set_plt_irregular_transfer = RedisSentinel(platform='plt', select=4)
+    #     set_plt_irregular_transfer.master.set(name='IrregularTransfer::isTesting', value='true')
+
+    #     retry_times = 6  # 目前case是消耗3以倍數定值
+    #     for _ in range(retry_times):
+    #         cs_wallet.wallet_game_transfer_deposit(channelCode="AWC", amount=10)
+
+    #     XxlJobs.game_transfer_executor()
+    #     time.sleep(2)
+
+    #     set_plt_result.master.hdel('MOCK::AWC', 'recheckResult')
+    #     set_cs_result.master.hdel('MOCK::AWC', 'transferResult')
+    #     set_plt_irregular_transfer.master.delete('IrregularTransfer::isTesting')
 
     # 顯示所有異常處理人
     def get_approver(self, plat_token=None):
