@@ -3,7 +3,7 @@ import os
 import sys
 sys.path.append(os.path.abspath('.'))
 import psycopg2
-import pymongo
+from pymongo import MongoClient, errors, ASCENDING, DESCENDING
 from utils.data_utils import EnvReader
 from elasticsearch import Elasticsearch, helpers
 import json
@@ -17,6 +17,8 @@ plt_password = env.POSTGRES_PLT_PASSWORD
 cs_password = env.POSTGRES_CS_PASSWORD
 mongo_plt_host = env.MONGO_PLT_HOST
 mongo_cs_host = env.MONGO_CS_HOST
+mongo_plt_account = env.MONGO_PLT_ACCOUNT
+mongo_cs_account = env.MONGO_CS_ACCOUNT
 mongo_plt_password = env.MONGO_PLT_PASSWORD
 mongo_cs_password = env.MONGO_CS_PASSWORD
 
@@ -101,27 +103,127 @@ class ElasticsearchTool:
 
 
 class Mongo:
-    def __init__(self, database="user", user="app_jr", platform="plt"):
-        self.database = database
-        self.user = user
+    def __init__(self, platform="plt"):
         self.password = None
         self.host = None
         if platform == "plt":
             self.host = mongo_plt_host
+            self.account = mongo_plt_account
             self.password = mongo_plt_password
         elif platform == "cs":
             self.host = mongo_cs_host
+            self.account = mongo_cs_account
             self.password = mongo_cs_password
         else:
-            raise "platform Error"
-        conn_str = f'mongodb+srv://{self.user}:{self.password}@{self.host}/{self.database}?authMechanism=DEFAULT'
-        # set a 5-second connection timeout
-        self.client = pymongo.MongoClient(
-            conn_str, serverSelectionTimeoutMS=5000, tls=True, tlsAllowInvalidCertificates=True)
+            raise "platform error"
+        conn_str = f'mongodb+srv://{self.account}:{self.password}@{self.host}'
+        self.mongodb = MongoClient(conn_str, serverSelectionTimeoutMS=5000, tls=True, tlsAllowInvalidCertificates=True)
+        # 檢查連線是否成功
         try:
-            print(self.client.server_info())
-        except Exception:
-            print("Unable to connect to the server.")
+            self.mongodb.server_info()
+        except errors.ServerSelectionTimeoutError as e:
+            raise Exception('MongoDB connection timeout: %s' % str(e))
+        except Exception as e:
+            raise Exception('MongoDB connection failed: %s' % str(e))
+
+    def specify_db(self, database):
+        if database:
+            db_list = self.mongodb.list_database_names()
+            if database in db_list:
+                self.db = self.mongodb[database]
+                return self.db
+            else:
+                raise Exception('No db [%s] in specified MongoDB.' % database)
+        else:
+            raise Exception('Mongo connection must have specified param [database].')
+
+    def specify_collection(self, collection):
+        self._check_db()
+        if collection:
+            collection_list = self.db.list_collection_names()
+            if collection in collection_list:
+                self.collection = self.db[collection]
+                return self.collection
+            else:
+                raise Exception(f'No collection {collection} in specified database {self.db}.')
+        else:
+            raise Exception('Mongo connection must have specified param [collection].')
+
+    def _check_db(self):
+        if self.db is None:
+            raise Exception('No database selected')
+
+    def _check_collection(self):
+        if self.collection is None:
+            raise Exception('No collection selected')
+
+    @staticmethod
+    def _check_query(query):
+        if not query:
+            raise Exception('Query syntax should not be emtpy dict or list')
+
+    @staticmethod
+    def _check_query_type(query, query_type):
+        if type(query) is not query_type:
+            raise TypeError(f'Query syntax type error, \"{query}\" type must be {query_type}')
+        if not query:
+            raise Exception('Query syntax should not be emtpy dict or list')
+
+    def find(self, query=None, projection=None, sort_key=None, sort_direction='DESC', limit=1):
+        self._check_db()
+        self._check_collection()
+        try:
+            query = query if query is not None else {}
+            # 依排序條件執行查詢
+            if sort_key:
+                if sort_direction == 'ASC':
+                    result = self.collection.find(filter=query, projection=projection).sort(sort_key, ASCENDING).limit(limit)
+                elif sort_direction == 'DESC':
+                    result = self.collection.find(filter=query, projection=projection).sort(sort_key, DESCENDING).limit(limit)
+                else:
+                    raise ValueError('param [key_direction] mush be "ASC" or "DESC".')
+            else:
+                result = self.collection.find(filter=query, projection=projection).limit(limit)
+
+            result_list = []
+            for x in result:
+                result_list.append(x)
+            return result_list
+        except Exception as e:
+            raise Exception('MongoDB query syntax issue: %s' % str(e))
+
+    def insert_one(self, query):
+        self._check_db()
+        self._check_collection()
+        # 檢查query資料型態是dict、並禁止使用empty dict
+        self._check_query_type(query, dict)
+
+        try:
+            self.collection.insert_one(query)
+        except Exception as e:
+            raise Exception('MongoDB insert_one issue: %s' % str(e))
+
+    def insert_many(self, query):
+        self._check_db()
+        self._check_collection()
+        # 檢查query資料型態是list、並禁止使用empty list
+        self._check_query_type(query, list)
+
+        try:
+            self.collection.insert_many(query)
+        except Exception as e:
+            raise Exception('MongoDB insert_many issue: %s' % str(e))
+
+    def delete(self, query):
+        self._check_db()
+        self._check_collection()
+        # 檢查query資料型態是dict、並禁止使用空{}
+        self._check_query_type(query, dict)
+
+        try:
+            self.collection.delete_many(query)
+        except Exception as e:
+            raise Exception('MongoDB delete issue: %s' % str(e))
 
 
 if __name__ == '__main__':
@@ -129,7 +231,24 @@ if __name__ == '__main__':
         print(json.dumps(func, sort_keys=True, indent=4,
                          separators=(',', ':')))
 
+
     test = ElasticsearchTool()
     abc = {"match": {"user_id": "66"}}
     t = test.query(index='vs_wallet_log', query_json=abc, size=1)
     printJson(t)
+
+    m = Mongo(platform='plt')
+    m.specify_db('plt_game')
+    m.specify_collection('vs_mer_user')
+    query_insert = {"name": "insert_one_test", "channel_code": "1", "game_code": "1", "user_id": 1}
+    query_insert_many = [{"name": "insert_two_test", "channel_code": "2", "game_code": "2", "user_id": 1}, {"name": "insert_three_test", "channel_code": "3", "game_code": "3", "user_id": 1}]
+    m.insert_one(query_insert)
+    m.insert_many(query_insert_many)
+    r1 = m.find(limit=10)
+    for detail in r1:
+        print(detail)
+    print('--------------------')
+    m.delete(query={"user_id": 1})
+    r1 = m.find(limit=10)
+    for detail in r1:
+        print(detail)
