@@ -2,7 +2,7 @@ import os
 import json5
 import copy
 import configparser
-from utils.json_verification import validate_json
+from json_verification import validate_json
 
 config = configparser.ConfigParser()
 config.read('config/config.ini')
@@ -190,6 +190,8 @@ class EnvReader:
     def __load_mongo(self):
         self.MONGO_PLT_HOST = config['mongo_connection']['mongo_plt_host']
         self.MONGO_CS_HOST = config['mongo_connection']['mongo_cs_host']
+        self.MONGO_PLT_ACCOUNT = config['mongo_connection']['mongo_plt_account']
+        self.MONGO_CS_ACCOUNT = config['mongo_connection']['mongo_cs_account']
         self.MONGO_PLT_PASSWORD = config['mongo_connection']['mongo_plt_password']
         self.MONGO_CS_PASSWORD = config['mongo_connection']['mongo_cs_password']
 
