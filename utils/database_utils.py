@@ -110,6 +110,30 @@ class Mongo:
         except Exception as e:
             raise Exception('MongoDB connection failed: %s' % str(e))
 
+    def _check_db(self):
+        if self.db is None:
+            raise Exception('No database selected')
+
+    def _check_collection(self):
+        if self.collection is None:
+            raise Exception('No collection selected')
+
+    def _check_db_and_collection(self):
+        self._check_db()
+        self._check_collection()
+
+    @staticmethod
+    def _check_query(query):
+        if not query:
+            raise Exception('Query syntax should not be emtpy dict or list')
+
+    @staticmethod
+    def _check_query_type(query, query_type):
+        if type(query) is not query_type:
+            raise TypeError(f'Query syntax type error, \"{query}\" type must be {query_type}')
+        if not query:
+            raise Exception('Query syntax should not be emtpy dict or list')
+
     def specify_db(self, database):
         if database:
             db_list = self.mongodb.list_database_names()
@@ -132,28 +156,6 @@ class Mongo:
                 raise Exception(f'No collection {collection} in specified database {self.db}.')
         else:
             raise Exception('Mongo connection must have specified param [collection].')
-
-    def _check_db(self):
-        if self.db is None:
-            raise Exception('No database selected')
-
-    def _check_db_and_collection(self):
-        if self.db is None:
-            raise Exception('No database selected')
-        if self.collection is None:
-            raise Exception('No collection selected')
-
-    @staticmethod
-    def _check_query(query):
-        if not query:
-            raise Exception('Query syntax should not be emtpy dict or list')
-
-    @staticmethod
-    def _check_query_type(query, query_type):
-        if type(query) is not query_type:
-            raise TypeError(f'Query syntax type error, \"{query}\" type must be {query_type}')
-        if not query:
-            raise Exception('Query syntax should not be emtpy dict or list')
 
     def find(self, query=None, projection=None, sort_key=None, sort_direction='DESC', limit=1):
         self._check_db_and_collection()
