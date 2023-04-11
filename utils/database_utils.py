@@ -133,11 +133,9 @@ class Mongo:
         else:
             raise Exception('Mongo connection must have specified param [collection].')
 
-    def _check_db(self):
+    def _check_db_and_collection(self):
         if self.db is None:
             raise Exception('No database selected')
-
-    def _check_collection(self):
         if self.collection is None:
             raise Exception('No collection selected')
 
@@ -154,8 +152,7 @@ class Mongo:
             raise Exception('Query syntax should not be emtpy dict or list')
 
     def find(self, query=None, projection=None, sort_key=None, sort_direction='DESC', limit=1):
-        self._check_db()
-        self._check_collection()
+        self._check_db_and_collection()
         try:
             query = query if query is not None else {}
             # 依排序條件執行查詢
@@ -177,8 +174,7 @@ class Mongo:
             raise Exception('MongoDB query syntax issue: %s' % str(e))
 
     def insert_one(self, query):
-        self._check_db()
-        self._check_collection()
+        self._check_db_and_collection()
         # 檢查query資料型態是dict、並禁止使用empty dict
         self._check_query_type(query, dict)
 
@@ -188,8 +184,7 @@ class Mongo:
             raise Exception('MongoDB insert_one issue: %s' % str(e))
 
     def insert_many(self, query):
-        self._check_db()
-        self._check_collection()
+        self._check_db_and_collection()
         # 檢查query資料型態是list、並禁止使用empty list
         self._check_query_type(query, list)
 
@@ -199,8 +194,7 @@ class Mongo:
             raise Exception('MongoDB insert_many issue: %s' % str(e))
 
     def delete(self, query):
-        self._check_db()
-        self._check_collection()
+        self._check_db_and_collection()
         # 檢查query資料型態是dict、並禁止使用空{}
         self._check_query_type(query, dict)
 
