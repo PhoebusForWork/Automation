@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
-sys.path.append(os.path.abspath('.'))
 import psycopg2
 from elasticsearch import Elasticsearch, helpers
 from pymongo import MongoClient, errors, ASCENDING, DESCENDING
-from utils.data_utils import EnvReader
+sys.path.append(os.path.abspath('.'))
+from utils.data_utils import EnvReader  # noqa: E402
 
 env = EnvReader()
 
