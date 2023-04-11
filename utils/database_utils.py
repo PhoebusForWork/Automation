@@ -88,7 +88,7 @@ class ElasticsearchTool:
 
 
 class Mongo:
-    def __init__(self, platform="plt"):
+    def __init__(self, platform):
         if platform == "plt":
             self.host = env.MONGO_PLT_HOST
             self.account = env.MONGO_PLT_ACCOUNT
@@ -132,6 +132,10 @@ class Mongo:
                 raise Exception(f'No collection {collection} in specified database {self.db}.')
         else:
             raise Exception('Mongo connection must have specified param [collection].')
+
+    def _check_db(self):
+        if self.db is None:
+            raise Exception('No database selected')
 
     def _check_db_and_collection(self):
         if self.db is None:
@@ -221,18 +225,25 @@ if __name__ == '__main__':
     printJson(t)
 
     # MongoDB sample
-    m = Mongo(platform='plt')
-    m.specify_db('plt_game')
-    m.specify_collection('vs_mer_user')
+    mongo = Mongo(platform='plt')
+    mongo.specify_db('plt_game')
+    mongo.specify_collection('vs_mer_user')
+
+    # demo insert_one and insert_many method
     query_insert = {"name": "insert_one_test", "channel_code": "1", "game_code": "1", "user_id": 1}
-    query_insert_many = [{"name": "insert_two_test", "channel_code": "2", "game_code": "2", "user_id": 1}, {"name": "insert_three_test", "channel_code": "3", "game_code": "3", "user_id": 1}]
-    m.insert_one(query_insert)
-    m.insert_many(query_insert_many)
-    r1 = m.find(limit=10)
-    for detail in r1:
+    query_insert_many = [
+        {"name": "insert_two_test", "channel_code": "2", "game_code": "2", "user_id": 1},
+        {"name": "insert_three_test", "channel_code": "3", "game_code": "3", "user_id": 1}
+    ]
+    mongo.insert_one(query_insert)
+    mongo.insert_many(query_insert_many)
+    result = mongo.find(limit=10)
+    for detail in result:
         print(detail)
     print('--------------------')
-    m.delete(query={"user_id": 1})
-    r1 = m.find(limit=10)
-    for detail in r1:
+
+    # demo delete method
+    mongo.delete(query={"user_id": 1})
+    result = mongo.find(limit=10)
+    for detail in result:
         print(detail)
