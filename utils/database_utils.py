@@ -3,10 +3,9 @@ import os
 import sys
 sys.path.append(os.path.abspath('.'))
 import psycopg2
+from elasticsearch import Elasticsearch, helpers
 from pymongo import MongoClient, errors, ASCENDING, DESCENDING
 from utils.data_utils import EnvReader
-from elasticsearch import Elasticsearch, helpers
-import json
 
 env = EnvReader()
 plt_host = env.POSTGRES_PLT_HOST
@@ -15,12 +14,6 @@ plt_port = env.POSTGRES_PLT_PORT
 cs_port = env.POSTGRES_CS_PORT
 plt_password = env.POSTGRES_PLT_PASSWORD
 cs_password = env.POSTGRES_CS_PASSWORD
-mongo_plt_host = env.MONGO_PLT_HOST
-mongo_cs_host = env.MONGO_CS_HOST
-mongo_plt_account = env.MONGO_PLT_ACCOUNT
-mongo_cs_account = env.MONGO_CS_ACCOUNT
-mongo_plt_password = env.MONGO_PLT_PASSWORD
-mongo_cs_password = env.MONGO_CS_PASSWORD
 
 
 class Postgresql:
@@ -104,18 +97,17 @@ class ElasticsearchTool:
 
 class Mongo:
     def __init__(self, platform="plt"):
-        self.password = None
-        self.host = None
         if platform == "plt":
-            self.host = mongo_plt_host
-            self.account = mongo_plt_account
-            self.password = mongo_plt_password
+            self.host = env.MONGO_PLT_HOST
+            self.account = env.MONGO_PLT_ACCOUNT
+            self.password = env.MONGO_PLT_PASSWORD
         elif platform == "cs":
-            self.host = mongo_cs_host
-            self.account = mongo_cs_account
-            self.password = mongo_cs_password
+            self.host = env.MONGO_CS_HOST
+            self.account = env.MONGO_CS_ACCOUNT
+            self.password = env.MONGO_CS_PASSWORD
         else:
             raise "platform error"
+
         conn_str = f'mongodb+srv://{self.account}:{self.password}@{self.host}'
         self.mongodb = MongoClient(conn_str, serverSelectionTimeoutMS=5000, tls=True, tlsAllowInvalidCertificates=True)
         # 檢查連線是否成功
@@ -227,15 +219,15 @@ class Mongo:
 
 
 if __name__ == '__main__':
-    def printJson(func):
-        print(json.dumps(func, sort_keys=True, indent=4,
-                         separators=(',', ':')))
-
-
-    test = ElasticsearchTool()
-    abc = {"match": {"user_id": "66"}}
-    t = test.query(index='vs_wallet_log', query_json=abc, size=1)
-    printJson(t)
+    # def printJson(func):
+    #     print(json.dumps(func, sort_keys=True, indent=4,
+    #                      separators=(',', ':')))
+    #
+    #
+    # test = ElasticsearchTool()
+    # abc = {"match": {"user_id": "66"}}
+    # t = test.query(index='vs_wallet_log', query_json=abc, size=1)
+    # printJson(t)
 
     m = Mongo(platform='plt')
     m.specify_db('plt_game')
