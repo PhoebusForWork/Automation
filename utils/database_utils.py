@@ -8,31 +8,23 @@ from pymongo import MongoClient, errors, ASCENDING, DESCENDING
 from utils.data_utils import EnvReader
 
 env = EnvReader()
-plt_host = env.POSTGRES_PLT_HOST
-cs_host = env.POSTGRES_CS_HOST
-plt_port = env.POSTGRES_PLT_PORT
-cs_port = env.POSTGRES_CS_PORT
-plt_password = env.POSTGRES_PLT_PASSWORD
-cs_password = env.POSTGRES_CS_PASSWORD
 
 
 class Postgresql:
     def __init__(self, database="wallet", user="app_jr", platform="plt"):
         self.database = database
         self.user = user
-        self.password = None
-        self.host = None
-        self.port = None
         if platform == "plt":
-            self.host = plt_host
-            self.port = plt_port
-            self.password = plt_password
+            self.host = env.POSTGRES_PLT_HOST
+            self.port = env.POSTGRES_PLT_PORT
+            self.password = env.POSTGRES_PLT_PASSWORD
         elif platform == "cs":
-            self.host = cs_host
-            self.port = cs_port
-            self.password = cs_password
+            self.host = env.POSTGRES_CS_HOST
+            self.port = env.POSTGRES_CS_PORT
+            self.password = env.POSTGRES_CS_PASSWORD
         else:
             raise "platform Error"
+
         self.db = psycopg2.connect(database=self.database,
                                    user=self.user,
                                    password=self.password,
@@ -219,16 +211,22 @@ class Mongo:
 
 
 if __name__ == '__main__':
-    # def printJson(func):
-    #     print(json.dumps(func, sort_keys=True, indent=4,
-    #                      separators=(',', ':')))
-    #
-    #
-    # test = ElasticsearchTool()
-    # abc = {"match": {"user_id": "66"}}
-    # t = test.query(index='vs_wallet_log', query_json=abc, size=1)
-    # printJson(t)
+    # PostgreSQL sample
+    pg = Postgresql(database='plt_account')
+    sql = "select * from plt_account.plt_account.vs_role where id = 3;"
+    print(pg.select_sql(sql=sql))
 
+    # ES sample
+    import json
+
+    def printJson(func):
+        print(json.dumps(func, sort_keys=True, indent=4, separators=(',', ':')))
+    test = ElasticsearchTool()
+    abc = {"match": {"user_id": "66"}}
+    t = test.query(index='vs_wallet_log', query_json=abc, size=1)
+    printJson(t)
+
+    # MongoDB sample
     m = Mongo(platform='plt')
     m.specify_db('plt_game')
     m.specify_collection('vs_mer_user')
