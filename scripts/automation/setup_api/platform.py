@@ -1,4 +1,5 @@
 from pylib.platform.account import AccountAdmin
+from pylib.platform.game import Game
 from utils.generate_utils import Make
 
 
@@ -38,3 +39,22 @@ def login_account():
     login_account.login(username="account001",
                         password="abc123456",
                         imgCode=code).json()['data']['token']
+
+
+def turn_on_the_game_to_test():
+    '''
+    用來開啟欲測試的遊戲讓他同步至前台cs_game
+    '''
+    trun_on_the_game = Game()
+    code = trun_on_the_game.imgcode()
+    trun_on_the_game.login(username="superAdmin",
+                           password="abc123456",
+                           imgCode=code)
+    #  目前僅有AI體育可測試
+    trun_on_the_game.edit_game_status(game_code='AI_SPORT_AI',
+                                      status=True,
+                                      currency='CNY')
+    trun_on_the_game.edit_game_status(game_code='AI_SPORT_AI',
+                                      status=True,
+                                      currency='USD')
+    trun_on_the_game.game_sync(game_code='AI_SPORT_AI')

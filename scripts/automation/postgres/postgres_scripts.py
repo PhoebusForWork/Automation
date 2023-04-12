@@ -21,3 +21,17 @@ def plt_account():
         INSERT INTO plt_account.vs_dept_role (dept_id, role_id, create_time, last_modified_time) VALUES (6, 6, DEFAULT, DEFAULT);
         INSERT INTO plt_account.vs_dept_role (dept_id, role_id, create_time, last_modified_time) VALUES (3, 6, DEFAULT, DEFAULT);
         ''')
+
+
+def plt_game():
+    plt_game = Postgresql(database='plt_game')
+    plt_game.run_sql('''
+    UPDATE plt_game.vs_game SET status = true::boolean
+    ''')
+
+
+def wallet():
+    wallet = Postgresql(database='wallet')
+    wallet.run_sql('''
+    UPDATE wallet.vs_wallet SET balance = 100.0000::numeric(21,4) WHERE user_id in (1,2,3,4,5,6)
+    ''')

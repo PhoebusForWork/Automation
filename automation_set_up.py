@@ -16,15 +16,17 @@ time.sleep(wait_for_sync)
 ############
 platform.super_admin_initialize_and_create_admin()
 platform.login_account()
-
+platform.turn_on_the_game_to_test()
 #############
 #  前台配置  #
 ############
 client_side.create_initial_user()
 
-##############
+# #############
 #  postgres  #
-##############
+# #############
 
 postgres_scripts.host_platform()
 postgres_scripts.plt_account()
+postgres_scripts.plt_game()
+postgres_scripts.wallet()
