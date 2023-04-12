@@ -1,5 +1,6 @@
 import pytest
 import allure
+import time
 from pylib.platform.wallet import WalletGameTransferFailed
 from utils.data_utils import TestDataReader, ResponseVerification
 from utils.api_utils import API_Controller
@@ -13,7 +14,7 @@ test_data.read_json5('test_wallet.json5')
 ######################
 
 # @pytest.fixture(scope="module")
-# def 一鍵回收用戶餘額(getPltLoginToken):
+# def turn_on_test_game(getPltLoginToken):
 # user_deposit("後台轉入指定渠道")結束後需要執行
 
 #############
@@ -70,23 +71,6 @@ class TestUserTransfer:
                                 token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)
 
-    @staticmethod
-    @allure.feature("客戶列表/資金往來")
-    @allure.story("轉帳紀錄")
-    @allure.title("{test[scenario]}")
-    # @pytest.mark.test
-    @pytest.mark.parametrize("test", test_data.get_case('get_game_transfer'))
-    def test_get_game_transfer(test, get_platform_token):
-
-        params_replace = test_data.replace_json(test['params'], test['target'])
-
-        api = API_Controller()
-        resp = api.send_request(test['req_method'],
-                                test['req_url'],
-                                test['json'],
-                                params_replace,
-                                token=get_platform_token)
-        ResponseVerification.basic_assert(resp, test)
 
     @staticmethod
     @allure.feature("客戶列表/資金往來")  # [issue]#25492
@@ -108,7 +92,7 @@ class TestUserTransfer:
     @allure.feature("客戶列表/資金往來")
     @allure.story("後台轉入指定渠道")
     @allure.title("{test[scenario]}")
-    @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('user_deposit'))
     def test_user_deposit(test, get_platform_token):
         json_replace = test_data.replace_json(test['json'], test['target'])
@@ -118,13 +102,15 @@ class TestUserTransfer:
                                 json_replace,
                                 test['params'],
                                 token=get_platform_token)
+        if "第一次新增錢包" in test['scenario']:
+            time.sleep(5)
         ResponseVerification.basic_assert(resp, test)
 
     @staticmethod
     @allure.feature("客戶列表/資金往來")
     @allure.story("後台一鍵收回")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('user_withdraw_all'))
     def test_user_withdraw_all(test, get_platform_token):
 
@@ -136,6 +122,24 @@ class TestUserTransfer:
                                 token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)
 
+    @staticmethod
+    @allure.feature("客戶列表/資金往來")
+    @allure.story("轉帳紀錄")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('get_game_transfer'))
+    def test_get_game_transfer(test, get_platform_token):
+
+        params_replace = test_data.replace_json(test['params'], test['target'])
+
+        api = API_Controller()
+        resp = api.send_request(test['req_method'],
+                                test['req_url'],
+                                test['json'],
+                                params_replace,
+                                token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
 
 class TestGameTransferFail:
 
@@ -143,7 +147,7 @@ class TestGameTransferFail:
     @allure.feature("異常轉帳處理")
     @allure.story("顯示所有異常處理人")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_fail_approver'))
     def test_get_fail_approver(test, get_platform_token):
 
@@ -158,21 +162,20 @@ class TestGameTransferFail:
 
     @staticmethod
     @allure.feature("異常轉帳處理")
-    @allure.story("異常轉帳處理列表")
+    @allure.story("手動處理異常轉帳")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
-    @pytest.mark.parametrize("test",
-                             test_data.get_case('get_game_transfer_fail_list')
-                             )
-    def test_get_game_transfer_fail_list(test, get_platform_token):
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('trade_manual_result'))
+    def test_trade_manual_result(test, get_platform_token):
 
-        test['params'] = test_data.replace_json(test['params'], test['target'])
+        test['json'] = test_data.replace_json(test['json'], test['target'])
 
-        if "存在ID" == test['params']['tradeId']:
+        if "存在ID" in test['req_url']:
             failed_id = WalletGameTransferFailed()
-            test['params']['tradeId'] = test['params']['tradeId'].replace(
+            test['req_url'] = test['req_url'].replace(
                 "存在ID",
-                str(failed_id.get_failed_id(plat_token=get_platform_token))
+                str(failed_id.get_failed_id_unused(
+                    plat_token=get_platform_token))
                 )
 
         api = API_Controller()
@@ -187,20 +190,21 @@ class TestGameTransferFail:
 
     @staticmethod
     @allure.feature("異常轉帳處理")
-    @allure.story("手動處理異常轉帳")
+    @allure.story("異常轉帳處理列表")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
-    @pytest.mark.parametrize("test", test_data.get_case('trade_manual_result'))
-    def test_trade_manual_result(test, get_platform_token):
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test",
+                             test_data.get_case('get_game_transfer_fail_list')
+                             )
+    def test_get_game_transfer_fail_list(test, get_platform_token):
 
-        test['json'] = test_data.replace_json(test['json'], test['target'])
+        test['params'] = test_data.replace_json(test['params'], test['target'])
 
-        if "存在ID" in test['req_url']:
+        if "存在ID" == test['params']['tradeId']:
             failed_id = WalletGameTransferFailed()
-            test['req_url'] = test['req_url'].replace(
+            test['params']['tradeId'] = test['params']['tradeId'].replace(
                 "存在ID",
-                str(failed_id.get_failed_id_unused(
-                    plat_token=get_platform_token))
+                str(failed_id.get_failed_id(plat_token=get_platform_token))
                 )
 
         api = API_Controller()

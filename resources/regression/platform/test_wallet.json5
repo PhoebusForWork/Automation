@@ -123,7 +123,7 @@
         "req_method": "put",
         "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
         "test_item": [
-            {"req_url": "/v1/wallet/game/transfer/user/99999/update/balance/all","scenario":"不存在的userId","json": {},"params": {},"code_status": 500,"keyword": "資料不存在"},
+            {"req_url": "/v1/wallet/game/transfer/user/99999/update/balance/all","scenario":"不存在的userId","json": {},"params": {},"code_status": 400,"keyword": "資料不存在"},
             {"req_url": "/v1/wallet/game/transfer/user/3/update/balance/all","scenario":"存在的userId","json": {},"params": {},"code_status": 200,"keyword": "data"},
             {"req_url": "/v1/wallet/game/transfer/user/3/update/balance/all","scenario":"[currency]CNY","json": {},"params": {"currency":"CNY"},"code_status": 200,"keyword": "data"},
             {"req_url": "/v1/wallet/game/transfer/user/3/update/balance/all","scenario":"[currency]USD","json": {},"params": {"currency":"USD"},"code_status": 200,"keyword": "data"},
@@ -152,16 +152,19 @@
         "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
         "json": {"channelCode":"AI","amount":10},
         "test_item": [
-            // {"req_url": "/v1/wallet/game/transfer/user/99999/deposit","scenario":"不存在的userId","target": {},"params": {},"code_status": 400,"keyword": "该用户不存在"},
-            {"req_url": "/v1/wallet/game/transfer/user/3/deposit","scenario":"[amount]0","target": {"amount":10},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            // {"req_url": "/v1/wallet/game/transfer/user/3/deposit","scenario":"[amount]超出錢包金額","target": {"amount":99999999999},"params": {},"code_status": 500,"keyword": "中心钱包余额不足"},
-            // {"req_url": "/v1/wallet/game/transfer/user/3/deposit","scenario":"[amount]null","target": {"amount":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            // {"req_url": "/v1/wallet/game/transfer/user/3/deposit","scenario":"[amount]非數字","target": {"amount":"string"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            // {"req_url": "/v1/wallet/game/transfer/user/3/deposit","scenario":"[channelCode]不存在的通道","target": {"channelCode":"unknow","amount":"10"},"params": {},"code_status": 400,"keyword": "資料不存在"},
+            {"req_url": "/v1/wallet/game/transfer/user/99999/deposit","scenario":"不存在的userId","target": {},"params": {},"code_status": 400,"keyword": "该用户不存在"},
+            {"req_url": "/v1/wallet/game/transfer/user/3/deposit","scenario":"[AI]第一次新增錢包","target": {},"params": {},"code_status": 500,"keyword": "正在创建游戏帐号，请稍候"},
+            {"req_url": "/v1/wallet/game/transfer/user/3/deposit","scenario":"[AI]正常新增","target": {},"params": {},"code_status": 200,"keyword": "success"},
+            {"req_url": "/v1/wallet/game/transfer/user/3/deposit","scenario":"[amount]0","target": {"amount":0},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/wallet/game/transfer/user/3/deposit","scenario":"[amount]超出錢包金額","target": {"amount":99999999999},"params": {},"code_status": 500,"keyword": "中心钱包余额不足"},
+            {"req_url": "/v1/wallet/game/transfer/user/3/deposit","scenario":"[amount]null","target": {"amount":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/wallet/game/transfer/user/3/deposit","scenario":"[amount]非數字","target": {"amount":"string"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/wallet/game/transfer/user/3/deposit","scenario":"[channelCode]不存在的通道","target": {"channelCode":"unknow","amount":"10"},"params": {},"code_status": 400,"keyword": "資料不存在"},
             // 目前只接一家AI
             // {"req_url": "/v1/wallet/game/transfer/user/3/deposit","scenario":"[channelCode]YB","target": {"channelCode":"YB","amount":"10"},"params": {},"code_status": 200,"keyword": "success"},
             // {"req_url": "/v1/wallet/game/transfer/user/3/deposit","scenario":"[channelCode]AI","target": {"amount":"10"},"params": {},"code_status": 200,"keyword": "success"},
-            // {"req_url": "/v1/wallet/game/transfer/user/3/deposit","scenario":"[channelCode]AI_USD","target": {"amount":"10"},"params": {"currency": "USD"},"code_status": 200,"keyword": "success"},
+            {"req_url": "/v1/wallet/game/transfer/user/3/deposit","scenario":"[channelCode]AI_USD_第一次新增錢包","target": {"amount":"10"},"params": {"currency": "USD"},"code_status": 500,"keyword": "正在创建游戏帐号，请稍候"},
+            {"req_url": "/v1/wallet/game/transfer/user/3/deposit","scenario":"[channelCode]AI_USD","target": {"amount":"10"},"params": {"currency": "USD"},"code_status": 200,"keyword": "success"},
             ]
     },
     {
