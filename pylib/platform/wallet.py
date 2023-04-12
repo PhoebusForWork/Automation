@@ -330,7 +330,7 @@ class WalletGameTransferFailed(PlatformAPI):
         set_plt_irregular_transfer.master.delete('IrregularTransfer::isTesting')
 
     @staticmethod
-    def _create_failed_transfer_record_v2(cs_user='wallet001'):
+    def _create_failed_transfer_record_v2(cs_user='AutoTester'):
         if os.getenv('MODE'):
             cs_user = 'wallet001'
         cs_wallet = Wallet()

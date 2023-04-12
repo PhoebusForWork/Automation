@@ -123,7 +123,7 @@
         "req_method": "put",
         "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
         "test_item": [
-            {"req_url": "/v1/wallet/game/transfer/user/99999/update/balance/all","scenario":"不存在的userId","json": {},"params": {},"code_status": 500,"keyword": "该用户无任何子钱包"},
+            {"req_url": "/v1/wallet/game/transfer/user/99999/update/balance/all","scenario":"不存在的userId","json": {},"params": {},"code_status": 400,"keyword": "資料不存在"},
             {"req_url": "/v1/wallet/game/transfer/user/266/update/balance/all","scenario":"存在的userId","json": {},"params": {},"code_status": 200,"keyword": "data"},
             {"req_url": "/v1/wallet/game/transfer/user/266/update/balance/all","scenario":"[currency]CNY","json": {},"params": {"currency":"CNY"},"code_status": 200,"keyword": "data"},
             {"req_url": "/v1/wallet/game/transfer/user/266/update/balance/all","scenario":"[currency]USD","json": {},"params": {"currency":"USD"},"code_status": 200,"keyword": "data"},

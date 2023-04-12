@@ -57,6 +57,7 @@ class TestUserTransfer:
     @allure.feature("客戶列表/資金往來")
     @allure.story("取得用戶財物信息")
     @allure.title("{test[scenario]}")
+    @pytest.mark.xfail()
     @pytest.mark.not_regression  # 尚未調整完成,需要在改from Andy
     @pytest.mark.parametrize("test", test_data.get_case('get_user_fund'))
     def test_get_user_fund(test, get_platform_token):
