@@ -188,12 +188,20 @@ class EnvReader:
         self.SECRET = config['secret']['secret']
 
     def __load_mongo(self):
-        self.MONGO_PLT_HOST = config['mongo_connection']['mongo_plt_host']
-        self.MONGO_CS_HOST = config['mongo_connection']['mongo_cs_host']
-        self.MONGO_PLT_ACCOUNT = config['mongo_connection']['mongo_plt_account']
-        self.MONGO_CS_ACCOUNT = config['mongo_connection']['mongo_cs_account']
-        self.MONGO_PLT_PASSWORD = config['mongo_connection']['mongo_plt_password']
-        self.MONGO_CS_PASSWORD = config['mongo_connection']['mongo_cs_password']
+        if os.getenv('MODE') is None:
+            self.MONGO_PLT_HOST = config['mongo_connection']['mongo_plt_host']
+            self.MONGO_CS_HOST = config['mongo_connection']['mongo_cs_host']
+            self.MONGO_PLT_ACCOUNT = config['mongo_connection']['mongo_plt_account']
+            self.MONGO_CS_ACCOUNT = config['mongo_connection']['mongo_cs_account']
+            self.MONGO_PLT_PASSWORD = config['mongo_connection']['mongo_plt_password']
+            self.MONGO_CS_PASSWORD = config['mongo_connection']['mongo_cs_password']
+        else:
+            self.MONGO_PLT_HOST = os.getenv('MONGO_PLT_HOST')
+            self.MONGO_CS_HOST = os.getenv('MONGO_CS_HOST')
+            self.MONGO_PLT_ACCOUNT = os.getenv('MONGO_PLT_ACCOUNT')
+            self.MONGO_CS_ACCOUNT = os.getenv('MONGO_CS_ACCOUNT')
+            self.MONGO_PLT_PASSWORD = os.getenv('MONGO_PLT_PASSWORD')
+            self.MONGO_CS_PASSWORD = os.getenv('MONGO_CS_PASSWORD')
 
 
 class ResponseVerification:
