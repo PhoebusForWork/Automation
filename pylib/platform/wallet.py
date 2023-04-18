@@ -300,7 +300,7 @@ class WalletGameTransferFailed(PlatformAPI):
         cs_wallet = Wallet()
         cs_wallet.login(deviceId="345",
                         username='AutoTester',
-                        password="abc123456").json()['data']
+                        password="abc123456")
         cs_wallet.wallet_game_transfer_withdraw_all()
         time.sleep(2)
         # 回收後進行redis MOCK配置
@@ -336,7 +336,7 @@ class WalletGameTransferFailed(PlatformAPI):
         cs_wallet = Wallet()
         cs_wallet.login(deviceId="345",
                         username=cs_user,
-                        password="abc123456").json()['data']["token"]
+                        password="abc123456")
         cs_wallet.wallet_game_transfer_withdraw_all()
         time.sleep(2)
         #  回收後進行redis MOCK配置

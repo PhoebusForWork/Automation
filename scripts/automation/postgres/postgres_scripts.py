@@ -6,7 +6,7 @@ def host_platform():
     host_platform = Postgresql(database='host_platform')
     host_platform.run_sql('''
         UPDATE host_platform.platform SET secret = '7E79731B19717750E618A4E0EFF248DA6AE334BB0706A31BC36A690A51F1A8E1' WHERE id = 1;
-    ''')
+        ''')
 
 
 def plt_account():
@@ -26,12 +26,12 @@ def plt_account():
 def plt_game():
     plt_game = Postgresql(database='plt_game')
     plt_game.run_sql('''
-    UPDATE plt_game.vs_game SET status = true::boolean
-    ''')
+        UPDATE plt_game.vs_game SET status = true::boolean
+        ''')
 
 
 def wallet():
     wallet = Postgresql(database='wallet')
     wallet.run_sql('''
-    UPDATE wallet.vs_wallet SET balance = 100.0000::numeric(21,4) WHERE user_id in (1,2,3,4,5,6)
-    ''')
+        UPDATE wallet.vs_wallet SET balance = 100.0000::numeric(21,4) WHERE user_id in (1,2,3,4,5,6)
+        ''')

@@ -11,13 +11,13 @@ def super_admin_initialize_and_create_admin():
     code = accountAdmin.imgcode()
     accountAdmin.login(username="superAdmin",
                        password="abc1234567",
-                       imgCode=code).json()['data']['token']
+                       imgCode=code)
     accountAdmin.edit_password(oldPassword='abc1234567',
                                newPassword='abc123456')
     code = accountAdmin.imgcode()
     accountAdmin.login(username="superAdmin",
                        password="abc123456",
-                       imgCode=code).json()['data']['token']
+                       imgCode=code)
 
     account_list = ['account001', 'account002', 'account003', 'deltest001']
     for account_name in account_list:
@@ -38,7 +38,7 @@ def login_account():
     code = login_account.imgcode()
     login_account.login(username="account001",
                         password="abc123456",
-                        imgCode=code).json()['data']['token']
+                        imgCode=code)
 
 
 def turn_on_the_game_to_test():

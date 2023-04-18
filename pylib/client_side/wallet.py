@@ -100,7 +100,6 @@ class TestGameTransferMock(WebAPI):
 
     #  塞轉帳用的MOCK資料
     def add_mock(self,
-                 user_id,
                  web_token=None,
                  channel_code=None,
                  gameBalance=None,
@@ -110,11 +109,10 @@ class TestGameTransferMock(WebAPI):
         request_body = {
             "method": "post",
             "url": f"/v1/test/game/transfer/mock/{channel_code}",
-            "json": {
-                    "url": None,
-                    "gameBalance": gameBalance,
-                    "result": result
-                    }
+            "json": {"url": None,
+                     "gameBalance": gameBalance,
+                     "result": result
+                     }
         }
         response = self.send_request(**request_body)
         return response.json()
