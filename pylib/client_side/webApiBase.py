@@ -13,7 +13,8 @@ class WebAPI(API_Controller):
         if token:
             self.request_session.headers.update({"token": token})
 
-    def login(self, deviceId="123", osType="WEB", username='qwe220805', password='abc123456', code=None):
+    def login(self, deviceId="123", osType="WEB",
+              username='qwe220805', password='abc123456', code=None):
         self.request_session.headers.update({"device-id": deviceId})
         self.request_session.headers.update({"os-type": osType})
 
@@ -52,21 +53,25 @@ class WebAPI(API_Controller):
 
     # 註冊帳號
     def user_register(
-            self, deviceId="123", osType="WEB", mobile='13224455667', code="000000", countryCode=86,
-            username='tester001', password="", confirmPassword=None, proxyCode=None
+            self, deviceId="123", osType="WEB",
+            username='tester001', password="",
+            confirmPassword=None, proxyCode=None,
+            captchaValidation={"channelName": "string", "imgToken": "string"}
     ):
         self.request_session.headers.update({"device-id": deviceId})
         self.request_session.headers.update({"os-type": osType})
 
         request_body = {
             "method": "post",
-            "url": "/v1/user/register",
+            "url": "/v2/user/register",
             "json": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
-        self.request_session.headers.update({"uid": str(response.json()['data']['userId'])})
-        self.request_session.headers.update({"token": str(response.json()['data']['token'])})
+        self.request_session.headers.update(
+            {"uid": str(response.json()['data']['userId'])})
+        self.request_session.headers.update(
+            {"token": str(response.json()['data']['token'])})
         return response.json()
 
     # 忘記密碼,發送驗證碼
@@ -89,7 +94,8 @@ class WebAPI(API_Controller):
         return response.json()
 
     # 用戶重設密碼
-    def reset_pwd(self, deviceId="123", osType="WEB", code=None, username=None, telephone=None, newPwd=None):
+    def reset_pwd(self, deviceId="123", osType="WEB",
+                  code=None, username=None, telephone=None, newPwd=None):
         self.request_session.headers.update({"device-id": deviceId})
         self.request_session.headers.update({"os-type": osType})
 
@@ -103,7 +109,8 @@ class WebAPI(API_Controller):
         return response.json()
 
     # 手機快捷登陸
-    def mobile_login(self, deviceId="123", osType="WEB", telephone=None, code=None):
+    def mobile_login(self, deviceId="123",
+                     osType="WEB", telephone=None, code=None):
         self.request_session.headers.update({"device-id": deviceId})
         self.request_session.headers.update({"os-type": osType})
 

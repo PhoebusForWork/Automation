@@ -53,14 +53,18 @@ class Game(PlatformAPI):
         return response.json()
 
     # 遊戲開啟/關閉狀態
-    def edit_game_status(self, plat_token=None, game_code=None, status=None):
+    def edit_game_status(self, plat_token=None,
+                         game_code=None,
+                         status=None,
+                         currency=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
         request_body = {
             "method": "put",
             "url": f"/v1/game/{game_code}/status",
-            "params": {"status": status}
+            "params": {"status": status,
+                       "currency": currency}
         }
 
         response = self.send_request(**request_body)
