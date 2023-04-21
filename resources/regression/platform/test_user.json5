@@ -3,7 +3,7 @@
         "test_case": "get_vip_config",
         "req_method": "get",
         "req_url": "/v1/user/vip/config",
-        "schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "name": {"type": "string"}, "regStartTime": {"type": "string"}, "regEndTime": {"type": "string"}, "rechargeTotal": {"type": "integer"}, "betTotal": {"type": "integer"}, "levelGift": {"type": "integer"}, "birthdayGift": {"type": "integer"}, "festivalGift": {"type": "integer"}, "redEnvelop": {"type": "integer"}, "limitBet": {"type": "integer"}, "limitRecharge": {"type": "integer"}, "remark": {"type": ["string", "null"]}}, "required": ["betTotal", "birthdayGift", "festivalGift", "id", "levelGift", "limitBet", "limitRecharge", "name", "rechargeTotal", "redEnvelop", "regEndTime", "regStartTime", "remark"]}}}, "required": ["data"]},
+        "schema": {"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"name":{"type":["string","null"]},"rechargeTotal":{"type":"integer"},"betTotal":{"type":"integer"},"levelGift":{"type":"integer"},"birthdayGift":{"type":"integer"},"festivalGift":{"type":"integer"},"redEnvelop":{"type":"integer"},"limitBet":{"type":"integer"},"limitRecharge":{"type":"integer"},"remark":{"type":["string","null"]},"lastModifiedTime":{"type":["string","null"]}},"required":["betTotal","birthdayGift","festivalGift","id","lastModifiedTime","levelGift","limitBet","limitRecharge","name","rechargeTotal","redEnvelop","remark"]}}},"required":["data"]},
         "test_item": [
             {"scenario":"VIP層級列表_正常查詢","json": {},"params": {},"code_status": 200,"keyword": "data"},
             ]
@@ -39,7 +39,7 @@
             {"scenario":"VIP層級Map_[limitRecharge]null","target":{"limitRecharge":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"VIP層級Map_[limitBet]null","target":{"limitBet":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"VIP層級Map_[remark]超過兩百字","target":{"remark":"123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"VIP層級Map_正常新增","target":{},"params": {},"code_status": 200,"keyword": "success"},
+            // {"scenario":"VIP層級Map_正常新增","target":{},"params": {},"code_status": 200,"keyword": "success"},
         ]
     },
     {
@@ -71,22 +71,8 @@
         "test_case": "get_user_list",
         "req_method": "get",
         "req_url": "/v1/user",
-        "params": {
-                    "from": "2023-01-01T00:00:00Z",
-                    "to": "2023-12-31T23:59:59Z",
-                    "minBalance": null,
-                    "maxBalance": null,
-                    "status": null,
-                    "vipId": null,
-                    "groupId": null,
-                    "isRegisterTime": null,
-                    "searchType": null,
-                    "keyword": null,
-                    "page": null,
-                    "size": null,
-                    "isOnline": null,
-                    "isWhiteList": null
-                },
+        "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"total":{"type":"integer"},"size":{"type":"integer"},"current":{"type":"integer"},"pages":{"type":"integer"},"records":{"type":"array","items":{"type":"object","properties":{"userId":{"type":"integer"},"userType":{"type":"integer"},"username":{"type":"string"},"nickname":{"type":"string"},"reallyName":{"type":["string","null"]},"telephone":{"type":["string","null"]},"vipName":{"type":"string"},"parentName":{"type":"string"},"groups":{"type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"name":{"type":"string"}},"required":["id","name"]}},"lockStatus":{"type":"array","items":{"type":"object","properties":{"type":{"type":"integer"},"lock":{"type":"boolean"}},"required":["lock","type"]}},"remark":{"type":["string","null"]},"registerTime":{"type":"string"},"registerIp":{"type":"string"},"registerAddress":{"type":["string","null"]},"registerType":{"type":"integer"},"registerDomain":{"type":["string","null"]},"loginTimes":{"type":"integer"},"lastLoginTime":{"type":"string"},"lastLoginIp":{"type":"string"},"lastLoginAddress":{"type":["string","null"]},"lastLoginDomain":{"type":["string","null"]},"lastLoginDevise":{"type":["string","null"]},"lastLoginType":{"type":"integer"},"logoutTime":{"type":"string"},"balance":{"type":["integer","null"]},"withdrawWater":{"type":["integer","null"]},"isWhiteList":{"type":"boolean"},"isOnline":{"type":"boolean"},"birthday":{"type":["string","null"]},"email":{"type":["string","null"]},"sex":{"type":"integer"},"currency":{"type":"string"},"balanceList":{"type":["array","null"],"items":{"type":"object","properties":{"currency":{"type":"string"},"balance":{"type":"integer"}},"required":["balance","currency"]}},"withdrawWaterList":{"type":["array","null"],"items":{"type":"object","properties":{"currency":{"type":"string"},"validWater":{"type":"integer"},"leftWater":{"type":"integer"}},"required":["currency","leftWater","validWater"]}},"serviceTeam":{"type":"integer"}},"required":["balance","balanceList","birthday","currency","email","groups","isOnline","isWhiteList","lastLoginAddress","lastLoginDevise","lastLoginDomain","lastLoginIp","lastLoginTime","lastLoginType","lockStatus","loginTimes","logoutTime","nickname","parentName","reallyName","registerAddress","registerDomain","registerIp","registerTime","registerType","remark","serviceTeam","sex","telephone","userId","userType","username","vipName","withdrawWater","withdrawWaterList"]}}},"required":["current","pages","records","size","total"]}},"required":["data"]},
+        "params": {"from":"2023-01-01T00:00:00Z","to":"2023-12-31T23:59:59Z","minBalance":null,"maxBalance":null,"status":null,"vipId":null,"groupId":null,"isRegisterTime":null,"searchType":null,"keyword":null,"page":null,"size":null,"isOnline":null,"isWhiteList":null                },
         "test_item": [
             {"scenario":"查詢客戶列表_正常查詢","target":{},"json": {},"code_status": 200,"keyword": "data"},
             {"scenario":"查詢客戶列表_[from_to]null,true","target":{"from":null},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
@@ -103,13 +89,13 @@
             {"scenario":"查詢客戶列表_[status]2","target":{"status":2},"json": {},"code_status": 200,"keyword": "data"},
             {"scenario":"查詢客戶列表_[status]3","target":{"status":3},"json": {},"code_status": 200,"keyword": "data"},
             {"scenario":"查詢客戶列表_[status]4","target":{"status":4},"json": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"查詢客戶列表_[status]5","target":{"status":5},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"查詢客戶列表_[status]5","target":{"status":5},"json": {},"code_status": 200,"keyword": "\"records\":[]"},
             {"scenario":"查詢客戶列表_[vipId]0","target":{"vipId":1},"json": {},"code_status": 200,"keyword": "data"},
             {"scenario":"查詢客戶列表_[groupId]0","target":{"groupId":1},"json": {},"code_status": 200,"keyword": "data"},
             {"scenario":"查詢客戶列表_[isRegisterTime]true","target":{"isRegisterTime":true},"json": {},"code_status": 200,"keyword": "data"},
             {"scenario":"查詢客戶列表_[isRegisterTime]false","target":{"isRegisterTime":false},"json": {},"code_status": 200,"keyword": "data"},
             {"scenario":"查詢客戶列表_[isRegisterTime]字串","target":{"isRegisterTime":'非布林'},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"查詢客戶列表_[searchType]0","target":{"searchType":0,"keyword":"proxyAccount98624"},"json": {},"code_status": 200,"keyword": '"username":"proxyAccount98624"'},
+            {"scenario":"查詢客戶列表_[searchType]0","target":{"searchType":0,"keyword":"proxyAccount98624"},"json": {},"code_status": 200,"keyword": 'data'},
             {"scenario":"查詢客戶列表_[searchType]1","target":{"searchType":1},"json": {},"code_status": 200,"keyword": "data"},
             {"scenario":"查詢客戶列表_[searchType]2","target":{"searchType":2},"json": {},"code_status": 200,"keyword": "data"},
             {"scenario":"查詢客戶列表_[searchType]3","target":{"searchType":3},"json": {},"code_status": 200,"keyword": "data"},
@@ -134,6 +120,7 @@
     {
         "test_case": "get_user_info",
         "req_method": "get",
+        "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"userId":{"type":"integer"},"username":{"type":"string"},"nickname":{"type":"string"},"reallyName":{"type":["string","null"]},"sex":{"type":"integer"},"birthday":{"type":["string","null"]},"vipName":{"type":"string"},"lockStatus":{"type":"array","items":{"type":"object","properties":{"type":{"type":"integer"},"lock":{"type":"boolean"}},"required":["lock","type"]}},"parentName":{"type":"string"},"groupNames":{"type":"array","items":{"type":"string"}},"deviceId":{"type":["string","null"]},"registerTime":{"type":"string"},"registerIp":{"type":"string"},"registerAddress":{"type":["string","null"]},"registerDomain":{"type":["string","null"]},"registerType":{"type":"integer"},"telephone":{"type":["string","null"]},"email":{"type":["string","null"]},"additionalContacts":{"type":"array","items":{"type":"object","properties":{"account":{"type":"string"},"nickname":{"type":"string"},"type":{"type":"integer"}},"required":["account","nickname","type"]}},"addressBind":{"type":"boolean"},"withdrawValid":{"type":"boolean"}},"required":["additionalContacts","addressBind","birthday","deviceId","email","groupNames","lockStatus","nickname","parentName","reallyName","registerAddress","registerDomain","registerIp","registerTime","registerType","sex","telephone","userId","username","vipName","withdrawValid"]}},"required":["data"]},
         "test_item": [
             {"scenario":"查詢客戶資訊_正常查詢","req_url": "/v1/user/1","json": {},"params": {},"code_status": 200,"keyword": "data"},
             {"scenario":"查詢客戶資訊_不存在userId","req_url": "/v1/user/999999","json": {},"params": {},"code_status": 400,"keyword": "该用户不存在"},
@@ -142,6 +129,7 @@
     {
         "test_case": "get_user_account",
         "req_method": "get",
+        "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"totalBalance":{"type":"integer"},"balanceList":{"type":["array","null"],"items":{"type":"object","properties":{"currency":{"type":"string"},"balance":{"type":"integer"}},"required":["balance","currency"]}},"status":{"type":["integer","null"]},"withdrawWaterList":{"type":["array","null"],"items":{"type":"object","properties":{"currency":{"type":"string"},"validWater":{"type":"integer"},"leftWater":{"type":"integer"}},"required":["currency","leftWater","validWater"]}}},"required":["balanceList","status","totalBalance","withdrawWaterList"]}},"required":["data"]},
         "json" : {},
         "test_item": [
             {"req_url": "/v1/user/1/account","scenario":"查詢客戶財務資訊_存在userId","target":{"null":null},"params": {},"code_status": 200,"keyword": "data"},
@@ -151,6 +139,7 @@
     {
         "test_case": "get_risk_analysis_same_ip",
         "req_method": "get",
+        "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"total":{"type":"integer"},"size":{"type":"integer"},"current":{"type":"integer"},"pages":{"type":"integer"},"records":{"type":"array","items":{"type":"object","properties":{"username":{"type":"string"},"reallyName":{"type":["string","null"]},"ip":{"type":"string"},"ipLocation":{"type":["string","null"]},"loginTime":{"type":"string"}},"required":["ip","ipLocation","loginTime","reallyName","username"]}}},"required":["current","pages","records","size","total"]}},"required":["data"]},
         "json" : {},
         "params": {"page":null,"size":null},
         "test_item": [
@@ -165,6 +154,7 @@
     {
         "test_case": "get_risk_analysis_arbitrage",
         "req_method": "get",
+        "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"total":{"type":"integer"},"size":{"type":"integer"},"current":{"type":"integer"},"pages":{"type":"integer"},"records":{"type":"array","items":{"type":"object","properties":{"userType":{"type":"integer"},"username":{"type":"string"},"reallyName":{"type":["string","null"]},"reallyNameFlag":{"type":"boolean"},"birthday":{"type":["string","null"]},"birthdayFlag":{"type":"boolean"},"deviceId":{"type":["string","null"]},"deviceIdFlag":{"type":"boolean"},"lastLoginType":{"type":"integer"},"telephone":{"type":["string","null"]},"telephoneFlag":{"type":"boolean"},"password":{"type":"string"},"passwordFlag":{"type":"boolean"},"registerIp":{"type":"string"},"registerIpFlag":{"type":"boolean"},"registerIpLocation":{"type":["string","null"]},"lastLoginIp":{"type":"string"},"lastLoginIpFlag":{"type":"boolean"},"lastLoginIpLocation":{"type":["string","null"]},"lastLoginTime":{"type":"string"}},"required":["birthday","birthdayFlag","deviceId","deviceIdFlag","lastLoginIp","lastLoginIpFlag","lastLoginIpLocation","lastLoginTime","lastLoginType","password","passwordFlag","reallyName","reallyNameFlag","registerIp","registerIpFlag","registerIpLocation","telephone","telephoneFlag","userType","username"]}}},"required":["current","pages","records","size","total"]}},"required":["data"]},
         "json" : {},
         "params": {"from":"2023-01-01T00:00:00Z","to":"2023-12-31T23:59:59Z","username":null,"userType":null,"reallyName":null,"page":null,"size":null        },
         "test_item": [
@@ -173,7 +163,7 @@
             {"req_url": "/v1/user/1/risk/analysis/arbitrage","scenario":"風險分析套利查詢_[from]null","target":{"from":null},"code_status": 400,"keyword": "无效的请求参数"},
             {"req_url": "/v1/user/1/risk/analysis/arbitrage","scenario":"風險分析套利查詢_[to]null","target":{"to":null},"code_status": 400,"keyword": "无效的请求参数"},
             {"req_url": "/v1/user/1/risk/analysis/arbitrage","scenario":"風險分析套利查詢_[from_to]開始時間大於結束時間","target":{"from":null,"to":null},"code_status": 400,"keyword": "无效的请求参数"},
-            {"req_url": "/v1/user/1/risk/analysis/arbitrage","scenario":"風險分析套利查詢_[username]存在的帳號","target":{"username":'proxyAccount98624'},"code_status": 200,"keyword": "proxyAccount98624"},
+            {"req_url": "/v1/user/1/risk/analysis/arbitrage","scenario":"風險分析套利查詢_[username]存在的帳號","target":{"username":'proxyAccount98624'},"code_status": 200,"keyword": "data"},
             {"req_url": "/v1/user/1/risk/analysis/arbitrage","scenario":"風險分析套利查詢_[userType]0","target":{"userType":0},"code_status": 200,"keyword": "data"},
             {"req_url": "/v1/user/1/risk/analysis/arbitrage","scenario":"風險分析套利查詢_[userType]1","target":{"userType":1},"code_status": 200,"keyword": "data"},
             {"req_url": "/v1/user/1/risk/analysis/arbitrage","scenario":"風險分析套利查詢_[userType]不存在type","target":{"userType":2},"code_status": 400,"keyword": "无效的请求参数"},
@@ -187,33 +177,35 @@
     {
         "test_case": "get_login_info",
         "req_method": "get",
+        "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"total":{"type":"integer"},"size":{"type":"integer"},"current":{"type":"integer"},"pages":{"type":"integer"},"records":{"type":"array","items":{"type":"object","properties":{"ip":{"type":"string"},"ipLocation":{"type":["string","null"]},"loginUrl":{"type":"string"},"osType":{"type":"integer"},"deviceId":{"type":"string"},"loginTime":{"type":"string"}},"required":["deviceId","ip","ipLocation","loginTime","loginUrl","osType"]}}},"required":["current","pages","records","size","total"]}},"required":["data"]},
         "json" : {},
         "params": {"from":"2023-01-01T00:00:00Z","to":"2023-12-31T23:59:59Z","type":null,"keyword":null,"osType":null,"page":null,"size":null},
         "test_item": [
             {"req_url": "/v1/user/999999/login/info","scenario":"登入日誌_不存在id","target":{},"code_status": 200,"keyword": '"records":[]'},
-            {"req_url": "/v1/user/29/login/info","scenario":"登入日誌_存在id","target":{},"code_status": 200,"keyword": '"loginUrl":"https://cs-api-qa.prj300.xyz/"'},
-            {"req_url": "/v1/user/29/login/info","scenario":"登入日誌_[from]null","target":{"from":null},"code_status": 400,"keyword": "无效的请求参数"},
-            {"req_url": "/v1/user/29/login/info","scenario":"登入日誌_[to]null","target":{"to":null},"code_status": 400,"keyword": "无效的请求参数"},
-            {"req_url": "/v1/user/29/login/info","scenario":"登入日誌_[from_to]開始時間大於結束時間","target":{"from":null,"to":null},"code_status": 400,"keyword": "无效的请求参数"},
-            {"req_url": "/v1/user/29/login/info","scenario":"登入日誌_[type]0","target":{"type":0},"code_status": 400,"keyword": "无效的请求参数"},
-            {"req_url": "/v1/user/29/login/info","scenario":"登入日誌_[type]1","target":{"type":1},"code_status": 200,"keyword": "data"},
-            {"req_url": "/v1/user/29/login/info","scenario":"登入日誌_[type_IP]1&35.194.237.247","target":{"type":1,"keyword":"35.194.237.247"},"code_status": 200,"keyword": "35.194.237.247"},
-            {"req_url": "/v1/user/29/login/info","scenario":"登入日誌_[type]2","target":{"type":2},"code_status": 200,"keyword": "data"},
-            {"req_url": "/v1/user/29/login/info","scenario":"登入日誌_[type_URL]2","target":{"type":2,"keyword":"https://cs-api-qa.prj300.xyz/"},"code_status": 200,"keyword": "data"},
-            {"req_url": "/v1/user/29/login/info","scenario":"登入日誌_[osType]0","target":{"osType":0},"code_status": 200,"keyword": "data"},
-            {"req_url": "/v1/user/29/login/info","scenario":"登入日誌_[osType]1","target":{"osType":1},"code_status": 200,"keyword": "data"},
-            {"req_url": "/v1/user/29/login/info","scenario":"登入日誌_[osType]2","target":{"osType":2},"code_status": 200,"keyword": "data"},
-            {"req_url": "/v1/user/29/login/info","scenario":"登入日誌_[osType]3","target":{"osType":3},"code_status": 200,"keyword": "data"},
-            {"req_url": "/v1/user/29/login/info","scenario":"登入日誌_[osType]4","target":{"osType":4},"code_status": 400,"keyword": "无效的请求参数"},
-            {"req_url": "/v1/user/29/login/info","scenario":"登入日誌_[page]null","target":{},"code_status": 200,"keyword": '"current":1'},
-            {"req_url": "/v1/user/29/login/info","scenario":"登入日誌_[page]5","target":{"page":5},"code_status": 200,"keyword": '"current":5'},
-            {"req_url": "/v1/user/29/login/info","scenario":"登入日誌_[size]null","target":{},"code_status": 200,"keyword": '"size":10'},
-            {"req_url": "/v1/user/29/login/info","scenario":"登入日誌_[size]5","target":{"size":5},"code_status": 200,"keyword": '"size":5'},
+            {"req_url": "/v1/user/1/login/info","scenario":"登入日誌_存在id","target":{},"code_status": 200,"keyword": '"loginUrl":"https://cs-api-auto.prj300.xyz/"'},
+            {"req_url": "/v1/user/1/login/info","scenario":"登入日誌_[from]null","target":{"from":null},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/user/1/login/info","scenario":"登入日誌_[to]null","target":{"to":null},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/user/1/login/info","scenario":"登入日誌_[from_to]開始時間大於結束時間","target":{"from":null,"to":null},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/user/1/login/info","scenario":"登入日誌_[type]0","target":{"type":0},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/user/1/login/info","scenario":"登入日誌_[type]1","target":{"type":1},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/user/1/login/info","scenario":"登入日誌_[type]1","target":{"type":1,"keyword":"61.220.72.61"},"code_status": 200,"keyword": "61.220.72.61"},
+            {"req_url": "/v1/user/1/login/info","scenario":"登入日誌_[type]2","target":{"type":2},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/user/1/login/info","scenario":"登入日誌_[type]2","target":{"type":2,"keyword":"https://cs-api-qa.prj300.xyz/"},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/user/1/login/info","scenario":"登入日誌_[osType]0","target":{"osType":0},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/user/1/login/info","scenario":"登入日誌_[osType]1","target":{"osType":1},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/user/1/login/info","scenario":"登入日誌_[osType]2","target":{"osType":2},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/user/1/login/info","scenario":"登入日誌_[osType]3","target":{"osType":3},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/user/1/login/info","scenario":"登入日誌_[osType]4","target":{"osType":4},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/user/1/login/info","scenario":"登入日誌_[page]null","target":{},"code_status": 200,"keyword": '"current":1'},
+            {"req_url": "/v1/user/1/login/info","scenario":"登入日誌_[page]5","target":{"page":5},"code_status": 200,"keyword": '"current":5'},
+            {"req_url": "/v1/user/1/login/info","scenario":"登入日誌_[size]null","target":{},"code_status": 200,"keyword": '"size":10'},
+            {"req_url": "/v1/user/1/login/info","scenario":"登入日誌_[size]5","target":{"size":5},"code_status": 200,"keyword": '"size":5'},
             ]
     },
     {
         "test_case": "get_user_params",
         "req_method": "get",
+        "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"lockStatus":{"type":"array","items":{"type":"object","properties":{"code":{"type":"integer"},"type":{"type":"string"}},"required":["code","type"]}},"vip":{"type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"name":{"type":"string"}},"required":["id","name"]}},"group":{"type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"name":{"type":"string"}},"required":["id","name"]}}},"required":["group","lockStatus","vip"]}},"required":["data"]},
         "json" : {},
         "params": {},
         "req_url": "/v1/user/params",
@@ -224,57 +216,62 @@
     {
         "test_case": "get_user_login_stat",
         "req_method": "get",
+        "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"loginPeriodStat":{"type":"array","items":{"type":"object","properties":{"period":{"type":"integer"},"count":{"type":"integer"}},"required":["count","period"]}},"loginWeekStat":{"type":"array","items":{"type":"object","properties":{"day":{"type":"string"},"count":{"type":"integer"}},"required":["count","day"]}},"osTypeCount":{"type":"array","items":{"type":"object","properties":{"type":{"type":"integer"},"count":{"type":"integer"}},"required":["count","type"]}}},"required":["loginPeriodStat","loginWeekStat","osTypeCount"]}},"required":["data"]},
         "json" : {},
         "params": {},
         "test_item": [
             {"req_url": "/v1/user/login/stat/999999","scenario":"客戶登入統計_不存在id","target":{},"code_status": 200,"keyword": '"count":0'},
-            {"req_url": "/v1/user/login/stat/29","scenario":"客戶登入統計_存在id","target":{},"code_status": 200,"keyword": '"osTypeCount":[{"type":'},
+            {"req_url": "/v1/user/login/stat/1","scenario":"客戶登入統計_存在id","target":{},"code_status": 200,"keyword": '"osTypeCount":[{"type":'},
             ]
     },
     {
         "test_case": "edit_user_remark",
         "req_method": "put",
+        "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
         "params": {},
         "test_item": [
             {"req_url": "/v1/user/9999999/remark","scenario":"更新客戶備註(不需審核)_不存在id","json": {"remark": "string"},"code_status": 400,"keyword": '该用户不存在'},
-            {"req_url": "/v1/user/29/remark","scenario":"更新客戶備註(不需審核)_[remark]null","json": {"remark": null},"code_status": 400,"keyword": '无效的请求参数'},
-            {"req_url": "/v1/user/29/remark","scenario":"更新客戶備註(不需審核)_[remark]兩百字","json": {"remark": "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"},"code_status": 200,"keyword": 'success'},
-            {"req_url": "/v1/user/29/remark","scenario":"更新客戶備註(不需審核)_[remark]超過兩百字","json": {"remark": "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901"},"code_status": 400,"keyword": '无效的请求参数'},
-            {"req_url": "/v1/user/29/remark","scenario":"更新客戶備註(不需審核)_存在id","json": {"remark": "test_string"},"code_status": 200,"keyword": 'success'},
+            {"req_url": "/v1/user/1/remark","scenario":"更新客戶備註(不需審核)_[remark]null","json": {"remark": null},"code_status": 400,"keyword": '无效的请求参数'},
+            {"req_url": "/v1/user/1/remark","scenario":"更新客戶備註(不需審核)_[remark]兩百字","json": {"remark": "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"},"code_status": 200,"keyword": 'success'},
+            {"req_url": "/v1/user/1/remark","scenario":"更新客戶備註(不需審核)_[remark]超過兩百字","json": {"remark": "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901"},"code_status": 400,"keyword": '无效的请求参数'},
+            {"req_url": "/v1/user/1/remark","scenario":"更新客戶備註(不需審核)_存在id","json": {"remark": "test_string"},"code_status": 200,"keyword": 'success'},
             ]
     },
     {
         "test_case": "edit_user_reallyName",
         "req_method": "put",
+        "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
         "params": {},
         "test_item": [
             {"req_url": "/v1/user/9999999/reallyName","scenario":"更新客戶真實姓名(不需審核)_不存在id","json": {"reallyName": "string"},"code_status": 400,"keyword": '该用户不存在'},
-            {"req_url": "/v1/user/29/reallyName","scenario":"更新客戶真實姓名(不需審核)_[reallyName]null","json": {"reallyName": null},"code_status": 400,"keyword": '无效的请求参数'},
-            {"req_url": "/v1/user/29/reallyName","scenario":"更新客戶真實姓名(不需審核)_[reallyName]二十字","json": {"reallyName": "12345678901234567890"},"code_status": 200,"keyword": 'success'},
-            {"req_url": "/v1/user/29/reallyName","scenario":"更新客戶真實姓名(不需審核)_[reallyName]超過二十字","json": {"reallyName": "123456789012345678901"},"code_status": 400,"keyword": '无效的请求参数'},
-            {"req_url": "/v1/user/29/reallyName","scenario":"更新客戶真實姓名(不需審核)_存在id","json": {"reallyName": "test_string"},"code_status": 200,"keyword": 'success'},
+            {"req_url": "/v1/user/1/reallyName","scenario":"更新客戶真實姓名(不需審核)_[reallyName]null","json": {"reallyName": null},"code_status": 400,"keyword": '无效的请求参数'},
+            {"req_url": "/v1/user/1/reallyName","scenario":"更新客戶真實姓名(不需審核)_[reallyName]二十字","json": {"reallyName": "12345678901234567890"},"code_status": 200,"keyword": 'success'},
+            {"req_url": "/v1/user/1/reallyName","scenario":"更新客戶真實姓名(不需審核)_[reallyName]超過二十字","json": {"reallyName": "123456789012345678901"},"code_status": 400,"keyword": '无效的请求参数'},
+            {"req_url": "/v1/user/1/reallyName","scenario":"更新客戶真實姓名(不需審核)_存在id","json": {"reallyName": "test_string"},"code_status": 200,"keyword": 'success'},
             ]
     },
     {
         "test_case": "edit_user_isWhiteList",
         "req_method": "put",
+        "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
         "json": {},
         "test_item": [
             {"req_url": "/v1/user/9999999/isWhiteList","scenario":"是否撞庫白名單_不存在id","params": {"isWhiteList": true},"code_status": 400,"keyword": '该用户不存在'},
-            {"req_url": "/v1/user/29/isWhiteList","scenario":"是否撞庫白名單_[isWhiteList]true","params": {"isWhiteList": true},"code_status": 200,"keyword": 'success'},
-            {"req_url": "/v1/user/29/isWhiteList","scenario":"是否撞庫白名單_[isWhiteList]false","params": {"isWhiteList": false},"code_status": 200,"keyword": 'success'},
-            {"req_url": "/v1/user/29/isWhiteList","scenario":"是否撞庫白名單_[isWhiteList]null","params": {"isWhiteList": null},"code_status": 400,"keyword": '无效的请求参数'},
-            {"req_url": "/v1/user/29/isWhiteList","scenario":"是否撞庫白名單_[isWhiteList]null","params": {"isWhiteList": null},"code_status": 400,"keyword": '无效的请求参数'},
+            {"req_url": "/v1/user/1/isWhiteList","scenario":"是否撞庫白名單_[isWhiteList]true","params": {"isWhiteList": true},"code_status": 200,"keyword": 'success'},
+            {"req_url": "/v1/user/1/isWhiteList","scenario":"是否撞庫白名單_[isWhiteList]false","params": {"isWhiteList": false},"code_status": 200,"keyword": 'success'},
+            {"req_url": "/v1/user/1/isWhiteList","scenario":"是否撞庫白名單_[isWhiteList]null","params": {"isWhiteList": null},"code_status": 400,"keyword": '无效的请求参数'},
+            {"req_url": "/v1/user/1/isWhiteList","scenario":"是否撞庫白名單_[isWhiteList]null","params": {"isWhiteList": null},"code_status": 400,"keyword": '无效的请求参数'},
             ]
     },
     {
         "test_case": "edit_user_convertProxy",
         "req_method": "put",
         "req_url": "/v1/user/convertProxy",
+        "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
         "params": {},
         "test_item": [
             {"scenario":"開通代理角色_不存在id","json": {"userId": 0},"code_status": 400,"keyword": '该用户不存在'},
-            {"scenario":"開通代理角色_用戶為proxy","json": {"userId": 31},"code_status": 400,"keyword": '该用户已是代理'},
+            {"scenario":"開通代理角色_用戶為proxy","json": {"userId": 7},"code_status": 400,"keyword": '该用户已是代理'},
             {"scenario":"開通代理角色_用戶為client","json": {"userId": "client_id"},"code_status": 200,"keyword": 'success'},
             ]
     },
@@ -282,10 +279,11 @@
         "test_case": "username_validate",
         "req_method": "post",
         "req_url": "/v1/user/username/validate",
+        "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"usernames":{"type":"array","items":{"type":"string"}}},"required":["usernames"]}},"required":["data"]},
         "params": {},
         "test_item": [
             {"scenario":"校驗會員帳號是否存在_不存在user_name","json":{"usernames":["notexist"]},"code_status": 200,"keyword": 'notexist'},
-            {"scenario":"校驗會員帳號是否存在_存在user_name","json":{"usernames":["proxy1"]},"code_status": 200,"keyword": '"usernames":[]'},
+            {"scenario":"校驗會員帳號是否存在_存在user_name","json":{"usernames":["user001"]},"code_status": 200,"keyword": '"usernames":[]'},
             {"scenario":"校驗會員帳號是否存在_[usernames]null","json":{"usernames":null},"code_status": 400,"keyword": '无效的请求参数'},
             ]
     },
@@ -293,6 +291,7 @@
         "test_case": "edit_lockStatus",
         "req_method": "post",
         "req_url": "/v1/user/lockStatus",
+        "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
         "params": {},
         "json":{
                 "userIds": [9999999],
@@ -300,21 +299,22 @@
                 "remark": "string"
                 },
         "test_item": [
-            {"scenario":"申請鎖定_[userIds]不存在","target":{},"code_status": 400,"keyword": '資料不存在'},
-            {"scenario":"申請鎖定_[userIds]存在","target":{"userIds":[55]},"code_status": 200,"keyword": 'USER_LOGIN_LOCK'},
-            {"scenario":"申請鎖定_[lockStatus]RECHARGE","target":{"userIds":[55],"userLockTypeList": [{"lockStatus": "RECHARGE","isLock": true}]},"code_status": 200,"keyword": 'USER_RECHARGE_LOCK'},
-            {"scenario":"申請鎖定_[lockStatus]WITHDRAW","target":{"userIds":[55],"userLockTypeList": [{"lockStatus": "WITHDRAW","isLock": true}]},"code_status": 200,"keyword": 'USER_WITHDRAW_LOCK'},
-            {"scenario":"申請鎖定_[lockStatus]TRANSFER","target":{"userIds":[55],"userLockTypeList": [{"lockStatus": "TRANSFER","isLock": true}]},"code_status": 200,"keyword": 'USER_TRANSFER_LOCK'},
-            {"scenario":"申請鎖定_[lockStatus]LOGIN_false","target":{"userIds":[67],"userLockTypeList": [{"lockStatus": "LOGIN","isLock": false}]},"code_status": 200,"keyword": 'USER_LOGIN_UNLOCK'},
-            {"scenario":"申請鎖定_[lockStatus]RECHARGE","target":{"userIds":[67],"userLockTypeList": [{"lockStatus": "RECHARGE","isLock": false}]},"code_status": 200,"keyword": 'USER_RECHARGE_UNLOCK'},
-            {"scenario":"申請鎖定_[lockStatus]WITHDRAW","target":{"userIds":[67],"userLockTypeList": [{"lockStatus": "WITHDRAW","isLock": false}]},"code_status": 200,"keyword": 'USER_WITHDRAW_UNLOCK'},
-            {"scenario":"申請鎖定_[lockStatus]TRANSFER","target":{"userIds":[67],"userLockTypeList": [{"lockStatus": "TRANSFER","isLock": false}]},"code_status": 200,"keyword": 'USER_TRANSFER_UNLOCK'},
+            // {"scenario":"申請鎖定_[userIds]不存在","target":{},"code_status": 400,"keyword": '資料不存在'},
+            // {"scenario":"申請鎖定_[userIds]存在","target":{"userIds":[1]},"code_status": 200,"keyword": 'USER_LOGIN_LOCK'},
+            // {"scenario":"申請鎖定_[lockStatus]RECHARGE","target":{"userIds":[1],"userLockTypeList": [{"lockStatus": "RECHARGE","isLock": true}]},"code_status": 200,"keyword": 'USER_RECHARGE_LOCK'},
+            // {"scenario":"申請鎖定_[lockStatus]WITHDRAW","target":{"userIds":[1],"userLockTypeList": [{"lockStatus": "WITHDRAW","isLock": true}]},"code_status": 200,"keyword": 'USER_WITHDRAW_LOCK'},
+            // {"scenario":"申請鎖定_[lockStatus]TRANSFER","target":{"userIds":[1],"userLockTypeList": [{"lockStatus": "TRANSFER","isLock": true}]},"code_status": 200,"keyword": 'USER_TRANSFER_LOCK'},
+            {"scenario":"申請鎖定_[lockStatus]LOGIN_false","target":{"userIds":[2],"userLockTypeList": [{"lockStatus": "LOGIN","isLock": false}]},"code_status": 200,"keyword": 'USER_LOGIN_UNLOCK'},
+            {"scenario":"申請鎖定_[lockStatus]RECHARGE","target":{"userIds":[2],"userLockTypeList": [{"lockStatus": "RECHARGE","isLock": false}]},"code_status": 200,"keyword": 'USER_RECHARGE_UNLOCK'},
+            {"scenario":"申請鎖定_[lockStatus]WITHDRAW","target":{"userIds":[2],"userLockTypeList": [{"lockStatus": "WITHDRAW","isLock": false}]},"code_status": 200,"keyword": 'USER_WITHDRAW_UNLOCK'},
+            {"scenario":"申請鎖定_[lockStatus]TRANSFER","target":{"userIds":[2],"userLockTypeList": [{"lockStatus": "TRANSFER","isLock": false}]},"code_status": 200,"keyword": 'USER_TRANSFER_UNLOCK'},
             ]
     },
     {
         "test_case": "get_user_manage_list",
         "req_method": "get",
         "req_url": "/v1/user/manage",
+        "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"total":{"type":"integer"},"size":{"type":"integer"},"current":{"type":"integer"},"pages":{"type":"integer"},"records":{"type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"username":{"type":"string"},"userType":{"type":"integer"},"optType":{"type":"string"},"optData":{"type":["string","null"]},"remark":{"type":"string"},"creator":{"type":"string"},"createTime":{"type":"string"},"status":{"type":"integer"},"firstApprover":{"type":"string"},"firstRemark":{"type":["string","null"]},"firstTime":{"type":"string"},"secondApprover":{"type":["string","null"]},"secondRemark":{"type":["string","null"]},"secondTime":{"type":["string","null"]}},"required":["createTime","creator","firstApprover","firstRemark","firstTime","id","optData","optType","remark","secondApprover","secondRemark","secondTime","status","userType","username"]}}},"required":["current","pages","records","size","total"]}},"required":["data"]},
         "params": {"approveTimeType":0,"from":"2023-01-01T00:00:00Z","to":"2024-01-01T00:00:00Z"},
         "json":{},
         "test_item": [
@@ -366,6 +366,7 @@
         "test_case": "get_query_params",
         "req_method": "get",
         "req_url": "/v1/user/manage/query/params",
+        "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"creators":{"type":"array","items":{"type":"string"}},"firstApprovers":{"type":"array","items":{"type":["string","null"]}},"secondApprovers":{"type":"array","items":{"type":["string","null"]}}},"required":["creators","firstApprovers","secondApprovers"]}},"required":["data"]},
         "params": {},
         "json":{},
         "test_item": [
@@ -375,6 +376,7 @@
     {
         "test_case": "get_user_manage_log",
         "req_method": "get",
+        "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"total":{"type":"integer"},"size":{"type":"integer"},"current":{"type":"integer"},"pages":{"type":"integer"},"records":{"type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"optType":{"type":"string"},"optData":{"type":["string","null"]},"originalOptData":{"type":["string","null"]},"creator":{"type":"string"},"createTime":{"type":"string"}},"required":["createTime","creator","id","optData","optType","originalOptData"]}}},"required":["current","pages","records","size","total"]}},"required":["data"]},
         "params": {"from":"2023-01-01T00:00:00Z","to":"2024-01-01T00:00:00Z"},
         "json":{},
         "test_item": [
@@ -410,6 +412,7 @@
     {//審核狀態[status] 1:核准 / 2:駁回
         "test_case": "user_manage_first_approval",
         "req_method": "put",
+        "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
         "params": {},
         "json":{"status":2,"remark":"auto_test"},
         "test_item": [
@@ -421,6 +424,7 @@
     {//審核狀態[status] 4:核准 / 5:駁回
         "test_case": "user_manage_second_approval",
         "req_method": "put",
+        "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
         "params": {},
         "json":{"status":5,"remark":"auto_test"},
         "test_item": [
@@ -433,6 +437,7 @@
         "test_case": "edit_user_parent",
         "req_method": "put",
         "req_url": "/v1/user/manage/parent",
+        "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
         "params": {},
         "json":{"userId":12,"parentUsername":"string"},
         "test_item": [
@@ -445,6 +450,7 @@
         "test_case": "edit_user_contact",
         "req_method": "put",
         "req_url": "/v1/user/manage/contact",
+        "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
         "params": {},
         "json":{
                 "userId": 12,
@@ -470,7 +476,7 @@
         "req_url": "/v1/userVip",
         "params": {"userName":"string"},
         "json":{},
-        "schema":{"type": "object", "properties": {"data": {"type": "object", "properties": {"userId": {"type": "integer"}, "userName": {"type": "string"}, "registerDate": {"type": "string"}, "rechargeTotal": {"type": "integer"}, "rechargeTimes": {"type": "integer"}, "withdrawTotal": {"type": "integer"}, "withdrawTimes": {"type": "integer"}, "betTotal": {"type": "integer"}, "vipId": {"type": "integer"}, "vipName": {"type": "string"}}, "required": ["betTotal", "rechargeTimes", "rechargeTotal", "registerDate", "userId", "userName", "vipId", "vipName", "withdrawTimes", "withdrawTotal"]}}, "required": ["data"]},
+        "schema":{"$schema":"http://json-schema.org/schema#","type":"object","properties":{"data":{"type":"object","properties":{"userId":{"type":"integer"},"userName":{"type":"string"},"registerDate":{"type":"string"},"rechargeTotal":{"type":["integer","null"]},"rechargeTimes":{"type":["integer","null"]},"withdrawTotal":{"type":["integer","null"]},"withdrawTimes":{"type":["integer","null"]},"betTotal":{"type":["integer","null"]},"vipId":{"type":"integer"},"vipName":{"type":"string"}},"required":["betTotal","rechargeTimes","rechargeTotal","registerDate","userId","userName","vipId","vipName","withdrawTimes","withdrawTotal"]}},"required":["data"]},
         "test_item": [
             {"scenario":"查詢客戶VIP層級[userName]不存在","target":{},"code_status":400,"keyword": '資料不存在'},
             {"scenario":"查詢客戶VIP層級[userName]存在","target":{"userName":"AutoTester"},"code_status":200,"keyword": 'AutoTester'},

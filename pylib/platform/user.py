@@ -250,7 +250,7 @@ class User(PlatformAPI):
 
     def get_client_user(self, plat_token=None):
         target = self.get_user_list(plat_token=plat_token, From='2022-01-01T00:00:00Z', status=0,
-                                    to='2023-01-15T00:00:00Z', page=None, size=1000)
+                                    to='2025-01-15T00:00:00Z', page=None, size=1000)
         client_user = jsonpath.jsonpath(target, "$..records[?(@.userType==0).userId]")
         return client_user[0]
 

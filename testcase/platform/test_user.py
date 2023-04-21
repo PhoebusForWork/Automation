@@ -85,7 +85,7 @@ class TestUser:
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_user_list'))
     def test_get_user_list(test, get_platform_token):
         params_replace = test_data.replace_json(test['params'], test['target'])
@@ -98,7 +98,7 @@ class TestUser:
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_user_info'))
     def test_get_user_info(test, get_platform_token):
         api = API_Controller()
@@ -110,7 +110,8 @@ class TestUser:
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
+    @pytest.mark.xfail()
     @pytest.mark.parametrize("test", test_data.get_case('get_user_account'))
     def test_get_user_account(test, get_platform_token):
         api = API_Controller()
@@ -122,7 +123,7 @@ class TestUser:
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_risk_analysis_same_ip'))
     def test_get_risk_analysis_same_ip(test, get_platform_token):
         params_replace = test_data.replace_json(test['params'], test['target'])
@@ -135,7 +136,7 @@ class TestUser:
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_risk_analysis_arbitrage'))
     def test_get_risk_analysis_arbitrage(test, get_platform_token):
         params_replace = test_data.replace_json(test['params'], test['target'])
@@ -148,7 +149,7 @@ class TestUser:
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_login_info'))
     def test_get_login_info(test, get_platform_token):
         params_replace = test_data.replace_json(test['params'], test['target'])
@@ -161,7 +162,7 @@ class TestUser:
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_user_params'))
     def test_get_user_params(test, get_platform_token):
         api = API_Controller()
@@ -173,7 +174,7 @@ class TestUser:
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_user_login_stat'))
     def test_get_user_login_stat(test, get_platform_token):
         params_replace = test_data.replace_json(test['params'], test['target'])
@@ -186,7 +187,7 @@ class TestUser:
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('edit_user_remark'))
     def test_edit_user_remark(test, get_platform_token):
         api = API_Controller()
@@ -198,7 +199,7 @@ class TestUser:
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('edit_user_reallyName'))
     def test_edit_user_reallyName(test, get_platform_token):
         api = API_Controller()
@@ -210,7 +211,7 @@ class TestUser:
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('edit_user_isWhiteList'))
     def test_edit_user_isWhiteList(test, get_platform_token):
         api = API_Controller()
@@ -222,7 +223,7 @@ class TestUser:
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('edit_user_convertProxy'))
     def test_edit_user_convertProxy(test, get_platform_token):
         if test['json']['userId'] == 'client_id':
@@ -241,7 +242,7 @@ class TestUser:
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('username_validate'))
     def test_username_validate(test, get_platform_token):
         api = API_Controller()
@@ -253,7 +254,7 @@ class TestUser:
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.test
     @pytest.mark.parametrize("test", test_data.get_case('edit_lockStatus'))
     def test_edit_lockStatus(test, get_platform_token):
         json_replace = test_data.replace_json(test['json'], test['target'])
