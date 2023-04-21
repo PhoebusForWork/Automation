@@ -37,8 +37,8 @@ class Postgresql:
             self.cursor.execute(sql)
             data = self.cursor.fetchall()
             return data
-        except:
-            print('select Error')
+        except Exception as e:
+            raise Exception('Postgresql select_sql issue: %s' % str(e))
         finally:
             self.cursor.close()
 
@@ -48,9 +48,10 @@ class Postgresql:
             self.cursor.execute(sql)
             self.db.commit()
             print("SQL Success")
-        except:
-            print("SQL Fail")
+        except Exception as e:
             self.db.rollback()
+            raise Exception('Postgresql select_sql issue: %s' % str(e))
+
         finally:
             self.db.close()
 
@@ -199,6 +200,17 @@ class Mongo:
         except Exception as e:
             raise Exception('MongoDB insert_many issue: %s' % str(e))
 
+    def update_one(self, filter_query, update_query):
+        self._check_db_and_collection()
+        # 檢查query資料型態是dict、並禁止使用empty dict
+        self._check_query_type(filter_query, dict)
+        self._check_query_type(update_query, dict)
+
+        try:
+            self.collection.update_one(filter_query, update_query)
+        except Exception as e:
+            raise Exception('MongoDB update_one issue: %s' % str(e))
+
     def delete(self, query):
         self._check_db_and_collection()
         # 檢查query資料型態是dict、並禁止使用空{}
@@ -230,6 +242,11 @@ if __name__ == '__main__':
     mongo = Mongo(platform='plt')
     mongo.specify_db('plt_game')
     mongo.specify_collection('vs_mer_user')
+
+    # test_mongo_update_user_status
+    # filter_query = {"username": "proxyAccount62226"}
+    # update_query = {"$set": {"lock_status": {"LOGIN": True, "RECHARGE": True, "WITHDRAW": True, "TRANSFER": True}}}
+    # mongo.update_one(filter_query, update_query)
 
     # demo insert_one and insert_many method
     query_insert = {"name": "insert_one_test", "channel_code": "1", "game_code": "1", "user_id": 1}
