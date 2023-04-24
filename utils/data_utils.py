@@ -2,7 +2,7 @@ import os
 import json5
 import copy
 import configparser
-from json_verification import validate_json
+from utils.json_verification import validate_json
 
 config = configparser.ConfigParser()
 config.read('config/config.ini')
