@@ -254,7 +254,7 @@ class TestUser:
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
-    @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('edit_lockStatus'))
     def test_edit_lockStatus(test, get_platform_token):
         json_replace = test_data.replace_json(test['json'], test['target'])
@@ -278,20 +278,7 @@ class TestUserManage:
     @allure.feature("客戶管理")
     @allure.story("審批操作")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
-    @pytest.mark.parametrize("test", test_data.get_case('get_user_manage_list'))
-    def test_get_user_manage_list(test, get_platform_token):
-        params_replace = test_data.replace_json(test['params'], test['target'])
-        api = API_Controller()
-        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
-                                params_replace, token=get_platform_token)
-        ResponseVerification.basic_assert(resp, test)
-
-    @staticmethod
-    @allure.feature("客戶管理")
-    @allure.story("審批操作")
-    @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_query_params'))
     def test_get_query_params(test, get_platform_token):
         api = API_Controller()
@@ -303,20 +290,7 @@ class TestUserManage:
     @allure.feature("客戶管理")
     @allure.story("審批操作")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
-    @pytest.mark.parametrize("test", test_data.get_case('get_user_manage_log'))
-    def test_get_user_manage_log(test, get_platform_token):
-        params_replace = test_data.replace_json(test['params'], test['target'])
-        api = API_Controller()
-        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
-                                params_replace, token=get_platform_token)
-        ResponseVerification.basic_assert(resp, test)
-
-    @staticmethod
-    @allure.feature("客戶管理")
-    @allure.story("審批操作")
-    @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('user_manage_first_approval'))
     def test_user_manage_first_approval(test, get_platform_token, clean):
         if "{id}" in test['req_url']:
@@ -334,7 +308,7 @@ class TestUserManage:
     @allure.feature("客戶管理")
     @allure.story("審批操作")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('user_manage_second_approval'))
     def test_user_manage_second_approval(test, get_platform_token, clean):
         if "{id}" in test['req_url']:
@@ -352,7 +326,33 @@ class TestUserManage:
     @allure.feature("客戶管理")
     @allure.story("審批操作")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('get_user_manage_list'))
+    def test_get_user_manage_list(test, get_platform_token):
+        params_replace = test_data.replace_json(test['params'], test['target'])
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                params_replace, token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("客戶管理")
+    @allure.story("審批操作")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('get_user_manage_log'))
+    def test_get_user_manage_log(test, get_platform_token):
+        params_replace = test_data.replace_json(test['params'], test['target'])
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                params_replace, token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("客戶管理")
+    @allure.story("審批操作")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('edit_user_parent'))
     def test_edit_user_parent(test, get_platform_token, clean):
         json_replace = test_data.replace_json(test['json'], test['target'])
@@ -365,7 +365,7 @@ class TestUserManage:
     @allure.feature("客戶管理")
     @allure.story("審批操作")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('edit_user_contact'))
     def test_edit_user_contact(test, get_platform_token, clean):
         json_replace = test_data.replace_json(test['json'], test['target'])

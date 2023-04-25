@@ -378,19 +378,49 @@ class UserManage(PlatformAPI):
     def get_manage_id(self, plat_token=None, phase=1):  # 一審訂單:1 二審訂單:2
         FIRST = 0
         SECOND = 3
+        userId = 12
+        if env.env:
+            userId = 2
         phase = FIRST if phase == 1 else SECOND
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
         jsdata = self.get_user_manage_list(plat_token=plat_token, status=phase)
         ret = jsonpath.jsonpath(jsdata, "$..id")
         if ret is False:
-            self.user_manage_parent(userId=12, parentUsername='proxy001')
+            self.user_manage_parent(userId=userId, parentUsername='proxy001')
             jsdata = self.get_user_manage_list(plat_token=plat_token, status=FIRST)
             ret = jsonpath.jsonpath(jsdata, "$..id")
             if phase == SECOND:
                 self.first_approval(id=ret[0], status=1)
         return ret[0]
 
+class UserVipRatio(PlatformAPI):
+    # VIP積分設定清單
+    def get_ratio_config(self, plat_token=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "get",
+            "url": "/v1/user/vip/ratio/config"
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 新增修改VIP積分設定
+    def set_ratio_config(self, plat_token=None, configs: list = None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "post",
+            "url": "/v1/user/vip/ratio/config",
+            "json": {"configs": configs}
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
 
 class UserVip(PlatformAPI):
     # 新增VIP層級
@@ -474,3 +504,39 @@ class UserVip(PlatformAPI):
         response = self.get_vip_list(plat_token=plat_token)
         target = jsonpath.jsonpath(response, '$..data[*].id')
         return target[-1]
+
+class UserOperation(PlatformAPI):
+    # 用戶操作記錄列表
+    def get_log_list(self, From='2023-01-01T00:00:00Z', to='2024-01-01T00:00:00Z',
+                     username=None, ip=None, page=None, size=None,
+                     plat_token=None,
+                     ):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "get",
+            "url": "/v1/user/operation/log",
+            "params": {"from": From, "to": to,
+                       "username": username, "ip": ip,
+                       "page": page, "size": size}
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 用戶操作記錄
+    def get_account_log(self, userId=None, page=None, size=None,
+                        plat_token=None,
+                        ):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "get",
+            "url": f"/v1/user/operation/log/{userId}",
+            "params": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
