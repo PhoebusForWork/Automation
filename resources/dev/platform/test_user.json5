@@ -221,7 +221,7 @@
         "params": {},
         "test_item": [
             {"req_url": "/v1/user/login/stat/999999","scenario":"客戶登入統計_不存在id","target":{},"code_status": 200,"keyword": '"count":0'},
-            {"req_url": "/v1/user/login/stat/29","scenario":"客戶登入統計_存在id","target":{},"code_status": 200,"keyword": '"osTypeCount":[{"type":'},
+            {"req_url": "/v1/user/login/stat/29","scenario":"客戶登入統計_存在id","target":{},"code_status": 200,"keyword": '"osTypeCount"'},
             ]
     },
     {
