@@ -100,5 +100,25 @@
         "test_item": [
             {"scenario":"普通查詢","params": {},"code_status": 200,"keyword": "data"}
         ]
+    },
+    {
+        "test_case": "get_platform_language",
+        "req_method": "get",
+        "req_url": "/v1/platform/language",
+        "schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"code": {"type": "string"}, "name": {"type": "string"}, "lastModifiedTime": {"type": "string"}}, "required": ["code", "lastModifiedTime", "name"]}}}, "required": ["data"]},
+        "json" : {},
+        "test_item": [
+            {"scenario":"普通查詢","params": {},"code_status": 200,"keyword": "data"}
+        ]
+    },
+    {
+        "test_case": "get_admin_action_log",
+        "req_method": "get",
+        "req_url": "/v1/admin-action-log",
+        "schema":{"type": "object", "properties": {"data": {"type": "object", "properties": {"total": {"type": "integer"}, "size": {"type": "integer"}, "current": {"type": "integer"}, "pages": {"type": "integer"}, "records": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "string"}, "account": {"type": "string"}, "accountId": {"type": "integer"}, "department": {"type": "string"}, "departmentId": {"type": "integer"}, "businessType": {"type": "string"}, "actionLogContentTitle": {"type": "string"}, "ip": {"type": "string"}, "logTime": {"type": "string"}, "userId": {"type": "integer"}, "userName": {"type": "string"}}, "required": ["account", "accountId", "actionLogContentTitle", "businessType", "department", "departmentId", "id", "ip", "logTime", "userId", "userName"]}}}, "required": ["current", "pages", "records", "size", "total"]}}, "required": ["data"]},
+        "json" : {},
+        "test_item": [
+            {"scenario":"普通查詢","params": {},"code_status": 200,"keyword": "data"}
+        ]
     }
 ]

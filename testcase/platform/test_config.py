@@ -139,3 +139,29 @@ def test_get_platform_currency(test, get_platform_token):
     resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                             test['params'], token=get_platform_token)
     ResponseVerification.basic_assert(resp, test)
+
+
+@allure.feature("語系管理")
+@allure.story("站點語系查詢")
+@allure.title("{test[scenario]}")
+@pytest.mark.regression
+@pytest.mark.parametrize("test", test_data.get_case('get_platform_language'))
+def test_get_platform_language(test, get_platform_token):
+    api = API_Controller()
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
+    ResponseVerification.basic_assert(resp, test)
+
+
+@allure.feature("操作日誌")
+@allure.story("查詢後台用戶操作登入日誌")
+@allure.title("{test[scenario]}")
+@pytest.mark.regression
+@pytest.mark.parametrize("test", test_data.get_case('get_admin_action_log'))
+def test_get_admin_action_log(test, get_platform_token):
+    params_replace = test_data.replace_json(test['params'], test['target'])
+    api = API_Controller()
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            params_replace, token=get_platform_token)
+    ResponseVerification.basic_assert(resp, test)
+
