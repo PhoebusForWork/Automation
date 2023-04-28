@@ -156,12 +156,35 @@ def test_get_platform_language(test, get_platform_token):
 @allure.feature("操作日誌")
 @allure.story("查詢後台用戶操作登入日誌")
 @allure.title("{test[scenario]}")
-@pytest.mark.regression
 @pytest.mark.parametrize("test", test_data.get_case('get_admin_action_log'))
 def test_get_admin_action_log(test, get_platform_token):
     params_replace = test_data.replace_json(test['params'], test['target'])
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                             params_replace, token=get_platform_token)
+    ResponseVerification.basic_assert(resp, test)
+
+
+@allure.feature("電話區碼管理")
+@allure.story("電話區碼查詢")
+@allure.title("{test[scenario]}")
+@pytest.mark.parametrize("test", test_data.get_case('get_country_code_manage'))
+def test_get_country_code_manage(test, get_platform_token):
+    api = API_Controller()
+    resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                            test['params'], token=get_platform_token)
+    ResponseVerification.basic_assert(resp, test)
+
+
+@allure.feature("電話區碼管理")
+@allure.story("修改電話區碼")
+@allure.title("{test[scenario]}")
+@pytest.mark.regression
+@pytest.mark.parametrize("test", test_data.get_case('put_country_code_manage'))
+def test_put_country_code_manage(test, get_platform_token):
+    json_replace = test_data.replace_json(test['json'], test['target'])
+    api = API_Controller()
+    resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                            test['params'], token=get_platform_token)
     ResponseVerification.basic_assert(resp, test)
 
