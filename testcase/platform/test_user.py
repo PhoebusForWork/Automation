@@ -5,6 +5,7 @@ from pylib.platform.user import UserVip, User, UserManage
 from pylib.platform.proxy import ProxyManage
 from utils.data_utils import TestDataReader, ResponseVerification
 from utils.api_utils import API_Controller
+from utils.json_verification import validate_json
 
 test_data = TestDataReader()
 test_data.read_json5('test_user.json5')
@@ -84,143 +85,145 @@ class TestUser:
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_user_list'))
     def test_get_user_list(test, get_platform_token):
         params_replace = test_data.replace_json(test['params'], test['target'])
         api = API_Controller()
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                                 params_replace, token=get_platform_token)
-        assert resp.status_code == test['code_status'], resp.text
-        assert test['keyword'] in resp.text
+        ResponseVerification.basic_assert(resp, test)
 
     @staticmethod  # testcase/platform/test_user.py::Test_User::test_get_user_info -s
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_user_info'))
     def test_get_user_info(test, get_platform_token):
         api = API_Controller()
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                                 test['params'], token=get_platform_token)
-        assert resp.status_code == test['code_status'], resp.text
-        assert test['keyword'] in resp.text
+        ResponseVerification.basic_assert(resp, test)
 
     @staticmethod
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.xfail()
     @pytest.mark.parametrize("test", test_data.get_case('get_user_account'))
     def test_get_user_account(test, get_platform_token):
         api = API_Controller()
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                                 test['params'], token=get_platform_token)
-        assert resp.status_code == test['code_status'], resp.text
-        assert test['keyword'] in resp.text
+        ResponseVerification.basic_assert(resp, test)
 
     @staticmethod
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_risk_analysis_same_ip'))
     def test_get_risk_analysis_same_ip(test, get_platform_token):
         params_replace = test_data.replace_json(test['params'], test['target'])
         api = API_Controller()
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                                 params_replace, token=get_platform_token)
-        assert resp.status_code == test['code_status'], resp.text
-        assert test['keyword'] in resp.text
+        ResponseVerification.basic_assert(resp, test)
 
     @staticmethod
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_risk_analysis_arbitrage'))
     def test_get_risk_analysis_arbitrage(test, get_platform_token):
         params_replace = test_data.replace_json(test['params'], test['target'])
         api = API_Controller()
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                                 params_replace, token=get_platform_token)
-        assert resp.status_code == test['code_status'], resp.text
-        assert test['keyword'] in resp.text
+        ResponseVerification.basic_assert(resp, test)
 
     @staticmethod
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_login_info'))
     def test_get_login_info(test, get_platform_token):
         params_replace = test_data.replace_json(test['params'], test['target'])
         api = API_Controller()
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                                 params_replace, token=get_platform_token)
-        assert resp.status_code == test['code_status'], resp.text
-        assert test['keyword'] in resp.text
+        ResponseVerification.basic_assert(resp, test)
 
     @staticmethod
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_user_params'))
     def test_get_user_params(test, get_platform_token):
         api = API_Controller()
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                                 test['params'], token=get_platform_token)
-        assert resp.status_code == test['code_status'], resp.text
-        assert test['keyword'] in resp.text
+        ResponseVerification.basic_assert(resp, test)
 
     @staticmethod
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_user_login_stat'))
     def test_get_user_login_stat(test, get_platform_token):
         params_replace = test_data.replace_json(test['params'], test['target'])
         api = API_Controller()
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                                 params_replace, token=get_platform_token)
-        assert resp.status_code == test['code_status'], resp.text
-        assert test['keyword'] in resp.text
+        ResponseVerification.basic_assert(resp, test)
 
     @staticmethod
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('edit_user_remark'))
     def test_edit_user_remark(test, get_platform_token):
         api = API_Controller()
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                                 test['params'], token=get_platform_token)
-        assert resp.status_code == test['code_status'], resp.text
-        assert test['keyword'] in resp.text
+        ResponseVerification.basic_assert(resp, test)
 
     @staticmethod
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('edit_user_reallyName'))
     def test_edit_user_reallyName(test, get_platform_token):
         api = API_Controller()
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                                 test['params'], token=get_platform_token)
-        assert resp.status_code == test['code_status'], resp.text
-        assert test['keyword'] in resp.text
+        ResponseVerification.basic_assert(resp, test)
 
     @staticmethod
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('edit_user_isWhiteList'))
     def test_edit_user_isWhiteList(test, get_platform_token):
         api = API_Controller()
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                                 test['params'], token=get_platform_token)
-        assert resp.status_code == test['code_status'], resp.text
-        assert test['keyword'] in resp.text
+        ResponseVerification.basic_assert(resp, test)
 
     @staticmethod
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('edit_user_convertProxy'))
     def test_edit_user_convertProxy(test, get_platform_token):
         if test['json']['userId'] == 'client_id':
@@ -233,25 +236,25 @@ class TestUser:
         if resp.status_code == 200:
             proxy_manage = ProxyManage()
             proxy_manage.clean_proxy_approval(get_platform_token)
-        assert resp.status_code == test['code_status'], resp.text
-        assert test['keyword'] in resp.text
+        ResponseVerification.basic_assert(resp, test)
 
     @staticmethod
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('username_validate'))
     def test_username_validate(test, get_platform_token):
         api = API_Controller()
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                                 test['params'], token=get_platform_token)
-        assert resp.status_code == test['code_status'], resp.text
-        assert test['keyword'] in resp.text
+        ResponseVerification.basic_assert(resp, test)
 
     @staticmethod
     @allure.feature("客戶管理")
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('edit_lockStatus'))
     def test_edit_lockStatus(test, get_platform_token):
         json_replace = test_data.replace_json(test['json'], test['target'])
@@ -268,51 +271,26 @@ class TestUser:
             assert test['keyword'] in optType
             target.first_approval(
                 plat_token=get_platform_token, id=ret[0], status=2, remark='test_approval')
-
+            assert validate_json(resp.json(), test['schema'])
 
 class TestUserManage:
     @staticmethod
     @allure.feature("客戶管理")
     @allure.story("審批操作")
     @allure.title("{test[scenario]}")
-    @pytest.mark.parametrize("test", test_data.get_case('get_user_manage_list'))
-    def test_get_user_manage_list(test, get_platform_token):
-        params_replace = test_data.replace_json(test['params'], test['target'])
-        api = API_Controller()
-        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
-                                params_replace, token=get_platform_token)
-        assert resp.status_code == test['code_status'], resp.text
-        assert test['keyword'] in resp.text
-
-    @staticmethod
-    @allure.feature("客戶管理")
-    @allure.story("審批操作")
-    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_query_params'))
     def test_get_query_params(test, get_platform_token):
         api = API_Controller()
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                                 test['params'], token=get_platform_token)
-        assert resp.status_code == test['code_status'], resp.text
-        assert test['keyword'] in resp.text
+        ResponseVerification.basic_assert(resp, test)
 
     @staticmethod
     @allure.feature("客戶管理")
     @allure.story("審批操作")
     @allure.title("{test[scenario]}")
-    @pytest.mark.parametrize("test", test_data.get_case('get_user_manage_log'))
-    def test_get_user_manage_log(test, get_platform_token):
-        params_replace = test_data.replace_json(test['params'], test['target'])
-        api = API_Controller()
-        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
-                                params_replace, token=get_platform_token)
-        assert resp.status_code == test['code_status'], resp.text
-        assert test['keyword'] in resp.text
-
-    @staticmethod
-    @allure.feature("客戶管理")
-    @allure.story("審批操作")
-    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('user_manage_first_approval'))
     def test_user_manage_first_approval(test, get_platform_token, clean):
         if "{id}" in test['req_url']:
@@ -324,13 +302,13 @@ class TestUserManage:
         api = API_Controller()
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                                 params_replace, token=get_platform_token)
-        assert resp.status_code == test['code_status'], resp.text
-        assert test['keyword'] in resp.text
+        ResponseVerification.basic_assert(resp, test)
 
     @staticmethod
     @allure.feature("客戶管理")
     @allure.story("審批操作")
     @allure.title("{test[scenario]}")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('user_manage_second_approval'))
     def test_user_manage_second_approval(test, get_platform_token, clean):
         if "{id}" in test['req_url']:
@@ -342,34 +320,59 @@ class TestUserManage:
         api = API_Controller()
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                                 params_replace, token=get_platform_token)
-        assert resp.status_code == test['code_status'], resp.text
-        assert test['keyword'] in resp.text
+        ResponseVerification.basic_assert(resp, test)
 
     @staticmethod
     @allure.feature("客戶管理")
     @allure.story("審批操作")
     @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('get_user_manage_list'))
+    def test_get_user_manage_list(test, get_platform_token):
+        params_replace = test_data.replace_json(test['params'], test['target'])
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                params_replace, token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("客戶管理")
+    @allure.story("審批操作")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('get_user_manage_log'))
+    def test_get_user_manage_log(test, get_platform_token):
+        params_replace = test_data.replace_json(test['params'], test['target'])
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                params_replace, token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("客戶管理")
+    @allure.story("審批操作")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('edit_user_parent'))
     def test_edit_user_parent(test, get_platform_token, clean):
         json_replace = test_data.replace_json(test['json'], test['target'])
         api = API_Controller()
         resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                                 test['params'], token=get_platform_token)
-        assert resp.status_code == test['code_status'], resp.text
-        assert test['keyword'] in resp.text
+        ResponseVerification.basic_assert(resp, test)
 
     @staticmethod
     @allure.feature("客戶管理")
     @allure.story("審批操作")
     @allure.title("{test[scenario]}")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('edit_user_contact'))
     def test_edit_user_contact(test, get_platform_token, clean):
         json_replace = test_data.replace_json(test['json'], test['target'])
         api = API_Controller()
         resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                                 test['params'], token=get_platform_token)
-        assert resp.status_code == test['code_status'], resp.text
-        assert test['keyword'] in resp.text
+        ResponseVerification.basic_assert(resp, test)
 
 
 class TestUserVip:

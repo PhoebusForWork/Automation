@@ -93,6 +93,7 @@ class TestDataReader:
 
 class EnvReader:
     def __init__(self) -> None:
+        self.env = os.getenv('MODE')
         self.__load_host()
         self.__load_postgres()
         self.__load_elasticsearch()

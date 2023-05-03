@@ -1,4 +1,5 @@
 from pylib.platform.account import AccountAdmin
+from pylib.platform.proxy import Proxy
 from pylib.platform.game import Game
 from utils.generate_utils import Make
 
@@ -58,3 +59,13 @@ def turn_on_the_game_to_test():
                                       status=True,
                                       currency='USD')
     trun_on_the_game.game_sync(game_code='AI_SPORT_AI')
+
+def create_initialize_proxy_account():
+    create_proxy = Proxy()
+    code = create_proxy.imgcode()
+    create_proxy.login(username="superAdmin",
+                       password="abc123456",
+                       imgCode=code)
+    create_proxy.add_proxy(proxyAccount="", proxyName="",
+                           password="", proxyChannelId="",
+                           commissionId=None)

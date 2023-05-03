@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import time
 from scripts.automation.postgres import postgres_scripts
+from scripts.automation.mongo import mongo_scripts
 from scripts.automation.setup_api import contorl, platform, client_side
 
 
@@ -23,3 +24,9 @@ postgres_scripts.host_platform()
 postgres_scripts.plt_account()
 postgres_scripts.plt_game()
 postgres_scripts.wallet()
+
+# #############
+#    mongo   #
+# #############
+
+mongo_scripts.setup_lock_status_user()

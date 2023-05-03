@@ -134,13 +134,13 @@ class ProxyGroup(PlatformAPI):
     def edit_group(self, plat_token=None, groupName=None, channelIds=[], groupId=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
-            
+
         request_body = {
             "method": "put",
             "url": f"/v1/proxy/group/{groupId}",
             "json": KeywordArgument.body_data()
         }
-        
+
         response = self.send_request(**request_body)
         return response.json()
 
@@ -320,7 +320,7 @@ class ProxyCommissionTemplate(PlatformAPI):
     ):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
-            
+
         # data example
         #  [
         #        {
@@ -338,7 +338,7 @@ class ProxyCommissionTemplate(PlatformAPI):
             "json": data,
             "params": {"currency": "USD"},
         }
-        
+
         response = self.send_request(**request_body)
         return response.json()
 
@@ -363,7 +363,7 @@ class ProxyCommissionTemplate(PlatformAPI):
     ):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
-            
+
         # json example
         #    [
         #        {
@@ -378,7 +378,7 @@ class ProxyCommissionTemplate(PlatformAPI):
             "url": f"/v1/proxy/commission/template/{id}/commissionConditions",
             "json": json
         }
-        
+
         response = self.send_request(**request_body)
         return response.json()
 
@@ -637,7 +637,7 @@ class ProxyManage(PlatformAPI):
         ret = jsonpath.jsonpath(jsdata, "$..id")
         if ret is False:
             add = Proxy()
-            add.add_proxy(plat_token=token, proxyAccount="AutoTestProxy"+str(random.randrange(99999)),
+            add.add_proxy(plat_token=token, proxyAccount="AutoTestProxy" + str(random.randrange(99999)),
                           password="abc123456", telephone=str(random.randrange(10000000000, 19999999999)), commissionId=1)
             jsdata = self.get_manage_list(plat_token=token, proxyManageStatus=0)
             ret = jsonpath.jsonpath(jsdata, "$..id")
@@ -648,7 +648,7 @@ class ProxyManage(PlatformAPI):
         ret = jsonpath.jsonpath(jsdata, "$..id")
         if ret is False:
             add = Proxy()
-            add.add_proxy(plat_token=token, proxyAccount="AutoTestProxy"+str(random.randrange(99999)),
+            add.add_proxy(plat_token=token, proxyAccount="AutoTestProxy" + str(random.randrange(99999)),
                           password="abc123456", telephone=str(random.randrange(10000000000, 19999999999)), commissionId=1)
 
             jsdata = self.get_manage_list(plat_token=token, proxyManageStatus=0)  # 獲取待一審訂單
@@ -664,7 +664,7 @@ class ProxyManage(PlatformAPI):
         ret = jsonpath.jsonpath(jsdata, "$..id")
         if ret is False:
             add = Proxy()
-            add.add_proxy(plat_token=token, proxyAccount="AutoTestProxy"+str(random.randrange(99999)),
+            add.add_proxy(plat_token=token, proxyAccount="AutoTestProxy" + str(random.randrange(99999)),
                           password="abc123456", telephone=str(random.randrange(10000000000, 19999999999)), commissionId=1)
 
             jsdata = self.get_manage_list(plat_token=token, proxyManageStatus=0)  # 獲取待一審訂單
