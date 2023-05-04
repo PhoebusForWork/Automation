@@ -79,8 +79,10 @@ class API_Controller:
             response = self.request_session.delete(**request_body)
         else:
             response = "沒有符合的請求模式"
-
-        self.print_response(response)
+        try:
+            self.print_response(response)
+        except Exception:
+            pass
         return response
 
 
