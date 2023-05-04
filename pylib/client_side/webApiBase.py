@@ -63,7 +63,7 @@ class WebAPI(API_Controller):
 
         request_body = {
             "method": "post",
-            "url": "/v2/user/register",
+            "url": "/v1/user/register",
             "json": KeywordArgument.body_data()
         }
 
