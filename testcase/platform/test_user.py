@@ -279,7 +279,7 @@ class TestUserVipRatio:
     @allure.feature("客戶管理")
     @allure.story("VIP積分")
     @allure.title("{test[scenario]}")
-    @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_vip_ratio_config'))
     def test_get_vip_ratio_config(test, get_platform_token):
         api = API_Controller()
@@ -409,7 +409,7 @@ class TestUserVipLevelRecord:
     @allure.feature("客戶管理")
     @allure.story("客戶VIP層級變更紀錄")
     @allure.title("{test[scenario]}")
-    @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_vip_level_record'))
     def test_get_vip_level_record(test, get_platform_token):
         params_replace = test_data.replace_json(test['params'], test['target'])
@@ -423,7 +423,7 @@ class TestUserRiskLoginLog:
     @allure.feature("客戶管理")
     @allure.story("客戶風控管理API")
     @allure.title("{test[scenario]}")
-    @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_user_risk_login_log'))
     def test_get_user_risk_login_log(test, get_platform_token):
         params_replace = test_data.replace_json(test['params'], test['target'])
@@ -480,7 +480,7 @@ class TestUserOperation:
     @allure.feature("客戶管理")
     @allure.story("用戶操作")
     @allure.title("{test[scenario]}")
-    @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_user_operation_log_list'))
     def test_get_user_operation_log_list(test, get_platform_token):
         params_replace = test_data.replace_json(test['params'], test['target'])
@@ -493,7 +493,7 @@ class TestUserOperation:
     @allure.feature("客戶管理")
     @allure.story("用戶操作")
     @allure.title("{test[scenario]}")
-    @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_user_operation_log'))
     def test_get_user_operation_log(test, get_platform_token):
         params_replace = test_data.replace_json(test['params'], test['target'])
