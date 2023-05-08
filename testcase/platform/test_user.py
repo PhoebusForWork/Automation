@@ -79,6 +79,7 @@ class TestUserVipConfig:
                                 test['params'], token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)
 
+
 # 客戶列表
 class TestUser:
     @staticmethod
@@ -273,6 +274,7 @@ class TestUser:
                 plat_token=get_platform_token, id=ret[0], status=2, remark='test_approval')
             assert validate_json(resp.json(), test['schema'])
 
+
 # VIP積分
 class TestUserVipRatio:
     @staticmethod
@@ -299,6 +301,7 @@ class TestUserVipRatio:
         resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                                 test['params'], token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)
+
 
 # 審批操作
 class TestUserManage:
@@ -402,6 +405,7 @@ class TestUserManage:
                                 test['params'], token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)
 
+
 # 首頁彈窗消息
 # 客戶VIP層級變更紀錄
 class TestUserVipLevelRecord:
@@ -417,6 +421,8 @@ class TestUserVipLevelRecord:
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                                 params_replace, token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)
+
+
 # 客戶風控管理API
 class TestUserRiskLoginLog:
     @staticmethod
@@ -431,6 +437,8 @@ class TestUserRiskLoginLog:
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                                 params_replace, token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)
+
+
 # 客戶標籤
 # 客戶地址
 class TestUserAddress:
@@ -446,6 +454,8 @@ class TestUserAddress:
         resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                                 test['params'], token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)
+
+
 # 客戶VIP層級
 class TestUserVip:
     @staticmethod
@@ -473,6 +483,8 @@ class TestUserVip:
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                                 params_replace, token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)
+
+
 # 站內信管理
 # 用戶操作記錄
 class TestUserOperation:
@@ -485,8 +497,8 @@ class TestUserOperation:
     def test_get_user_operation_log_list(test, get_platform_token):
         params_replace = test_data.replace_json(test['params'], test['target'])
         api = API_Controller()
-        resp = api.send_request(test['req_method'], test['req_url'], params_replace,
-                                test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                params_replace, token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)
 
     @staticmethod
@@ -498,6 +510,6 @@ class TestUserOperation:
     def test_get_user_operation_log(test, get_platform_token):
         params_replace = test_data.replace_json(test['params'], test['target'])
         api = API_Controller()
-        resp = api.send_request(test['req_method'], test['req_url'], params_replace,
-                                test['params'], token=get_platform_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                params_replace, token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)
