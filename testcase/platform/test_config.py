@@ -1,5 +1,7 @@
 import pytest
 import allure
+import copy
+from datetime import datetime
 from utils.data_utils import TestDataReader, ResponseVerification
 from utils.api_utils import API_Controller
 from pylib.platform.config import Avatar
@@ -156,9 +158,16 @@ def test_get_platform_language(test, get_platform_token):
 @allure.feature("操作日誌")
 @allure.story("查詢後台用戶操作登入日誌")
 @allure.title("{test[scenario]}")
+@pytest.mark.regression
 @pytest.mark.parametrize("test", test_data.get_case('get_admin_action_log'))
 def test_get_admin_action_log(test, get_platform_token):
-    params_replace = test_data.replace_json(test['params'], test['target'])
+    today = datetime.today().strftime('%Y-%m-%d')
+    date_from = today + 'T00:00:00Z'
+    date_to = today + 'T23:59:59Z'
+    temp = copy.deepcopy(test)
+    if test["params"]["to"] == "today_date_to":
+        temp["params"].update({"from": date_from, "to": date_to})
+    params_replace = test_data.replace_json(temp['params'], temp['target'])
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                             params_replace, token=get_platform_token)
@@ -168,6 +177,7 @@ def test_get_admin_action_log(test, get_platform_token):
 @allure.feature("電話區碼管理")
 @allure.story("電話區碼查詢")
 @allure.title("{test[scenario]}")
+@pytest.mark.regression
 @pytest.mark.parametrize("test", test_data.get_case('get_country_code_manage'))
 def test_get_country_code_manage(test, get_platform_token):
     api = API_Controller()
@@ -182,7 +192,7 @@ def test_get_country_code_manage(test, get_platform_token):
 @pytest.mark.regression
 @pytest.mark.parametrize("test", test_data.get_case('put_country_code_manage'))
 def test_put_country_code_manage(test, get_platform_token):
-    json_replace = test_data.replace_json(test['json'], test['target'])
+    json_replace = test_data.replace_json_list(test['json'], test['target'])
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                             test['params'], token=get_platform_token)

@@ -90,6 +90,17 @@ class TestDataReader:
                 json_copy[0][key] = value
         return json_copy
 
+    @staticmethod
+    def replace_json_list(json, target):
+        json_copy = copy.deepcopy(json)
+        for i, item in enumerate(target):
+            for key, value in item.items():
+                try:
+                    json_copy[i][key] = value
+                except:
+                    json_copy[0][key] = value
+        return json_copy
+
 
 class EnvReader:
     def __init__(self) -> None:

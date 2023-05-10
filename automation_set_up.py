@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import time
+from scripts.automation.elasticsearch import elasticsearch_scripts
 from scripts.automation.postgres import postgres_scripts
 from scripts.automation.mongo import mongo_scripts
 from scripts.automation.setup_api import platform, client_side
@@ -43,3 +44,8 @@ platform.sync_relation_manage()
 # #############
 
 mongo_scripts.setup_lock_status_user()
+
+# #############
+#  elasticsearch  #
+# #############
+elasticsearch_scripts.ElasticsearchTool()
