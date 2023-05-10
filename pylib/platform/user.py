@@ -6,8 +6,91 @@ import jsonpath
 
 env = EnvReader()
 platform_host = env.PLATFORM_HOST
+# VIP層級
+class UserVip(PlatformAPI):
+    # 新增VIP層級
+    def add_vip(
+            self, plat_token=None, name=None, regStartTime=None, regEndTime=None, rechargeTotal=None,
+            betTotal=None, levelGift=None, birthdayGift=None, festivalGift=None, redEnvelop=None,
+            limitBet=None, limitRecharge=None, isVip=None, remark=None
+    ):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
 
+        request_body = {
+            "method": "post",
+            "url": "/v1/user/vip/config",
+            "json": KeywordArgument.body_data()
+        }
 
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 編輯VIP層級
+    def edit_vip(
+            self, plat_token=None, vipId=None, name=None, regStartTime=None, regEndTime=None,
+            rechargeTotal=None, betTotal=None, levelGift=None, birthdayGift=None, festivalGift=None,
+            redEnvelop=None, limitBet=None, limitRecharge=None, isVip=None, remark=None
+    ):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "put",
+            "url": f"/v1/user/vip/config/{vipId}",
+            "json": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 編輯VIP專享
+    def edit_vip_only(self, plat_token=None, vipId=None, isVip=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "put",
+            "url": f"/v1/user/vip/config/{vipId}/isVip",
+            "params": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 獲取VIP配置
+    def get_vip_info(self, plat_token=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "get",
+            "url": "/v1/user/vip/config"
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 獲取VIP列表
+    def get_vip_list(self, plat_token=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "get",
+            "url": "/v1/user/vip/config/mapList"
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 獲取存在vip_id
+    def get_vip_id_exist(self, plat_token=None):
+        response = self.get_vip_list(plat_token=plat_token)
+        target = jsonpath.jsonpath(response, '$..data[*].id')
+        return target[-1]
+
+# 客戶管理
 class User(PlatformAPI):
     # 查詢客戶列表
     def get_user_list(
@@ -136,6 +219,22 @@ class User(PlatformAPI):
         response = self.send_request(**request_body)
         return response.json()
 
+    # 同设备号查询
+    def user_device(self, plat_token=None,
+                    deviceId=None, usernames=None, userType=None,
+                    page=None, size=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "post",
+            "url": "/v1/user/userDevice",
+            "json": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
     # 申請鎖定 lockStatus(鎖定類別) LOGIN：登入, RECHARGE：充值, WITHDRAW：提領, TRANSFER：轉帳
     def user_lock_status(self, plat_token=None, userIds=None, lockStatus=None, isLock=None, remark=None):
         if plat_token is not None:
@@ -254,7 +353,39 @@ class User(PlatformAPI):
         client_user = jsonpath.jsonpath(target, "$..records[?(@.userType==0).userId]")
         return client_user[0]
 
+# VIP積分
+class UserVipRatio(PlatformAPI):
+    # VIP積分設定清單
+    def get_ratio_config(self, plat_token=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
 
+        request_body = {
+            "method": "get",
+            "url": "/v1/user/vip/ratio/config"
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 新增修改VIP積分設定
+    def set_ratio_config(self, plat_token=None, configs: list = None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+        '''
+        configs object sample:
+        [{"currency": "string","ratio": 0}]
+        '''
+        request_body = {
+            "method": "post",
+            "url": "/v1/user/vip/ratio/config",
+            "json": {"configs": configs}
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+# 審批操作
 class UserManage(PlatformAPI):
     # 查詢審批列表
     def get_user_manage_list(
@@ -394,117 +525,22 @@ class UserManage(PlatformAPI):
                 self.first_approval(id=ret[0], status=1)
         return ret[0]
 
-class UserVipRatio(PlatformAPI):
-    # VIP積分設定清單
-    def get_ratio_config(self, plat_token=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
-        request_body = {
-            "method": "get",
-            "url": "/v1/user/vip/ratio/config"
-        }
-
-        response = self.send_request(**request_body)
-        return response.json()
-
-    # 新增修改VIP積分設定
-    def set_ratio_config(self, plat_token=None, configs: list = None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
-        request_body = {
-            "method": "post",
-            "url": "/v1/user/vip/ratio/config",
-            "json": {"configs": configs}
-        }
-
-        response = self.send_request(**request_body)
-        return response.json()
-
-class UserVip(PlatformAPI):
-    # 新增VIP層級
-    def add_vip(
-            self, plat_token=None, name=None, regStartTime=None, regEndTime=None, rechargeTotal=None,
-            betTotal=None, levelGift=None, birthdayGift=None, festivalGift=None, redEnvelop=None,
-            limitBet=None, limitRecharge=None, isVip=None, remark=None
-    ):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
-        request_body = {
-            "method": "post",
-            "url": "/v1/user/vip/config",
-            "json": KeywordArgument.body_data()
-        }
-
-        response = self.send_request(**request_body)
-        return response.json()
-
-    # 編輯VIP層級
-    def edit_vip(
-            self, plat_token=None, vipId=None, name=None, regStartTime=None, regEndTime=None,
-            rechargeTotal=None, betTotal=None, levelGift=None, birthdayGift=None, festivalGift=None,
-            redEnvelop=None, limitBet=None, limitRecharge=None, isVip=None, remark=None
-    ):
+# 客戶VIP層級變更紀錄
+class UserVipLevelRecord(PlatformAPI):
+    def get_vip_level_record(self, plat_token=None,
+                             From=None, to=None, username=None, actionType=None,
+                             operator=None, page=None, size=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
         request_body = {
             "method": "put",
-            "url": f"/v1/user/vip/config/{vipId}",
+            "url": "/v1/user/manage/parent",
             "json": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
         return response.json()
-
-    # 編輯VIP專享
-    def edit_vip_only(self, plat_token=None, vipId=None, isVip=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
-        request_body = {
-            "method": "put",
-            "url": f"/v1/user/vip/config/{vipId}/isVip",
-            "params": KeywordArgument.body_data()
-        }
-
-        response = self.send_request(**request_body)
-        return response.json()
-
-    # 獲取VIP配置
-    def get_vip_info(self, plat_token=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
-        request_body = {
-            "method": "get",
-            "url": "/v1/user/vip/config"
-        }
-
-        response = self.send_request(**request_body)
-        return response.json()
-
-    # 獲取VIP列表
-    def get_vip_list(self, plat_token=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
-        request_body = {
-            "method": "get",
-            "url": "/v1/user/vip/config/mapList"
-        }
-
-        response = self.send_request(**request_body)
-        return response.json()
-
-    # 獲取存在vip_id
-    def get_vip_id_exist(self, plat_token=None):
-        response = self.get_vip_list(plat_token=plat_token)
-        target = jsonpath.jsonpath(response, '$..data[*].id')
-        return target[-1]
-
 class UserOperation(PlatformAPI):
     # 用戶操作記錄列表
     def get_log_list(self, From='2023-01-01T00:00:00Z', to='2024-01-01T00:00:00Z',
