@@ -31,13 +31,20 @@ class Validation(WebAPI):
         return response.json()
 
     # 發送短信驗證訊息
-    def valid_sms(self, device=None, requestType=None):
+    def valid_sms(self, mobile=None, requestType=None, countryCode=None):
         request_body = {
             "method": "post",
             "url": "/v1/validation/sms",
-            "json": KeywordArgument.body_data()
+            "json": {
+                      "requestType": requestType,
+                      "mobile": mobile,
+                      "countryCode": countryCode,
+                      "captchaValidation": {
+                          "channelName": "string",
+                          "imgToken": "string"
+                      }
+            }
         }
-
         response = self.send_request(**request_body)
         return response.json()
 
