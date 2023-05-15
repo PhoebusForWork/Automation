@@ -37,7 +37,7 @@ class WebAPI(API_Controller):
         try:
             self.request_session.headers.update(
                 {"token": str(response.json()['data']['token'])})
-        except:
+        except Exception:
             print("登錄失敗")
         return response
 
@@ -160,7 +160,7 @@ class WebAPI(API_Controller):
                 {"uid": str(response.json()['data']['userId'])})
             self.request_session.headers.update(
                 {"token": str(response.json()['data']['token'])})
-        except:
+        except Exception:
             print("登入失敗")
         return response.json()
 

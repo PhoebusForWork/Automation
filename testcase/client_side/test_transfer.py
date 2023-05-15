@@ -3,7 +3,7 @@ import allure
 from utils.data_utils import TestDataReader
 from utils.api_utils import API_Controller
 from utils.postgres_utils import UserWallet
-from pylib.client_side.wallet import Wallet
+from pylib.client_side.wallet import GameTransfer
 
 td = TestDataReader()
 td.read_json5('test_wallet.json5', file_side='cs')
@@ -15,7 +15,7 @@ td.read_json5('test_wallet.json5', file_side='cs')
 
 @pytest.fixture(scope="class")  #
 def reset_user_wallet_for_deposit(get_client_side_token):
-    do_withdraw = Wallet()
+    do_withdraw = GameTransfer()
     do_withdraw.wallet_game_transfer_withdraw_all(
         web_token=get_client_side_token)
     reset = UserWallet()
@@ -27,7 +27,7 @@ def reset_user_wallet_for_deposit(get_client_side_token):
 
 @pytest.fixture(scope="class")  #
 def reset_user_wallet_for_withdraw(get_client_side_token, get_user_id):
-    do_withdraw = Wallet()
+    do_withdraw = GameTransfer()
     do_withdraw.wallet_game_transfer_withdraw_all(
         web_token=get_client_side_token)
     reset = UserWallet()
@@ -38,7 +38,7 @@ def reset_user_wallet_for_withdraw(get_client_side_token, get_user_id):
 
 @pytest.fixture(scope="class")  #
 def reset_user_wallet_for_withdraw_all(get_client_side_token, get_user_id):
-    do_withdraw = Wallet()
+    do_withdraw = GameTransfer()
     do_withdraw.wallet_game_transfer_withdraw_all(
         web_token=get_client_side_token)
     reset = UserWallet()
