@@ -36,44 +36,34 @@ class Detail(WebAPI):
 
 # 用戶安全中心
 class Security(WebAPI):
-    # 取得用戶安全中心資訊
-    def get_security_info(self):
+    # 提款短信驗證開關
+    def get_withdraw_protect(self, status=None):
         request_body = {
-            "method": "get",
-            "url": "/v1/user/security/info"
+            "method": "put",
+            "url": "/v1/user/security/withdrawProtect",
+            "params": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
         return response.json()
 
-    # 綁定郵箱地址
-    def bind_email(self, email=None, code=None):
+    # 解綁交易所地址
+    def unbind_exchange(self, addressId=None):
         request_body = {
             "method": "put",
-            "url": "/v1/user/security/email/binding",
-            "json": KeywordArgument.body_data()
+            "url": "/v1/user/security/unBind/exchange",
+            "params": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
         return response.json()
 
-    # 解綁郵箱地址
-    def unbind_email(self, code=None):
+    # 解綁虛擬幣地址
+    def unbind_address(self, addressId=None):
         request_body = {
             "method": "put",
-            "url": "/v1/user/security/email/unbind",
-            "json": KeywordArgument.body_data()
-        }
-
-        response = self.send_request(**request_body)
-        return response.json()
-
-    # 更換手機號
-    def edit_mobile(self, newMobile=None, nmCode=None, omCode=None):
-        request_body = {
-            "method": "put",
-            "url": "/v1/user/security/mobile",
-            "json": KeywordArgument.body_data()
+            "url": "/v1/user/security/unBind/address",
+            "params": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
@@ -90,44 +80,134 @@ class Security(WebAPI):
         response = self.send_request(**request_body)
         return response.json()
 
-
-# 用戶-安全中心
-class Trade(WebAPI):
-    # 查詢資金明細
-    def balance_history(
-            self, webUid=None, web_token=None, orderType="", startTime="",
-            endTime="", status="-1", page="", size=""
-    ):
-        if webUid is not None:
-            self.request_session.headers.update({"uid": str(webUid)})
-            self.request_session.headers.update({"token": str(web_token)})
-
+    # 是否綁定手機號碼
+    def check_mobile(self):
         request_body = {
-            "method": "post",
-            "url": "/api/gl/balance/history/v2",
+            "method": "get",
+            "url": "/v1/user/security/mobile"
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 更換手機號
+    def edit_mobile(self, newMobileCountryCode=None, newMobile=None,
+                    nmCode=None, omCode=None):
+        request_body = {
+            "method": "put",
+            "url": "/v1/user/security/mobile",
             "json": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
         return response.json()
 
-    # 獲取用戶體育注單列表
-    def history_sport_list(
-            self, webUid=None, web_token=None, endTime="2022-04-01 23:59:59", startTime="2022-04-01 23:59:59",
-            channelId=None, gameId=None, page=None, size=None, status=None
-    ):
-        if webUid is not None:
-            self.request_session.headers.update({"uid": str(webUid)})
-            self.request_session.headers.update({"token": str(web_token)})
-
+    # 綁定手機號碼
+    def mobile_binding(self, countryCode=None, mobile=None,
+                       code=None):
         request_body = {
-            "method": "post",
-            "url": "/api/game/v2/history/sportList",
+            "method": "put",
+            "url": "/v1/user/security/mobile/binding",
             "json": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
         return response.json()
+
+    # 預設銀行卡設置
+    def bank_card_default(self, cardId=None, cardType=None):
+        request_body = {
+            "method": "put",
+            "url": "/v1/user/security/bankCard/default",
+            "params": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 預設虛擬幣設置
+    def address_default(self, addressId=None, type=None):
+        request_body = {
+            "method": "put",
+            "url": "/v1/user/security/address/default",
+            "params": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 綁定交易所地址
+    def bind_exchange(self, userId=None, userName=None,
+                      withdrawAddress=None, protocol=None,
+                      remark=None, isDefault=None, code=None):
+        request_body = {
+            "method": "post",
+            "url": "/v1/user/security/bind/exchange",
+            "json": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 綁定銀行卡
+    def bind_bank_card(self, userId=None, userName=None,
+                       realName=None, bankId=None,
+                       bankName=None, bankAddress=None, cardNo=None,
+                       cardOwnerName=None, cardType=None,
+                       default=None, first=None):
+        request_body = {
+            "method": "post",
+            "url": "/v1/user/security/bind/bankCard",
+            "json": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 綁定虛擬幣地址
+    def bind_address(self, userId=None, userName=None,
+                     withdrawAddress=None, protocol=None,
+                     remark=None, isDefault=None, code=None):
+        request_body = {
+            "method": "post",
+            "url": "/v1/user/security/bind/address",
+            "json": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 取得用戶安全中心資訊
+    def get_security_info(self):
+        request_body = {
+            "method": "get",
+            "url": "/v1/user/security/info"
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # # 綁定郵箱地址
+    # def bind_email(self, email=None, code=None):
+    #     request_body = {
+    #         "method": "put",
+    #         "url": "/v1/user/security/email/binding",
+    #         "json": KeywordArgument.body_data()
+    #     }
+
+    #     response = self.send_request(**request_body)
+    #     return response.json()
+
+    # # 解綁郵箱地址
+    # def unbind_email(self, code=None):
+    #     request_body = {
+    #         "method": "put",
+    #         "url": "/v1/user/security/email/unbind",
+    #         "json": KeywordArgument.body_data()
+    #     }
+
+    #     response = self.send_request(**request_body)
+    #     return response.json()
 
 
 # 用戶送貨地址
