@@ -1,5 +1,8 @@
 import pytest
 import allure
+import time
+from utils.generate_utils import Make
+from pylib.client_side.webApiBase import WebAPI
 from utils.data_utils import TestDataReader, ResponseVerification
 from utils.api_utils import API_Controller
 from pylib.client_side.user import Address
@@ -43,10 +46,11 @@ def re_mobile_default():
 
     sms_api = Validation()
     resp_token = sms_api.login(username='changephone01').json()['data']['token']
-    get_nm_code = sms_api.valid_sms(device='13847389803', requestType=6)
-    get_om_code = sms_api.valid_sms(device='13947389803', requestType=5)
+    get_nm_code = sms_api.valid_sms(requestType=6, mobile='13947389803', countryCode=86, channelName=123, imgToken=123)
+    get_om_code = sms_api.valid_sms(requestType=5, mobile='18147389803', countryCode=86, channelName=123, imgToken=123)
     edit_api = Security(resp_token)
-    edit_api.edit_mobile(newMobile=13847389803, nmCode=get_nm_code['data'], omCode=get_om_code['data'])
+    edit_api.edit_mobile(newMobileCountryCode=86, newMobile=13947389803, nmCode=get_nm_code['data'],
+                         omCode=get_om_code['data'])
 
 
 @pytest.fixture(scope="class")
@@ -314,9 +318,24 @@ class TestUserOperation:
         api = API_Controller(platform='cs')
         resp = api.send_request(test['req_method'], test['req_url'], json_replace, test['params'], token=get_client_side_token)
         ResponseVerification.basic_assert(resp, test)
+        resp = api.send_request(test['req_method'], test['req_url'], json_replace, test['params'],
+                                token=get_client_side_token)
+        assert resp.status_code == test['code_status'], resp.text
+        assert test['keyword'] in resp.text
 
 
 class TestUserSecurityCenter:
+    @staticmethod
+    @allure.feature("用戶安全中心")
+    @allure.story("提款短信驗證開關")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.parametrize("test", test_data.get_case('user_security_withdrawProtect'))
+    def test_user_security_withdraw_protect(test, get_client_side_token):
+        api = API_Controller(platform='cs')
+        resp = api.send_request(test['req_method'], test['req_url'],
+                                test['json'], test['params'], token=get_client_side_token)
+        ResponseVerification.basic_assert(resp, test)
+
     @staticmethod
     @allure.feature("用戶安全中心")
     @allure.story("获取用户安全中心信息")
@@ -325,15 +344,15 @@ class TestUserSecurityCenter:
     def test_user_security_info(test, get_client_side_token):
         json_replace = test_data.replace_json(test['json'], test['target'])
         api = API_Controller(platform='cs')
-        resp = api.send_request(test['req_method'], test['req_url'], json_replace, test['params'], token=get_client_side_token)
-
-        assert resp.status_code == test['code_status'], resp.text
-        assert test['keyword'] in resp.text
+        resp = api.send_request(test['req_method'], test['req_url'], json_replace, test['params'],
+                                token=get_client_side_token)
+        ResponseVerification.basic_assert(resp, test)
 
     @staticmethod
     @allure.feature("用戶安全中心")
     @allure.story("綁定郵箱地址")
     @allure.title("{test[scenario]}")
+    @pytest.mark.xfail(reason="目前拔掉此需求")
     @pytest.mark.parametrize("test", test_data.get_case('user_security_email_binding'))
     def test_user_security_email_binding(test):
         validation_api = Validation()
@@ -353,6 +372,7 @@ class TestUserSecurityCenter:
     @allure.feature("用戶安全中心")
     @allure.story("解綁郵箱地址")
     @allure.title("{test[scenario]}")
+    @pytest.mark.xfail(reason="目前拔掉此需求")
     @pytest.mark.parametrize("test", test_data.get_case('user_security_email_unbind'))
     def test_user_security_email_unbind(test):
         validation_api = Validation()
@@ -370,23 +390,47 @@ class TestUserSecurityCenter:
 
     @staticmethod
     @allure.feature("用戶安全中心")
+    @allure.story("是否綁定手機號碼")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.parametrize("test", test_data.get_case('get_user_security_mobile'))
+    def test_get_user_security_mobile(test, get_client_side_token):
+        api = API_Controller(platform='cs')
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_client_side_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("用戶安全中心")
+    @allure.story("綁定手機號碼")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.parametrize("test", test_data.get_case('put_user_security_mobile_binding'))
+    def test_put_user_security_mobile_binding(test, get_client_side_token):
+        register_new_user = WebAPI()
+        register_new_user.user_register(username="",password="",confirmPassword="")
+        api = API_Controller(platform='cs')
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_client_side_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("用戶安全中心")
     @allure.story("更换手机号码")
     @allure.title("{test[scenario]}")
-    @pytest.mark.parametrize("test", test_data.get_case('user_security_mobile'))
-    def test_user_security_mobile(test, re_mobile_default):
+    @pytest.mark.parametrize("test", test_data.get_case('put_user_security_mobile'))
+    def test_put_user_security_mobile(test, re_mobile_default):
         validation_api = Validation()
         json_replace = test_data.replace_json(test['json'], test['target'])
         resp_token = validation_api.login(username='changephone01').json()['data']['token']
         if test['scenario'] == '正常更換手機號碼':
-            get_nm_code = validation_api.valid_sms(device=json_replace['newMobile'], requestType=6)
-            get_om_code = validation_api.valid_sms(device='13847389803', requestType=5)
+            get_nm_code = validation_api.valid_sms(requestType=6, mobile=json_replace['newMobile'], countryCode=86, channelName=123, imgToken=123)
+            print("get_nm_code：", get_nm_code)
+            get_om_code = validation_api.valid_sms(requestType=5, mobile='13947389803', countryCode=86, channelName=123, imgToken=123)
+            print("get_om_code：", get_om_code)
             json_replace['nmCode'] = get_nm_code["data"]
             json_replace['omCode'] = get_om_code["data"]
         api = API_Controller(platform='cs')
         resp = api.send_request(test['req_method'], test['req_url'], json_replace, test['params'], token=resp_token)
-
-        assert resp.status_code == test['code_status'], resp.text
-        assert test['keyword'] in resp.text
+        ResponseVerification.basic_assert(resp, test)
 
     @staticmethod
     @allure.feature("用戶安全中心")
@@ -400,6 +444,5 @@ class TestUserSecurityCenter:
         json_replace = test_data.replace_json(test['json'], test['target'])
         api = API_Controller(platform='cs')
         resp = api.send_request(test['req_method'], test['req_url'], json_replace, test['params'], token=admin_token)
+        ResponseVerification.basic_assert(resp, test)
 
-        assert resp.status_code == test['code_status'], resp.text
-        assert test['keyword'] in resp.text
