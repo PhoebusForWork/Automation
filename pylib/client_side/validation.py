@@ -31,8 +31,8 @@ class Validation(WebAPI):
         return response.json()
 
     # 發送短信驗證訊息
-    # 請求種類 1:註冊, 2:手機快捷登陸, 3:重設密碼, 4:撞庫驗證, 5:原手機號解綁, 6:綁定新手機號, 7:原郵箱地址解綁, 8:綁定新郵箱地址
-    def valid_sms(self, mobile=None, requestType=None, countryCode=None):
+    # 請求種類 1:註冊, 2:手機快捷登陸, 3:重設密碼, 4:撞庫驗證, 5:原手機號解綁, 6:綁定新手機號, 7:原郵箱地址解綁, 8:綁定新郵箱地址, 9:提款短信驗證
+    def valid_sms(self, mobile=None, requestType=None, countryCode=None, uuid=None):
         request_body = {
             "method": "post",
             "url": "/v1/validation/sms",
@@ -40,6 +40,7 @@ class Validation(WebAPI):
                       "requestType": requestType,
                       "mobile": mobile,
                       "countryCode": countryCode,
+                      "uuid": uuid,
                       "captchaValidation": {
                           "channelName": "string",
                           "imgToken": "string"

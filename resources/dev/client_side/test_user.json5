@@ -344,6 +344,7 @@
         "test_case": "user_security_mobile",
         "req_method": "put",
         "req_url": "/v1/user/security/mobile",
+        "login_user": 'changephone01',
         "json": {
                   "newMobile": "13947389803",
                   "nmCode": "123456",

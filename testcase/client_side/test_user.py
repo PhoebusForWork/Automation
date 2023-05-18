@@ -1,6 +1,5 @@
 import pytest
 import allure
-import time
 from utils.data_utils import TestDataReader, ResponseVerification
 from utils.api_utils import API_Controller
 from pylib.client_side.user import Address
@@ -24,12 +23,18 @@ def clear_address(get_client_side_token):
         web_token=get_client_side_token)
 
 
-@pytest.fixture(scope="class")
-def re_password_default():
-    validation_api = Validation()
-    code = validation_api.valid_sms(mobile=18887827895, requestType=3, countryCode=886)['data']
-    uuid = validation_api.valid_account(username='CCuserpwd01', countryCode=886, telephone=18887827895)['data']
-    validation_api.reset_pwd(username="CCuserpwd01", uuid=uuid, countryCode=886, telephone=18887827895, newPwd="abc123456", confirmPwd="abc123456", code=code)
+@pytest.fixture()
+def re_password_default(request, test):
+    if request.param_index == 0:
+        validation_api = Validation()
+        target = request.getfixturevalue("test")
+        mobile = target['json']['telephone']
+        username = target['json']['username']
+        countryCode = target['json']['countryCode']
+        password = "abc123456"
+        code = validation_api.valid_sms(mobile=mobile, requestType=3, countryCode=countryCode)['data']
+        uuid = validation_api.valid_account(username=username, countryCode=countryCode, telephone=mobile)['data']
+        validation_api.reset_pwd(username=username, uuid=uuid, countryCode=countryCode, telephone=mobile, newPwd=password, confirmPwd=password, code=code)
 
 
 @pytest.fixture(scope="class")
