@@ -405,11 +405,40 @@ class TestUserSecurityCenter:
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", test_data.get_case('put_user_security_mobile_binding'))
     def test_put_user_security_mobile_binding(test, get_client_side_token):
-        register_new_user = WebAPI()
-        register_new_user.user_register(username="",password="",confirmPassword="")
-        api = API_Controller(platform='cs')
-        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
-                                test['params'], token=get_client_side_token)
+        # 定義常數
+        MOBILE_COUNTRY_CODE = 86
+        CHANNEL_NAME = 123
+        IMG_TOKEN = 123
+        REQUEST_TYPE = 6
+        PASSWORD = "abc123456"
+        CONFIRM_PASSWORD = "abc123456"
+        json_replace = test_data.replace_json(test['json'], test['target'])
+        if json_replace['mobile'] == "綁定號碼":
+            register_new_user = WebAPI()
+            name_len = 10
+            new_name = Make.name(name_len)
+            token_resp = register_new_user.user_register(username=new_name, password=PASSWORD,
+                                                         confirmPassword=CONFIRM_PASSWORD,
+                                                         captchaValidation={"channelName": str(CHANNEL_NAME),
+                                                                            "imgToken": str(IMG_TOKEN)})
+            register_new_user_token = token_resp['data']['token']
+            new_mobile = Make.mobile()
+            validation_api = Validation()
+            register_code = validation_api.valid_sms(requestType=REQUEST_TYPE,
+                                                     mobile=new_mobile,
+                                                     countryCode=MOBILE_COUNTRY_CODE,
+                                                     channelName=CHANNEL_NAME,
+                                                     imgToken=IMG_TOKEN)
+            json_replace['mobile'] = new_mobile
+            json_replace['code'] = register_code['data']
+
+            api = API_Controller(platform='cs')
+            resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                                    test['params'], token=register_new_user_token)
+        else:
+            api = API_Controller(platform='cs')
+            resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                                    test['params'], token=get_client_side_token)
         ResponseVerification.basic_assert(resp, test)
 
     @staticmethod
