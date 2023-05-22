@@ -14,3 +14,12 @@ class XxlJobs:
         for _ in range(transfer_executor_count):
             xxl.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
                              json={}, params={"id": 1, "executorParam": None, "addressList": None})
+
+    @staticmethod
+    def sync_plt_basics_data():
+        xxl = API_Controller(platform='xxl')
+        xxl.send_request(method='post', url='/xxl-job-admin/login',
+                         json={}, params={"userName": "admin", "password": "123456"})
+        # 等xxl-id補上
+        # xxl.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
+        #                  json={}, params={"id": 2, "executorParam": None, "addressList": None})
