@@ -294,13 +294,14 @@
         "req_method": "put",
         "req_url": "/v1/user/security/withdrawProtect",
         "schema":{"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
-        "json": {},
+        "json": {"status": 0,"code":"000000"},
+        "params": {},
         "test_item": [
-            {"scenario":"關閉","params": {"status": 0},"code_status": 200,"keyword": "success"},
-            {"scenario":"打開","params": {"status": 1},"code_status": 200,"keyword": "success"},
-            {"scenario":"null","params": {"status": null},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"空值","params": {"status": ""},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"字串","params": {"status": "abc"},"code_status": 400,"keyword": "无效的请求参数"}
+            {"scenario":"關閉","target": {"status": 0},"code_status": 200,"keyword": "success"},
+            {"scenario":"打開","target": {"status": 1},"code_status": 200,"keyword": "success"},
+            {"scenario":"null","target": {"status": null},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"空值","target": {"status": ""},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"字串","target": {"status": "abc"},"code_status": 400,"keyword": "无效的请求参数"}
         ]
     },
     {
@@ -358,11 +359,11 @@
         "json": {
                   "countryCode": "86",
                   "mobile": "12345678901",
-                  "code": "string"
+                  "code": "000000"
                 },
         "test_item": [
             {"scenario":"首次綁定","target":{"mobile": "綁定號碼", "code": ""}, "params": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"已綁定過再次綁定","target":{"mobile": "綁定號碼", "code": ""}, "params": {},"code_status": 400,"keyword": "data"},
+            {"scenario":"已綁定過再次綁定","target":{"mobile": "12345678901", "code": "123"}, "params": {},"code_status": 400,"keyword": "資料已存在"},
             {"scenario":"[countryCode]空值","target":{"countryCode": ""}, "params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[countryCode]null","target":{"countryCode": null}, "params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[countryCode]錯誤國碼","target":{"countryCode": 1234556}, "params": {},"code_status": 400,"keyword": "國碼錯誤"},
@@ -372,29 +373,29 @@
             {"scenario":"[mobile]字串","target":{"mobile": "abc"}, "params": {},"code_status": 400,"keyword": "手機格式錯誤"},
             {"scenario":"[mobile+86CN]10碼","target":{"countryCode":86,"mobile": 123456789}, "params": {},"code_status": 400,"keyword": "手機格式錯誤"},
             {"scenario":"[mobile_+86CN]12碼","target":{"countryCode":86,"mobile": 123456789011}, "params": {},"code_status": 400,"keyword": "手機格式錯誤"},
-            {"scenario":"[mobile_+86CN]11碼","target":{"countryCode":86,"mobile": 12345678901}, "params": {},"code_status": 400,"keyword": "訊息驗證碼錯誤"},
+            {"scenario":"[mobile_+86CN]11碼","target":{"countryCode":86,"mobile": 12345678901}, "params": {},"code_status": 400,"keyword": "資料已存在"},
             {"scenario":"[mobile_+66TH]12碼","target":{"countryCode":66,"mobile": 123456789012}, "params": {},"code_status": 400,"keyword": "手機格式錯誤"},//目前其他國家為符合7-11碼
-            {"scenario":"[mobile_+66TH]11碼","target":{"countryCode":66,"mobile": 12345678901}, "params": {},"code_status": 400,"keyword": "訊息驗證碼錯誤"},//目前其他國家為符合7-11碼
-            {"scenario":"[mobile_+66TH]7碼","target":{"countryCode":66,"mobile": 1234567}, "params": {},"code_status": 400,"keyword": "訊息驗證碼錯誤"},//目前其他國家為符合7-11碼
+            {"scenario":"[mobile_+66TH]11碼","target":{"countryCode":66,"mobile": 12345678901}, "params": {},"code_status": 400,"keyword": "資料已存在"},//目前其他國家為符合7-11碼
+            {"scenario":"[mobile_+66TH]7碼","target":{"countryCode":66,"mobile": 1234567}, "params": {},"code_status": 400,"keyword": "資料已存在"},//目前其他國家為符合7-11碼
             {"scenario":"[mobile_+66TH]6碼","target":{"countryCode":66,"mobile": 123456}, "params": {},"code_status": 400,"keyword": "手機格式錯誤"},//目前其他國家為符合7-11碼
             {"scenario":"[mobile_+852HK]12碼","target":{"countryCode":852,"mobile": 123456789012}, "params": {},"code_status": 400,"keyword": "手機格式錯誤"},//目前其他國家為符合7-11碼
-            {"scenario":"[mobile_+852HK]11碼","target":{"countryCode":852,"mobile": 12345678901}, "params": {},"code_status": 400,"keyword": "訊息驗證碼錯誤"},//目前其他國家為符合7-11碼
-            {"scenario":"[mobile_+852HK]7碼","target":{"countryCode":852,"mobile": 1234567}, "params": {},"code_status": 400,"keyword": "訊息驗證碼錯誤"},//目前其他國家為符合7-11碼
+            {"scenario":"[mobile_+852HK]11碼","target":{"countryCode":852,"mobile": 12345678901}, "params": {},"code_status": 400,"keyword": "資料已存在"},//目前其他國家為符合7-11碼
+            {"scenario":"[mobile_+852HK]7碼","target":{"countryCode":852,"mobile": 1234567}, "params": {},"code_status": 400,"keyword": "資料已存在"},//目前其他國家為符合7-11碼
             {"scenario":"[mobile_+852HK]6碼","target":{"countryCode":852,"mobile": 123456}, "params": {},"code_status": 400,"keyword": "手機格式錯誤"},//目前其他國家為符合7-11碼
             {"scenario":"[mobile_+63PH]12碼","target":{"countryCode":63,"mobile": 123456789012}, "params": {},"code_status": 400,"keyword": "手機格式錯誤"},//目前其他國家為符合7-11碼
-            {"scenario":"[mobile_+63PH]11碼","target":{"countryCode":63,"mobile": 12345678901}, "params": {},"code_status": 400,"keyword": "訊息驗證碼錯誤"},//目前其他國家為符合7-11碼
-            {"scenario":"[mobile_+63PH]7碼","target":{"countryCode":63,"mobile": 1234567}, "params": {},"code_status": 400,"keyword": "訊息驗證碼錯誤"},//目前其他國家為符合7-11碼
+            {"scenario":"[mobile_+63PH]11碼","target":{"countryCode":63,"mobile": 12345678901}, "params": {},"code_status": 400,"keyword": "資料已存在"},//目前其他國家為符合7-11碼
+            {"scenario":"[mobile_+63PH]7碼","target":{"countryCode":63,"mobile": 1234567}, "params": {},"code_status": 400,"keyword": "資料已存在"},//目前其他國家為符合7-11碼
             {"scenario":"[mobile_+63PH]6碼","target":{"countryCode":63,"mobile": 123456}, "params": {},"code_status": 400,"keyword": "手機格式錯誤"},//目前其他國家為符合7-11碼
             {"scenario":"[mobile_+81JP]12碼","target":{"countryCode":81,"mobile": 123456789012}, "params": {},"code_status": 400,"keyword": "手機格式錯誤"},//目前其他國家為符合7-11碼
-            {"scenario":"[mobile_+81JP]11碼","target":{"countryCode":81,"mobile": 12345678901}, "params": {},"code_status": 400,"keyword": "訊息驗證碼錯誤"},//目前其他國家為符合7-11碼
-            {"scenario":"[mobile_+81JP]7碼","target":{"countryCode":81,"mobile": 1234567}, "params": {},"code_status": 400,"keyword": "訊息驗證碼錯誤"},//目前其他國家為符合7-11碼
+            {"scenario":"[mobile_+81JP]11碼","target":{"countryCode":81,"mobile": 12345678901}, "params": {},"code_status": 400,"keyword": "資料已存在"},//目前其他國家為符合7-11碼
+            {"scenario":"[mobile_+81JP]7碼","target":{"countryCode":81,"mobile": 1234567}, "params": {},"code_status": 400,"keyword": "資料已存在"},//目前其他國家為符合7-11碼
             {"scenario":"[mobile_+81JP]6碼","target":{"countryCode":81,"mobile": 123456}, "params": {},"code_status": 400,"keyword": "手機格式錯誤"},//目前其他國家為符合7-11碼
             {"scenario":"[mobile_+82KH]12碼","target":{"countryCode":82,"mobile": 123456789012}, "params": {},"code_status": 400,"keyword": "手機格式錯誤"},//目前其他國家為符合7-11碼
-            {"scenario":"[mobile_+82KH]11碼","target":{"countryCode":82,"mobile": 12345678901}, "params": {},"code_status": 400,"keyword": "訊息驗證碼錯誤"},//目前其他國家為符合7-11碼
-            {"scenario":"[mobile_+82KH]7碼","target":{"countryCode":82,"mobile": 1234567}, "params": {},"code_status": 400,"keyword": "訊息驗證碼錯誤"},//目前其他國家為符合7-11碼
+            {"scenario":"[mobile_+82KH]11碼","target":{"countryCode":82,"mobile": 12345678901}, "params": {},"code_status": 400,"keyword": "資料已存在"},//目前其他國家為符合7-11碼
+            {"scenario":"[mobile_+82KH]7碼","target":{"countryCode":82,"mobile": 1234567}, "params": {},"code_status": 400,"keyword": "資料已存在"},//目前其他國家為符合7-11碼
             {"scenario":"[mobile_+82KH]6碼","target":{"countryCode":82,"mobile": 123456}, "params": {},"code_status": 400,"keyword": "手機格式錯誤"},//目前其他國家為符合7-11碼
-            {"scenario":"[code]錯誤驗證碼","target":{"code": "09876543"}, "params": {},"code_status": 400,"keyword": "訊息驗證碼錯誤"},
-            {"scenario":"[code]字串","target":{"code": "abc"}, "params": {},"code_status": 400,"keyword": "訊息驗證碼錯誤"},
+            {"scenario":"[code]錯誤驗證碼","target":{"code": "09876543"}, "params": {},"code_status": 400,"keyword": "資料已存在"},
+            {"scenario":"[code]字串","target":{"code": "abc"}, "params": {},"code_status": 400,"keyword": "資料已存在"},
             {"scenario":"[code]空值","target":{"code": ""}, "params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[code]null","target":{"code": null}, "params": {},"code_status": 400,"keyword": "无效的请求参数"}
         ]

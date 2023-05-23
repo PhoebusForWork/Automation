@@ -274,7 +274,9 @@ class Security(WebAPI):
 
     # 綁定手機號碼
     def mobile_binding(self, countryCode=None, mobile=None,
-                       code=None):
+                       code=None,  web_token=None):
+        if web_token is not None:
+            self.request_session.headers.update({"token": str(web_token)})
         request_body = {
             "method": "put",
             "url": "/v1/user/security/mobile/binding",
