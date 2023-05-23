@@ -208,7 +208,7 @@ class TestUserOperation:
     @allure.feature("用戶操作")
     @allure.story("用戶註冊")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('user_register'))
     def test_user_register(test, register_check_trigger):
         json_replace = test_data.replace_json(test['json'], test['target'])
@@ -225,11 +225,11 @@ class TestUserOperation:
     @allure.feature("用戶操作")
     @allure.story("用戶登出")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('user_logout'))
-    def test_user_logout(test, get_client_side_token):
+    def test_user_logout(test):
         validation_api = Validation()
-        resp = validation_api.login(username='CCheartbeat01')
+        resp = validation_api.login(username=test["login_user"])
         admin_token = resp.json()['data']['token']
         api = API_Controller(platform='cs')
         resp = api.send_request(test['req_method'], test['req_url'], test['json'], test['params'], token=admin_token)
@@ -240,7 +240,8 @@ class TestUserOperation:
     @allure.feature("用戶操作")
     @allure.story("帳戶名登入")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
+    @pytest.mark.usefixtures('register_check_trigger')
     @pytest.mark.parametrize("test", test_data.get_case('user_login'))
     def test_user_login(test):
         json_replace = test_data.replace_json(test['json'], test['target'])
@@ -253,7 +254,8 @@ class TestUserOperation:
     @allure.feature("用戶操作")
     @allure.story("手機快捷登入")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    # @pytest.mark.test # 還缺設置手機號
+    @pytest.mark.usefixtures('register_check_trigger')
     @pytest.mark.parametrize("test", test_data.get_case('user_login_by_mobile'))
     def test_user_login_by_mobile(test):
         json_replace = test_data.replace_json(test['json'], test['target'])
@@ -272,7 +274,7 @@ class TestUserOperation:
     @allure.feature("用戶操作")
     @allure.story("忘記密碼重設(帳號驗證)")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    # @pytest.mark.test 還缺設置手機號
     @pytest.mark.parametrize("test", test_data.get_case('user_valid_account'))
     def test_user_valid_account(test):
         json_replace = test_data.replace_json(test['json'], test['target'])

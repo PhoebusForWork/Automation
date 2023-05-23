@@ -179,8 +179,12 @@ class EnvReader:
                 'REDIS_SENTINEL_CS_PASSWORD')
 
     def __load_cs_test_account(self):
-        self.CS_ACCOUNT = config['cs_account']['account']
-        self.CS_PASSWORD = config['cs_account']['password']
+        if os.getenv('MODE') is None:
+            self.CS_TEST_ACCOUNT = config['cs_account']['test_account']
+            self.CS_TEST_PASSWORD = config['cs_account']['test_password']
+        else:
+            self.CS_TEST_ACCOUNT = os.getenv('CS_TEST_ACCOUNT')
+            self.CS_TEST_PASSWORD = os.getenv('CS_TEST_PASSWORD')
 
     def __load_API_headers(self):
         self.PLT_HEADER = config['API_headers']['plt']
