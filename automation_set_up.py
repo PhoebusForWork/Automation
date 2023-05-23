@@ -35,6 +35,8 @@ postgres_scripts.host_platform()
 postgres_scripts.plt_account()
 postgres_scripts.plt_game()
 postgres_scripts.wallet()
+postgres_scripts.cs_message()
+platform.sync_relation_manage()
 
 # #############
 #    mongo    #
