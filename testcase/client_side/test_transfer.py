@@ -3,7 +3,8 @@ import allure
 from utils.data_utils import TestDataReader, ResponseVerification
 from utils.api_utils import API_Controller
 from utils.postgres_utils import UserWallet
-from pylib.client_side.wallet import GameTransfer
+from utils.generate_utils import Make
+from pylib.client_side.wallet import GameTransfer, FrontUser
 
 test_data = TestDataReader()
 test_data.read_json5('test_wallet.json5', file_side='cs')
@@ -120,6 +121,9 @@ class TestFrontUser:
     @pytest.mark.parametrize("test", test_data.get_case('get_trade_info'))
     def test_get_trade_info(test, get_user_token):
         json_replace = test_data.replace_json(test["json"], test["target"])
+        if "存在id" in test['req_url']:
+            trade_id = str(FrontUser(token=get_user_token).get_trade_id())
+            test['req_url'] = test['req_url'].replace("存在id", trade_id)
         api = API_Controller(platform='cs')
         resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                                 test['params'], token=get_user_token)
@@ -146,6 +150,7 @@ class TestFrontUser:
     # @pytest.mark.test
     @pytest.mark.parametrize("test", test_data.get_case('get_wallet_front_user_fund'))
     def test_get_wallet_front_user_fund(test, get_user_token):
+        test['params']['from'] = Make.generate_custom_date(months=-3)
         params_replace = test_data.replace_json(test["params"], test["target"])
         api = API_Controller(platform='cs')
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],

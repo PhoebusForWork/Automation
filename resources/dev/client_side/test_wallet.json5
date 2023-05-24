@@ -57,9 +57,9 @@
         "test_case": "get_wallet_front_user_fund",
         "req_method": "get",
         "req_url": "/v1/wallet/front/user/fund",
-        "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"total":{"type":"integer"},"size":{"type":"integer"},"current":{"type":"integer"},"pages":{"type":"integer"},"records":{"type":"array","items":{"type":"object","properties":{"tradeId":{"type":"integer"},"fromChannelCode":{"type":"string"},"toChannelCode":{"type":"string"},"currency":{"type":"string"},"icon":{"type":"string"},"transactionStatus":{"type":"integer"},"transactionType":{"type":"integer"},"amount":{"type":"integer"},"createTime":{"type":"string"},"lastModifiedTime":{"type":"string"},"paymentChannelCode":{"type":"string"},"fee":{"type":"integer"}},"required":["amount","createTime","currency","fee","fromChannelCode","icon","lastModifiedTime","paymentChannelCode","toChannelCode","tradeId","transactionStatus","transactionType"]}}},"required":["current","pages","records","size","total"]}},"required":["data"]},
+        "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"total":{"type":"integer"},"size":{"type":"integer"},"current":{"type":"integer"},"pages":{"type":"integer"},"records":{"type":"array","items":{"type":"object","properties":{"tradeId":{"type":"integer"},"fromChannelCode":{"type":"string"},"toChannelCode":{"type":"string"},"currency":{"type":"string"},"icon":{"type":"string"},"transactionStatus":{"type":"integer"},"transactionType":{"type":"integer"},"amount":{"type":"integer"},"createTime":{"type":"string"},"lastModifiedTime":{"type":["string","null"]},"paymentChannelCode":{"type":["string","null"]},"fee":{"type":["string","null"]}},"required":["amount","createTime","currency","fee","fromChannelCode","icon","lastModifiedTime","paymentChannelCode","toChannelCode","tradeId","transactionStatus","transactionType"]}}},"required":["current","pages","records","size","total"]}},"required":["data"]},
         "json": {},
-        "params" : {"from":"2023-12-01T00:00:00Z","to":"2024-01-01T00:00:00Z","transactionType":null,"transactionStatus":null,"page":null,"size":null},
+        "params" : {"from":"2023-01-01T00:00:00Z","to":"2024-01-01T00:00:00Z","transactionType":null,"transactionStatus":null,"page":null,"size":null},
         "test_item": [
             {"scenario":"[transactionType]充值","target":{"transactionType":7},"code_status": 200,"keyword": "data"},
             {"scenario":"[transactionType]提款","target":{"transactionType":9},"code_status": 200,"keyword": "data"},
@@ -79,11 +79,12 @@
     {
         "test_case": "get_trade_info",
         "req_method": "get",
-        "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"tradeId":{"type":"integer"},"fromChannelCode":{"type":"string"},"toChannelCode":{"type":"string"},"currency":{"type":"string"},"icon":{"type":"string"},"transactionStatus":{"type":"integer"},"transactionType":{"type":"integer"},"amount":{"type":"integer"},"createTime":{"type":"string"},"lastModifiedTime":{"type":"string"},"paymentChannelCode":{"type":"string"},"fee":{"type":"integer"}},"required":["amount","createTime","currency","fee","fromChannelCode","icon","lastModifiedTime","paymentChannelCode","toChannelCode","tradeId","transactionStatus","transactionType"]}},"required":["data"]},
+        "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"tradeId":{"type":"integer"},"fromChannelCode":{"type":"string"},"toChannelCode":{"type":"string"},"currency":{"type":"string"},"icon":{"type":["string","null"]},"transactionStatus":{"type":"integer"},"transactionType":{"type":"integer"},"amount":{"type":"integer"},"createTime":{"type":"string"},"lastModifiedTime":{"type":["string","null"]},"paymentChannelCode":{"type":["string","null"]},"fee":{"type":["string","null"]}},"required":["amount","createTime","currency","fee","fromChannelCode","icon","lastModifiedTime","paymentChannelCode","toChannelCode","tradeId","transactionStatus","transactionType"]}},"required":["data"]},
         "json": {},
         "params": {},
         "test_item": [
-            {"scenario":"[tradeId]","req_url": "/v1/wallet/front/user/trade/info/1","target": {},"code_status": 200,"keyword": 'success'},
+            {"scenario":"[tradeId]不存在","req_url": "/v1/wallet/front/user/trade/info/1","target": {},"code_status": 400,"keyword": '資料不存在'},
+            {"scenario":"[tradeId]存在","req_url": "/v1/wallet/front/user/trade/info/存在id","target": {},"code_status": 200,"keyword": 'data'},
             ]
     },
     {
