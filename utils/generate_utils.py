@@ -35,7 +35,6 @@ class Make:
     def sign(os_type, SECRET, device_id=3263782594) -> dict:
         timestamp = str(int(datetime.datetime.now().timestamp()))
         pre_sign = f'device-id={device_id}&os-type={os_type}&timestamp={timestamp}{SECRET}'
-        md5_sign = hashlib.md5(pre_sign.encode()).hexdigest()
-        after_sign = base64.b64encode(md5_sign.encode('utf-8'))
-        dict_of_sign = {"timestamp": timestamp, "sign": after_sign}
-        return dict_of_sign
+        md5_sign = hashlib.md5(pre_sign.encode()).digest()
+        after_sign = base64.b64encode(md5_sign).decode()
+        return {"timestamp": timestamp, "sign": after_sign}
