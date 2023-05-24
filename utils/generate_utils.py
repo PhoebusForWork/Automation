@@ -4,7 +4,7 @@ import string
 import base64
 import hashlib
 import datetime
-
+from dateutil.relativedelta import relativedelta
 
 class Make:
 
@@ -40,6 +40,18 @@ class Make:
 
         else:
             return time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
+
+    @staticmethod
+    def generate_custom_date(months=0, weeks=0, days=0):
+        # 獲取當前日期時間
+        now = datetime.datetime.now()
+        # 進行日期計算
+        target_date = now + relativedelta(months=months, weeks=weeks, days=days)
+        # 將小時、分鐘和秒設定為 00:00:00
+        target_date = target_date.replace(hour=0, minute=0, second=0)
+        # 格式化日期為指定格式
+        formatted_date = target_date.strftime('%Y-%m-%dT%H:%M:%SZ')
+        return formatted_date
 
     @staticmethod
     def sign(os_type, SECRET, device_id=3263782594) -> dict:
