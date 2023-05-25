@@ -180,8 +180,8 @@ class EnvReader:
 
     def __load_cs_test_account(self):
         if os.getenv('MODE') is None:
-            self.CS_TEST_ACCOUNT = config['cs_account']['test_account']
-            self.CS_TEST_PASSWORD = config['cs_account']['test_password']
+            self.CS_TEST_ACCOUNT = config['cs_account']['account']
+            self.CS_TEST_PASSWORD = config['cs_account']['password']
         else:
             self.CS_TEST_ACCOUNT = os.getenv('CS_TEST_ACCOUNT')
             self.CS_TEST_PASSWORD = os.getenv('CS_TEST_PASSWORD')
