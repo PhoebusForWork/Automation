@@ -188,6 +188,7 @@ class TestUserDetail:
     @allure.story("獲取用戶明細資料")
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", test_data.get_case('get_user_detail'))
+    @pytest.mark.regression
     def test_get_user_detail(test):
         validation_api = Validation()
         resp = validation_api.login(username="user001")
@@ -200,7 +201,9 @@ class TestUserDetail:
     @allure.feature("客戶明細資料")
     @allure.story("修改用戶明細資料")
     @allure.title("{test[scenario]}")
+    @pytest.mark.xfail(reason="auto環境變更資料用")
     @pytest.mark.parametrize("test", test_data.get_case('put_user_detail'))
+    @pytest.mark.regression
     def test_put_user_detail(test, ):
         validation_api = Validation()
         resp = validation_api.login(username="generic001")

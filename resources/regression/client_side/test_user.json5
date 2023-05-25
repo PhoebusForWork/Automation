@@ -120,6 +120,7 @@
         "test_case": "get_user_detail",
         "req_method": "get",
         "req_url": "/v1/user/detail",
+        "schema": {"type": "object", "properties": {"data": {"type": "object", "properties": {"userId": {"type": "integer"}, "username": {"type": "string"}, "registerTime": {"type": "string"}, "avatar": {"type": ["string","null"]}, "nickname": {"type": "string"}, "hasChangeNickname": {"type": "boolean"}, "birthday": {"type": ["string","null"]}, "sex": {"type": "integer"}, "mobile": {"type": "string"}, "countryCode": {"type": "string"}, "withdrawProtect": {"type": "boolean"}}, "required": ["avatar", "birthday", "countryCode", "hasChangeNickname", "mobile", "nickname", "registerTime", "sex", "userId", "username", "withdrawProtect"]}}, "required": ["data"]},
         "test_item": [
             {"scenario":"獲取明細資料","json": {},"params": {},"code_status": 200,"keyword": "data"},
             ]
@@ -128,10 +129,26 @@
         "test_case": "put_user_detail",
         "req_method": "put",
         "req_url": "/v1/user/detail",
+        "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
+        "params": {},
         "test_item": [
-            {"scenario":"修改明細資料","json": {"avatar": "string", "nickname": "六四直男","birthday": "1999-06-04T02:24:30.308Z", "sex": 0},"target":{}, "params": {},"code_status": 400,"keyword": "生日填写后不可修改"},
-            {"scenario":"修改明細資料","json": {"avatar": "string", "nickname": "六四直男", "sex": 0},"target":{}, "params": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"修改明細資料","json": {"sex": 2},"target":{}, "params": {},"code_status": 400,"keyword": "无效的请求参数"}
+            {"scenario":"[avatar]null","json": {"avatar": null}, "code_status": 200,"keyword": "success"},
+            {"scenario":"[avatar]空值","json": {"avatar": ""}, "code_status": 200,"keyword": "success"},
+            {"scenario":"[avatar]正確更換","json": {"avatar": "/static/img/avatar/a5e93a9a29/125669346c3c5bc8.png"}, "code_status": 200,"keyword": "success"},
+            {"scenario":"[nickname]空值","json": {"nickname": ""}, "code_status": 200,"keyword": "success"},
+            {"scenario":"[nickname]null","json": {"nickname": null}, "code_status": 200,"keyword": "success"},
+            {"scenario":"[nickname]11字","json": {"nickname": "12345678901"}, "code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[nickname]10字","json": {"nickname": "1234567890"}, "code_status": 200,"keyword": "success"},
+            {"scenario":"[birthday]不驗證","json": {"birthday": "1999-06-04T02:24:30.308Z"}, "code_status": "","keyword": ""},
+            {"scenario":"[birthday]10字","json": {"birthday": "1999-06-04T02:24:30.308Z"}, "code_status": 400,"keyword": "生日填写后不可修改"},
+            {"scenario":"[birthday]null","json": {"birthday": null}, "code_status": 200,"keyword": "success"},
+            {"scenario":"[birthday]空值","json": {"birthday": ""}, "code_status": 200,"keyword": "success"},
+            {"scenario":"[sex]空值","json": {"sex": ""}, "code_status": 200,"keyword": "success"},
+            {"scenario":"[sex]null","json": {"sex": null}, "code_status": 200,"keyword": "success"},
+            {"scenario":"[sex]0","json": {"sex": 0}, "code_status": 200,"keyword": "success"},
+            {"scenario":"[sex]1","json": {"sex": 1}, "code_status": 200,"keyword": "success"},
+            {"scenario":"[sex]2","json": {"sex": 2}, "code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[sex]字串","json": {"sex": "abc"}, "code_status": 400,"keyword": "无效的请求参数"},
         ]
     },
     {
