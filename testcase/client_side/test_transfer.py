@@ -55,7 +55,7 @@ class TestGameTransfer:
     @allure.feature("轉帳操作")
     @allure.story("從指定遊戲渠道轉錢回中心錢包")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.usefixtures("reset_user_wallet_for_withdraw")
     @pytest.mark.parametrize("test", test_data.get_case('wallet_game_transfer_withdraw'))
     def test_wallet_game_transfer_withdraw(test, get_user_token):
@@ -70,7 +70,7 @@ class TestGameTransfer:
     @allure.feature("轉帳操作")
     @allure.story("一鍵收回")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.usefixtures("reset_user_wallet_for_withdraw_all")
     @pytest.mark.parametrize("test", test_data.get_case('wallet_game_transfer_withdraw_all'))
     def test_wallet_game_transfer_withdraw_all(test, get_user_token):
@@ -85,7 +85,7 @@ class TestGameTransfer:
     @allure.feature("轉帳操作")
     @allure.story("將錢轉出至遊戲渠道")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.usefixtures("reset_user_wallet_for_deposit")
     @pytest.mark.parametrize("test", test_data.get_case('wallet_game_transfer_deposit'))
     def test_wallet_game_transfer_deposit(test, get_user_token):
@@ -100,7 +100,7 @@ class TestGameTransfer:
     @allure.feature("轉帳操作")
     @allure.story("顯示中心錢包及各遊戲錢包金額和渠道狀態")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_wallet_user_info'))
     def test_get_wallet_user_info(test, get_user_token):
         params_replace = test_data.replace_json(test["params"], test["target"])
