@@ -20,6 +20,5 @@ class XxlJobs:
         xxl = API_Controller(platform='xxl')
         xxl.send_request(method='post', url='/xxl-job-admin/login',
                          json={}, params={"userName": "admin", "password": "123456"})
-        # 等xxl-id補上
-        # xxl.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
-        #                  json={}, params={"id": 2, "executorParam": None, "addressList": None})
+        xxl.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
+                         json={}, params={"id": 15, "executorParam": "{\"pltCode\": \"vs\"}", "addressList": None})
