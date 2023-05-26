@@ -12,7 +12,7 @@ class TransferMock(WebAPI):
     def set_env(self, is_pro: bool):
         request_body = {
             "method": "put",
-            "url": "/v1/test/evn",
+            "url": "/v1/test/env/user",
             "params": {"isPro": is_pro}
         }
         response = self.send_request(**request_body)

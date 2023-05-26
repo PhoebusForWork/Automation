@@ -35,3 +35,10 @@ def wallet():
     wallet.run_sql('''
         UPDATE wallet.vs_wallet SET balance = 100.0000::numeric(21,4) WHERE user_id in (1,2,3,4,5,6)
         ''')
+
+def edit_the_default_platform():
+    edit_the_default_platform = Postgresql(database='plt_basics')
+    edit_the_default_platform.run_sql('''
+        UPDATE plt_basics.platform SET domains = 'api30-auto.prj300.xyz'::varchar(128) WHERE id = 1::integer;
+        UPDATE plt_basics.platform_currency SET status = 'ENABLE'::varchar(16);
+        ''')
