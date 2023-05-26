@@ -201,11 +201,24 @@ class TestUserDetail:
     @allure.feature("客戶明細資料")
     @allure.story("修改用戶明細資料")
     @allure.title("{test[scenario]}")
-    @pytest.mark.xfail(reason="auto環境變更資料用")
     @pytest.mark.parametrize("test", test_data.get_case('put_user_detail'))
     @pytest.mark.regression
     def test_put_user_detail(test, ):
         validation_api = Validation()
+        if test["scenario"] == "[birthday]首次修改":
+            register_new_user = WebAPI()
+            name_len = 10
+            new_name = Make.name(name_len)
+            token_resp = register_new_user.user_register(username=new_name, password="abc123456",
+                                                         confirmPassword="abc123456",
+                                                         captchaValidation={"channelName": str(123),
+                                                                            "imgToken": str(123)})
+            register_new_user_token = token_resp['data']['token']
+            api = API_Controller(platform='cs')
+            resp = api.send_request(test['req_method'], test['req_url'], test['json'], test['params'],
+                                    token=register_new_user_token)
+            ResponseVerification.basic_assert(resp, test)
+            return
         resp = validation_api.login(username="generic001")
         admin_token = resp.json()['data']['token']
         api = API_Controller(platform='cs')
@@ -472,5 +485,33 @@ class TestUserSecurityCenter:
         json_replace = test_data.replace_json(test['json'], test['target'])
         api = API_Controller(platform='cs')
         resp = api.send_request(test['req_method'], test['req_url'], json_replace, test['params'], token=admin_token)
+        ResponseVerification.basic_assert(resp, test)
+
+
+class TestUserLanguageAndCurrency:
+    @staticmethod
+    @allure.feature("用戶語系與幣種")
+    @allure.story("選擇語系")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.parametrize("test", test_data.get_case('user_security_withdrawProtect'))
+    @pytest.mark.regression
+    def test_user_security_withdraw_protect(test, get_client_side_token):
+        json_replace = test_data.replace_json(test['json'], test['target'])
+        api = API_Controller(platform='cs')
+        resp = api.send_request(test['req_method'], test['req_url'],
+                                json_replace, test['params'], token=get_client_side_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("用戶語系與幣種")
+    @allure.story("選擇幣別")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.parametrize("test", test_data.get_case('user_security_withdrawProtect'))
+    @pytest.mark.regression
+    def test_user_security_withdraw_protect(test, get_client_side_token):
+        json_replace = test_data.replace_json(test['json'], test['target'])
+        api = API_Controller(platform='cs')
+        resp = api.send_request(test['req_method'], test['req_url'],
+                                json_replace, test['params'], token=get_client_side_token)
         ResponseVerification.basic_assert(resp, test)
 

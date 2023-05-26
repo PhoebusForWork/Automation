@@ -139,8 +139,8 @@
             {"scenario":"[nickname]null","json": {"nickname": null}, "code_status": 200,"keyword": "success"},
             {"scenario":"[nickname]11字","json": {"nickname": "12345678901"}, "code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[nickname]10字","json": {"nickname": "1234567890"}, "code_status": 200,"keyword": "success"},
-            {"scenario":"[birthday]10字","json": {"birthday": "1999-06-04T02:24:30.308Z"}, "code_status": "","keyword": ""},
-            {"scenario":"[birthday]10字","json": {"birthday": "1999-06-04T02:24:30.308Z"}, "code_status": 400,"keyword": "生日填写后不可修改"},
+            {"scenario":"[birthday]首次修改","json": {"birthday": "1999-06-04T02:24:30.308Z"}, "code_status": 200,"keyword": "success"},
+            {"scenario":"[birthday]重複填寫","json": {"birthday": "1999-06-04T02:24:30.308Z"}, "code_status": 400,"keyword": "生日填写后不可修改"},
             {"scenario":"[birthday]null","json": {"birthday": null}, "code_status": 200,"keyword": "success"},
             {"scenario":"[birthday]空值","json": {"birthday": ""}, "code_status": 200,"keyword": "success"},
             {"scenario":"[sex]空值","json": {"sex": ""}, "code_status": 200,"keyword": "success"},
@@ -505,5 +505,26 @@
             {"scenario":"忘記密碼重設(帳號驗證)[username]空字串測試項目","target":{"username":""},"params":{},"code_status":400,"keyword":"无效的请求参数"},
             {"scenario":"忘記密碼重設(帳號驗證)[telephone]錯誤手機號","target":{"telephone":"18234792385"},"params":{},"code_status":400,"keyword":"您输入的用户名与手机号不匹配，请检查后重试，或点击下方联系客服"},
             ]
+    },
+
+    {
+        "test_case": "user_language",
+        "req_method": "put",
+        "req_url": "/v1/user/language",
+        "schema":{"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
+        "json": {},
+        "test_item": [
+            {"scenario":"[oldPwd]密碼錯誤", "params": {"language": ""},"code_status": 400,"keyword": "您输入的密码錯誤，请检查后重试"},
+        ]
+    },
+    {
+        "test_case": "user_currency",
+        "req_method": "put",
+        "req_url": "/v1/user/currency",
+        "schema":{"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
+        "json": {},
+        "test_item": [
+            {"scenario":"[oldPwd]密碼錯誤", "params": {"currency": ""},"code_status": 400,"keyword": "您输入的密码錯誤，请检查后重试"},
+        ]
     }
 ]
