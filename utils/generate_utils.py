@@ -9,10 +9,20 @@ import datetime
 class Make:
 
     @staticmethod
-    def name(namelen=8):
-        return ''.join(
-            random.choice(string.ascii_letters + string.digits)
-            for _ in range(namelen))
+    def name(namelen):
+        if namelen < 2:
+            raise ValueError("字串長度必須大於或等於2")
+        # 選擇一個隨機英文字母作為開頭
+        first_letter = random.choice(string.ascii_letters)
+        # 在剩餘的字元中隨機選擇數字和英文字母
+        remaining_chars = [random.choice(string.ascii_letters + string.digits) for _ in range(namelen - 1)]
+        # 確保至少有一個數字存在
+        if not any(char.isdigit() for char in remaining_chars):
+            index_to_replace = random.randrange(len(remaining_chars))
+            remaining_chars[index_to_replace] = random.choice(string.digits)
+        # 生成最終字串
+        result_string = first_letter + ''.join(remaining_chars)
+        return result_string
 
     @staticmethod
     def mobile():

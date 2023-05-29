@@ -123,3 +123,37 @@ class Avatar(PlatformAPI):
             response = self.get_avatar(title="待刪除頭像")
             ret = jsonpath.jsonpath(response, "$..id")
         return ret[-1]
+
+
+class CountryCodeRelation(PlatformAPI):
+    # 電信商查詢
+    def get_manage(self, plat_token=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "get",
+            "url": "/v1/countryCodeRelationManage"
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 修改電信商
+    def edit_manage(self, plat_token=None, thirdPartyId=None, countryCodeId=None, weight=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "put",
+            "url": "/v1/countryCodeRelationManage",
+            "json": [
+                {"thirdPartyId": thirdPartyId,
+                 "countryCodeId": countryCodeId,
+                 "weight": weight
+                 }
+            ]
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()

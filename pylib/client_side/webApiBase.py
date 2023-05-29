@@ -56,6 +56,7 @@ class WebAPI(API_Controller):
             self, deviceId="123", osType="WEB",
             username='tester001', password="",
             confirmPassword=None, proxyCode=None,
+            countryCode=None, telephone=None, uuid=None,
             captchaValidation={"channelName": "string", "imgToken": "string"}
     ):
         self.request_session.headers.update({"device-id": deviceId})
@@ -93,9 +94,33 @@ class WebAPI(API_Controller):
         response = self.send_request(**request_body)
         return response.json()
 
-    # 用戶重設密碼
+    # 忘記密碼重設(帳號驗證)
+    def valid_account(self, deviceId="123", osType="WEB",
+                      username=None, countryCode=None, telephone=None):
+        self.request_session.headers.update({"device-id": deviceId})
+        self.request_session.headers.update({"os-type": osType})
+        request_body = {
+            "method": "post",
+            "url": "/v1/user/valid/account",
+            "json": {
+                "username": username,
+                "countryCode": countryCode,
+                "telephone": telephone,
+                "captchaValidation": {
+                    "channelName": "string",
+                    "imgToken": "string"
+                }
+            }
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 忘記密碼重設
     def reset_pwd(self, deviceId="123", osType="WEB",
-                  code=None, username=None, telephone=None, newPwd=None):
+                  code=None, username=None, uuid=None,
+                  countryCode=None, telephone=None,
+                  newPwd=None, confirmPwd=None):
         self.request_session.headers.update({"device-id": deviceId})
         self.request_session.headers.update({"os-type": osType})
 
@@ -109,8 +134,8 @@ class WebAPI(API_Controller):
         return response.json()
 
     # 手機快捷登陸
-    def mobile_login(self, deviceId="123",
-                     osType="WEB", telephone=None, code=None):
+    def mobile_login(self, deviceId="123", osType="WEB",
+                     telephone=None, countryCode=None, code=None):
         self.request_session.headers.update({"device-id": deviceId})
         self.request_session.headers.update({"os-type": osType})
 
@@ -120,6 +145,7 @@ class WebAPI(API_Controller):
             "json": {
                 "telephone": telephone,
                 "code": code,
+                "countryCode": countryCode,
                 "captchaValidation":
                     {
                         "channelName": "string",
@@ -136,4 +162,16 @@ class WebAPI(API_Controller):
                 {"token": str(response.json()['data']['token'])})
         except:
             print("登入失敗")
+        return response.json()
+
+    def user_heartbeat(self, deviceId="123", osType="WEB"):
+        self.request_session.headers.update({"device-id": deviceId})
+        self.request_session.headers.update({"os-type": osType})
+
+        request_body = {
+            "method": "post",
+            "url": "/v1/user/heartbeat"
+        }
+
+        response = self.send_request(**request_body)
         return response.json()
