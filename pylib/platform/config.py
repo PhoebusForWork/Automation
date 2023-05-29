@@ -125,7 +125,7 @@ class Avatar(PlatformAPI):
         return ret[-1]
 
 
-class ContryCodeRelation(PlatformAPI):
+class CountryCodeRelation(PlatformAPI):
     # 電信商查詢
     def get_manage(self, plat_token=None):
         if plat_token is not None:
