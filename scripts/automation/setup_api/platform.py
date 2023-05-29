@@ -1,6 +1,7 @@
 from pylib.platform.account import AccountAdmin
 from pylib.platform.proxy import Proxy
 from pylib.platform.game import Game
+from pylib.platform.config import CountryCodeRelation
 from utils.generate_utils import Make
 
 
@@ -69,3 +70,11 @@ def create_initialize_proxy_account():
     create_proxy.add_proxy(proxyAccount="", proxyName="",
                            password="", proxyChannelId="",
                            commissionId=None)
+
+def sync_relation_manage():
+    sync_relation = CountryCodeRelation()
+    code = sync_relation.imgcode()
+    sync_relation.login(username="superAdmin",
+                        password="abc123456",
+                        imgCode=code)
+    sync_relation.edit_manage(thirdPartyId=1, countryCodeId=5)

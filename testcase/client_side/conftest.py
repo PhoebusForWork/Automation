@@ -5,8 +5,8 @@ from pylib.client_side.webApiBase import WebAPI
 from utils.data_utils import EnvReader
 
 env = EnvReader()
-cs_account = env.CS_ACCOUNT
-cs_password = env.CS_PASSWORD
+cs_account = env.CS_TEST_ACCOUNT
+cs_password = env.CS_TEST_PASSWORD
 login_user_id = None
 
 

@@ -8,8 +8,10 @@ platform_host = env.PLATFORM_HOST
 
 
 class PlatformAPI(API_Controller):
-    def __init__(self):
+    def __init__(self, token=None):
         super().__init__(platform='plt')
+        if token:
+            self.request_session.headers.update({"token": token})
 
     # 新帳戶更新密碼
     def first_login_password(self, username='phoebusliu', oldPassword='abc123456', newPassword='abc123456'):
@@ -44,7 +46,7 @@ class PlatformAPI(API_Controller):
         try:
             self.request_session.headers.update(
                 {"token": str(response.json()['data']['token'])})
-        except:
+        except Exception as e:
             print("登入失敗")
         return response
 
