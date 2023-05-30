@@ -190,7 +190,7 @@ class EnvReader:
         self.PLT_HEADER = config['API_headers']['plt']
         self.XXL_HEADER = config['API_headers']['xxl']
         self.CS_HEADER = config['API_headers']['cs']
-        self.CS_SECRET = config['secret']['secret']
+        self.CS_SECRET = config['secret']['cs_secret']
         self.PLT_SECRET = config['secret']['plt_secret']
 
     def __load_mongo(self):
