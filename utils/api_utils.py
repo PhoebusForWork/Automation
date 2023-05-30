@@ -13,7 +13,6 @@ cs_host = env.WEB_HOST
 control_host = env.CONTROL_HOST
 cs_header = env.CS_HEADER
 xxl_host = env.XXL_HOST
-secret = env.SECRET
 
 
 class API_Controller:
@@ -22,13 +21,14 @@ class API_Controller:
 
         self.current_timestamp = str(int(datetime.datetime.now().timestamp()))
         self.request_session = requests.Session()
-        if platform == 'plt':
+        self.platform = platform
+        if self.platform == 'plt':
             self.host = platform_host
             # 這邊字串轉為dict要使用eval不可用dict會掛
             self.request_session.headers = eval(platform_header)
-        elif platform == 'xxl':
+        elif self.platform == 'xxl':
             self.host = xxl_host
-        elif platform == 'control':
+        elif self.platform == 'control':
             self.host = control_host
         else:
             self.host = cs_host
@@ -55,6 +55,10 @@ class API_Controller:
     def __update_sign(self):
         device_id = self.request_session.headers.get("device-id", "")
         os_type = self.request_session.headers.get("os-type", "")
+        if self.platform == 'plt':
+            secret = env.PLT_SECRET
+        else:
+            secret = env.CS_SECRET
         sign = Make.sign(device_id=device_id, SECRET=secret, os_type=os_type)
         self.request_session.headers.update(sign)
 
