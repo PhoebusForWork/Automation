@@ -147,10 +147,11 @@ class TestFrontUser:
     @allure.feature("錢包操作")
     @allure.story("取得使用者資金明細")
     @allure.title("{test[scenario]}")
+    @allure.issue("http://35.76.28.10/issues/29362")
     # @pytest.mark.test
     @pytest.mark.parametrize("test", test_data.get_case('get_wallet_front_user_fund'))
     def test_get_wallet_front_user_fund(test, get_user_token):
-        test['params']['from'] = Make.generate_custom_date(months=-3)
+        test['params']['from'] = Make.generate_custom_date(days=-90)
         params_replace = test_data.replace_json(test["params"], test["target"])
         api = API_Controller(platform='cs')
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
