@@ -9,7 +9,7 @@ import datetime
 class Make:
 
     @staticmethod
-    def name(namelen):
+    def name(namelen=8):
         if namelen < 2:
             raise ValueError("字串長度必須大於或等於2")
         # 選擇一個隨機英文字母作為開頭
