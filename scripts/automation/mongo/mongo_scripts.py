@@ -4,7 +4,7 @@ from utils.database_utils import Mongo
 def setup_lock_status_user():
     setup = Mongo(platform='plt')
     setup.specify_db('plt_user')
-    setup.specify_collection('vs_user')
+    setup.specify_collection('ldpro_user')
 
     filter_query = {"username": "user002"}
     update_query = {"$set": {"lock_status": {"LOGIN": True, "RECHARGE": True, "WITHDRAW": True, "TRANSFER": True}}}
