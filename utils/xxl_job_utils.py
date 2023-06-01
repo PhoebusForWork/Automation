@@ -21,4 +21,4 @@ class XxlJobs:
         xxl.send_request(method='post', url='/xxl-job-admin/login',
                          json={}, params={"userName": "admin", "password": "123456"})
         xxl.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
-                         json={}, params={"id": 15, "executorParam": "{\"pltCode\": \"vs\"}", "addressList": None})
+                         json={}, params={"id": 15, "executorParam": "{\"pltCode\": \"ldpro\"}", "addressList": None})
