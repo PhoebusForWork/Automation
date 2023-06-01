@@ -5,7 +5,7 @@ def host_platform():
     # host_platform SQL
     host_platform = Postgresql(database='host_platform')
     host_platform.run_sql('''
-        UPDATE host_platform.platform SET secret = '7E79731B19717750E618A4E0EFF248DA6AE334BB0706A31BC36A690A51F1A8E1' WHERE id = 1;
+        UPDATE host_platform.platform SET secret = '30BDCDFC4EC1A3164ADF6860741DA40C95A35D574AEEE9673A218ADA7738EAEC' WHERE id = 1;
         ''')
 
 
@@ -13,27 +13,27 @@ def plt_account():
     # plt_account SQL
     plt_account = Postgresql(database='plt_account')
     plt_account.run_sql('''
-        UPDATE plt_account.vs_admin SET last_login_time = '2023-03-06 04:01:21.203101 +00:00', last_login_device_id = '3263782594', last_login_ip = '61.220.72.61', last_modified_admin_id = 1, last_modified_admin = 'superAdmin' WHERE id = 2;
-        INSERT INTO plt_account.vs_department (department, pid, status, creator_id, creator, create_time, last_modified_admin_id, last_modified_admin, last_modified_time) VALUES ('測試用部門', 0, 1, 1, 'admin', DEFAULT, null, null, DEFAULT);
-        INSERT INTO plt_account.vs_department (department, pid, status, creator_id, creator, create_time, last_modified_admin_id, last_modified_admin, last_modified_time) VALUES ('刪除用部門', 0, 1, 1, 'admin', DEFAULT, null, null, DEFAULT);
-        INSERT INTO plt_account.vs_role (role, status, num_of_total_admin, remark, creator_id, creator, create_time, last_modified_admin_id, last_modified_admin, last_modified_time) VALUES ('測試用權限', 1, 0, null, 1, '超级管理员', DEFAULT, null, null, DEFAULT);
-        INSERT INTO plt_account.vs_role (role, status, num_of_total_admin, remark, creator_id, creator, create_time, last_modified_admin_id, last_modified_admin, last_modified_time) VALUES ('編輯用角色', 1, 0, null, 1, '超级管理员', DEFAULT, null, null, DEFAULT);
-        INSERT INTO plt_account.vs_dept_role (dept_id, role_id, create_time, last_modified_time) VALUES (6, 6, DEFAULT, DEFAULT);
-        INSERT INTO plt_account.vs_dept_role (dept_id, role_id, create_time, last_modified_time) VALUES (3, 6, DEFAULT, DEFAULT);
+        UPDATE plt_account.ldpro_admin SET last_login_time = '2023-03-06 04:01:21.203101 +00:00', last_login_device_id = '3263782594', last_login_ip = '61.220.72.61', last_modified_admin_id = 1, last_modified_admin = 'superAdmin' WHERE id = 2;
+        INSERT INTO plt_account.ldpro_department (department, pid, status, creator_id, creator, create_time, last_modified_admin_id, last_modified_admin, last_modified_time) VALUES ('測試用部門', 0, 1, 1, 'admin', DEFAULT, null, null, DEFAULT);
+        INSERT INTO plt_account.ldpro_department (department, pid, status, creator_id, creator, create_time, last_modified_admin_id, last_modified_admin, last_modified_time) VALUES ('刪除用部門', 0, 1, 1, 'admin', DEFAULT, null, null, DEFAULT);
+        INSERT INTO plt_account.ldpro_role (role, status, num_of_total_admin, remark, creator_id, creator, create_time, last_modified_admin_id, last_modified_admin, last_modified_time) VALUES ('測試用權限', 1, 0, null, 1, '超级管理员', DEFAULT, null, null, DEFAULT);
+        INSERT INTO plt_account.ldpro_role (role, status, num_of_total_admin, remark, creator_id, creator, create_time, last_modified_admin_id, last_modified_admin, last_modified_time) VALUES ('編輯用角色', 1, 0, null, 1, '超级管理员', DEFAULT, null, null, DEFAULT);
+        INSERT INTO plt_account.ldpro_dept_role (dept_id, role_id, create_time, last_modified_time) VALUES (6, 6, DEFAULT, DEFAULT);
+        INSERT INTO plt_account.ldpro_dept_role (dept_id, role_id, create_time, last_modified_time) VALUES (3, 6, DEFAULT, DEFAULT);
         ''')
 
 
 def plt_game():
     plt_game = Postgresql(database='plt_game')
     plt_game.run_sql('''
-        UPDATE plt_game.vs_game SET status = true::boolean
+        UPDATE plt_game.ldpro_game SET status = true::boolean
         ''')
 
 
 def wallet():
     wallet = Postgresql(database='wallet')
     wallet.run_sql('''
-        UPDATE wallet.vs_wallet SET balance = 100.0000::numeric(21,4) WHERE user_id in (1,2,3,4,5,6)
+        UPDATE wallet.ldpro_wallet SET balance = 100.0000::numeric(21,4) WHERE user_id in (1,2,3,4,5,6)
         ''')
 
 def edit_the_default_platform():
@@ -47,7 +47,7 @@ def edit_the_default_platform():
 def cs_message():
     cs_message = Postgresql(database='cs_message', platform='cs')
     cs_message.run_sql('''
-        insert into cs_message.vs_third_party_manage (id, name, type, weighting, ext, is_enabled, created_time, last_modified_id, last_modified_name, last_modified_time, language)
+        insert into cs_message.ldpro_third_party_manage (id, name, type, weighting, ext, is_enabled, created_time, last_modified_id, last_modified_name, last_modified_time, language)
         values
         (3, 'AliCloud', 'EMAIL', 100, '{"alias": "乐动体育", "endpoint": "dm.ap-southeast-1.aliyuncs.com", "accessKeyId": "LTAI4GH9TbcyRjXhT4U8QnR8", "accountName": "support@mail.ld65.pro", "accessKeySecret": "zA9VIxRvLAlnM7Tx3T62nIR1dMBAVg"}', true, '2022-07-19 08:11:41.620049 +00:00', null, null, null, 'NONE'),
         (5, 'MaiXunTongInternational', 'SMS', 100, '{"url": "http://43.153.82.227:9511/api/send-sms-single", "spId": "495347", "password": "1d1b7213"}', true, '2022-07-19 08:11:41.524691 +00:00', 1, 'superAdmin', '2023-03-27 09:35:34.922353 +00:00', 'NONE'),
@@ -60,7 +60,7 @@ def cs_message():
         (19, 'Livechat-EN', 'CUSTOMER', 22, '{"url": "https://secure.livechatinc.com/licence/14077215/v2/open_chat.cgi"}', true, '2023-05-18 07:37:36.479127 +00:00', 25, 'ping666', '2023-05-19 07:57:03.335012 +00:00', 'EN'),
         (11, '阿里云-聚美-queenp', 'BANK', 1, '{"url": "https://jmbank.market.alicloudapi.com/bankcard/validate", "password": "bf9498bb597d4f1e9facb4834e4afbc2", "username": "2fyoiNoeqLlLNfS25lxUiMb9l6tIz5oY"}', false, '2023-05-16 05:57:18.094000 +00:00', 25, 'ping666', '2023-05-18 06:57:02.091009 +00:00', 'ZH'),
         (20, 'SmartCustomerSystem-EN', 'CUSTOMER', 234, '{"h5Url": "https://icstest.aicspro.com/h5sdk/#/loading", "appKey": "b6ChSz7G", "priKey": "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBANPMumNKiSXn2LvkHJxn6Ud4iTEPxqpCjD2BUjLjg6f1b9WgvA7LFUuch2i5Woegw/jq9UblFixuoIAmHJenlAE/clEAgjlBVFXT0Pxl0bGIl2tK0Kidm5KFMREwg7NuPBljbw2a2VpunrGQv2GcPyRfRjvkLc80DbVKE3BJwg+jAgMBAAECgYEAv6p2RaJO6IGd7bJpfdS/E5FtvXtEUhF07bfY1fpzywvdz5nsdQqs08br9wY9eZ0vm1Os8SIg5caa8j0LBOZ+lNjr0H2dPx2/tTFkXh9xHKEdwjQt9dN5AubRPKYQWpUOgtpMOyflRS0QLISa07hX1h4tlJZCxD0epsEjBGBa2iECQQDu528FNKBjJyj4jWg/cGyGH3n/e4f59TWjQmMHpJDuR+taHvkoPxo9MI/RyRnO0ZwybMkZTr2I1w3qDPKTdAuTAkEA4vTCzTMQjDyW+2pTbuEXEn1iYhNZFaVGAFvhyue9NxT21mdEKpELFeFx+Uoql4DinoWisHUAU1Reify84gEVsQJAdE/C0nL7vypanSAjZ/dxLp92gvb+jahfc9unYRoy4X+sStUXkwud17qj2owg/3s3o6kpAyQ9zLh+8rtZAocV9wJBAJgc/nd0E1I6xeMKd5MoUEN3QDqFxz6HwGw7KRHK0noZlftLyVdSUYC/0pkICZXzr3AaF1l3gdlYAekwORStL3ECQHKeVUL8mZ4klVMezmzbSsyEAoKuaHms6QWzPjFD+etgr4UolKIg/skErtU82WKaIm6gZn/33AKWsI1Dhz31UiM=", "webUrl": "https://icstest.aicspro.com/sdk/#/loading", "appSecret": "1444447d809cda3ec4ffe46af4a8285301d00862", "getUserTokenApiUrl": "https://icstest.aicspro.com/apis/api/user/v1/login", "getAccessTokenApiUrl": "https://icstest.aicspro.com/apis/api/auth/v1/getAccessToken"}', false, '2023-05-18 07:37:38.485801 +00:00', 25, 'ping666', '2023-05-19 08:02:43.378985 +00:00', 'EN');
-        insert into cs_message.vs_message_template (id, name, type, third_party_manage_name, content, is_enabled, created_time, last_modified_id, last_modified_name, last_modified_time)
+        insert into cs_message.ldpro_message_template (id, name, type, third_party_manage_name, content, is_enabled, created_time, last_modified_id, last_modified_name, last_modified_time)
         values
         (1, 'MaiXunTong', 'SMS', 'MaiXunTong', '【乐动科技】這是測試喔: ${code}', true, '2022-07-19 08:11:45.082426 +00:00', 3, 'alan', '2022-07-19 09:03:06.824647 +00:00'),
         (2, 'YunPian', 'VOICE', 'YunPian', 'this is test ${code}', true, '2022-07-11 03:56:52.270635 +00:00', 3, 'alan', '2022-07-18 10:34:31.191348 +00:00'),
