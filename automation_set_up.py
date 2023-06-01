@@ -22,6 +22,7 @@ time.sleep(wait_for_sync)
 # 待移除
 # contorl.create_platform_and_sync()
 
+postgres_scripts.plt_dept()
 platform.super_admin_initialize_and_create_admin()
 platform.login_account()
 platform.turn_on_the_game_to_test()

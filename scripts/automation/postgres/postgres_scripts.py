@@ -22,6 +22,18 @@ def plt_account():
         INSERT INTO plt_account.ldpro_dept_role (dept_id, role_id, create_time, last_modified_time) VALUES (3, 6, DEFAULT, DEFAULT);
         ''')
 
+# 這邊先用語法處理 之後換成api新增
+def plt_dept():
+    # plt_dept SQL
+    plt_dept = Postgresql(database='plt_account')
+    plt_dept.run_sql('''
+        INSERT INTO plt_account.ldpro_department (id, department, pid, status, creator_id, creator, create_time, last_modified_admin_id, last_modified_admin, last_modified_time) VALUES (1, '資訊部門', 0, 1, 1, 'admin', '2022-07-14 09:56:56.862311 +00:00', 1, 'superAdmin', '2022-07-28 06:12:56.176618 +00:00');
+        INSERT INTO plt_account.ldpro_department (id, department, pid, status, creator_id, creator, create_time, last_modified_admin_id, last_modified_admin, last_modified_time) VALUES (2, '行銷部', 0, 1, 1, 'admin', '2022-07-14 09:56:56.862311 +00:00', null, null, '2022-07-14 09:56:56.862311 +00:00');
+        INSERT INTO plt_account.ldpro_department (id, department, pid, status, creator_id, creator, create_time, last_modified_admin_id, last_modified_admin, last_modified_time) VALUES (3, '測試部', 0, 1, 1, 'admin', '2022-07-14 09:56:56.862311 +00:00', null, null, '2022-07-14 09:56:56.862311 +00:00');
+        INSERT INTO plt_account.ldpro_department (id, department, pid, status, creator_id, creator, create_time, last_modified_admin_id, last_modified_admin, last_modified_time) VALUES (4, '風控部', 0, 1, 1, 'admin', '2022-07-14 09:56:56.862311 +00:00', null, null, '2022-07-14 09:56:56.862311 +00:00');
+        INSERT INTO plt_account.ldpro_department (id, department, pid, status, creator_id, creator, create_time, last_modified_admin_id, last_modified_admin, last_modified_time) VALUES (5, '客服部', 0, 1, 1, 'admin', '2022-07-14 09:56:56.862311 +00:00', 24, 'kkoma666', '2023-05-16 02:32:19.649329 +00:00');
+        ''')
+
 
 def plt_game():
     plt_game = Postgresql(database='plt_game')
