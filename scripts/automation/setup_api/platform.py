@@ -24,10 +24,10 @@ def create_dept_and_role():
                                password="abc123456",
                                imgCode=code).json()['data']['token']
 
-    # dept = AccountDept(token=token)
-    # dept.add_dept(department='測試組')
-    # role = AccountRole(token=token)
-    # role.add_role(role='測試員', departmentIds=[1], authorityIds=[])
+    dept = AccountDept(token=token)
+    dept.add_dept(department='測試組')
+    role = AccountRole(token=token)
+    role.add_role(role='測試員', departmentIds=[1], authorityIds=[])
 
 
 def create_account():

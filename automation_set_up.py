@@ -41,4 +41,4 @@ platform.sync_relation_manage()
 #    mongo    #
 # #############
 
-mongo_scripts.setup_lock_status_user() # 有問題
+mongo_scripts.setup_lock_status_user()
