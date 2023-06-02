@@ -16,7 +16,7 @@ check_health() {
       # second if
       if [ $SECONDS -gt "300" ]; then
         echo "SECONDS >= 300 force restart service"
-        for item in $(ARGOCD_AUTH_TOKEN=$ARGOCD_TOKEN argocd app get $ARGOCD_APPNAME --show-operation --grpc-web | grep "Progressing" | awk '{print $4}'); do
+        for item in $(ARGOCD_AUTH_TOKEN=$ARGOCD_TOKEN argocd app get $ARGOCD_APPNAME --insecure --show-operation --grpc-web --server $ARGOCD_SERVER | grep "Progressing" | awk '{print $4}'); do
           ARGOCD_AUTH_TOKEN=$ARGOCD_TOKEN argocd app actions run $ARGOCD_APPNAME restart --resource-name $item --kind $ARGOCD_KIND --insecure --server $ARGOCD_SERVER --grpc-web && echo "Restart Pod '$item'"
         done;
         SECONDS=0
