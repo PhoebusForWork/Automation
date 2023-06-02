@@ -1,11 +1,11 @@
-from pylib.platform.account import AccountAdmin
+from pylib.platform.account import AccountAdmin, AccountDept, AccountRole
 from pylib.platform.proxy import Proxy
 from pylib.platform.game import Game
 from pylib.platform.config import CountryCodeRelation
 from utils.generate_utils import Make
 
 
-def super_admin_initialize_and_create_admin():
+def super_admin_initialize():
     accountAdmin = AccountAdmin()
     accountAdmin.first_login_password(username='superAdmin',
                                       oldPassword='abc123456',
@@ -16,6 +16,22 @@ def super_admin_initialize_and_create_admin():
                        imgCode=code)
     accountAdmin.edit_password(oldPassword='abc1234567',
                                newPassword='abc123456')
+
+def create_dept_and_role():
+    accountAdmin = AccountAdmin()
+    code = accountAdmin.imgcode()
+    token = accountAdmin.login(username="superAdmin",
+                               password="abc123456",
+                               imgCode=code).json()['data']['token']
+
+    # dept = AccountDept(token=token)
+    # dept.add_dept(department='測試組')
+    # role = AccountRole(token=token)
+    # role.add_role(role='測試員', departmentIds=[1], authorityIds=[])
+
+
+def create_account():
+    accountAdmin = AccountAdmin()
     code = accountAdmin.imgcode()
     accountAdmin.login(username="superAdmin",
                        password="abc123456",
@@ -24,13 +40,12 @@ def super_admin_initialize_and_create_admin():
     account_list = ['account001', 'account002', 'account003', 'deltest001']
     for account_name in account_list:
         accountAdmin.add_admin(account=account_name,
-                               deptId=3,
+                               deptId=1,
                                displayName=account_name,
                                phone=Make.mobile(),
                                password='abc1234567',
                                isLeader=1,
-                               roleIds=[3])
-
+                               roleIds=[2])
 
 def login_account():
     login_account = AccountAdmin()
