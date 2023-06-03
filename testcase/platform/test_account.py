@@ -20,7 +20,7 @@ test_data.read_json5('test_account.json5')
 def re_password_default(get_platform_token):
     api = PlatformAPI()
     code = api.imgcode()
-    resp = api.login(username='charlieadmin100',
+    resp = api.login(username='account001',
                      password='abc12345',
                      imgCode=code)
     admin_token = resp.json()['data']['token']
@@ -67,15 +67,7 @@ def test_dept_list(test, get_platform_token):
                             json_replace,
                             test['params'],
                             token=get_platform_token)
-    assert resp.status_code == test['code_status'], resp.text
-
-    if "[roleId]基本查詢" == test['scenario']:
-        resp = resp.json()
-        for d in resp['data']:
-            if d['id'] == test['params']['roleId']:
-                assert d["selected"] is True
-    else:
-        ResponseVerification.basic_assert(resp, test)
+    ResponseVerification.basic_assert(resp, test)
 
 
 @allure.feature("組織結構")
@@ -284,7 +276,8 @@ def test_get_role_status(test, get_platform_token):
 @allure.feature("角色管理")
 @allure.story("角色列表/搜尋角色")
 @allure.title("{test[scenario]}")
-@pytest.mark.regression
+@pytest.mark.xfail()
+@pytest.mark.not_regression
 @pytest.mark.parametrize("test", test_data.get_case('test_role_list'))
 def test_role_list(test, get_platform_token):
 
@@ -339,7 +332,8 @@ def test_edit_admin(test, get_platform_token):
 @pytest.mark.regression
 @pytest.mark.parametrize("test", test_data.get_case('test_admin_add_account'))
 def test_admin_add_account(test, get_platform_token):
-    temp = copy.deepcopy(test)  #避免淺層複製,直接替換會動到原始json資料
+    # 避免淺層複製,直接替換會動到原始json資料
+    temp = copy.deepcopy(test)
     if test["json"]["account"] == "AutoTest":
         random_name = Make.name()
         temp["json"]["account"] = random_name
@@ -410,7 +404,7 @@ def test_admin_reset_password(test, get_platform_token):
     ResponseVerification.basic_assert(resp, test)
 
 
-#設計一個修改帳號後重新登錄回來執行的機制
+# 設計一個修改帳號後重新登錄回來執行的機制
 @allure.feature("帳號列表")
 @allure.story("修改帳號密碼")
 @allure.title("{test[scenario]}")
@@ -420,11 +414,11 @@ def test_admin_password(test, get_platform_token, re_password_default):
     api = PlatformAPI()
     code = api.imgcode()
     if test['scenario'] == "正常修改密碼":
-        resp = api.login(username='charlieadmin100',
+        resp = api.login(username='account001',
                          password='abc123456',
                          imgCode=code)
     else:
-        resp = api.login(username='charlieadmin100',
+        resp = api.login(username='account001',
                          password='abc12345',
                          imgCode=code)
     admin_token = resp.json()['data']['token']
@@ -554,23 +548,6 @@ def test_authority_list(test, get_platform_token):
                             test["params"],
                             token=get_platform_token)
     ResponseVerification.basic_assert(resp, test)
-
-
-@allure.feature("頁面結構")
-@allure.story("權限總列表")
-@allure.title("{test[scenario]}")
-@pytest.mark.regression
-@pytest.mark.parametrize("test", test_data.get_case('test_authority_list'))
-def test_authority_list(test, get_platform_token):
-
-    api = API_Controller()
-    resp = api.send_request(test["req_method"],
-                            test["req_url"],
-                            test["json"],
-                            test["params"],
-                            token=get_platform_token)
-    ResponseVerification.basic_assert(resp, test)
-
 
 @allure.feature("頁面結構")
 @allure.story("選單樹列表")

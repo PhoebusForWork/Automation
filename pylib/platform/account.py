@@ -160,7 +160,7 @@ class AccountAdmin(PlatformAPI):
         now = time.time()
         auto_account = "auto" + str(int(now * 10))
         resp = self.add_admin(plat_token=plat_token, account=auto_account, password="abc123456",
-                              isLeader=True, deptId='6', roleIds=['5'], displayName=auto_account)
+                              isLeader=True, deptId='1', roleIds=['2'], displayName=auto_account)
         if resp["data"] == "success":
             return auto_account
         else:
@@ -342,7 +342,8 @@ class AccountDept(PlatformAPI):
 
     def find_dept_id(self, plat_token=None):
         response = self.dept_list(plat_token=plat_token)
-        dept_id = jsonpath.jsonpath(response, "$..id")
+        dept_id = jsonpath.jsonpath(response, "$..id").sort()
+        print(dept_id)
         return str(dept_id[-1])
 
 
