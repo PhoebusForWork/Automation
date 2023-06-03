@@ -112,7 +112,6 @@ class TestUser:
     @allure.story("客戶管理")
     @allure.title("{test[scenario]}")
     @pytest.mark.regression
-    @pytest.mark.xfail()
     @pytest.mark.parametrize("test", test_data.get_case('get_user_account'))
     def test_get_user_account(test, get_platform_token):
         api = API_Controller()
