@@ -3,6 +3,7 @@ import allure
 import time
 from pylib.platform.wallet import WalletGameTransferFailed
 from utils.data_utils import TestDataReader, ResponseVerification
+from utils.generate_utils import Make
 from utils.api_utils import API_Controller
 
 test_data = TestDataReader()
@@ -57,11 +58,11 @@ class TestUserTransfer:
     @allure.feature("客戶列表/資金往來")
     @allure.story("取得用戶財物信息")
     @allure.title("{test[scenario]}")
-    @pytest.mark.xfail()
-    @pytest.mark.not_regression  # 尚未調整完成,需要在改from Andy
-    @pytest.mark.parametrize("test", test_data.get_case('get_user_fund'))
-    def test_get_user_fund(test, get_platform_token):
-
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('get_user_summary'))
+    def test_get_user_summary(test, get_platform_token):
+        test['params'] = {"from": Make.generate_custom_date(days=-30), "to": Make.generate_custom_date()}
+        print(test['params'])
         params_replace = test_data.replace_json(test['params'], test['target'])
 
         api = API_Controller()
@@ -71,7 +72,6 @@ class TestUserTransfer:
                                 params_replace,
                                 token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)
-
 
     @staticmethod
     @allure.feature("客戶列表/資金往來")  # [issue]#25492
@@ -177,7 +177,7 @@ class TestGameTransferFail:
                 "存在ID",
                 str(failed_id.get_failed_id_unused(
                     plat_token=get_platform_token))
-                )
+            )
 
         api = API_Controller()
         resp = api.send_request(test['req_method'],
@@ -206,7 +206,7 @@ class TestGameTransferFail:
             test['params']['tradeId'] = test['params']['tradeId'].replace(
                 "存在ID",
                 str(failed_id.get_failed_id(plat_token=get_platform_token))
-                )
+            )
 
         api = API_Controller()
         resp = api.send_request(test['req_method'],
