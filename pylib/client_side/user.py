@@ -10,6 +10,176 @@ env = EnvReader()
 web_host = env.WEB_HOST
 
 
+# 交易通知信
+class TransactionNotice(WebAPI):
+    # 已讀通知信
+    def read_notice(self, id=None):
+        request_body = {
+            "method": "put",
+            "url": f"/v1/transaction/notice/read/{id}"
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 一鍵已讀
+    def read_all_notice(self):
+        request_body = {
+            "method": "post",
+            "url": "/v1/transaction/notice/read/all"
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 未讀數量
+    def get_unread_count(self):
+        request_body = {
+            "method": "get",
+            "url": "/v1/transaction/notice/unread/count"
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 通知信列表
+    def get_notice_list(self, page=None, size=None):
+        request_body = {
+            "method": "get",
+            "url": "/v1/transaction/notice/list",
+            "params": KeywordArgument.body_data()
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+
+# 站內信
+class InternalLetter(WebAPI):
+    # 未讀數量
+    def get_unread_count(self, now=Make.date('end')):
+        request_body = {
+            "method": "get",
+            "url": "/v1/user/internal/letter/unread/count",
+            "params": KeywordArgument.body_data(),
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 一鍵已讀
+    def read_all_letter(self, now=Make.date('end')):
+        request_body = {
+            "method": "post",
+            "url": "/v1/user/internal/letter/read/all",
+            "params": KeywordArgument.body_data()
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 新站內信
+    def new_letter(self, page=None, size=None,
+                   typeId=None, title=None, message=None,
+                   now=None, img1=None, img2=None, img3=None):
+        request_body = {
+            "method": "post",
+            "url": "/v1/user/internal/letter",
+            "json": KeywordArgument.body_data()
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 站內信回覆
+    def reply_letter(self, id=None, type=None, message=None,
+                     img1=None, img2=None, img3=None):
+        request_body = {
+            "method": "put",
+            "url": "/v1/user/internal/letter/message/reply",
+            "json": KeywordArgument.body_data()
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 問題類型
+    def get_quiz_types(self):
+        request_body = {
+            "method": "get",
+            "url": "/v1/user/internal/letter/quiz/types"
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 站內信對話
+    def get_massage(self, id=None, type=None,
+                    now=None, page=None, size=None):
+        request_body = {
+            "method": "get",
+            "url": "/v1/user/internal/letter/message",
+            "params": KeywordArgument.body_data()
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 站內信列表
+    def get_letter_list(self, type=None, now=None,
+                        page=None, size=None):
+        request_body = {
+            "method": "get",
+            "url": "/v1/user/internal/letter/list",
+            "params": KeywordArgument.body_data()
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+
+# 用戶幣種
+class Currency(WebAPI):
+    # 選擇幣別
+    def select_currency(self, currency=None):
+        request_body = {
+            "method": "put",
+            "url": "/v1/user/currency",
+            "params": KeywordArgument.body_data()
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+
+# VIP資訊
+class Vip(WebAPI):
+    # 用戶VIP紅利列表(每月紅利/佳節紅利)
+    def get_bonus_info(self):
+        request_body = {
+            "method": "get",
+            "url": "/v1/user/vip/bonus"
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 領取VIP紅利
+    def get_bonus(self, type=None):
+        request_body = {
+            "method": "put",
+            "url": "/v1/user/vip/bonus",
+            "params": KeywordArgument.body_data()
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 用戶VIP
+    def get_vip(self):
+        request_body = {
+            "method": "get",
+            "url": "/v1/user/vip"
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 各VIP階層與幣別積分比例
+    def get_vip_config(self):
+        request_body = {
+            "method": "get",
+            "url": "/v1/user/vip/config"
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+
 # 客戶詳細資料
 class Detail(WebAPI):
     # 獲取用戶明細資料
@@ -312,3 +482,28 @@ class Address(WebAPI):
             resp = self.get_user_address()
             ret = jsonpath.jsonpath(resp, "$.data[?(@.isDefault != 1)].id")
             return ret[0]
+
+
+# 用戶語系
+class Language(WebAPI):
+    # 選擇語系
+    def select_language(self, language=None):
+        request_body = {
+            "method": "put",
+            "url": "/v1/user/language",
+            "params": KeywordArgument.body_data()
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+
+# 用戶操作
+class User(WebAPI):
+    # 用戶心跳
+    def hearrbeat(self):
+        request_body = {
+            "method": "post",
+            "url": "/v1/user/heartbeat"
+        }
+        response = self.send_request(**request_body)
+        return response.json()

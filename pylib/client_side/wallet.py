@@ -1,51 +1,41 @@
 # -*- coding: utf-8 -*-
+import jsonpath
 from ..client_side.webApiBase import WebAPI
 from utils.api_utils import KeywordArgument
 from utils.data_utils import EnvReader
+from utils.generate_utils import Make
 
 env = EnvReader()
 web_host = env.WEB_HOST
 
 
-class Wallet(WebAPI):
-    # 顯示中心錢包及各遊戲錢包金額和渠道狀態
-    def get_wallet_user_info(self, web_token=None):
-        if web_token is not None:
-            self.request_session.headers.update({"token": str(web_token)})
-
-        request_body = {
-            "method": "get",
-            "url": "/v1/wallet/game/transfer/user/info"
-        }
-
-        response = self.send_request(**request_body)
-        return response.json()
-
+# 轉帳操作
+class GameTransfer(WebAPI):
     # 從指定遊戲渠道轉錢回中心錢包
     def wallet_game_transfer_withdraw(self,
-                                      web_token=None,
+                                      currency=None,
                                       channelCode=None,
                                       amount=None):
-        if web_token is not None:
-            self.request_session.headers.update({"token": str(web_token)})
-
         request_body = {
             "method": "post",
             "url": "/v1/wallet/game/transfer/user/withdraw",
-            "json": KeywordArgument.body_data()
+            "params": {"currency": currency},
+            "json": {
+                "channelCode": channelCode,
+                "amount": amount
+            }
         }
 
         response = self.send_request(**request_body)
         return response.json()
 
     # 一鍵回收
-    def wallet_game_transfer_withdraw_all(self, web_token=None):
-        if web_token is not None:
-            self.request_session.headers.update({"token": str(web_token)})
-
+    def wallet_game_transfer_withdraw_all(self,
+                                          currency=None):
         request_body = {
             "method": "post",
-            "url": "/v1/wallet/game/transfer/user/withdraw/all"
+            "url": "/v1/wallet/game/transfer/user/withdraw/all",
+            "params": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
@@ -53,43 +43,98 @@ class Wallet(WebAPI):
 
     # 將錢轉出至遊戲渠道
     def wallet_game_transfer_deposit(self,
-                                     web_token=None,
                                      channelCode=None,
-                                     amount=None):
-        if web_token is not None:
-            self.request_session.headers.update({"token": str(web_token)})
-
+                                     amount=None,
+                                     currency=None):
         request_body = {
             "method": "post",
             "url": "/v1/wallet/game/transfer/user/deposit",
-            "json": KeywordArgument.body_data()
+            "params": {"currency": currency},
+            "json": {
+                "channelCode": channelCode,
+                "amount": amount
+            }
         }
 
         response = self.send_request(**request_body)
         return response.json()
 
-    # 取得使用者資金明細
-    def get_wallet_front_user_fund(self, web_token=None):
-        if web_token is not None:
-            self.request_session.headers.update({"token": str(web_token)})
+    # 顯示中心錢包及各遊戲錢包金額和渠道狀態
+    def get_wallet_user_info(self,
+                             currency=None):
+        request_body = {
+            "method": "get",
+            "url": "/v1/wallet/game/transfer/user/info",
+            "params": KeywordArgument.body_data()
+        }
 
+        response = self.send_request(**request_body)
+        return response.json()
+
+
+# 錢包操作
+class FrontUser(WebAPI):
+    # 遊戲可回收餘額
+    def get_refundable_balance(self, userId=None,
+                               currency=None):
+        request_body = {
+            "method": "get",
+            "url": f"/v1/wallet/front/user/{userId}/refundable/balance",
+            "params": KeywordArgument.body_data()
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 取得使用者訂單資訊
+    def get_trade_info(self, tradeId=None):
+        request_body = {
+            "method": "get",
+            "url": f"/v1/wallet/front/user/trade/info/{tradeId}",
+            "params": KeywordArgument.body_data()
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 取得用戶訂單id
+    def get_trade_id(self):
+        jsdata = self.get_wallet_front_user_fund(From=Make.generate_custom_date(months=-3), to=Make.generate_custom_date(days=1))
+        ret = jsonpath.jsonpath(jsdata, "$..tradeId")
+        return ret[0]
+
+    # 取得使用者資金明細
+    # 交易類型：充值7｜提款9｜轉帳0｜紅利/充值獎勵/紅包/平台獎勵/派彩/老用戶活動紅利 皆合併至紅利8｜返水6｜加幣13｜減幣14｜上級轉入10
+    def get_wallet_front_user_fund(self, From=None, to=None,
+                                   transactionType=None, transactionStatus=None,
+                                   page=None, size=None):
         request_body = {
             "method": "get",
             "url": "/v1/wallet/front/user/fund",
-            "params": {"from": "2022-10-01T00:00:00Z",
-                       "to": "2023-10-07T00:00:00Z"}
+            "params": {
+                "from": From,
+                "to": to,
+                "transactionType": transactionType,
+                "transactionStatus": transactionStatus,
+                "page": page,
+                "size": size
+            }
         }
 
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 查詢用戶各幣別餘額
+    def get_balance(self):
+        request_body = {
+            "method": "get",
+            "url": "/v1/wallet/front/user/balance"
+        }
         response = self.send_request(**request_body)
         return response.json()
 
 
 class TestGameTransferMock(WebAPI):
     # 顯示中心錢包及各遊戲錢包金額和渠道狀態
-    def get_wallet_user_info(self, web_token=None):
-        if web_token is not None:
-            self.request_session.headers.update({"token": str(web_token)})
-
+    def get_wallet_user_info(self):
         request_body = {
             "method": "get",
             "url": "/v1/wallet/game/transfer/user/info"
@@ -100,12 +145,9 @@ class TestGameTransferMock(WebAPI):
 
     #  塞轉帳用的MOCK資料
     def add_mock(self,
-                 web_token=None,
                  channel_code=None,
                  gameBalance=None,
                  result=None):
-        if web_token is not None:
-            self.request_session.headers.update({"token": str(web_token)})
         request_body = {
             "method": "post",
             "url": f"/v1/test/game/transfer/mock/{channel_code}",
