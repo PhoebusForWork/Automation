@@ -480,9 +480,9 @@
     {
         "test_case" : "proxy_get_edit_detail",
         "req_method" : "get",
-        "schema":{"type":"object","properties":{"data":{"type":"object","properties":{"birthday":{"type":["null","string"]},"email":{"type":["null","string"]},"lastLoginTime":{"type":"string"},"lockStatus":{"type":"array","items":{"type":"object","properties":{"lock":{"type":"boolean"},"type":{"type":"integer"}},"required":["lock","type"]}},"parentProxyAccount":{"type":"string"},"reallyName":{"type":["null","string"]},"registerIp":{"type":"string"},"registerTime":{"type":"string"},"sex":{"type":"integer"},"telephone":{"type":"string"},"userId":{"type":"integer"},"username":{"type":"string"}},"required":["birthday","email","lastLoginTime","lockStatus","parentProxyAccount","reallyName","registerIp","registerTime","sex","telephone","userId","username"]}},"required":["data"]},
+        "schema":{"type":"object","properties":{"data":{"type":"object","properties":{"birthday":{"type":["null","string"]},"email":{"type":["null","string"]},"lastLoginTime":{"type":"string"},"lockStatus":{"type":"array","items":{"type":"object","properties":{"lock":{"type":"boolean"},"type":{"type":"integer"}},"required":["lock","type"]}},"parentProxyAccount":{"type":"string"},"reallyName":{"type":["null","string"]},"registerIp":{"type":"string"},"registerTime":{"type":"string"},"sex":{"type":["null","string"]},"telephone":{"type":"string"},"userId":{"type":"integer"},"username":{"type":"string"}},"required":["birthday","email","lastLoginTime","lockStatus","parentProxyAccount","reallyName","registerIp","registerTime","sex","telephone","userId","username"]}},"required":["data"]},
         "test_item" : [
-            {"req_url" : "/v1/proxy/7/detail/edit","scenario":"存在的id","json":{},"params": {},"code_status": 200,"keyword": "proxy001"},
+            {"req_url" : "/v1/proxy/67/detail/edit","scenario":"存在的id","json":{},"params": {},"code_status": 200,"keyword": "proxy001"},
             {"req_url" : "/v1/proxy/99999/detail/edit","scenario":"不存在的id","json":{},"params": {},"code_status": 400,"keyword": "该用户不存在"},
             ]
     },
@@ -491,7 +491,7 @@
         "req_method" : "get",
         "schema":{"type":"object","properties":{"data":{"type":"object","properties":{"birthday":{"type":["null","string"]},"email":{"type":["null","string"]},"lastLoginTime":{"type":"string"},"lockStatus":{"type":"array","items":{"type":"object","properties":{"lock":{"type":"boolean"},"type":{"type":"integer"}},"required":["lock","type"]}},"parentProxyAccount":{"type":"string"},"reallyName":{"type":["null","string"]},"registerIp":{"type":"string"},"registerTime":{"type":"string"},"sex":{"type":"integer"},"telephone":{"type":"string"},"userId":{"type":"integer"},"username":{"type":"string"}},"required":["birthday","email","lastLoginTime","lockStatus","parentProxyAccount","reallyName","registerIp","registerTime","sex","telephone","userId","username"]}},"required":["data"]},
         "test_item" : [
-            {"req_url" : "/v1/proxy/7/detail/display","scenario":"存在的id","json":{},"params": {},"code_status": 200,"keyword": "proxy001"},
+            {"req_url" : "/v1/proxy/67/detail/display","scenario":"存在的id","json":{},"params": {},"code_status": 200,"keyword": "proxy001"},
             {"req_url" : "/v1/proxy/999999/detail/display","scenario":"不存在的id","json":{},"params": {},"code_status": 400,"keyword": "该用户不存在"},
             ]
     },
@@ -646,19 +646,19 @@
         "req_url" : "/v1/proxy/credit",
         "schema":{"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
         "params": {},
-        "json":{"userId": 7,"amount": 100,"changeType": 1,"status": true},
+        "json":{"userId": 67,"amount": 100,"changeType": 1,"status": true},
         "test_item" : [
-            // {"scenario":"[userId]不存在id","target":{"userId": 999999},"code_status": 400,"keyword": "该用户不存在"},
-            // // {"scenario":"[userId]非代理用戶","target":{"userId": 1},"code_status": 400,"keyword": "该代理不存在"},
-            {"scenario":"[userId]可操作代理","target":{"userId": 7},"code_status": 200,"keyword": "success"},
-            // {"scenario":"[amount]0","target":{"amount": 0},"code_status": 400,"keyword": "无效的请求参数"},
-            // {"scenario":"[amount]null","target":{"amount": null},"code_status": 400,"keyword": "无效的请求参数"},
-            // {"scenario":"[amount]字串","target":{"amount": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
-            // {"scenario":"[changeType]2","target":{"amount": "100"},"code_status": 200,"keyword": "success"},
-            // {"scenario":"[changeType]3","target":{"amount": "100","changeType": 3},"code_status": 400,"keyword": "无效的请求参数"},
-            // {"scenario":"[changeType]null","target":{"amount": "100","changeType": null},"code_status": 400,"keyword": "无效的请求参数"},
-            // {"scenario":"[status]false","target":{"amount": "100","status": false},"code_status": 200,"keyword": "success"},
-            // {"scenario":"[status]字串","target":{"amount": "100","status": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[userId]不存在id","target":{"userId": 999999},"code_status": 400,"keyword": "该用户不存在"},
+            {"scenario":"[userId]非代理用戶","target":{"userId": 1},"code_status": 400,"keyword": "该代理不存在"},
+            {"scenario":"[userId]可操作代理","target":{},"code_status": 200,"keyword": "success"},
+            {"scenario":"[amount]0","target":{"amount": 0},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[amount]null","target":{"amount": null},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[amount]字串","target":{"amount": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[changeType]2","target":{"amount": "100"},"code_status": 200,"keyword": "success"},
+            {"scenario":"[changeType]3","target":{"amount": "100","changeType": 3},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[changeType]null","target":{"amount": "100","changeType": null},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[status]false","target":{"amount": "100","status": false},"code_status": 200,"keyword": "success"},
+            {"scenario":"[status]字串","target":{"amount": "100","status": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
             ]
     }          
 ]
