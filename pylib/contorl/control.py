@@ -24,8 +24,8 @@ class ControlAPI(API_Controller):
     # 建立站點
     def add_host_platform(
             self,
-            code='vs',
-            name='vs',
+            code='ldpro',
+            name='ldpro',
             language='ZH',
             supportLanguages=["ZH", "EN"],
             currency='CNY',
@@ -48,8 +48,8 @@ class ControlAPI(API_Controller):
     def edit_host_platform(
             self,
             platformId=1,
-            code='vs',
-            name='vs',
+            code='ldpro',
+            name='ldpro',
             language='ZH',
             supportLanguages=["ZH", "EN"],
             currency='CNY',

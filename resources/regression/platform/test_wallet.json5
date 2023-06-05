@@ -2,7 +2,7 @@
     {
         "test_case": "get_user_wallets",
         "req_method": "get",
-        "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"CNY":{"type":"object","properties":{"gameWallets":{"type":"array","items":{"type":"object","properties":{"balance":{"type":"integer"},"channelCode":{"type":"string"},"channelName":{"type":"string"},"freezeBalance":{"type":"integer"},"merUsername":{"type":"string"}},"required":["balance","channelCode","channelName","freezeBalance","merUsername"]}},"walletVo":{"type":"object","properties":{"balance":{"type":"integer"},"freezeBalance":{"type":"integer"}},"required":["balance","freezeBalance"]}},"required":["gameWallets","walletVo"]}},"required":[]}},"required":["data"]},
+        "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"USDT_ERC20":{"$ref":"#/definitions/wallet"},"USD":{"$ref":"#/definitions/wallet"},"USDT_TRC20":{"$ref":"#/definitions/wallet"},"CNY":{"$ref":"#/definitions/wallet"}},"anyOf":[{"required":["USDT_ERC20"]},{"required":["USD"]},{"required":["USDT_TRC20"]},{"required":["CNY"]}]}},"required":["data"],"definitions":{"wallet":{"type":"object","properties":{"gameWallets":{"type":"array","items":{"type":"object","properties":{"balance":{"type":"integer"},"channelCode":{"type":"string"},"channelName":{"type":"string"},"freezeBalance":{"type":"integer"},"merUsername":{"type":"string"}},"required":["balance","channelCode","channelName","freezeBalance","merUsername"]}},"walletVo":{"type":"object","properties":{"balance":{"type":"integer"},"freezeBalance":{"type":"integer"}},"required":["balance","freezeBalance"]}},"required":["gameWallets","walletVo"]}}},
         "test_item": [
             {"req_url": "/v1/wallet/user/99999/wallets","scenario":"不存在的userId","json": {},"params": {"currency":"CNY"},"code_status": 400,"keyword": "该用户不存在"},
             {"req_url": "/v1/wallet/user/3/wallets","scenario":"[currency]CNY","json": {},"params": {"currency":"CNY"},"code_status": 200,"keyword": "data"},
@@ -54,18 +54,18 @@
             ]
     },
     {
-        "test_case": "get_user_fund",
+        "test_case": "get_user_summary",
         "req_method": "get",
-        "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"rechargeCount":{"type":"integer"},"totalBet":{"type":"number"},"totalBonus":{"type":"integer"},"totalExtraSum":{"type":"integer"},"totalPayout":{"type":"number"},"totalProfit":{"type":"number"},"totalRebate":{"type":"number"},"totalRecharge":{"type":"integer"},"totalWithdraw":{"type":"integer"},"withdrawCount":{"type":"integer"}},"required":["rechargeCount","totalBet","totalBonus","totalExtraSum","totalPayout","totalProfit","totalRebate","totalRecharge","totalWithdraw","withdrawCount"]}},"required":["data"]},
+        "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"additionalAdd":{"type":"number"},"bet":{"type":"number"},"bonus":{"type":"number"},"payout":{"type":"number"},"profit":{"type":"number"},"rebate":{"type":"number"},"rechargeTimes":{"type":"integer"},"rechargeTotal":{"type":"number"},"validBet":{"type":"number"},"withdrawTimes":{"type":"integer"},"withdrawTotal":{"type":"number"}},"required":["additionalAdd","bet","bonus","payout","profit","rebate","rechargeTimes","rechargeTotal","validBet","withdrawTimes","withdrawTotal"]}},"required":["data"]},
         "params" : {"from":"2022-01-01T00:00:00+08:00","to":"2023-01-01T00:00:00+08:00"},
         "test_item": [
-            {"req_url": "/v1/wallet/user/99999/fund","scenario":"用戶不存在","target":{"null":null},"json": {},"code_status": 200,"keyword": '"data":{"totalBonus":0,"totalRebate":0,"totalRecharge":0,"rechargeCount":0,"totalWithdraw":0,"withdrawCount":0,"totalExtraSum":0,"totalBet":0,"totalPayout":0,"totalProfit":0}'},
-            {"req_url": "/v1/wallet/user/3/fund","scenario":"[from]null","target":{"from":null},"json": {},"code_status": 400,"keyword": "parameter 'from' must not be null"},
-            {"req_url": "/v1/wallet/user/3/fund","scenario":"[from]string","target":{"from":"string"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"req_url": "/v1/wallet/user/3/fund","scenario":"[to]null","target":{"to":null},"json": {},"code_status": 400,"keyword": "parameter 'to' must not be null"},
-            {"req_url": "/v1/wallet/user/3/fund","scenario":"[to]string","target":{"to":"string"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"req_url": "/v1/wallet/user/3/fund","scenario":"[from,to]開始不可大於結束時間","target":{"from":"2023-01-01T00:00:00+08:00Z","to":"2022-01-01T00:00:00+08:00Z"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"req_url": "/v1/wallet/user/3/fund","scenario":"正常查詢","target":{},"json": {},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/wallet/user/99999/summary","scenario":"用戶不存在","target":{"null":null},"json": {},"code_status": 200,"keyword": '"data":{"totalBonus":0,"totalRebate":0,"totalRecharge":0,"rechargeCount":0,"totalWithdraw":0,"withdrawCount":0,"totalExtraSum":0,"totalBet":0,"totalPayout":0,"totalProfit":0}'},
+            {"req_url": "/v1/wallet/user/3/summary","scenario":"[from]null","target":{"from":null},"json": {},"code_status": 400,"keyword": "parameter 'from' must not be null"},
+            {"req_url": "/v1/wallet/user/3/summary","scenario":"[from]string","target":{"from":"string"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/wallet/user/3/summary","scenario":"[to]null","target":{"to":null},"json": {},"code_status": 400,"keyword": "parameter 'to' must not be null"},
+            {"req_url": "/v1/wallet/user/3/summary","scenario":"[to]string","target":{"to":"string"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/wallet/user/3/summary","scenario":"[from,to]開始不可大於結束時間","target":{"from":"2023-01-01T00:00:00+08:00Z","to":"2022-01-01T00:00:00+08:00Z"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/wallet/user/3/summary","scenario":"正常查詢","target":{},"json": {},"code_status": 200,"keyword": "data"},
             // 須確認是否有"currency"參數
             ]
     },

@@ -202,7 +202,7 @@
             "code": ""
                 },
         "test_item": [
-            {"scenario":"帳戶名登入[username]正確登入","target":{"username": "AutoTester001"}, "params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"帳戶名登入[username]正確登入","target":{"username": "user001"}, "params": {},"code_status": 200,"keyword": "data"},
             {"scenario":"帳戶名登入[username]空字串測試項目","target":{"username":""},"params":{},"code_status":400,"keyword":"无效的请求参数"},
             {"scenario":"帳戶名登入[username]無數字測試項目","target":{"username":"abcdef"},"params":{},"code_status":400,"keyword":"无效的请求参数"},
             {"scenario":"帳戶名登入[username]無字母測試項目","target":{"username":"123456"},"params":{},"code_status":400,"keyword":"无效的请求参数"},

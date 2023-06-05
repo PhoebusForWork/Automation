@@ -225,7 +225,7 @@ class Mongo:
 if __name__ == '__main__':
     # PostgreSQL sample
     pg = Postgresql(database='plt_account')
-    sql = "select * from plt_account.plt_account.vs_role where id = 3;"
+    sql = "select * from plt_account.plt_account.ldpro_role where id = 3;"
     print(pg.select_sql(sql=sql))
 
     # ES sample
@@ -235,13 +235,13 @@ if __name__ == '__main__':
         print(json.dumps(func, sort_keys=True, indent=4, separators=(',', ':')))
     test = ElasticsearchTool()
     abc = {"match": {"user_id": "66"}}
-    t = test.query(index='vs_wallet_log', query_json=abc, size=1)
+    t = test.query(index='ldpro_wallet_log', query_json=abc, size=1)
     printJson(t)
 
     # MongoDB sample
     mongo = Mongo(platform='plt')
     mongo.specify_db('plt_game')
-    mongo.specify_collection('vs_mer_user')
+    mongo.specify_collection('ldpro_mer_user')
 
     # test_mongo_update_user_status
     # filter_query = {"username": "proxyAccount62226"}
