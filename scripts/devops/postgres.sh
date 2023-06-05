@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CS=("cs_basics cs_fund cs_game cs_message cs_proxy cs_user")
+CS=("cs_basics cs_fund cs_game cs_message cs_proxy cs_user cs_activity")
 PLT=("host_platform plt_account plt_basics plt_fund plt_game plt_message plt_proxy plt_user plt-risk wallet")
 
 syntax(){
@@ -9,7 +9,8 @@ syntax(){
   RECEIVRE_ITEM=$3
 
 echo "###### $RECEIVRE_ITEM ######" && echo "## Rebuild ##"
-PGPASSWORD=$PG_MANAGE_PASSWORD psql -h $RECEIVE_ADDRESS -p $POSTGRES_PORT -U $PG_MANAGE_USER -d $RECEIVRE_ITEM  <<EOFSQL
+# PGPASSWORD=$PG_MANAGE_PASSWORD psql -h $RECEIVE_ADDRESS -p $POSTGRES_PORT -U $PG_MANAGE_USER -d $RECEIVRE_ITEM  <<EOFSQL
+PGPASSWORD=$RECEIVE_PASSWORD psql -h $RECEIVE_ADDRESS -p $POSTGRES_PORT -U $PG_RD_USER -d $RECEIVRE_ITEM  <<EOFSQL
     DROP SCHEMA $RECEIVRE_ITEM cascade;
     CREATE SCHEMA $RECEIVRE_ITEM;
     GRANT USAGE  ON SCHEMA $RECEIVRE_ITEM TO sit_sr;

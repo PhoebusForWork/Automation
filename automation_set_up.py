@@ -19,10 +19,10 @@ time.sleep(wait_for_sync)
 # #############
 #  API 預處理  #
 # #############
-# 待移除
-# contorl.create_platform_and_sync()
 
-platform.super_admin_initialize_and_create_admin()
+platform.super_admin_initialize()
+platform.create_dept_and_role()
+platform.create_account()
 platform.login_account()
 platform.turn_on_the_game_to_test()
 client_side.create_initial_user()
@@ -35,7 +35,6 @@ postgres_scripts.host_platform()
 postgres_scripts.plt_account()
 postgres_scripts.plt_game()
 postgres_scripts.wallet()
-postgres_scripts.cs_message()
 platform.sync_relation_manage()
 
 # #############
