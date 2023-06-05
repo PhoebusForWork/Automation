@@ -39,10 +39,10 @@ class TestDataReader:
 
         with open(data_path, mode='r', encoding='utf8') as f:
             json_data = json5.load(f)
-            for l in json_data:
+            for line in json_data:
                 value1 = []
                 key1 = []
-                for k1, v1 in l.items():
+                for k1, v1 in line.items():
                     if k1 != "test_item":
                         value1.append(v1)
                         key1.append(k1)
@@ -86,7 +86,7 @@ class TestDataReader:
             value = target.get(key, "不存在")
             try:
                 json_copy[key] = value
-            except:
+            except Exception:
                 json_copy[0][key] = value
         return json_copy
 

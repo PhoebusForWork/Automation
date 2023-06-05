@@ -1,5 +1,5 @@
 from ..platform.platApiBase import PlatformAPI  # 執行RF時使用
-from ..client_side.wallet import Wallet, TestGameTransferMock as CsMock
+from ..client_side.wallet import GameTransfer, TestGameTransferMock as CsMock
 from utils.api_utils import KeywordArgument
 from utils.redis_utils import RedisSentinel
 from utils.xxl_job_utils import XxlJobs
@@ -297,7 +297,7 @@ class TestGameTransferMock(PlatformAPI):
 class WalletGameTransferFailed(PlatformAPI):
     @staticmethod
     def _create_failed_transfer_record():
-        cs_wallet = Wallet()
+        cs_wallet = GameTransfer()
         cs_wallet.login(deviceId="345",
                         username='AutoTester',
                         password="abc123456")
@@ -333,7 +333,7 @@ class WalletGameTransferFailed(PlatformAPI):
     def _create_failed_transfer_record_v2(cs_user='AutoTester'):
         if os.getenv('MODE'):
             cs_user = 'wallet001'
-        cs_wallet = Wallet()
+        cs_wallet = GameTransfer()
         cs_wallet.login(deviceId="345",
                         username=cs_user,
                         password="abc123456")
