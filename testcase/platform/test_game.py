@@ -1,7 +1,7 @@
 import pytest
 import allure
 import random
-from datetime import datetime
+from utils.generate_utils import Make
 from utils.data_utils import TestDataReader, ResponseVerification
 from pylib.platform.game import Game, RebateTemplate
 from utils.data_utils import TestDataReader
@@ -134,7 +134,7 @@ def test_game_sync(test, get_platform_token, open_game):
 
 
 @allure.feature("遊戲管理")
-@allure.story("查詢注單")
+@allure.story("查詢注單")  # 需要前台去製造注單，當下前台登入噴500無法去投注（2023/06/05 11:20）
 @allure.title("{test[scenario]}")
 @pytest.mark.parametrize("test", test_data.get_case('get_game_orders'))
 def test_get_game_orders(test, get_platform_token):
@@ -302,6 +302,7 @@ def test_edit_game_rebate_config(test, get_platform_token):
 @allure.story("獲取指定遊戲類型反水模板配置")  # API可能會調整，待釐清
 @allure.title("{test[scenario]}")
 # @pytest.mark.regression API可能會調整，待釐清
+@pytest.mark.xfail()  # case[test1]需要釐清
 @pytest.mark.parametrize("test", test_data.get_case('get_game_rebate_config'))
 def test_get_game_rebate_config(test, get_platform_token):
 
@@ -340,8 +341,8 @@ def test_game_rebate_config_open(test, get_platform_token):
 @allure.feature("返水紀錄")
 @allure.story("獲取返水紀錄")  # API可能會調整，待釐清
 @allure.title("{test[scenario]}")
-# @pytest.mark.regression 需要反水的資料，目前尚未製造反水資料
-@pytest.mark.xfail()
+# @pytest.mark.regression API可能會調整，待釐清
+@pytest.mark.xfail()  # 要製造返水紀錄
 @pytest.mark.parametrize("test", test_data.get_case('rebate_record'))
 def test_rebate_record(test, get_platform_token):
 
@@ -373,8 +374,7 @@ def test_post_game_recover_first(test, get_platform_token, clear_game_recover_se
     json_replace = test_data.replace_json(test['json'], test['target'])
     if json_replace['recoverManageId'] == "true_false_case":
         get_recover_manage = GameRecover()
-        get_recover_manage.post_game_recover(plat_token=get_platform_token)
-        manage_id = get_recover_manage.find_recover_manage_id(plat_token=get_platform_token, status=0)
+        manage_id = get_recover_manage.make_recover_status_data(plat_token=get_platform_token, status=0)
         json_replace['recoverManageId'] = manage_id
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], json_replace,
@@ -391,12 +391,7 @@ def test_post_game_recover_second(test, get_platform_token,):
     json_replace = test_data.replace_json(test['json'], test['target'])
     if json_replace['recoverManageId'] == "true_false_case":
         get_recover_manage = GameRecover()
-        get_recover_manage.post_game_recover(plat_token=get_platform_token)
-        manage_id = get_recover_manage.find_recover_manage_id(plat_token=get_platform_token, status=0)
-        get_recover_manage.post_game_recover_first(
-            plat_token=get_platform_token,
-            recoverManageId=manage_id,
-            isApprove=True)
+        manage_id = get_recover_manage.make_recover_status_data(plat_token=get_platform_token, status=1)
         json_replace['recoverManageId'] = manage_id
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], json_replace,
@@ -423,32 +418,20 @@ def test_post_game_recover(test, get_platform_token, clear_game_recover_first):
 @pytest.mark.regression
 @pytest.mark.parametrize("test", test_data.get_case('get_game_recover'))
 def test_get_game_recover(test, get_platform_token, clear_game_recover_first_change, clear_game_recover_second):
+    test["params"].update({'from': Make.date(status="start"), "to": Make.date(status="end")})
     params_replace = test_data.replace_json(test['params'], test['target'])
-    today = datetime.today().strftime('%Y-%m-%d')
-    date_from = today + 'T00:00:00Z'
-    date_to = today + 'T23:59:59Z'
-    if params_replace['status'] == "status_case0":
-        params_replace = {'from': date_from, 'to': date_to, 'status': 0}
-        get_recover_manage = GameRecover()
-        get_recover_manage.post_game_recover(plat_token=get_platform_token)
-    elif params_replace['status'] == "status_case1":
-        params_replace = {'from': date_from, 'to': date_to, 'status': 1}
-        get_recover_manage = GameRecover()
-        get_recover_manage.post_game_recover(plat_token=get_platform_token)
-        manage_id = get_recover_manage.find_recover_manage_id(plat_token=get_platform_token, status=0)
-        get_recover_manage.post_game_recover_first(
-            plat_token=get_platform_token,
-            recoverManageId=manage_id,
-            isApprove=True)
-    elif params_replace['status'] == "status_case2":
-        params_replace = {'from': date_from, 'to': date_to, 'status': 2}
-    elif params_replace['status'] == "status_case3":
-        params_replace = {'from': date_from, 'to': date_to, 'status': 3}
-    elif params_replace['status'] == "status_case4":
-        params_replace = {'from': date_from, 'to': date_to, 'status': 4}
-    elif params_replace['to'] == "change":
-        params_replace = {'from': date_from, 'to': date_to}
+    get_recover_manage = GameRecover()
+
+    status = params_replace.get('status')
+    currency = params_replace.get('currency')
+
+    if status in [0, 1, 3]:
+        get_recover_manage.make_recover_status_data(plat_token=get_platform_token, status=status)
+    elif currency in ["USD", "USDT_TRC20", "USDT_ERC20"]:
+        get_recover_manage.make_recover_status_data(plat_token=get_platform_token, status=currency)
+
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], test['json'], params_replace, token=get_platform_token)
     ResponseVerification.basic_assert(resp, test)
+
 

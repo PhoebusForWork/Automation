@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from utils.generate_utils import Make
 from datetime import datetime
 from ..platform.platApiBase import PlatformAPI
 from utils.api_utils import KeywordArgument
@@ -340,41 +341,35 @@ class RebateRecord(PlatformAPI):
 class GameRecover(PlatformAPI):
 
     def get_game_recover(self,  # 獲取資金歸集審核列表
-                         plat_token=None,
-                         From=None,
+                         plat_token=None, From=None,
                          to=None, creator=None,
                          approver=None, status=None,
                          currency=None, page=None, size=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
-        response = self.request_session.get(platform_host + "/v1/game/recover",
-                                            json={},
-                                            params={"from": From, "to": to, "status": status}
-                                            )
-        self.print_response(response)
+        request_body = {
+            "method": "get",
+            "url": "/v1/game/recover",
+            "params": {"from": From, "to": to, "status": status}
+        }
+        response = self.send_request(**request_body)
         return response.json()
 
     def post_game_recover(self,  # 一鍵歸集
-                          plat_token=None,
-                          channelCode="AI",
-                          gameCode="AI_SPORT_AI",
-                          currency="CNY",):
+                          plat_token=None, channelCode="AI",
+                          gameCode="AI_SPORT_AI", currency=None,):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
-        response = self.request_session.post(platform_host + "/v1/game/recover",
-                                             json={"channelCode": channelCode,
-                                                   "gameCode": gameCode,
-                                                   "currency": currency},
-                                             params={}
-                                             )
-        self.print_response(response)
+        request_body = {
+            "method": "post",
+            "url": "/v1/game/recover",
+            "json": {"channelCode": channelCode, "gameCode": gameCode, "currency": currency}
+        }
+        response = self.send_request(**request_body)
         return response.json()
 
     def find_recover_manage_id(self, plat_token=None, status=0):
-        today = datetime.today().strftime('%Y-%m-%d')
-        date_from = today + 'T00:00:00Z'
-        date_to = today + 'T23:59:59Z'
-        response = self.get_game_recover(plat_token=plat_token, status=status, to=date_to, From=date_from)
+        response = self.get_game_recover(plat_token=plat_token, status=status, to=Make.date(status="end"), From=Make.date(status="start"))
         recover_manage_id = jsonpath.jsonpath(response, "$..id")
         if recover_manage_id:
             return str(recover_manage_id[-1])
@@ -382,34 +377,52 @@ class GameRecover(PlatformAPI):
             return False
 
     def post_game_recover_first(self,  # 資金歸集一審
-                          plat_token=None,
-                          recoverManageId=None,
-                          isApprove=None,
-                                ):
+                          plat_token=None, recoverManageId=None, isApprove=None,):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
-        response = self.request_session.post(platform_host + "/v1/game/recover/first",
-                                             json={"recoverManageId": recoverManageId,
-                                                   "isApprove": isApprove,
-                                                   },
-                                             params={}
-                                             )
-        self.print_response(response)
+        request_body = {
+            "method": "post",
+            "url": "/v1/game/recover/first",
+            "json": {"recoverManageId": recoverManageId, "isApprove": isApprove}
+                        }
+        response = self.send_request(**request_body)
         return response.json()
 
     def post_game_recover_second(self,  # 資金歸集二審
-                          plat_token=None,
-                          recoverManageId=None,
-                          isApprove=None,
-                                ):
+                          plat_token=None, recoverManageId=None, isApprove=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
-        response = self.request_session.post(platform_host + "/v1/game/recover/second",
-                                             json={"recoverManageId": recoverManageId,
-                                                   "isApprove": isApprove,
-                                                   },
-                                             params={}
-                                             )
-        self.print_response(response)
+        request_body = {
+            "method": "post",
+            "url": "/v1/game/recover/second",
+            "json": {"recoverManageId": recoverManageId, "isApprove": isApprove}
+        }
+        response = self.send_request(**request_body)
         return response.json()
+
+    def make_recover_status_data(self, plat_token=None, status=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        if status == 'USD':
+            self.post_game_recover(plat_token=plat_token, currency="USD")
+        elif status == 'USDT_TRC20':
+            self.post_game_recover(plat_token=plat_token, currency="USDT_TRC20")
+        elif status == 'USDT_ERC20':
+            self.post_game_recover(plat_token=plat_token, currency="USDT_ERC20")
+            manage_id = self.find_recover_manage_id(plat_token=plat_token, status=0)
+            return manage_id
+        elif status in [0, 1, 3]:
+            self.post_game_recover(plat_token=plat_token, currency="CNY")
+            manage_id = self.find_recover_manage_id(plat_token=plat_token, status=0)
+            if status == 1:
+                self.post_game_recover_first(plat_token=plat_token, recoverManageId=manage_id, isApprove=True)
+            elif status == 3:
+                self.post_game_recover_first(plat_token=plat_token, recoverManageId=manage_id, isApprove=True)
+                self.post_game_recover_second(plat_token=None, recoverManageId=manage_id, isApprove=True)
+            return manage_id
+        else:
+            return False
+
+
 
