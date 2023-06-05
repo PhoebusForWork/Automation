@@ -624,12 +624,12 @@ def test_account_logout(test, get_platform_token):
 @allure.title("{test[scenario]}")
 @pytest.mark.regression
 @pytest.mark.parametrize("test", test_data.get_case('test_login_img_code'))
-def test_login_img_code(test, get_platform_token):
+def test_login_img_code(test):
 
     api = API_Controller()
     resp = api.send_request(test["req_method"],
                             test["req_url"],
                             test["json"],
                             test["params"],
-                            token=get_platform_token)
+                            token=None)
     ResponseVerification.basic_assert(resp, test)

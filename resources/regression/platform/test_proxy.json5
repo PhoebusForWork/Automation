@@ -650,7 +650,7 @@
         "test_item" : [
             {"scenario":"[userId]不存在id","target":{"userId": 999999},"code_status": 400,"keyword": "该用户不存在"},
             {"scenario":"[userId]非代理用戶","target":{"userId": 1},"code_status": 400,"keyword": "该代理不存在"},
-            {"scenario":"[userId]可操作代理","target":{"userId": 7},"code_status": 200,"keyword": "success"},
+            {"scenario":"[userId]可操作代理","target":{},"code_status": 200,"keyword": "success"},
             {"scenario":"[amount]0","target":{"amount": 0},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[amount]null","target":{"amount": null},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[amount]字串","target":{"amount": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
