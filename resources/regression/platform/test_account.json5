@@ -281,7 +281,7 @@
             {"scenario":"[deptId]字串","target": {"deptId":"string"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[roleIds]空陣列","target": {"roleIds":[]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[roleIds]null","target": {"roleIds":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[roleIds]多個參數","target": {"roleIds":[2,3]},"params": {},"code_status": 200,"keyword": "success"},
+            {"scenario":"[roleIds]多個參數","target": {"deptId":3, "roleIds":[2,5]},"params": {},"code_status": 200,"keyword": "success"},
             {"scenario":"[roleIds]不存在部門的角色","target": {"roleIds":[1]},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[expiredTime]null","target": {"expiredTime":null},"params": {},"code_status": 200,"keyword": "success"},
             {"scenario":"[expiredTime]非時間字串","target": {"expiredTime":"string"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
