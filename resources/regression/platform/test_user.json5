@@ -132,7 +132,7 @@
     {
         "test_case": "get_user_account",
         "req_method": "get",
-        "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"totalBalance":{"type":"integer"},"balanceList":{"type":["array","null"],"items":{"type":"object","properties":{"currency":{"type":"string"},"balance":{"type":"integer"},"freezeBalance":{"type":"integer"}},"required":["balance","currency","freezeBalance"]}},"status":{"type":["integer","null"]},"withdrawWaterList":{"type":["array","null"],"items":{"type":"object","properties":{"currency":{"type":"string"},"validWater":{"type":"integer"},"leftWater":{"type":"integer"}},"required":["currency","leftWater","validWater"]}}},"required":["balanceList","status","totalBalance","withdrawWaterList"]}},"required":["data"]},
+        "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"totalBalance":{"type":"integer"},"balanceList":{"type":["array","null"],"items":{"type":"object","properties":{"currency":{"type":"string"},"balance":{"type":"number"},"freezeBalance":{"type":"number"}},"required":["balance","currency","freezeBalance"]}},"status":{"type":["integer","null"]},"withdrawWaterList":{"type":["array","null"],"items":{"type":"object","properties":{"currency":{"type":"string"},"validWater":{"type":"number"},"leftWater":{"type":"number"}},"required":["currency","leftWater","validWater"]}}},"required":["balanceList","status","totalBalance","withdrawWaterList"]}},"required":["data"]},
         "json" : {},
         "test_item": [
             {"req_url": "/v1/user/1/account","scenario":"查詢客戶財務資訊_存在userId","target":{"null":null},"params": {},"code_status": 200,"keyword": "data"},
@@ -191,7 +191,7 @@
             {"req_url": "/v1/user/1/login/info","scenario":"登入日誌_[from_to]開始時間大於結束時間","target":{"from":null,"to":null},"code_status": 400,"keyword": "无效的请求参数"},
             {"req_url": "/v1/user/1/login/info","scenario":"登入日誌_[type]0","target":{"type":0},"code_status": 400,"keyword": "无效的请求参数"},
             {"req_url": "/v1/user/1/login/info","scenario":"登入日誌_[type]1","target":{"type":1},"code_status": 200,"keyword": "data"},
-            {"req_url": "/v1/user/1/login/info","scenario":"登入日誌_[type]1","target":{"type":1,"keyword":"61.220.72.61"},"code_status": 200,"keyword": "61.220.72.61"},
+            {"req_url": "/v1/user/1/login/info","scenario":"登入日誌_[type]1","target":{"type":1,"keyword":"10.3.1.73"},"code_status": 200,"keyword": "10.3.1.73"},
             {"req_url": "/v1/user/1/login/info","scenario":"登入日誌_[type]2","target":{"type":2},"code_status": 200,"keyword": "data"},
             {"req_url": "/v1/user/1/login/info","scenario":"登入日誌_[type]2","target":{"type":2,"keyword":"https://cs-api-qa.prj300.xyz/"},"code_status": 200,"keyword": "data"},
             {"req_url": "/v1/user/1/login/info","scenario":"登入日誌_[osType]0","target":{"osType":0},"code_status": 200,"keyword": "data"},
