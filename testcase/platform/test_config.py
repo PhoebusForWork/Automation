@@ -1,10 +1,10 @@
 import pytest
 import allure
 import copy
-from datetime import datetime
 from utils.data_utils import TestDataReader, ResponseVerification
 from utils.api_utils import API_Controller
-from pylib.platform.config import Avatar
+from utils.generate_utils import Make
+from pylib.platform.config import Avatar, Make_config_data
 
 test_data = TestDataReader()
 test_data.read_json5('test_config.json5')
@@ -14,6 +14,10 @@ test_data.read_json5('test_config.json5')
 #  setup & teardown  #
 ######################
 
+
+@pytest.fixture(scope="module")  # 將密碼重置為可登入狀態
+def make_config_action_log_data(get_platform_token):
+    Make_config_data().make_action_log_data(plat_token=get_platform_token)
 
 #############
 # test_case #
@@ -160,13 +164,10 @@ def test_get_platform_language(test, get_platform_token):
 @allure.title("{test[scenario]}")
 @pytest.mark.regression
 @pytest.mark.parametrize("test", test_data.get_case('get_admin_action_log'))
-def test_get_admin_action_log(test, get_platform_token):
-    today = datetime.today().strftime('%Y-%m-%d')
-    date_from = today + 'T00:00:00Z'
-    date_to = today + 'T23:59:59Z'
+def test_get_admin_action_log(test, get_platform_token, make_config_action_log_data):
     temp = copy.deepcopy(test)
     if test["params"]["to"] == "today_date_to":
-        temp["params"].update({"from": date_from, "to": date_to})
+        temp["params"].update({"from": Make.date('start'), "to": Make.date('end')})
     params_replace = test_data.replace_json(temp['params'], temp['target'])
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], test['json'],
@@ -192,7 +193,7 @@ def test_get_country_code_manage(test, get_platform_token):
 @pytest.mark.regression
 @pytest.mark.parametrize("test", test_data.get_case('put_country_code_manage'))
 def test_put_country_code_manage(test, get_platform_token):
-    json_replace = test_data.replace_json_list(test['json'], test['target'])
+    json_replace = test_data.replace_json(test['json'], test['target'])
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                             test['params'], token=get_platform_token)
