@@ -34,6 +34,7 @@ class TestThirdPartyManage:
     @allure.feature("三方接口管理")
     @allure.story("三方接口:權重更新")
     @allure.title("{test[scenario]}")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('update_weighting'))
     def test_update_weighting(test, get_platform_token):
         json_replace = test_data.replace_json(test["json"], test["target"])
@@ -47,6 +48,7 @@ class TestThirdPartyManage:
     @allure.feature("三方接口管理")
     @allure.story("三方接口:開關更新")
     @allure.title("{test[scenario]}")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('update_switched'))
     def test_update_switched(test, get_platform_token):
         json_replace = test_data.replace_json(test["json"], test["target"])
@@ -61,6 +63,7 @@ class TestThirdPartyManage:
     @allure.story("客服接口-群組管理-查詢")
     @allure.title("{test[scenario]}")
     @pytest.mark.usefixtures("check_customer_group")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_customer_group'))
     def test_get_customer_group(test, get_platform_token):
         parmas_replace = test_data.replace_json(test["params"], test["target"])
@@ -74,6 +77,7 @@ class TestThirdPartyManage:
     @allure.feature("三方接口管理")
     @allure.story("客服接口-群組管理-保存")
     @allure.title("{test[scenario]}")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('save_customer_group'))
     def test_save_customer_group(test, get_platform_token):
         json_replace = test_data.replace_json(test["json"], test["target"])
@@ -87,6 +91,7 @@ class TestThirdPartyManage:
     @allure.feature("三方接口管理")
     @allure.story("三方接口:查詢")
     @allure.title("{test[scenario]}")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_third_party_manage'))
     def test_get_third_party_manage(test, get_platform_token):
         api = API_Controller()
@@ -106,6 +111,7 @@ class TestThirdPartyManage:
     @allure.feature("三方接口管理")
     @allure.story("三方接口:圖形驗證接口-查詢")
     @allure.title("{test[scenario]}")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_captcha'))
     def test_get_captcha(test, get_platform_token):
         api = API_Controller()
@@ -119,6 +125,7 @@ class TestThirdPartyManage:
     @allure.feature("三方接口管理")
     @allure.story("三方接口:銀行卡接口-查詢")
     @allure.title("{test[scenario]}")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_bank_card'))
     def test_get_bank_card(test, get_platform_token):
         api = API_Controller()
@@ -131,6 +138,7 @@ class TestThirdPartyManage:
     @allure.feature("三方接口管理")
     @allure.story("客服接口-群組管理-最後更新時間")
     @allure.title("{test[scenario]}")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_customer_group_last_update_time'))
     def test_get_customer_group_last_update_time(test, get_platform_token):
         api = API_Controller()
@@ -144,6 +152,7 @@ class TestThirdPartyManage:
     @allure.feature("三方接口管理")
     @allure.story("客服接口-群組管理-群組類型下拉選單")
     @allure.title("{test[scenario]}")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_customer_group_type'))
     def test_get_customer_group_type(test, get_platform_token):
         api = API_Controller()
@@ -157,6 +166,7 @@ class TestThirdPartyManage:
     @allure.feature("三方接口管理")
     @allure.story("客服接口-群組管理-客服下拉選單")
     @allure.title("{test[scenario]}")
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_customer_service'))
     def test_get_customer_service(test, get_platform_token):
         api = API_Controller()
