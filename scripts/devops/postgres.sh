@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CS=("cs_basics cs_fund cs_game cs_message cs_proxy cs_user cs_activity")
-PLT=("host_platform plt_account plt_basics plt_fund plt_game plt_message plt_proxy plt_user plt-risk wallet")
+PLT=("plt_account plt_basics plt_fund plt_game plt_message plt_proxy plt_user plt_risk plt_user wallet")
 
 syntax(){
   RECEIVE_ADDRESS=$1
