@@ -18,6 +18,10 @@ class XxlJobs(API_Controller):
             self.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
                               json={}, params={"id": 1, "executorParam": None, "addressList": None})
 
-    def sync_plt_basics_data(self):
+    def sync_plt_basics_data(self, pltCode='ldpro'):
         self.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
-                          json={}, params={"id": 11, "executorParam": "{\"pltCode\": \"ldpro\"}", "addressList": None})
+                          json={}, params={"id": 11, "executorParam": str({"pltCode": pltCode}), "addressList": None})
+
+    def set_message_risk_env(self, pltCode='ldpro', is_pro: bool = False):
+        self.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
+                          json={}, params={"id": 13, "executorParam": str({"pltCode": pltCode, "isPro": is_pro}), "addressList": None})
