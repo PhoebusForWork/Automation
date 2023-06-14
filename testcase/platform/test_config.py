@@ -15,7 +15,7 @@ test_data.read_json5('test_config.json5')
 ######################
 
 
-@pytest.fixture(scope="module")  # 將密碼重置為可登入狀態
+@pytest.fixture(scope="module")
 def make_config_action_log_data(get_platform_token):
     Make_config_data().make_action_log_data(plat_token=get_platform_token)
 
@@ -165,10 +165,9 @@ def test_get_platform_language(test, get_platform_token):
 @pytest.mark.regression
 @pytest.mark.parametrize("test", test_data.get_case('get_admin_action_log'))
 def test_get_admin_action_log(test, get_platform_token, make_config_action_log_data):
-    temp = copy.deepcopy(test)
     if test["params"]["to"] == "today_date_to":
-        temp["params"].update({"from": Make.date('start'), "to": Make.date('end')})
-    params_replace = test_data.replace_json(temp['params'], temp['target'])
+        test["params"].update({"from": Make.date('start'), "to": Make.date('end')})
+    params_replace = test_data.replace_json(test['params'], test['target'])
     api = API_Controller()
     resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                             params_replace, token=get_platform_token)

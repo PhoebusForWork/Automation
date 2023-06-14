@@ -74,10 +74,7 @@ class Avatar(PlatformAPI):
         return response.json()
 
     # 刪除頭像
-    def delete_avatar(self, plat_token=None, id: str = None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
+    def delete_avatar(self, id: str = None):
         request_body = {
             "method": "delete",
             "url": f"/v1/config/avatar/{id}"
@@ -113,8 +110,8 @@ class Avatar(PlatformAPI):
         response = self.send_request(**request_body)
         return response.json()
 
-    def find_avatar_id(self, plat_token=None):
-        response = self.get_avatar(plat_token=plat_token)
+    def find_avatar_id(self, ):
+        response = self.get_avatar()
         dept_id = jsonpath.jsonpath(response, "$..id")
         return str(dept_id[-1])
 
@@ -167,44 +164,45 @@ class CountryCodeRelation(PlatformAPI):
 
 
 class Report(PlatformAPI):
-    def post_report_type(self, plat_token=None, reportType=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-            request_body = {
-                "method": "post",
-                "url": f"/v1/report/{reportType}",
-                "json":
-                    {"startTime": Make.date('start'),
-                     "endTime": Make.date('end'),
-                     "currency": "CNY"
-                     }
-            }
-            response = self.send_request(**request_body)
-            return response.json()
+    def post_report_type(self, reportType=None):
+        request_body = {
+            "method": "post",
+            "url": f"/v1/report/{reportType}",
+            "json":
+                {"startTime": Make.date('start'),
+                 "endTime": Make.date('end'),
+                 "currency": "CNY"
+                 }
+        }
+        response = self.send_request(**request_body)
+        return response.json()
 
-    def get_report_download(self, plat_token=None, id=None, reportType=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-            request_body = {
-                "method": "get",
-                "url": "/v1/report/",
-                "params": [
-                    {"id": id,
-                     "reportType": reportType,
-                     }]
-            }
-            response = self.send_request(**request_body)
-            return response.json()
+    def get_report_download(self, id=None, reportType=None):
+        request_body = {
+            "method": "get",
+            "url": "/v1/report/",
+            "params": [
+                {"id": id,
+                 "reportType": reportType,
+                 }]
+        }
+        response = self.send_request(**request_body)
+        return response.json()
 
 
 class Make_config_data(PlatformAPI):
-
     def make_action_log_data(self, plat_token=None,):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
-        Avatar().add_avatar(plat_token=plat_token, title='rttest', url='/rt/test')  # 新增頭像
-        get_id = Avatar().find_avatar_id(plat_token=plat_token)  # 取得頭像最後一個id
-        Avatar().delete_avatar(plat_token=plat_token, id=get_id)  # 製造刪除頭像紀錄
-        WalletManage().water_clear_all(plat_token=plat_token, userId=1, currency="CNY")  # 製造一鍵流水清零紀錄
-        Report().post_report_type(plat_token=plat_token, reportType="PLT_REPORT_USER_FINANCE_REPORT_DOWNLOAD")  # 製造導出紀錄
+        resp_Avatar = Avatar(token=plat_token)
+        resp_Avatar.add_avatar(title='rttest', url='/rt/test')  # 新增頭像
+        get_id = resp_Avatar.find_avatar_id()  # 取得頭像最後一個id
+
+        resp_Avatar.delete_avatar(id=get_id)  # 製造刪除頭像紀錄
+
+        water_clear_resp = WalletManage(token=plat_token)
+        water_clear_resp.water_clear_all(userId=1, currency="CNY")  # 製造一鍵流水清零紀錄
+
+        report_resp = Report(token=plat_token)
+        report_resp.post_report_type(reportType="PLT_REPORT_USER_FINANCE_REPORT_DOWNLOAD")  # 製造導出紀錄
         return
