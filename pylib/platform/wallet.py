@@ -8,7 +8,7 @@ import time
 import jsonpath
 import os
 
-
+xxl = XxlJobs()
 env = EnvReader()
 platform_host = env.PLATFORM_HOST
 
@@ -322,7 +322,7 @@ class WalletGameTransferFailed(PlatformAPI):
             cs_wallet.wallet_game_transfer_deposit(channelCode="AWC",
                                                    amount=10)
 
-        XxlJobs.game_transfer_executor()
+        xxl.game_transfer_executor()
         time.sleep(2)
 
         set_plt_result.master.hdel('MOCK::AWC', 'recheckResult')
@@ -357,7 +357,7 @@ class WalletGameTransferFailed(PlatformAPI):
             cs_wallet.wallet_game_transfer_deposit(channelCode="AI",
                                                    amount=10)
 
-        XxlJobs.game_transfer_executor()
+        xxl.game_transfer_executor()
         time.sleep(2)
 
         set_plt_mock.delete_mock(channelCode='AI')

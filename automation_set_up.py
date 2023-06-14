@@ -6,13 +6,14 @@ from scripts.automation.setup_api import platform, client_side
 from utils.xxl_job_utils import XxlJobs
 
 
+xxl = XxlJobs()
 # ####################
 #  postgres-總控模擬  #
 # ####################
 # setting預設的站點資料
 postgres_scripts.edit_the_default_platform()
 # 這邊要進行plt-basic的sync
-XxlJobs.sync_plt_basics_data()
+xxl.sync_plt_basics_data()
 wait_for_sync = 5
 time.sleep(wait_for_sync)
 
