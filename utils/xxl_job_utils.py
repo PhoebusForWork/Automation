@@ -1,4 +1,5 @@
 from .api_utils import API_Controller
+import json
 
 
 class XxlJobs(API_Controller):
@@ -19,9 +20,11 @@ class XxlJobs(API_Controller):
                               json={}, params={"id": 1, "executorParam": None, "addressList": None})
 
     def sync_plt_basics_data(self, pltCode='ldpro'):
+        executorParam = json.dumps({"pltCode": pltCode}, ensure_ascii=False)
         self.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
-                          json={}, params={"id": 11, "executorParam": str({"pltCode": pltCode}), "addressList": None})
+                          json={}, params={"id": 11, "executorParam": executorParam, "addressList": None})
 
     def set_message_risk_env(self, pltCode='ldpro', is_pro: bool = False):
+        executorParam = json.dumps({"pltCode": pltCode, "isPro": is_pro}, ensure_ascii=False)
         self.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
-                          json={}, params={"id": 13, "executorParam": str({"pltCode": pltCode, "isPro": is_pro}), "addressList": None})
+                          json={}, params={"id": 13, "executorParam": executorParam, "addressList": None})
