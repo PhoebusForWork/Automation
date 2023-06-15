@@ -191,9 +191,8 @@ class Report(PlatformAPI):
 
 
 class Make_config_data(PlatformAPI):
-    def make_action_log_data(self, plat_token=None,):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
+    def make_action_log_data(self):
+        plat_token = self.request_session.headers["token"]
         resp_Avatar = Avatar(token=plat_token)
         resp_Avatar.add_avatar(title='rttest', url='/rt/test')  # 新增頭像
         get_id = resp_Avatar.find_avatar_id()  # 取得頭像最後一個id

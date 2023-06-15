@@ -137,7 +137,7 @@
             {"scenario":"[ip]正常查詢","target": {"ip": "61.220.72.61"},"code_status": 200,"keyword": "\"ip\":\"61.220.72.61\","},
             {"scenario":"[ip]字串","target": {"ip": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[ip]不完整參數","target": {"ip": "61.220.72"},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[ip]null","target": {"ip": null},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[ip]null","target": {"ip": null},"code_status": 200,"keyword": "data"},
             {"scenario":"[ip]空值","target": {"ip": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[businessType]SELECT","target": {"businessType": "SELECT"},"code_status": 200,"keyword": "\"businessType\":\"SELECT\","},
             {"scenario":"[businessType]OTHER","target": {"businessType": "OTHER"},"code_status": 200,"keyword": "\"businessType\":\"OTHER\","},

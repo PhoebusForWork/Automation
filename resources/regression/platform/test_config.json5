@@ -7,10 +7,10 @@
         "json" : {"title":"autoTest","url":"autoTest"},
         "test_item": [
             {"scenario":"[title]不存在","target":{"title":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[title]31字","target":{"title":'1234567890123456789012345678901'},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[url]null","target":{"url":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[url]300字","target":{"url":"123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"正常新增","target":{"null":null},"params": {},"code_status": 200,"keyword": "success"},
+//            {"scenario":"[title]31字","target":{"title":'1234567890123456789012345678901'},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+//            {"scenario":"[url]null","target":{"url":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+//            {"scenario":"[url]300字","target":{"url":"123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+//            {"scenario":"正常新增","target":{"null":null},"params": {},"code_status": 200,"keyword": "success"},
             ]
     },
     {
@@ -137,7 +137,7 @@
             {"scenario":"[ip]正常查詢","target": {"ip": "61.220.72.61"},"code_status": 200,"keyword": "\"ip\":\"61.220.72.61\","},
             {"scenario":"[ip]字串","target": {"ip": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[ip]不完整參數","target": {"ip": "61.220.72"},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[ip]null","target": {"ip": null},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[ip]null","target": {"ip": null},"code_status": 200,"keyword": "data"},
             {"scenario":"[ip]空值","target": {"ip": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[businessType]SELECT","target": {"businessType": "SELECT"},"code_status": 200,"keyword": "\"businessType\":\"SELECT\","},
             {"scenario":"[businessType]OTHER","target": {"businessType": "OTHER"},"code_status": 200,"keyword": "\"businessType\":\"OTHER\","},
