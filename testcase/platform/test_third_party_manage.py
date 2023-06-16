@@ -3,10 +3,14 @@ import allure
 import jsonpath
 
 from pylib.platform.thirdPartyManage import ThirdPartyManage
+from pylib.platform.config import CountryCodeRelation
 from pylib.platform.fund import UserGroup
-from utils.data_utils import TestDataReader, ResponseVerification
+from pylib.client_side.validation import Validation
+from utils.data_utils import TestDataReader, ResponseVerification, EnvReader
 from utils.api_utils import API_Controller
 from utils.json_verification import validate_json
+
+env = EnvReader()
 
 test_data = TestDataReader()
 test_data.read_json5('test_third_party_manage.json5')
@@ -23,9 +27,52 @@ def check_customer_group(get_platform_token):
         add_user_group = UserGroup(get_platform_token)
         add_user_group.save_group(groupName='客服測試-群組類型測試-客服群組名稱測試')
 
+@pytest.fixture(scope="class")
+def make_vaild_code(get_platform_token):
+    # 關閉風控開關
+    # 開啟後台66(泰國)國碼三方簡訊商
+    update_sms = CountryCodeRelation(get_platform_token)
+    update_sms.edit_manage(thirdPartyId=8, countryCodeId=6)
+    # 前台發送各類型驗證
+    valid_build = Validation()
+    valid_build.login(username=env.CS_TEST_ACCOUNT)
+    valid_build.build_all_valid()
+    yield
+    # 開啟風控開關
+
 #############
 # test_case #
 #############
+# 用戶驗證碼找回
+class TestUserValidCode:
+    # 查找用戶驗證碼
+    @staticmethod
+    @allure.feature("用戶驗證碼找回")
+    @allure.story("查找用戶驗證碼")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.usefixtures('make_vaild_code')
+    @pytest.mark.parametrize("test", test_data.get_case('get_valid_code'))
+    def test_get_valid_code(test, get_platform_token):
+        api = API_Controller()
+        params_replace = test_data.replace_json(test["params"], test["target"])
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                params_replace, token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    # 查找用戶驗證碼類型列表
+    @staticmethod
+    @allure.feature("用戶驗證碼找回")
+    @allure.story("查找用戶驗證碼類型列表")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('get_code_type'))
+    def test_get_code_type(test, get_platform_token):
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
 
 # 三方接口管理
 class TestThirdPartyManage:

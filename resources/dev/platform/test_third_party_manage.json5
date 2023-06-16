@@ -1,5 +1,41 @@
 [
-      {
+    {
+        "test_case": "get_valid_code",
+        "req_method": "get",
+        "req_url": "/v1/userValidCode",
+        "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
+        "params" : {"type": 1, "userName": null, "device": "66-987654321"},
+        "json": {},
+        "test_item": [
+            {"scenario":"[userName,device]null","target":{"userName": null, "device": null}, "code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[type]1","target":{"type": '1'}, "code_status": 200,"keyword": "data"},
+            {"scenario":"[type]2","target":{"type": '2'}, "code_status": 200,"keyword": "data"},
+            {"scenario":"[type]3","target":{"type": '3'}, "code_status": 200,"keyword": "data"},
+            {"scenario":"[type]4","target":{"type": '4'}, "code_status": 200,"keyword": "data"},
+            {"scenario":"[type]5","target":{"type": '5'}, "code_status": 200,"keyword": "data"},
+            {"scenario":"[type]6","target":{"type": '6'}, "code_status": 200,"keyword": "data"},
+            {"scenario":"[type]7","target":{"type": '7'}, "code_status": 200,"keyword": "data"},
+            {"scenario":"[type]8","target":{"type": '8'}, "code_status": 200,"keyword": "data"},
+            {"scenario":"[type]不存在","target":{"type": '9'}, "code_status": 400,"keyword": "資料不存在"},
+            {"scenario":"[userName]user002","target":{"userName": "user002"}, "code_status": 200,"keyword": "data"},
+            {"scenario":"[userName]不存在","target":{"userName": "unknow001"}, "code_status": 400,"keyword": "資料不存在"},
+            {"scenario":"[userName]字數上限","target":{"userName": "abc4567890123678901"}, "code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[device]不存在","target":{"device": "null-1"}, "code_status": 400,"keyword": "資料不存在"},
+            // 確認一下這裡有沒有字數限制
+            ]
+    },
+    {
+        "test_case": "get_code_type",
+        "req_method": "get",
+        "req_url": "/v1/userValidCode/typeList",
+        "schema": {"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"code":{"type":"integer"},"description":{"type":"string"}},"required":["code","description"]}}},"required":["data"]},
+        "params" : {},
+        "json": {},
+        "test_item": [
+            {"scenario":"正常查詢","target":{}, "code_status": 200,"keyword": "data"},
+            ]
+    },
+    {
         "test_case": "update_weighting",
         "req_method": "put",
         "req_url": "/v1/thirdPartyManage/weighting",
