@@ -9,6 +9,8 @@ from pylib.client_side.validation import Validation
 from utils.data_utils import TestDataReader, ResponseVerification, EnvReader
 from utils.api_utils import API_Controller
 from utils.json_verification import validate_json
+from utils.xxl_job_utils import XxlJobs
+
 
 env = EnvReader()
 
@@ -30,6 +32,8 @@ def check_customer_group(get_platform_token):
 @pytest.fixture(scope="class")
 def make_vaild_code(get_platform_token):
     # 關閉風控開關
+    xxl = XxlJobs()
+    xxl.set_message_risk_env()
     # 開啟後台66(泰國)國碼三方簡訊商
     update_sms = CountryCodeRelation(get_platform_token)
     update_sms.edit_manage(thirdPartyId=8, countryCodeId=6)
@@ -38,7 +42,7 @@ def make_vaild_code(get_platform_token):
     valid_build.login(username=env.CS_TEST_ACCOUNT)
     valid_build.build_all_valid()
     yield
-    # 開啟風控開關
+    # 開啟風控開關(先不關閉)
 
 #############
 # test_case #
