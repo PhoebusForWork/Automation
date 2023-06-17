@@ -87,7 +87,8 @@ class TestDataReader:
             try:
                 json_copy[key] = value
             except Exception:
-                json_copy[0][key] = value
+                for item in json_copy:
+                    item[key] = value
         return json_copy
 
 
