@@ -1,11 +1,44 @@
 [
     {
+        "test_case": "get_language_list",
+        "req_method": "get",
+        "req_url": "/v1/config/language",
+        "schema": {"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"isDefault":{"type":"boolean"},"code":{"type":"string"},"name":{"type":"string"}},"required":["code","isDefault","name"]}}},"required":["data"]},
+        "json" : {},
+        "test_item": [
+            {"scenario":"正常查詢","target":{},"params": {},"code_status": 200,"keyword": "data"},
+            ]
+    },
+    {
+        "test_case": "get_dynamic_data",
+        "req_method": "get",
+        "req_url": "/v1/config/dynamic-data",
+        "schema": {"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"name":{"type":"string"},"key":{"type":"string"},"value":{"type":"string"}},"required":["key","name","value"]}}},"required":["data"]},
+        "json" : {},
+        "params": {"keys": ['auto_testing']},
+        "test_item": [
+            {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"},
+            ]
+    },
+    {
+        "test_case": "get_currency_list",
+        "req_method": "get",
+        "req_url": "/v1/config/currency",
+        "schema": {"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"code":{"type":"string"},"currencyName":{"type":"string"},"isDefault":{"type":"boolean"},"icon":{"type":"string"}},"required":["code","currencyName","icon","isDefault"]}}},"required":["data"]},
+        "json" : {},
+        "params": {},
+        "test_item": [
+            {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"},
+            ]
+    },
+    {
         "test_case": "get_config_avatar_urls",
         "req_method": "get",
         "req_url": "/v1/config/avatar/urls",
+        "schema": {"type":"object","properties":{"data":{"type":"array","items":{"type":"string"}}},"required":["data"]},
         "json" : {},
         "test_item": [
-            {"scenario":"正常查詢","target":{},"params": {},"code_status": 200,"keyword": "/static/img/avatar/a5e93a9a29/125669346c3c5bc8.png"},
+            {"scenario":"正常查詢","target":{},"params": {},"code_status": 200,"keyword": "autoTest"},
             ]
     }
 ]

@@ -15,7 +15,7 @@
         "req_url": "/v1/config/dynamic-data",
         "schema": {"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"name":{"type":"string"},"key":{"type":"string"},"value":{"type":"string"}},"required":["key","name","value"]}}},"required":["data"]},
         "json" : {},
-        "params": {"keys": []},
+        "params": {"keys": ['auto_testing']},
         "test_item": [
             {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"},
             ]

@@ -5,6 +5,7 @@ from utils.api_utils import KeywordArgument
 from utils.data_utils import EnvReader
 from utils.generate_utils import Make
 import jsonpath
+import json
 
 env = EnvReader()
 platform_host = env.PLATFORM_HOST
@@ -158,15 +159,26 @@ class DynamicData(PlatformAPI):
         response = self.send_request(**request_body)
         return response.json()
 
-    # 建立動態造型
+    # 建立動態資料
     def add_dynamic_data(self, name=None, key=None, value=None):
         request_body = {
             "method": "post",
             "url": "/v1/dynamic-data",
-            "json": KeywordArgument.body_data()
+            "json": {
+                "name": name,
+                "key": key,
+                "value": json.dumps(value, ensure_ascii=False)
+            }
         }
         response = self.send_request(**request_body)
         return response.json()
+
+    # 確認動態資料
+    def check_dynamic_data(self):
+        jsdata = self.get_dynamic_data(key='auto_testing')
+        ret = jsonpath.jsonpath(jsdata, "$..key")
+        if ret is False:
+            self.add_dynamic_data(name="測試資料", key="auto_testing", value={"test": "test"})
 
 
 # 檔案上傳

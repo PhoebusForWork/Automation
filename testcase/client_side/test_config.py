@@ -2,6 +2,7 @@ import pytest
 import allure
 from utils.data_utils import TestDataReader, ResponseVerification
 from utils.api_utils import API_Controller
+from pylib.platform.config import DynamicData
 
 test_data = TestDataReader()
 test_data.read_json5('test_config.json5', file_side='cs')
@@ -10,6 +11,13 @@ test_data.read_json5('test_config.json5', file_side='cs')
 ######################
 #  setup & teardown  #
 ######################
+
+@pytest.fixture(scope="module")  # 確認動態資料
+def check_dynamic_data():
+    check = DynamicData()
+    code = check.imgcode()
+    check.login(username="superAdmin", password="abc123456", imgCode=code)
+    check.check_dynamic_data()
 
 #############
 # test_case #
@@ -33,6 +41,7 @@ class TestConfig():
     @allure.feature("基本配置")
     @allure.story("取得動態資料 (無須登入)")
     @allure.title("{test[scenario]}")
+    @pytest.mark.usefixtures("check_dynamic_data")
     @pytest.mark.parametrize("test", test_data.get_case('get_dynamic_data'))
     def test_get_dynamic_data(test, get_user_token):
         params_replace = test_data.replace_json(test["params"], test["target"])
