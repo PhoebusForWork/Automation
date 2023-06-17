@@ -48,4 +48,4 @@ mongo_scripts.setup_lock_status_user()
 # #############
 #  elasticsearch  #
 # #############
-elasticsearch_scripts.plt_action_log()
+# elasticsearch_scripts.plt_action_log()
