@@ -10,6 +10,166 @@ env = EnvReader()
 platform_host = env.PLATFORM_HOST
 
 
+# 報表
+class Report(PlatformAPI):
+    def post_report_type(self, reportType=None):
+        request_body = {
+            "method": "post",
+            "url": f"/v1/report/{reportType}",
+            "json":
+                {"startTime": Make.date('start'),
+                 "endTime": Make.date('end'),
+                 "currency": "CNY"
+                 }
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    def get_report_download(self, id=None, reportType=None):
+        request_body = {
+            "method": "get",
+            "url": "/v1/report/",
+            "params": [
+                {"id": id,
+                 "reportType": reportType,
+                 }]
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+
+# 電信商管理
+class CountryCodeRelation(PlatformAPI):
+    # 電信商查詢
+    def get_manage(self, plat_token=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "get",
+            "url": "/v1/countryCodeRelationManage"
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 修改電信商
+    def edit_manage(self, plat_token=None, thirdPartyId=None, countryCodeId=None, weight=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "put",
+            "url": "/v1/countryCodeRelationManage",
+            "json": [
+                {"thirdPartyId": thirdPartyId,
+                 "countryCodeId": countryCodeId,
+                 "weight": weight
+                 }
+            ]
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+
+# 操作日誌
+class ActionLog(PlatformAPI):
+    # 查詢後台用戶操作登入日誌
+    # 操作类型 : SELECT, OTHER, INSERT, UPDATE, DELETE, GRANT, EXPORT, IMPORT, FORCE, GEN_CODE, CLEAN
+    def get_action_log(self, From=None, to=None, account=None, userName=None,
+                       departmentId=None, ip=None, businessType=None, page=None, size=None):
+        request_body = {
+            "method": "get",
+            "url": "/v1/actionLog",
+            "parmas": KeywordArgument.body_data().update({"from": From})
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+
+# 電話區碼管理
+class CountryCodeManage(PlatformAPI):
+    # 電話區碼查詢
+    def get_country_code(self):
+        request_body = {
+            "method": "get",
+            "url": "/v1/countryCodeManage"
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 修改電話區碼
+    def edit_country_code(self, id=None, isDisplay=None, isDefault=None):
+        request_body = {
+            "method": "put",
+            "url": "/v1/countryCodeManage",
+            "json": [
+                {"id": id,
+                 "isDisplay": isDisplay,
+                 "isDefault": isDefault
+                 }
+            ]
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+
+# 語系管理
+class PlatformLanguage(PlatformAPI):
+    # 站點語系查詢
+    def get_language(self):
+        request_body = {
+            "method": "get",
+            "url": "/v1/platform/language"
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+
+# 站點後台動態資料
+class DynamicData(PlatformAPI):
+    # 編輯動態資料
+    def edit_dynamic_data(self, id=None, name=None, key=None, value=None):
+        request_body = {
+            "method": "put",
+            "url": f"/v1/dynamic-data/{id}",
+            "json": KeywordArgument.body_data()
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 刪除動態資料
+    def delete_dynamic_data(self, id=None):
+        request_body = {
+            "method": "delete",
+            "url": f"/v1/dynamic-data/{id}",
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 查詢動態資料 (模糊查詢)
+    def get_dynamic_data(self, name=None, key=None, value=None, page=None, size=None):
+        request_body = {
+            "method": "get",
+            "url": "/v1/dynamic-data",
+            "params": KeywordArgument.body_data()
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 建立動態造型
+    def add_dynamic_data(self, name=None, key=None, value=None):
+        request_body = {
+            "method": "post",
+            "url": "/v1/dynamic-data",
+            "json": KeywordArgument.body_data()
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+
+# 檔案上傳
 class File(PlatformAPI):
     # 上傳影片
     def upload_video(self, plat_token=None, file=None, videoPathType=None):
@@ -44,6 +204,7 @@ class File(PlatformAPI):
         return response.json()
 
 
+# 基本配置
 class Avatar(PlatformAPI):
     # 新增頭像
     def add_avatar(self, plat_token=None, title=None, url=None):
@@ -127,67 +288,6 @@ class Avatar(PlatformAPI):
             response = self.get_avatar(title="待刪除頭像")
             ret = jsonpath.jsonpath(response, "$..id")
         return ret[-1]
-
-
-class CountryCodeRelation(PlatformAPI):
-    # 電信商查詢
-    def get_manage(self, plat_token=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
-        request_body = {
-            "method": "get",
-            "url": "/v1/countryCodeRelationManage"
-        }
-
-        response = self.send_request(**request_body)
-        return response.json()
-
-    # 修改電信商
-    def edit_manage(self, plat_token=None, thirdPartyId=None, countryCodeId=None, weight=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
-        request_body = {
-            "method": "put",
-            "url": "/v1/countryCodeRelationManage",
-            "json": [
-                {"thirdPartyId": thirdPartyId,
-                 "countryCodeId": countryCodeId,
-                 "weight": weight
-                 }
-            ]
-        }
-
-        response = self.send_request(**request_body)
-        return response.json()
-
-
-class Report(PlatformAPI):
-    def post_report_type(self, reportType=None):
-        request_body = {
-            "method": "post",
-            "url": f"/v1/report/{reportType}",
-            "json":
-                {"startTime": Make.date('start'),
-                 "endTime": Make.date('end'),
-                 "currency": "CNY"
-                 }
-        }
-        response = self.send_request(**request_body)
-        return response.json()
-
-    def get_report_download(self, id=None, reportType=None):
-        request_body = {
-            "method": "get",
-            "url": "/v1/report/",
-            "params": [
-                {"id": id,
-                 "reportType": reportType,
-                 }]
-        }
-        response = self.send_request(**request_body)
-        return response.json()
 
 
 class Make_config_data(PlatformAPI):
