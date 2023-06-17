@@ -15,14 +15,12 @@ platform_host = env.PLATFORM_HOST
 
 class WalletManage(PlatformAPI):
     # 一鍵流水清零
-    def water_clear_all(self, plat_token=None, userId=None, remark=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
+    def water_clear_all(self, userId=None, remark=None, currency=None):
         request_body = {
             "method": "post",
             "url": "/v1/water/manage/withdrawWater/waterAndValidWater/clear",
-            "json": KeywordArgument.body_data()
+            "json": KeywordArgument.body_data(),
+            "params": currency
         }
 
         response = self.send_request(**request_body)
