@@ -120,7 +120,7 @@
         "test_case": "get_user_detail",
         "req_method": "get",
         "req_url": "/v1/user/detail",
-        "schema": {"type": "object", "properties": {"data": {"type": "object", "properties": {"userId": {"type": "integer"}, "username": {"type": "string"}, "registerTime": {"type": "string"}, "avatar": {"type": "string"}, "nickname": {"type": "string"}, "hasChangeNickname": {"type": "boolean"}, "birthday": {"type": ["string","null"]}, "sex": {"type": "integer"}, "mobile": {"type": "string"}, "countryCode": {"type": "string"}, "withdrawProtect": {"type": "boolean"}}, "required": ["avatar", "birthday", "countryCode", "hasChangeNickname", "mobile", "nickname", "registerTime", "sex", "userId", "username", "withdrawProtect"]}}, "required": ["data"]},
+        "schema": {"type": "object", "properties": {"data": {"type": "object", "properties": {"userId": {"type": "integer"}, "username": {"type": "string"}, "registerTime": {"type": "string"}, "avatar": {"type": ["string","null"]}, "nickname": {"type": "string"}, "hasChangeNickname": {"type": "boolean"}, "birthday": {"type": ["string", "null"]}, "sex": {"type": ["integer","null"]}, "mobile": {"type": ["string","null"]}, "countryCode": {"type": ["string","null"]}, "withdrawProtect": {"type": "boolean"}}, "required": ["avatar", "birthday", "countryCode", "hasChangeNickname", "mobile", "nickname", "registerTime", "sex", "userId", "username", "withdrawProtect"]}}, "required": ["data"]},
         "test_item": [
             {"scenario":"獲取明細資料","json": {},"params": {},"code_status": 200,"keyword": "data"}
             ]
@@ -201,7 +201,7 @@
         "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
         "req_url": "/v1/user/logout",
         "json": {},
-        "login_user": "CCheartbeat01",
+        "login_user": "user001",
         "test_item": [
             {"scenario":"帳號登出","target":{}, "params": {},"code_status": 200,"keyword": "success"}
         ]
@@ -264,13 +264,34 @@
             ]
     },
     {
+        "test_case": "user_valid_account",
+        "req_method": "post",
+        "req_url": "/v1/user/valid/account",
+        "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
+        "json":{
+                "username": "CCuserpwd01",
+                "countryCode": 886,
+                "telephone": "18887827895",
+                "captchaValidation": {
+                    "channelName": "string",
+                    "imgToken": "string"
+                }
+        },
+        "test_item": [
+            {"scenario":"忘記密碼重設(帳號驗證)正常請求","target":{}, "params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"忘記密碼重設(帳號驗證)[username]不存在","target":{"username": "unknow999"}, "params": {},"code_status": 400,"keyword": "您输入的用户名与手机号不匹配，请检查后重试，或点击下方联系客服"},
+            {"scenario":"忘記密碼重設(帳號驗證)[username]空字串測試項目","target":{"username":""},"params":{},"code_status":400,"keyword":"无效的请求参数"},
+            {"scenario":"忘記密碼重設(帳號驗證)[telephone]錯誤手機號","target":{"telephone":"18234792385"},"params":{},"code_status":400,"keyword":"您输入的用户名与手机号不匹配，请检查后重试，或点击下方联系客服"},
+            ]
+    },
+    {
         "test_case": "user_pwd",
         "req_method": "put",
         "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
         "req_url": "/v1/user/pwd",
         "json": {
                   "username": "CCuserpwd01",
-                  "countryCode": 886,
+                  "countryCode": 86,
                   "telephone": "18887827895",
                   "newPwd": "",
                   "confirmPwd": "",
@@ -395,7 +416,7 @@
                   "code": "000000"
                 },
         "test_item": [
-            {"scenario":"首次綁定","target":{"mobile": "綁定號碼", "code": ""}, "params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"首次綁定","target":{"mobile": "綁定號碼"}, "params": {},"code_status": 200,"keyword": "success"},
             {"scenario":"已綁定過再次綁定","target":{"mobile": "12345678901", "code": "123"}, "params": {},"code_status": 400,"keyword": "資料已存在"},
             {"scenario":"[countryCode]空值","target":{"countryCode": ""}, "params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[countryCode]null","target":{"countryCode": null}, "params": {},"code_status": 400,"keyword": "无效的请求参数"},
@@ -442,12 +463,12 @@
         "json": {
                     "newMobileCountryCode": 86,
                     "newMobile": 18280389308,
-                    "nmCode": "123456", "omCode":
-                    "654321"
+                    "nmCode": "000000",
+                    "omCode": "000000"
                 },
         "test_item": [
-            {"scenario":"正常更換手機號碼","target":{"nmCode": "", "omCode": ""}, "params": {},"code_status": 200,"keyword": "data"},
-            //此case需等Stan RD完成風控開關{"scenario":"新舊號碼一樣","target":{}, "params": {},"code_status": 400,"keyword": "新旧号码不可一样"}
+            {"scenario":"正常更換手機號碼","target":{"newMobile": 18147389803}, "params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"新舊號碼一樣","target":{"newMobile": 18147389803}, "params": {},"code_status": 400,"keyword": "新旧号码不可一样"},
             {"scenario":"[newMobileCountryCode]錯誤國碼","target":{"newMobileCountryCode": 123}, "params": {},"code_status": 400,"keyword": "國碼錯誤"},
             {"scenario":"[newMobileCountryCode]字串","target":{"newMobileCountryCode": "abc"}, "params": {},"code_status": 400,"keyword": "國碼錯誤"},
             {"scenario":"[newMobileCountryCode]空值","target":{"newMobileCountryCode": ""}, "params": {},"code_status": 400,"keyword": "无效的请求参数"},
@@ -457,12 +478,12 @@
             {"scenario":"[newMobile]10碼","target":{"newMobile": 1234567890}, "params": {},"code_status": 400,"keyword": "手機格式錯誤"},
             {"scenario":"[newMobile]12碼","target":{"newMobile": 123456789011}, "params": {},"code_status": 400,"keyword": "手機格式錯誤"},
             {"scenario":"[newMobile]字串","target":{"newMobile": "abc"}, "params": {},"code_status": 400,"keyword": "手機格式錯誤"},
-            {"scenario":"[nmCode]錯誤驗證碼","target":{"nmCode": "09876543"}, "params": {},"code_status": 400,"keyword": "訊息驗證碼錯誤"},
-            {"scenario":"[nmCode]字串","target":{"nmCode": "abc"}, "params": {},"code_status": 400,"keyword": "訊息驗證碼錯誤"},
+            {"scenario":"[nmCode]錯誤驗證碼","target":{"nmCode": "09876543"}, "params": {},"code_status": 400,"keyword": "您输入的验证码有误，请检查后重试"},
+            {"scenario":"[nmCode]字串","target":{"nmCode": "abc"}, "params": {},"code_status": 400,"keyword": "您输入的验证码有误，请检查后重试"},
             {"scenario":"[nmCode]空值","target":{"nmCode": ""}, "params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[nmCode]null","target":{"nmCode": null}, "params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[omCode]錯誤驗證碼","target":{"omCode": "09876543"}, "params": {},"code_status": 400,"keyword": "訊息驗證碼錯誤"},
-            {"scenario":"[omCode]字串","target":{"omCode": "abc"}, "params": {},"code_status": 400,"keyword": "訊息驗證碼錯誤"},
+            {"scenario":"[omCode]錯誤驗證碼","target":{"omCode": "09876543"}, "params": {},"code_status": 400,"keyword": "您输入的验证码有误，请检查后重试"},
+            {"scenario":"[omCode]字串","target":{"omCode": "abc"}, "params": {},"code_status": 400,"keyword": "您输入的验证码有误，请检查后重试"},
             {"scenario":"[omCode]空值","target":{"omCode": ""}, "params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[omCode]null","target":{"omCode": null}, "params": {},"code_status": 400,"keyword": "无效的请求参数"}
         ]
@@ -477,7 +498,7 @@
                   "oldPwd": ""
                 },
         "test_item": [
-            {"scenario":"[oldPwd]密碼錯誤","target":{"newPwd": "abc123456f", "oldPwd": "abc12345abc123456"}, "params": {},"code_status": 400,"keyword": "您输入的密码錯誤，请检查后重试"},
+            {"scenario":"[oldPwd]密碼錯誤","target":{"newPwd": "abc123456f", "oldPwd": "abc12345abc123456"}, "params": {},"code_status": 400,"keyword": "您输入的旧密码有误"},
             {"scenario":"[oldPwd]null","target":{"newPwd": "abc123456f", "oldPwd": null}, "params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[oldPwd]超過18碼","target":{"newPwd": "abc123456f", "oldPwd": "abc123456abc123456a"}, "params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[newPwd]null","target":{"newPwd": null, "oldPwd": "abc123456"}, "params": {},"code_status": 400,"keyword": "无效的请求参数"},
@@ -486,35 +507,18 @@
         ]
     },
     {
-        "test_case": "user_valid_account",
-        "req_method": "post",
-        "req_url": "/v1/user/valid/account",
-        "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
-        "json":{
-                "username": "CCuserpwd01",
-                "countryCode": 886,
-                "telephone": "18887827895",
-                "captchaValidation": {
-                    "channelName": "string",
-                    "imgToken": "string"
-                }
-        },
-        "test_item": [
-            {"scenario":"忘記密碼重設(帳號驗證)正常請求","target":{}, "params": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"忘記密碼重設(帳號驗證)[username]不存在","target":{"username": "unknow999"}, "params": {},"code_status": 400,"keyword": "您输入的用户名与手机号不匹配，请检查后重试，或点击下方联系客服"},
-            {"scenario":"忘記密碼重設(帳號驗證)[username]空字串測試項目","target":{"username":""},"params":{},"code_status":400,"keyword":"无效的请求参数"},
-            {"scenario":"忘記密碼重設(帳號驗證)[telephone]錯誤手機號","target":{"telephone":"18234792385"},"params":{},"code_status":400,"keyword":"您输入的用户名与手机号不匹配，请检查后重试，或点击下方联系客服"},
-            ]
-    },
-
-    {
         "test_case": "user_language",
         "req_method": "put",
         "req_url": "/v1/user/language",
         "schema":{"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "json": {},
         "test_item": [
-            {"scenario":"[oldPwd]密碼錯誤", "params": {"language": ""},"code_status": 400,"keyword": "您输入的密码錯誤，请检查后重试"},
+            {"scenario":"[language]EN", "params": {"language": "EN"},"code_status": 200,"keyword": "success"},
+            {"scenario":"[language]ZH", "params": {"language": "ZH"},"code_status": 200,"keyword": "success"},
+            {"scenario":"[language]TH", "params": {"language": "TH"},"code_status": 200,"keyword": "success"},
+            {"scenario":"[language]非資料庫有的語系", "params": {"language": "JP"},"code_status": 500,"keyword": "語言為空"},
+            {"scenario":"[language]空值", "params": {"language": ""},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[language]null", "params": {"language": null},"code_status": 400,"keyword": "无效的请求参数"}
         ]
     },
     {
@@ -524,7 +528,14 @@
         "schema":{"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "json": {},
         "test_item": [
-            {"scenario":"[oldPwd]密碼錯誤", "params": {"currency": ""},"code_status": 400,"keyword": "您输入的密码錯誤，请检查后重试"},
+            {"scenario":"[currency]USD", "params": {"currency": "USD"},"code_status": 200,"keyword": "success"},
+            {"scenario":"[currency]USDT_ERC20", "params": {"currency": "USDT_ERC20"},"code_status": 200,"keyword": "success"},
+            {"scenario":"[currency]USDT_TRC20", "params": {"currency": "USDT_TRC20"},"code_status": 200,"keyword": "success"},
+            {"scenario":"[currency]THB", "params": {"currency": "THB"},"code_status": 200,"keyword": "success"},
+            {"scenario":"[currency]CNY", "params": {"currency": "CNY"},"code_status": 200,"keyword": "success"},
+            {"scenario":"[currency]非資料庫有的資料", "params": {"currency": "TWD"},"code_status": 500,"keyword": "幣別為空"},
+            {"scenario":"[currency]空值", "params": {"currency": ""},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[currency]null", "params": {"currency": null},"code_status": 400,"keyword": "无效的请求参数"}
         ]
     }
 ]
