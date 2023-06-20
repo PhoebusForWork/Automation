@@ -24,7 +24,14 @@ class XxlJobs(API_Controller):
         self.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
                           json={}, params={"id": 11, "executorParam": executorParam, "addressList": None})
 
+    # 設定風控環境
     def set_message_risk_env(self, pltCode='ldpro', is_pro: bool = False):
         executorParam = json.dumps({"pltCode": pltCode, "isPro": is_pro}, ensure_ascii=False)
         self.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
                           json={}, params={"id": 13, "executorParam": executorParam, "addressList": None})
+
+    # 設定風控環境(用戶註冊與登入)
+    def set_user_risk_env(self, pltCode='ldpro', is_pro: bool = False):
+        executorParam = json.dumps({"pltCode": pltCode, "isPro": is_pro}, ensure_ascii=False)
+        self.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
+                          json={}, params={"id": 15, "executorParam": executorParam, "addressList": None})
