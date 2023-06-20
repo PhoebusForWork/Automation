@@ -36,7 +36,10 @@ class WebAPI(API_Controller):
         response = self.send_request(**request_body)
         try:
             self.request_session.headers.update(
-                {"token": str(response.json()['data']['token'])})
+                # {"token": str(response.json()['data']['token'])}
+                # 測試把所有資訊夾帶至header
+                {str(key): str(value) for key, value in response.json()['data'].items()}
+            )
         except Exception:
             print("登錄失敗")
         return response

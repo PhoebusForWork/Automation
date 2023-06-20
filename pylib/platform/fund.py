@@ -9,11 +9,23 @@ import jsonpath
 env = EnvReader()
 platform_host = env.PLATFORM_HOST
 
+# 客戶群組
+class UserGroup(PlatformAPI):
+    # 新增群組
+    def save_group(self, groupName: str = None, beginRegisterTime=Make.generate_custom_date(days=-30), endRegisterTime=Make.generate_custom_date(days=30)):
+        request_body = {
+            "method": "post",
+            "url": "/v1/fund/user/group/save",
+            "json": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
 
 # 資金配置管理
 class Change(PlatformAPI):
     # 申請變更
-    def change_apply(self,  
+    def change_apply(self,
                      plat_token=None,
                      # 0:玩家, 1:代理
                      userType=0,
