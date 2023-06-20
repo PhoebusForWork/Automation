@@ -22,6 +22,49 @@ def make_config_action_log_data(get_platform_token):
 #############
 # test_case #
 #############
+# 電信商管理
+class TestCountryCodeRelationManage:
+    # 電信商查詢
+    @staticmethod
+    @allure.feature("電信商管理")
+    @allure.story("電信商查詢")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.test
+    @pytest.mark.parametrize("test", test_data.get_case('get_relation_manage'))
+    def test_get_relation_manage(test, get_platform_token):
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    # 修改電信商
+    @staticmethod
+    @allure.feature("電信商管理")
+    @allure.story("修改電信商")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.test
+    @pytest.mark.parametrize("test", test_data.get_case('edit_relation_manage'))
+    def test_edit_relation_manage(test, get_platform_token):
+        json_replace = test_data.replace_json(test['json'], test['target'])
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                                test['params'], token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+
+# 幣別管理
+class TestCurrency:
+    @staticmethod
+    @allure.feature("幣別管理")
+    @allure.story("站點幣別查詢")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('get_platform_currency'))
+    def test_get_platform_currency(test, get_platform_token):
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
 
 
 class TestBasicConfiguration:
@@ -209,4 +252,3 @@ class TestCountryCodeManagement:
         resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                                 test['params'], token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)
-

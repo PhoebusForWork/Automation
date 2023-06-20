@@ -191,5 +191,36 @@
             {"scenario": "[isDefault]all true", "target": {"isDefault":  true }, "code_status": 400, "keyword": "更新失敗"},
             {"scenario": "[isDefault]all false", "target": {"isDefault":  false }, "code_status": 400, "keyword": "更新失敗"},
         ]
+    },
+    {
+        "test_case": "get_relation_manage",
+        "req_method": "get",
+        "req_url": "/v1/countryCodeRelationManage",
+        "schema": {"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"thirdPartyId":{"type":"integer"},"thirdPartyName":{"type":"string"},"relationList":{"type":"array","items":{"type":"object","properties":{"countryCodeId":{"type":"integer"},"countryCode":{"type":"string"},"areaCode":{"type":"string"},"nameCn":{"type":"string"},"nameEn":{"type":"string"},"weight":{"type":["number","null"]},"status":{"type":"integer"}},"required":["areaCode","countryCode","countryCodeId","nameCn","nameEn","status","weight"]}}},"required":["relationList","thirdPartyId","thirdPartyName"]}}},"required":["data"]},
+        "json" : {},
+        "params": {},
+        "test_item": [
+            {"scenario":"普通查詢","code_status": 200,"keyword": "data"}
+        ]
+    },
+    {
+        "test_case": "edit_relation_manage",
+        "req_method": "put",
+        "req_url": "/v1/countryCodeRelationManage",
+        "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
+        "json" : [{"thirdPartyId": 1,"countryCodeId": 1,"weight": 99}],
+        "params": {},
+        "test_item": [
+            {"scenario":"[thirdPartyId]正常編輯","target":{}, "params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[thirdPartyId]空值測試項目","target":{"thirdPartyId":null}, "params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[thirdPartyId]字串類型測試項目","target":{"thirdPartyId":"abc"}, "params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[thirdPartyId]正常值測試項目","target":{"thirdPartyId":123}, "params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[countryCodeId]空值測試項目","target":{"countryCodeId":null}, "params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[countryCodeId]字串類型測試項目","target":{"countryCodeId":"abc"}, "params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[countryCodeId]正常值測試項目","target":{"countryCodeId":123}, "params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[weight]空值測試項目","target":{"weight":null}, "params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[weight]字串類型測試項目","target":{"weight":"abc"}, "params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[weight]正常值測試項目","target":{"weight":123.5}, "params": {},"code_status": 200,"keyword": "data"}
+            ]
     }
 ]
