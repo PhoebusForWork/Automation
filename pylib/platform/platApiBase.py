@@ -30,7 +30,7 @@ class PlatformAPI(API_Controller):
         return response.json()
 
     # 用戶登陸
-    def login(self, username='phoebusliu', password='abc123456', imgCode='a'):
+    def login(self, username='superAdmin', password='abc123456', imgCode='a'):
         request_body = {
             "method": "post",
             "url": "/v1/account/login",
