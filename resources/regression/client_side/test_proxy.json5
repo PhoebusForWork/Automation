@@ -1,0 +1,17 @@
+[
+    {
+        "test_case": "prase_domain",
+        "req_method": "get",
+        "req_url": "/v1/proxy/parseDomain",
+        "schema":{"type":"object","properties":{"data":{"type":"object","properties":{"isProxyDomain":{"type":["boolean","null"]},"proxyCode":{"type":["string","null"]}},"required":["isProxyDomain","proxyCode"]}},"required":["data"]},
+        "json" : {},
+        "params": {},
+        "test_item": [
+            {"scenario":"[Origin_url]null","target":{"Origin_url":null},"code_status": 200,"keyword": "\"isProxyDomain\":null"},
+            {"scenario":"[Origin_url]已設定域名","target":{"Origin_url":"https://abc.setting.com"},"code_status": 200,"keyword": "\"isProxyDomain\":true"},
+            {"scenario":"[Origin_url]已設定域名","target":{"Origin_url":"https://setting.com"},"code_status": 200,"keyword": "\"isProxyDomain\":true"},
+            {"scenario":"[Origin_url]已設定域名","target":{"Origin_url":"https://qa-auto.setting.com"},"code_status": 200,"keyword": "\"isProxyDomain\":true"},
+            {"scenario":"[Origin_url]未設定域名","target":{"Origin_url":"https://abc.unknow.com"},"code_status": 200,"keyword": "\"isProxyDomain\":false"},
+            ]
+    }
+]
