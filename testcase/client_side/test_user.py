@@ -7,6 +7,7 @@ from pylib.client_side.validation import Validation
 from pylib.client_side.user import Security
 from pylib.client_side.test import TransferMock
 from utils.generate_utils import Make
+from utils.xxl_job_utils import XxlJobs
 
 test_data = TestDataReader()
 test_data.read_json5('test_user.json5', file_side='cs')
@@ -58,10 +59,10 @@ def re_security_pwd_default():
 
 @pytest.fixture(scope="class")
 def register_check_trigger():
-    check_controller = TransferMock()
-    check_controller.set_env(False)
+    xxl = XxlJobs()
+    xxl.set_user_risk_env(is_pro=False)
     yield
-    check_controller.set_env(True)
+    xxl.set_user_risk_env(is_pro=True)
 
 ######################
 #      testCase      #

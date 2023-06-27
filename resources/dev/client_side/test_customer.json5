@@ -1,0 +1,17 @@
+[
+    {
+        "test_case": "get_customer_link",
+        "req_method": "get",
+        "req_url": "/v1/customer/link",
+        "schema": {"type": "object", "properties": {"data": {"type": "object", "properties": {"name": {"type": "string"}, "url": {"type": "string"}}, "required": ["name", "url"]}}, "required": ["data"]},
+        "json" : {},
+        "test_item": [
+            {"scenario":"[language]EN","params": {"language": "EN"},"code_status": 200,"keyword": "LIVECHAT_EN"},
+            {"scenario":"[language]ZH","params": {"language": "ZH"},"code_status": 200,"keyword": "LIVECHAT_ZH"},
+            {"scenario":"[language]TH","params": {"language": "TH"},"code_status": 200,"keyword": "LIVECHAT_TH"},
+            {"scenario":"[language]尚未有資料的語言","params": {"language": "JP"},"code_status": 500,"keyword": "語言為空"},
+            {"scenario":"[language]null","params": {"language": null},"code_status": 500,"keyword": "語言為空"},
+            {"scenario":"[language]空值","params": {"language": ""},"code_status": 500,"keyword": "語言為空"}
+        ]
+    }
+]

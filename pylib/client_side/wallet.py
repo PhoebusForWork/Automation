@@ -97,14 +97,14 @@ class FrontUser(WebAPI):
 
     # 取得用戶訂單id
     def get_trade_id(self):
-        jsdata = self.get_wallet_front_user_fund(From=Make.generate_custom_date(months=-3), to=Make.generate_custom_date(days=1))
+        jsdata = self.get_wallet_front_user_fund(From=Make.generate_custom_date(days=-90), to=Make.generate_custom_date(days=1))
         ret = jsonpath.jsonpath(jsdata, "$..tradeId")
         return ret[0]
 
     # 取得使用者資金明細
     # 交易類型：充值7｜提款9｜轉帳0｜紅利/充值獎勵/紅包/平台獎勵/派彩/老用戶活動紅利 皆合併至紅利8｜返水6｜加幣13｜減幣14｜上級轉入10
     def get_wallet_front_user_fund(self, From=None, to=None,
-                                   transactionType=None, transactionStatus=None,
+                                   balanceTypes=0, status=-1,
                                    page=None, size=None):
         request_body = {
             "method": "get",
@@ -112,8 +112,8 @@ class FrontUser(WebAPI):
             "params": {
                 "from": From,
                 "to": to,
-                "transactionType": transactionType,
-                "transactionStatus": transactionStatus,
+                "balanceTypes": balanceTypes,
+                "status": status,
                 "page": page,
                 "size": size
             }
