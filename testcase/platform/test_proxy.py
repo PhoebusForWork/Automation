@@ -671,6 +671,22 @@ class TestProxy:
         )
         ResponseVerification.basic_assert(resp, test)
 
+    @staticmethod
+    @allure.feature("代理列表")
+    @allure.story("搜尋代理域名")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("get_proxy_domain_query"))
+    def test_get_proxy_domain_query(test, get_platform_token):
+        params_replace = test_data.replace_json(test["params"], test["target"])
+        api = API_Controller()
+        resp = api.send_request(test["req_method"],
+                                test["req_url"],
+                                test["json"],
+                                params_replace,
+                                token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
 
 class TestProxyManage:
     @staticmethod
@@ -809,4 +825,39 @@ class TestProxyCredit:
         )
         clean = UserManage()
         clean.clean_approval(plat_token=get_platform_token, optType="CREDIT_CHANGE")
+        ResponseVerification.basic_assert(resp, test)
+
+
+class TestProxyDomain:
+    # 編輯域名
+    @staticmethod
+    @allure.feature("代理訊息")
+    @allure.story("編輯域名")
+    @allure.title("{test[scenario]}")
+    # @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("edit_proxy_domain"))
+    def test_edit_proxy_domain(test, get_platform_token):
+        json_replace = test_data.replace_json(test["json"], test["target"])
+        api = API_Controller()
+        resp = api.send_request(test["req_method"],
+                                test["req_url"],
+                                json_replace,
+                                test["params"],
+                                token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    # 取得推廣域名
+    @staticmethod
+    @allure.feature("代理訊息")
+    @allure.story("取得推廣域名")
+    @allure.title("{test[scenario]}")
+    # @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("get_proxy_domain_promotion_link"))
+    def test_get_proxy_domain_promotion_link(test, get_platform_token):
+        api = API_Controller()
+        resp = api.send_request(test["req_method"],
+                                test["req_url"],
+                                test["json"],
+                                test["params"],
+                                token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)

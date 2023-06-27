@@ -629,7 +629,7 @@ class ProxyManage(PlatformAPI):
             if ret2:
                 for i in ret2:
                     self.approval_second(plat_token=token, id=i, isApprove=False, remark="rej")
-        except:
+        except Exception:
             pass
 
     def get_first_approval_id(self, token=None):
@@ -846,6 +846,30 @@ class ProxyCommission(PlatformAPI):
             "method": "put",
             "url": f"/v1/proxy/commission/{detailId}/secondApprove",
             "json": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+
+# 代理訊息
+class ProxyDomain(PlatformAPI):
+    # 編輯代理域名
+    def edit_proxy_domain(self, proxyId=None, domain_list: dict = {}):
+        request_body = {
+            "method": "put",
+            "url": f"/v1/proxy/domain/{proxyId}",
+            "json": domain_list
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 取得推廣域名
+    def get_promotion_link(self, proxyId=None):
+        request_body = {
+            "method": "get",
+            "url": f"/v1/proxy/domain/{proxyId}/promotionLink"
         }
 
         response = self.send_request(**request_body)
