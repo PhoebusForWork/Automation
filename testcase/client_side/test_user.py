@@ -218,16 +218,12 @@ class TestUserDetail:
     def test_put_user_detail(test, make_register_new_user):
         validation_api = Validation()
         if test["scenario"] == "[birthday]首次修改":
-            register_new_user_token = make_register_new_user
-            api = API_Controller(platform='cs')
-            resp = api.send_request(test['req_method'], test['req_url'], test['json'], test['params'],
-                                    token=register_new_user_token)
-            ResponseVerification.basic_assert(resp, test)
-            return
-        resp = validation_api.login(username="generic001")
-        admin_token = resp.json()['data']['token']
+            token = make_register_new_user
+        else:
+            resp = validation_api.login(username="generic001")
+            token = resp.json()['data']['token']
         api = API_Controller(platform='cs')
-        resp = api.send_request(test['req_method'], test['req_url'], test['json'], test['params'], token=admin_token)
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'], test['params'], token=token)
         ResponseVerification.basic_assert(resp, test)
 
 
@@ -345,10 +341,6 @@ class TestUserOperation:
         api = API_Controller(platform='cs')
         resp = api.send_request(test['req_method'], test['req_url'], json_replace, test['params'], token=get_user_token)
         ResponseVerification.basic_assert(resp, test)
-        resp = api.send_request(test['req_method'], test['req_url'], json_replace, test['params'],
-                                token=get_user_token)
-        assert resp.status_code == test['code_status'], resp.text
-        assert test['keyword'] in resp.text
 
 
 class TestUserSecurityCenter:

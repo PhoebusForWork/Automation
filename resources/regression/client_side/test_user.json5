@@ -120,7 +120,7 @@
         "test_case": "get_user_detail",
         "req_method": "get",
         "req_url": "/v1/user/detail",
-        "schema": {"type": "object", "properties": {"data": {"type": "object", "properties": {"userId": {"type": "integer"}, "username": {"type": "string"}, "registerTime": {"type": "string"}, "avatar": {"type": ["string","null"]}, "nickname": {"type": "string"}, "hasChangeNickname": {"type": "boolean"}, "birthday": {"type": ["string", "null"]}, "sex": {"type": ["integer","null"]}, "mobile": {"type": ["string","null"]}, "countryCode": {"type": ["string","null"]}, "withdrawProtect": {"type": "boolean"}}, "required": ["avatar", "birthday", "countryCode", "hasChangeNickname", "mobile", "nickname", "registerTime", "sex", "userId", "username", "withdrawProtect"]}}, "required": ["data"]},
+        "schema": {"type": "object", "properties": {"data": {"type": "object", "properties": {"userId": {"type": "integer"}, "username": {"type": "string"}, "registerTime": {"type": "string"}, "avatar": {"type": ["string", "null"]}, "nickname": {"type": "string"}, "hasChangeNickname": {"type": "boolean"}, "birthday": {"type": ["string","null"]}, "sex": {"type": ["integer","null"]}, "telephone": {"type": ["string","null"]}, "countryCode": {"type": "string"}, "withdrawProtect": {"type": "boolean"}}, "required": ["avatar", "birthday", "countryCode", "hasChangeNickname", "nickname", "registerTime", "sex", "telephone", "userId", "username", "withdrawProtect"]}}, "required": ["data"]},
         "test_item": [
             {"scenario":"獲取明細資料","json": {},"params": {},"code_status": 200,"keyword": "data"},
             ]
