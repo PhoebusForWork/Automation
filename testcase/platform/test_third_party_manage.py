@@ -137,25 +137,19 @@ class TestThirdPartyManage:
                                 test['params'], token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)
 
-    # 三方接口:查詢
+    # 三方接口:客服接口-查詢
     @staticmethod
     @allure.feature("三方接口管理")
-    @allure.story("三方接口:查詢")
+    @allure.story("三方接口:客服接口-查詢")
     @allure.title("{test[scenario]}")
     @pytest.mark.regression
-    @pytest.mark.parametrize("test", test_data.get_case('get_third_party_manage'))
-    def test_get_third_party_manage(test, get_platform_token):
+    @pytest.mark.parametrize("test", test_data.get_case('get_customerService'))
+    def test_get_customerService(test, get_platform_token):
+        parmas_replace = test_data.replace_json(test["params"], test["target"])
         api = API_Controller()
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
-                                test['params'], token=get_platform_token)
-        assert resp.status_code == test['code_status'], resp.text
-        # check multi-type
-        if "所有資料" in test['scenario']:
-            assert set(test['keyword']).issubset(jsonpath.jsonpath(resp.json(), '$..type'))
-        else:
-            assert test['keyword'] in resp.text
-        if resp.status_code == 200:
-            assert validate_json(resp.json(), test['schema'])
+                                parmas_replace, token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
 
     # 三方接口:圖形驗證接口-查詢
     @staticmethod

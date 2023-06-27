@@ -74,7 +74,7 @@
     {
         "test_case": "get_customer_group",
         "req_method": "get",
-        "req_url": "/v1/customer-service-group",
+        "req_url": "/v1/thirdPartyManage/customerServiceGroup",
         "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"total":{"type":"integer"},"size":{"type":"integer"},"current":{"type":"integer"},"pages":{"type":"integer"},"records":{"type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"groupTypeName":{"type":"string"},"groupName":{"type":"string"},"customerServiceId":{"type":"integer"},"language":{"type":"string"}},"required":["customerServiceId","groupName","groupTypeName","id","language"]}}},"required":["current","pages","records","size","total"]}},"required":["data"]},
         "json" : {},
         "params": {"groupTypeName": null, "groupName": null, "customerServiceId": null,"page": null, "size": null, "language": null},
@@ -92,13 +92,13 @@
             {"scenario":"[language]TH","target":{"language": "TH"}, "code_status": 200,"keyword": "\"language\":\"TH\""},
             {"scenario":"[language]EN","target":{"language": "EN"}, "code_status": 200,"keyword": "\"language\":\"EN\""},
             {"scenario":"[language]ZH","target":{"language": "ZH"}, "code_status": 200,"keyword": "\"language\":\"ZH\""},
-            {"scenario":"[language]不存在","target":{"language": "ZZ"}, "code_status": 200,"keyword": "\"records\":[]"},
+            {"scenario":"[language]不存在","target":{"language": "ZZ"}, "code_status": 400,"keyword": "无效的请求参数"},
             ]
     },
     {
         "test_case": "save_customer_group",
         "req_method": "put",
-        "req_url": "/v1/customer-service-group",
+        "req_url": "/v1/thirdPartyManage/customerServiceGroup",
         "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
         "json" : [{"id":1,"customerServiceId":4}],
         "params": {},
@@ -109,23 +109,17 @@
             ]
     },
     {
-        "test_case": "get_third_party_manage",
+        "test_case": "get_customerService",
         "req_method": "get",
-        "req_url": "/v1/thirdPartyManage",
-        "schema": {"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"language":{"type":"string"},"name":{"type":"string"},"type":{"type":"string"},"weighting":{"type":"integer"},"isEnabled":{"type":"boolean"}},"required":["id","isEnabled","language","name","type","weighting"]}}},"required":["data"]},
+        "req_url": "/v1/thirdPartyManage/customerService",
+        "schema": {"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"language":{"type":"string"},"name":{"type":"string"},"weighting":{"type":"number"},"isEnabled":{"type":"boolean"}},"required":["id","isEnabled","language","name","weighting"]}}},"required":["data"]},
         "json" : {},
+        "params": {"language": null},
         "test_item": [
-            {"scenario":"[type=9999999]不存在","target":{},"params": {"type": "9999999"},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[type=0]不存在","target":{},"params": {"type": 0},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[type=5]不存在","target":{},"params": {"type": 5},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[type=null]所有資料","target":{},"params": {"type": null},"code_status": 200,"keyword": ['SMS', 'EMAIL', 'VOICE', 'CAPTCHA', 'CUSTOMER','BANK'] },
-            {"scenario":"[type=test]不存在","target":{},"params": {"type": "test"},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[type=1]存在","target":{},"params": {"type": "SMS"},"code_status": 200,"keyword":'"type":"SMS",'},
-            {"scenario":"[type=2]存在","target":{},"params": {"type": "VOICE"},"code_status": 200,"keyword":'"type":"VOICE"'},
-            {"scenario":"[type=3]存在","target":{},"params": {"type": "EMAIL"},"code_status": 200,"keyword":'"type":"EMAIL"'},
-            {"scenario":"[type=4]存在","target":{},"params": {"type": "CAPTCHA"},"code_status": 200,"keyword":'"type":"CAPTCHA"'},
-            {"scenario":"[type=5]存在","target":{},"params": {"type": "CUSTOMER"},"code_status": 200,"keyword":'"type":"CUSTOMER"'},
-            {"scenario":"[type=6]存在","target":{},"params": {"type": "BANK"},"code_status": 200,"keyword":'"type":"BANK"'}
+            {"scenario":"[language]null","target":{},"code_status": 200,"keyword": "data"},
+            {"scenario":"[language]ZH","target":{"language":"ZH"},"code_status": 200,"keyword": "ZH"},
+            {"scenario":"[language]TH","target":{"language":"TH"},"code_status": 200,"keyword": "TH"},
+            {"scenario":"[language]EN","target":{"language":"EN"},"code_status": 200,"keyword": "EN"},
             ]
     },
     {
@@ -140,7 +134,7 @@
             {"scenario":"[language]EN","target":{"language": "EN"}, "code_status": 200,"keyword": "data"},
             {"scenario":"[language]TH","target":{"language": "TH"}, "code_status": 200,"keyword": "data"},
             {"scenario":"[language]ZH","target":{"language": "ZH"}, "code_status": 200,"keyword": "data"},
-            {"scenario":"[language]不存在","target":{"language": "ABC"}, "code_status": 200,"keyword": "\"data\":[]"},
+            {"scenario":"[language]不存在","target":{"language": "ABC"}, "code_status": 400,"keyword": "无效的请求参数"},
             ]
     },
     {
@@ -157,8 +151,8 @@
     {
         "test_case": "get_customer_group_last_update_time",
         "req_method": "get",
-        "req_url": "/v1/customer-service-group/last-update-time",
-        "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"value":{"type":"string"}},"required":["value"]}},"required":["data"]},
+        "req_url": "/v1/thirdPartyManage/customerServiceGroup/customerServiceList",
+        "schema": {"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"language":{"type":"string"},"name":{"type":"string"},"type":{"type":"string"},"weighting":{"type":"number"},"isEnabled":{"type":"boolean"}},"required":["id","isEnabled","language","name","type","weighting"]}}},"required":["data"]},
         "json" : {},
         "params": {"language": null},
         "test_item": [
@@ -166,13 +160,13 @@
             {"scenario":"[language]EN","target":{"language": "EN"}, "code_status": 200,"keyword": "data"},
             {"scenario":"[language]TH","target":{"language": "TH"}, "code_status": 200,"keyword": "data"},
             {"scenario":"[language]ZH","target":{"language": "ZH"}, "code_status": 200,"keyword": "data"},
-            {"scenario":"[language]不存在","target":{"language": "ABC"}, "code_status": 200,"keyword": "{\"value\":null}"},
+            {"scenario":"[language]不存在","target":{"language": "ABC"}, "code_status": 400,"keyword": "无效的请求参数"},
             ]
     },
     {
         "test_case": "get_customer_group_type",
         "req_method": "get",
-        "req_url": "/v1/customer-service-group/group-type",
+        "req_url": "/v1/thirdPartyManage/customerServiceGroup/groupType",
         "schema": {"type":"object","properties":{"data":{"type":"array","items":{"type":"string"}}},"required":["data"]},
         "json" : {},
         "params": {"language": null},
@@ -181,22 +175,22 @@
             {"scenario":"[language]EN","target":{"language": "EN"}, "code_status": 200,"keyword": "data"},
             {"scenario":"[language]TH","target":{"language": "TH"}, "code_status": 200,"keyword": "data"},
             {"scenario":"[language]ZH","target":{"language": "ZH"}, "code_status": 200,"keyword": "data"},
-            {"scenario":"[language]不存在","target":{"language": "ABC"}, "code_status": 200,"keyword": "\"data\":[]"},
+            {"scenario":"[language]不存在","target":{"language": "ABC"}, "code_status": 400,"keyword": "无效的请求参数"},
             ]
     },
     {
         "test_case": "get_customer_service",
         "req_method": "get",
-        "req_url": "/v1/customer-service-group/customer-service-list",
+        "req_url": "/v1/thirdPartyManage/customerServiceGroup/customerServiceList",
         "schema": {"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"language":{"type":"string"},"name":{"type":"string"},"type":{"type":"string"},"weighting":{"type":"integer"},"isEnabled":{"type":"boolean"}},"required":["id","isEnabled","language","name","type","weighting"]}}},"required":["data"]},
         "json" : {},
         "params": {"language": "ZH"},
         "test_item": [
-            {"scenario":"[language]null","target":{"language":null}, "code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[language]null","target":{"language":null}, "code_status": 200,"keyword": "data"},
             {"scenario":"[language]EN","target":{"language": "EN"}, "code_status": 200,"keyword": "data"},
             {"scenario":"[language]TH","target":{"language": "TH"}, "code_status": 200,"keyword": "data"},
             {"scenario":"[language]ZH","target":{"language": "ZH"}, "code_status": 200,"keyword": "data"},
-            {"scenario":"[language]不存在","target":{"language": "ABC"}, "code_status": 200,"keyword": "\"data\":[]"},
+            {"scenario":"[language]不存在","target":{"language": "ABC"}, "code_status": 400,"keyword": "无效的请求参数"},
             ]
     }
 ]
