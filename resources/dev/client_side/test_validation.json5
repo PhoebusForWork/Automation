@@ -1,44 +1,46 @@
 [
     {
+        // 請求種類 1:註冊, 2:手機快捷登陸, 3:重設密碼, 4:撞庫驗證, 5:原手機號解綁, 6:綁定新手機號, 7:原郵箱地址解綁, 8:綁定新郵箱地址, 9:提款短信驗證, 10:修改密碼, 11:提現發起
         "test_case": "validation_voice",
         "req_method": "post",
         "req_url": "/v1/validation/voice",
-        "json" : {"device": "","requestType": ""},
+        "json" : {"requestType":"","mobile":"隨機手機","countryCode":"66","uuid":null,"captchaValidation":{"channelName":"string","imgToken":"000000"}},
+        "schema":{"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
         "test_item": [
-            {"scenario":"[requestType]null","target":{"device": null,"requestType": "1"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[requestType重複]1:註冊","target":{"device": "1234567890","requestType": "1"},"params": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"[requestType重複]1:註冊","target":{"device": "1234567890","requestType": "1"},"params": {},"code_status": 400,"keyword": "\"驗證碼已發送, 請稍候嘗試\""},
-            {"scenario":"[requestType]2:手機快捷登陸","target":{"device": "空","requestType": "2"},"params": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"[requestType]3:重設密碼","target":{"device": "空","requestType": "3"},"params": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"[requestType]4:撞庫驗證","target":{"device": "空","requestType": "4"},"params": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"[requestType]5:原手機號解綁","target":{"device": "空","requestType": "5"},"params": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"[requestType]6:綁定新手機號","target":{"device": "空","requestType": "6"},"params": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"[requestType]7:原郵箱地址解綁","target":{"device": "空","requestType": "7"},"params": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"[requestType]8:綁定新郵箱地址","target":{"device": "空","requestType": "8"},"params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[requestType]null","target":{"mobile": "1234567890", "requestType": null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[requestType]1:註冊","target":{"mobile": "1234567890", "requestType": "1"},"params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[requestType]2:手機快捷登陸","target":{"requestType": "2"},"params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[requestType]3:重設密碼","target":{"requestType": "3"},"params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[requestType]4:撞庫驗證","target":{"requestType": "4"},"params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[requestType]5:原手機號解綁","target":{"requestType": "5"},"params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[requestType]6:綁定新手機號","target":{"requestType": "6"},"params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[requestType]7:原郵箱地址解綁","target":{"requestType": "7"},"params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[requestType]8:綁定新郵箱地址","target":{"requestType": "8"},"params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[requestType]9:綁定新郵箱地址","target":{"requestType": "9"},"params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[requestType]10:綁定新郵箱地址","target":{"requestType": "10"},"params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[requestType]11:綁定新郵箱地址","target":{"requestType": "11"},"params": {},"code_status": 200,"keyword": "data"},
             {"scenario":"[requestType]null","target":{"requestType": null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[requestType]字串","target":{"requestType": "字串"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[device]email","target":{"device": "charlie@gmail.com","requestType": "1"},"params": {},"code_status": 200,"keyword": "data"}
-        ]
+            ]
     },
     {
         "test_case": "validation_sms",
         "req_method": "post",
         "req_url": "/v1/validation/sms",
-        "json" : {"device": "","requestType": ""},
+        "json" : {"requestType":null,"mobile":"隨機手機","countryCode":"66","uuid":null,"captchaValidation":{"channelName":"string","imgToken":"000000"}},
+        "schema":{"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
         "test_item": [
-            {"scenario":"[requestType]null","target":{"device": null,"requestType": "1"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[requestType重複]1:註冊","target":{"device": "123456789","requestType": "1"},"params": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"[requestType重複]1:註冊","target":{"device": "123456789","requestType": "1"},"params": {},"code_status": 400,"keyword": "\"驗證碼已發送, 請稍候嘗試\""},
-            {"scenario":"[requestType]2:手機快捷登陸","target":{"device": "空","requestType": "2"},"params": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"[requestType]3:重設密碼","target":{"device": "空","requestType": "3"},"params": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"[requestType]4:撞庫驗證","target":{"device": "空","requestType": "4"},"params": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"[requestType]5:原手機號解綁","target":{"device": "空","requestType": "5"},"params": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"[requestType]6:綁定新手機號","target":{"device": "空","requestType": "6"},"params": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"[requestType]7:原郵箱地址解綁","target":{"device": "空","requestType": "7"},"params": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"[requestType]8:綁定新郵箱地址","target":{"device": "空","requestType": "8"},"params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[requestType]null","target":{"mobile": null,"requestType": "1"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[requestType]1:註冊","target":{"mobile": "123456789","requestType": "1"},"params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[requestType]2:手機快捷登陸","target":{"requestType": "2"},"params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[requestType]3:重設密碼","target":{"requestType": "3"},"params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[requestType]4:撞庫驗證","target":{"requestType": "4"},"params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[requestType]5:原手機號解綁","target":{"requestType": "5"},"params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[requestType]6:綁定新手機號","target":{"requestType": "6"},"params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[requestType]7:原郵箱地址解綁","target":{"requestType": "7"},"params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[requestType]8:綁定新郵箱地址","target":{"requestType": "8"},"params": {},"code_status": 200,"keyword": "data"},
             {"scenario":"[requestType]null","target":{"requestType": null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[requestType]字串","target":{"requestType": "字串"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[device]email","target":{"device": "charlievs@gmail.com","requestType": "1"},"params": {},"code_status": 200,"keyword": "data"}
         ]
     },
     {
@@ -63,9 +65,28 @@
         ]
     },
     {
+        "test_case": "voice_check",
+        "req_method": "get",
+        "req_url": "/v1/validation/voice/check",
+        "schema": {"type":"object","properties":{"data":{"type":"boolean"}},"required":["data"]},
+        "json" : {},
+        "params": {"countryCode":null},
+        "test_item": [
+            {"scenario":"[countryCode]null","target":{},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[countryCode]PH","target":{"countryCode":"66"},"code_status": 200,"keyword": "false"},
+            {"scenario":"[countryCode]TH","target":{"countryCode":"63"},"code_status": 200,"keyword": "false"},
+            {"scenario":"[countryCode]JP","target":{"countryCode":"81"},"code_status": 200,"keyword": "false"},
+            {"scenario":"[countryCode]KR","target":{"countryCode":"82"},"code_status": 200,"keyword": "false"},
+            {"scenario":"[countryCode]CN","target":{"countryCode":"86"},"code_status": 200,"keyword": "true"},
+            {"scenario":"[countryCode]HK","target":{"countryCode":"852"},"code_status": 200,"keyword": "false"},
+            {"scenario":"[countryCode]不存在","target":{"countryCode":"1024"},"code_status": 200,"keyword": "false"},
+            ]
+    },
+    {
         "test_case": "validation_captcha",
         "req_method": "get",
         "req_url": "/v1/validation/captcha",
+        "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"channelName":{"type":"string"},"additionalParams":{"type":"object"}},"required":["additionalParams","channelName"]}},"required":["data"]},
         "json" : {"device": "","requestType": ""},
         "test_item": [
             {"scenario":"[]","target":{},"params": {},"code_status": 200,"keyword": "data"}
