@@ -1,0 +1,61 @@
+[
+    {
+        "test_case": "game_select_list",
+        "req_method": "get",
+        "req_url": "/v1/game/selectList",
+        "schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"gameType": {"type": "integer"}, "gameList": {"type": "array", "items": {"type": "object", "properties": {"channelCode": {"type": "string"}, "gameCode": {"type": "string"}, "currency": {"type": "string"}, "name": {"type": "string"}, "sort": {"type": "integer"}, "icon": {"type": "string"}}, "required": ["channelCode", "currency", "gameCode", "icon", "name", "sort"]}}}, "required": ["gameList", "gameType"]}}}, "required": ["data"]},
+        "json" : {},
+        "test_item": [
+            {"scenario":"[currency]USD","params":{"currency": "USD"},"code_status": 200,"keyword": "\"currency\":\"USD\""},
+            {"scenario":"[currency]CNY","params":{"currency": "CNY"},"code_status": 200,"keyword": "\"currency\":\"CNY\""},
+            {"scenario":"[currency]USDT_TRC20","params":{"currency": "USDT_TRC20"},"code_status": 200,"keyword": "\"currency\":\"USDT_TRC20\""},
+            {"scenario":"[currency]USDT_ERC20","params":{"currency": "USDT_ERC20"},"code_status": 200,"keyword": "\"currency\":\"USDT_ERC20\""}
+        ]
+    },
+    {
+        "test_case": "game_type",
+        "req_method": "get",
+        "req_url": "/v1/game/type",
+        "schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"gameType": {"type": "integer"}, "sort": {"type": "integer"}}, "required": ["gameType", "sort"]}}}, "required": ["data"]},
+        "test_item": [
+            {"scenario":"正常執行","params":{},"json": {},"code_status": 200,"keyword": "\"sort\":1"}
+        ]
+    },
+    {
+        "test_case": "game_redirect",
+        "req_method": "get",
+        "json" : {},
+        "params":{"backUrl":"https://cs-qa-h5.prj300.xyz/", "subGameCode": ""},//subGameCode參數目前尚未用到
+        "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
+        "test_item": [
+            {"scenario":"AI體育-正常遊戲跳轉","req_url": "/v1/game/redirect/AI_SPORT_AI/url","code_status": 200,"keyword": "https://ai019vscnym.cruzbear666.com"},
+            {"scenario":"錯誤的gameCode","req_url": "/v1/game/redirect/BI_SPORT_BI/url","code_status": 400,"keyword": "資料不存在"},
+            {"scenario":"遊戲跳轉過於頻繁","req_url": "/v1/game/redirect/AI_SPORT_AI/url","code_status": 500,"keyword": "游戏跳转过于频繁"},
+        ]
+    },
+    {
+        "test_case": "game_usual",
+        "req_method": "get",
+        "req_url": "/v1/game/usual",
+        "schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"gameCode": {"type": "string"}, "name": {"type": "string"}, "channelCode": {"type": "string"}, "returnPrize": {"type": ["integer","number"]}, "gameStatus": {"type": "integer"}, "isTesting": {"type": "boolean"}, "isNewArrival": {"type": "boolean"}, "mbImg": {"type": "string"}, "maintainStartTime": {"type": "string"}, "maintainEndTime": {"type": "string"}, "maintainBufferStartTime": {"type": "string"}, "maintainBufferEndTime": {"type": "string"}}, "required": ["channelCode", "gameCode", "gameStatus", "isNewArrival", "isTesting", "maintainBufferEndTime", "maintainBufferStartTime", "maintainEndTime", "maintainStartTime", "mbImg", "name", "returnPrize"]}}}, "required": ["data"]},
+        "test_item": [
+            {"scenario":"三個月內有遊戲紀錄","params":{},"json": {},"code_status": 200,"keyword": "\"channelCode\""},
+            {"scenario":"未有遊戲紀錄","params":{},"json": {},"code_status": 200,"keyword": "\"data\":[]"},
+        ]
+    },
+    {
+        "test_case": "game_list",
+        "req_method": "get",
+        "req_url": "/v1/game/list",
+        "schema":{"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"gameType": {"type": "integer"}, "gameList": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "gameCode": {"type": "string"}, "name": {"type": "string"}, "channelCode": {"type": "string"}, "gameType": {"type": "integer"}, "gameDesc": {"type": "string"}, "gameDetail": {"type": ["string","null"]}, "gameIntro": {"type": "string"}, "returnPrize": {"type": "integer"}, "gameStatus": {"type": "integer"}, "isHot": {"type": "boolean"}, "isTesting": {"type": "boolean"}, "isNewArrival": {"type": "boolean"}, "isHit": {"type": "boolean"}, "hotLevel": {"type": "integer"}, "sort": {"type": "integer"}, "navImg": {"type": ["string","null"]}, "navHoverImg": {"type": ["string","null"]}, "mbImg": {"type": ["string","null"]}, "hotImg": {"type": ["string","null"]}, "largeHotImg": {"type": ["string","null"]}, "mbGameImg": {"type": ["string","null"]}, "mbHotImg": {"type": "string"}, "icon": {"type": ["string","null"]}, "mainIntroImg": {"type": ["string","null"]}, "mainIntroVideo": {"type": ["string","null"]}, "subIntroImgs": {"type": ["array","null"], "items": {"type": ["string","null"]}}, "maintainStartTime": {"type": "string"}, "maintainEndTime": {"type": "string"}, "maintainBufferStartTime": {"type": "string"}, "maintainBufferEndTime": {"type": "string"}}, "required": ["channelCode", "gameCode", "gameDesc", "gameDetail", "gameIntro", "gameStatus", "gameType", "hotImg", "hotLevel", "icon", "id", "isHit", "isHot", "isNewArrival", "isTesting", "largeHotImg", "mainIntroImg", "mainIntroVideo", "maintainBufferEndTime", "maintainBufferStartTime", "maintainEndTime", "maintainStartTime", "mbGameImg", "mbHotImg", "mbImg", "name", "navHoverImg", "navImg", "returnPrize", "sort", "subIntroImgs"]}}}, "required": ["gameList", "gameType"]}}}, "required": ["data"]},
+        "json": {},
+        "params":{},
+        "test_item": [
+            //此參數目前已經拔掉，先保留紀錄{"scenario":"[ignoreGameIds]","params":{"ignoreGameIds": ""},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"os_type_WEB","code_status": 200,"keyword": "\"mbImg\":null,"},
+            {"scenario":"os_type_H5","code_status": 200,"keyword": "\"hotImg\":null,"},
+            {"scenario":"os_type_APP","code_status": 200,"keyword": "\"hotImg\":null,"},
+        ]
+    },
+
+]
