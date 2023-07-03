@@ -13,7 +13,6 @@ test_data.read_json5('test_game.json5', file_side='cs')
 ######################
 #  setup & teardown  #
 ######################
-
 @pytest.fixture(scope="class")
 def set_game_type_list():
     api = PlatformAPI()
@@ -28,8 +27,7 @@ def set_game_type_list():
 ######################
 
 
-class Test_game_related:
-
+class TestGameRelated:
     @staticmethod
     @allure.feature("遊戲相關")
     @allure.story("遊戲列表下拉選單(注單查詢用)")
@@ -100,12 +98,41 @@ class Test_game_related:
         elif test['scenario'] == "os_type_H5":
             api.request_session.headers['os-type'] = 'H5'
         else:
-            None
+            api.request_session.headers['os-type'] = None
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                                 test['params'], token=login_token)
         ResponseVerification.basic_assert(resp, test)
 
 
+class TestGameOrder:
+    @staticmethod
+    @allure.feature("遊戲注單")
+    @allure.story("注單查詢")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.parametrize("test", test_data.get_case('get_game_order'))
+    def test_get_game_order(test, get_client_side_token):
+        if test['scenario'] == '不帶條件查詢':
+            param_replace = {}
+        else:
+            param_replace = test_data.replace_json(test['param'], test['target'])
+        api = API_Controller(platform='cs')
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                param_replace, token=get_client_side_token)
 
+        ResponseVerification.basic_assert(resp, test)
 
+    @staticmethod
+    @allure.feature("遊戲注單")
+    @allure.story("注單總和查詢")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.parametrize("test", test_data.get_case('get_game_order_summary'))
+    def test_get_game_order(test, get_client_side_token):
+        if test['scenario'] == '不帶條件查詢':
+            param_replace = {}
+        else:
+            param_replace = test_data.replace_json(test['param'], test['target'])
+        api = API_Controller(platform='cs')
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                param_replace, token=get_client_side_token)
 
+        ResponseVerification.basic_assert(resp, test)
