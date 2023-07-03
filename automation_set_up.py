@@ -28,6 +28,7 @@ platform.create_account()
 platform.login_account()
 platform.turn_on_the_game_to_test()
 client_side.create_initial_user()
+client_side.binding_mobile()
 
 # #############
 #   postgres  #

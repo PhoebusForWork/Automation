@@ -16,7 +16,6 @@ def get_client_side_token(username=cs_account, password=cs_password):
         token = resp.json()['data']['token']
         global login_user_id
         login_user_id = resp.json()['data']['userId']
-        print(login_user_id)
     except Exception as ex:
         logging.error('登錄失敗！接口返回:{}'.format(resp.text))
         traceback.print_tb(ex)
