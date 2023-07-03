@@ -117,7 +117,7 @@ class TestFrontUser:
     @allure.feature("錢包操作")
     @allure.story("取得使用者訂單資訊")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_trade_info'))
     def test_get_trade_info(test, get_user_token):
         json_replace = test_data.replace_json(test["json"], test["target"])
@@ -134,7 +134,7 @@ class TestFrontUser:
     @allure.feature("錢包操作")
     @allure.story("遊戲可回收餘額")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_refundable_balance'))
     def test_get_refundable_balance(test, get_user_token):
         api = API_Controller(platform='cs')
@@ -148,7 +148,7 @@ class TestFrontUser:
     @allure.story("取得使用者資金明細")
     @allure.title("{test[scenario]}")
     @allure.issue("http://35.76.28.10/issues/29362")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_wallet_front_user_fund'))
     def test_get_wallet_front_user_fund(test, get_user_token):
         test['params']['from'] = Make.generate_custom_date(days=-90)
@@ -163,7 +163,7 @@ class TestFrontUser:
     @allure.feature("錢包操作")
     @allure.story("查詢用戶各幣別餘額")
     @allure.title("{test[scenario]}")
-    @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_balance'))
     def test_get_balance(test, get_user_token):
         json_replace = test_data.replace_json(test["json"], test["target"])
