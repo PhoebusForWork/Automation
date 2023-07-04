@@ -128,6 +128,38 @@ class PlatformLanguage(PlatformAPI):
         return response.json()
 
 
+# 幣別管理
+class PlatformCurrency(PlatformAPI):
+    # 站點幣別上下架修改
+    def edit_curreny(self, code=None, status=None):
+        request_body = {
+            "method": "put",
+            "url": f"/v1/platform/currency/{code}",
+            "params": KeywordArgument.body_data()
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 站點幣別管理查詢
+    def get_curreny(self):
+        request_body = {
+            "method": "get",
+            "url": "/v1/platform/currency"
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 站點幣別下拉選單(排序)
+    def get_curreny_drop_down(self, currency=None):
+        request_body = {
+            "method": "get",
+            "url": "/v1/platform/currency/dropDown",
+            "params": KeywordArgument.body_data()
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+
 # 站點後台動態資料
 class DynamicData(PlatformAPI):
     # 編輯動態資料
