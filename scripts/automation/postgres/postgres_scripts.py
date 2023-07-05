@@ -41,7 +41,8 @@ def plt_dept():
 def plt_game():
     plt_game = Postgresql(database='plt_game')
     plt_game.run_sql('''
-        UPDATE plt_game.ldpro_game SET status = true::boolean
+        UPDATE plt_game.ldpro_game SET status = true::boolean;
+        UPDATE plt_game.ldpro_game_merchant SET urls['getSportOrderList'] = to_jsonb()('https://mock-game-merchant-automation.prj300.xyz/getGameOrderList/1'::text), urls['getTransferOrderStatus']= to_jsonb('https://mock-game-merchant-automation.prj300.xyz/getTransferOrderList/1}'::text) WHERE currency = 'CNY';
         ''')
 
 

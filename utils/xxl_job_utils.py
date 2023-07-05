@@ -35,3 +35,7 @@ class XxlJobs(API_Controller):
         executorParam = json.dumps({"pltCode": pltCode, "isPro": is_pro}, ensure_ascii=False)
         self.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
                           json={}, params={"id": 15, "executorParam": executorParam, "addressList": None})
+
+    def get_game_orders(self, pltCode='ldpro'):
+        self.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
+                          json={}, params={"id": 2, "executorParam": str({"pltCode": pltCode}), "addressList": None})
