@@ -488,319 +488,376 @@ class TestProxyCommission:
         ResponseVerification.basic_assert(resp, test)
 
 
-@allure.feature("代理列表")
-@allure.story("創建代理")
-@allure.title("{test[scenario]}")
-@pytest.mark.regression
-@pytest.mark.parametrize("test", test_data.get_case("proxy_add_proxy"))
-def test_proxy_add_proxy(test, get_platform_token):
-    json_replace = test_data.replace_json(test["json"], test["target"])
-    if json_replace["proxyAccount"] == "不重複名稱":
-        json_replace["proxyAccount"] = "proxyAccount" + str(random.randrange(99999))
+class TestProxy:
+    @staticmethod
+    @allure.feature("代理列表")
+    @allure.story("創建代理")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("proxy_add_proxy"))
+    def test_proxy_add_proxy(test, get_platform_token):
+        json_replace = test_data.replace_json(test["json"], test["target"])
+        if json_replace["proxyAccount"] == "不重複名稱":
+            json_replace["proxyAccount"] = "proxyAccount" + str(random.randrange(99999))
 
-    if json_replace["telephone"] == "不重複手機號":
-        json_replace["telephone"] = Make.mobile()
+        if json_replace["telephone"] == "不重複手機號":
+            json_replace["telephone"] = Make.mobile()
 
-    api = API_Controller()
-    resp = api.send_request(
-        test["req_method"],
-        test["req_url"],
-        json_replace,
-        test["params"],
-        token=get_platform_token,
-    )
-    ResponseVerification.basic_assert(resp, test)
-
-
-@allure.feature("代理列表")
-@allure.story("獲取代理列表")
-@allure.title("{test[scenario]}")
-@pytest.mark.regression
-@pytest.mark.parametrize("test", test_data.get_case("proxy_proxy_list"))
-def test_proxy_proxy_list(test, get_platform_token):
-    params_replace = test_data.replace_json(test["params"], test["target"])
-    api = API_Controller()
-    resp = api.send_request(
-        test["req_method"],
-        test["req_url"],
-        test["json"],
-        params_replace,
-        token=get_platform_token,
-    )
-    ResponseVerification.basic_assert(resp, test)
-
-
-@allure.feature("代理列表")
-@allure.story("代理驗證")
-@allure.title("{test[scenario]}")
-@pytest.mark.regression
-@pytest.mark.parametrize("test", test_data.get_case("proxy_proxy_validate"))
-def test_proxy_proxy_validate(test, get_platform_token):
-    api = API_Controller()
-    resp = api.send_request(
-        test["req_method"],
-        test["req_url"],
-        test["json"],
-        test["params"],
-        token=get_platform_token,
-    )
-    ResponseVerification.basic_assert(resp, test)
-
-
-@allure.feature("代理列表")
-@allure.story("修改子代理上限")
-@allure.title("{test[scenario]}")
-@pytest.mark.regression
-@pytest.mark.parametrize("test", test_data.get_case("proxy_proxy_subCount"))
-def test_proxy_proxy_subCount(test, get_platform_token):
-    api = API_Controller()
-    resp = api.send_request(
-        test["req_method"],
-        test["req_url"],
-        test["json"],
-        test["params"],
-        token=get_platform_token,
-    )
-    ResponseVerification.basic_assert(resp, test)
-
-
-@allure.feature("代理列表")
-@allure.story("申請佣金模式變更")
-@allure.title("{test[scenario]}")
-@pytest.mark.regression
-@pytest.mark.parametrize("test", test_data.get_case("proxy_proxy_commission"))
-def test_proxy_proxy_commission(test, get_platform_token):
-    api = API_Controller()
-    resp = api.send_request(
-        test["req_method"],
-        test["req_url"],
-        test["json"],
-        test["params"],
-        token=get_platform_token,
-    )
-    clean = UserManage()
-    clean.clean_approval(plat_token=get_platform_token, optType="COMMISSION_CHANGE")
-    ResponseVerification.basic_assert(resp, test)
-
-
-@allure.feature("代理列表")
-@allure.story("編輯代理渠道")
-@allure.title("{test[scenario]}")
-@pytest.mark.regression
-@pytest.mark.parametrize("test", test_data.get_case("proxy_proxy_channel"))
-def test_proxy_proxy_channel(test, get_platform_token):
-    api = API_Controller()
-    resp = api.send_request(
-        test["req_method"],
-        test["req_url"],
-        test["json"],
-        test["params"],
-        token=get_platform_token,
-    )
-    ResponseVerification.basic_assert(resp, test)
-
-
-@allure.feature("代理列表")
-@allure.story("查詢代理列表編輯資訊")
-@allure.title("{test[scenario]}")
-@pytest.mark.regression
-@pytest.mark.parametrize("test", test_data.get_case("proxy_get_edit_detail"))
-def test_proxy_get_edit_detail(test, get_platform_token):
-    api = API_Controller()
-    resp = api.send_request(
-        test["req_method"],
-        test["req_url"],
-        test["json"],
-        test["params"],
-        token=get_platform_token,
-    )
-    ResponseVerification.basic_assert(resp, test)
-
-
-@allure.feature("代理列表")
-@allure.story("查詢代理列表顯示資訊")
-@allure.title("{test[scenario]}")
-@pytest.mark.regression
-@pytest.mark.parametrize("test", test_data.get_case("proxy_get_edit_display"))
-def test_proxy_get_edit_display(test, get_platform_token):
-    api = API_Controller()
-    resp = api.send_request(
-        test["req_method"],
-        test["req_url"],
-        test["json"],
-        test["params"],
-        token=get_platform_token,
-    )
-    assert resp.status_code == test["code_status"], resp.text
-    assert test["keyword"] in resp.text
-
-
-@allure.feature("代理列表")
-@allure.story("查詢三個月平均佣金")
-@allure.title("{test[scenario]}")
-@pytest.mark.regression
-@pytest.mark.parametrize("test", test_data.get_case("proxy_get_commission_avg"))
-def test_proxy_get_commission_avg(test, get_platform_token):
-    api = API_Controller()
-    resp = api.send_request(
-        test["req_method"],
-        test["req_url"],
-        test["json"],
-        test["params"],
-        token=get_platform_token,
-    )
-    ResponseVerification.basic_assert(resp, test)
-
-
-@allure.feature("代理列表")
-@allure.story("查詢交易信息")
-@allure.title("{test[scenario]}")
-@pytest.mark.regression
-@pytest.mark.parametrize("test", test_data.get_case("proxy_get_tradeInfo"))
-def test_proxy_get_tradeInfo(test, get_platform_token):
-    params_replace = test_data.replace_json(test["params"], test["target"])
-    api = API_Controller()
-    resp = api.send_request(
-        test["req_method"],
-        test["req_url"],
-        test["json"],
-        params_replace,
-        token=get_platform_token,
-    )
-    ResponseVerification.basic_assert(resp, test)
-
-
-@allure.feature("代理帳號審核")
-@allure.story("代理帳號審核列表")
-@allure.title("{test[scenario]}")
-@pytest.mark.regression
-@pytest.mark.parametrize("test", test_data.get_case("proxy_get_manage_list"))
-def test_proxy_get_manage_list(test, get_platform_token):
-    params_replace = test_data.replace_json(test["params"], test["target"])
-    api = API_Controller()
-    resp = api.send_request(
-        test["req_method"],
-        test["req_url"],
-        test["json"],
-        params_replace,
-        token=get_platform_token,
-    )
-    ResponseVerification.basic_assert(resp, test)
-
-
-@allure.feature("代理帳號審核")
-@allure.story("代理帳號審批人列表")
-@allure.title("{test[scenario]}")
-@pytest.mark.regression
-@pytest.mark.parametrize("test", test_data.get_case("proxy_get_manage_approver_list"))
-def test_proxy_get_manage_approver_list(test, get_platform_token):
-    api = API_Controller()
-    resp = api.send_request(
-        test["req_method"],
-        test["req_url"],
-        test["json"],
-        test["params"],
-        token=get_platform_token,
-    )
-    ResponseVerification.basic_assert(resp, test)
-
-
-@allure.feature("代理帳號審核")
-@allure.story("代理帳號審_一審")
-@allure.title("{test[scenario]}")
-@pytest.mark.regression
-@pytest.mark.parametrize("test", test_data.get_case("proxy_manage_approver_first"))
-def test_proxy_manage_approver_first(test, get_platform_token):
-    json_replace = test_data.replace_json(test["json"], test["target"])
-    if "待審核訂單" in test["req_url"]:
-        orderid = ProxyManage()
-        test["req_url"] = test["req_url"].replace(
-            "待審核訂單", orderid.get_first_approval_id(token=get_platform_token)
+        api = API_Controller()
+        resp = api.send_request(
+            test["req_method"],
+            test["req_url"],
+            json_replace,
+            test["params"],
+            token=get_platform_token,
         )
-    if "一審完成訂單" in test["req_url"]:
-        orderid = ProxyManage()
-        test["req_url"] = test["req_url"].replace(
-            "一審完成訂單", orderid.get_second_approval_id(token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("代理列表")
+    @allure.story("獲取代理列表")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("proxy_proxy_list"))
+    def test_proxy_proxy_list(test, get_platform_token):
+        params_replace = test_data.replace_json(test["params"], test["target"])
+        api = API_Controller()
+        resp = api.send_request(
+            test["req_method"],
+            test["req_url"],
+            test["json"],
+            params_replace,
+            token=get_platform_token,
         )
-    if "二審完成訂單" in test["req_url"]:
-        orderid = ProxyManage()
-        test["req_url"] = test["req_url"].replace(
-            "二審完成訂單", orderid.get_second_approval_success_id(token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("代理列表")
+    @allure.story("校驗代理帳號")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("proxy_proxy_validate"))
+    def test_proxy_proxy_validate(test, get_platform_token):
+        api = API_Controller()
+        resp = api.send_request(
+            test["req_method"],
+            test["req_url"],
+            test["json"],
+            test["params"],
+            token=get_platform_token,
         )
+        ResponseVerification.basic_assert(resp, test)
 
-    api = API_Controller()
-    resp = api.send_request(
-        test["req_method"],
-        test["req_url"],
-        json_replace,
-        test["params"],
-        token=get_platform_token,
-    )
-    ResponseVerification.basic_assert(resp, test)
-
-
-@allure.feature("代理帳號審核")
-@allure.story("代理帳號審_二審")
-@allure.title("{test[scenario]}")
-@pytest.mark.regression
-@pytest.mark.parametrize("test", test_data.get_case("proxy_manage_approver_second"))
-def test_proxy_manage_approver_second(test, get_platform_token):
-    json_replace = test_data.replace_json(test["json"], test["target"])
-    if "待審核訂單" in test["req_url"]:
-        orderid = ProxyManage()
-        test["req_url"] = test["req_url"].replace(
-            "待審核訂單", orderid.get_second_approval_id(token=get_platform_token)
+    @staticmethod
+    @allure.feature("代理列表")
+    @allure.story("修改子代理上限")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("proxy_proxy_subCount"))
+    def test_proxy_proxy_subCount(test, get_platform_token):
+        api = API_Controller()
+        resp = api.send_request(
+            test["req_method"],
+            test["req_url"],
+            test["json"],
+            test["params"],
+            token=get_platform_token,
         )
-    if "二審完成訂單" in test["req_url"]:
-        orderid = ProxyManage()
-        test["req_url"] = test["req_url"].replace(
-            "二審完成訂單", orderid.get_second_approval_success_id(token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("代理列表")
+    @allure.story("申請佣金模式變更")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("proxy_proxy_commission"))
+    def test_proxy_proxy_commission(test, get_platform_token):
+        api = API_Controller()
+        resp = api.send_request(
+            test["req_method"],
+            test["req_url"],
+            test["json"],
+            test["params"],
+            token=get_platform_token,
         )
+        clean = UserManage()
+        clean.clean_approval(plat_token=get_platform_token, optType="COMMISSION_CHANGE")
+        ResponseVerification.basic_assert(resp, test)
 
-    api = API_Controller()
-    resp = api.send_request(
-        test["req_method"],
-        test["req_url"],
-        json_replace,
-        test["params"],
-        token=get_platform_token,
-    )
-    ResponseVerification.basic_assert(resp, test)
+    @staticmethod
+    @allure.feature("代理列表")
+    @allure.story("編輯代理渠道")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("proxy_proxy_channel"))
+    def test_proxy_proxy_channel(test, get_platform_token):
+        api = API_Controller()
+        resp = api.send_request(
+            test["req_method"],
+            test["req_url"],
+            test["json"],
+            test["params"],
+            token=get_platform_token,
+        )
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("代理列表")
+    @allure.story("查詢代理列表編輯資訊")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("proxy_get_edit_detail"))
+    def test_proxy_get_edit_detail(test, get_platform_token):
+        api = API_Controller()
+        resp = api.send_request(
+            test["req_method"],
+            test["req_url"],
+            test["json"],
+            test["params"],
+            token=get_platform_token,
+        )
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("代理列表")
+    @allure.story("查詢代理列表顯示資訊")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("proxy_get_edit_display"))
+    def test_proxy_get_edit_display(test, get_platform_token):
+        api = API_Controller()
+        resp = api.send_request(
+            test["req_method"],
+            test["req_url"],
+            test["json"],
+            test["params"],
+            token=get_platform_token,
+        )
+        assert resp.status_code == test["code_status"], resp.text
+        assert test["keyword"] in resp.text
+
+    @staticmethod
+    @allure.feature("代理列表")
+    @allure.story("查詢三個月平均佣金")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("proxy_get_commission_avg"))
+    def test_proxy_get_commission_avg(test, get_platform_token):
+        api = API_Controller()
+        resp = api.send_request(
+            test["req_method"],
+            test["req_url"],
+            test["json"],
+            test["params"],
+            token=get_platform_token,
+        )
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("代理列表")
+    @allure.story("查詢交易信息")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("proxy_get_tradeInfo"))
+    def test_proxy_get_tradeInfo(test, get_platform_token):
+        params_replace = test_data.replace_json(test["params"], test["target"])
+        api = API_Controller()
+        resp = api.send_request(
+            test["req_method"],
+            test["req_url"],
+            test["json"],
+            params_replace,
+            token=get_platform_token,
+        )
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("代理列表")
+    @allure.story("搜尋代理域名")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("get_proxy_domain_query"))
+    def test_get_proxy_domain_query(test, get_platform_token):
+        params_replace = test_data.replace_json(test["params"], test["target"])
+        api = API_Controller()
+        resp = api.send_request(test["req_method"],
+                                test["req_url"],
+                                test["json"],
+                                params_replace,
+                                token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
 
 
-@allure.feature("代理帳號上分紀錄")
-@allure.story("查詢上分紀錄")
-@allure.title("{test[scenario]}")
-@pytest.mark.regression
-@pytest.mark.parametrize("test", test_data.get_case("proxy_get_credit_detail"))
-def test_proxy_get_credit_detail(test, get_platform_token):
-    params_replace = test_data.replace_json(test["params"], test["target"])
-    api = API_Controller()
-    resp = api.send_request(
-        test["req_method"],
-        test["req_url"],
-        test["json"],
-        params_replace,
-        token=get_platform_token,
-    )
-    ResponseVerification.basic_assert(resp, test)
+class TestProxyManage:
+    @staticmethod
+    @allure.feature("代理帳號審核")
+    @allure.story("代理帳號審核列表")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("proxy_get_manage_list"))
+    def test_proxy_get_manage_list(test, get_platform_token):
+        params_replace = test_data.replace_json(test["params"], test["target"])
+        api = API_Controller()
+        resp = api.send_request(
+            test["req_method"],
+            test["req_url"],
+            test["json"],
+            params_replace,
+            token=get_platform_token,
+        )
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("代理帳號審核")
+    @allure.story("代理帳號審批人列表")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("proxy_get_manage_approver_list"))
+    def test_proxy_get_manage_approver_list(test, get_platform_token):
+        api = API_Controller()
+        resp = api.send_request(
+            test["req_method"],
+            test["req_url"],
+            test["json"],
+            test["params"],
+            token=get_platform_token,
+        )
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("代理帳號審核")
+    @allure.story("代理帳號審_一審")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("proxy_manage_approver_first"))
+    def test_proxy_manage_approver_first(test, get_platform_token):
+        json_replace = test_data.replace_json(test["json"], test["target"])
+        if "待審核訂單" in test["req_url"]:
+            orderid = ProxyManage()
+            test["req_url"] = test["req_url"].replace(
+                "待審核訂單", orderid.get_first_approval_id(token=get_platform_token)
+            )
+        if "一審完成訂單" in test["req_url"]:
+            orderid = ProxyManage()
+            test["req_url"] = test["req_url"].replace(
+                "一審完成訂單", orderid.get_second_approval_id(token=get_platform_token)
+            )
+        if "二審完成訂單" in test["req_url"]:
+            orderid = ProxyManage()
+            test["req_url"] = test["req_url"].replace(
+                "二審完成訂單", orderid.get_second_approval_success_id(token=get_platform_token)
+            )
+
+        api = API_Controller()
+        resp = api.send_request(
+            test["req_method"],
+            test["req_url"],
+            json_replace,
+            test["params"],
+            token=get_platform_token,
+        )
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("代理帳號審核")
+    @allure.story("代理帳號審_二審")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("proxy_manage_approver_second"))
+    def test_proxy_manage_approver_second(test, get_platform_token):
+        json_replace = test_data.replace_json(test["json"], test["target"])
+        if "待審核訂單" in test["req_url"]:
+            orderid = ProxyManage()
+            test["req_url"] = test["req_url"].replace(
+                "待審核訂單", orderid.get_second_approval_id(token=get_platform_token)
+            )
+        if "二審完成訂單" in test["req_url"]:
+            orderid = ProxyManage()
+            test["req_url"] = test["req_url"].replace(
+                "二審完成訂單", orderid.get_second_approval_success_id(token=get_platform_token)
+            )
+
+        api = API_Controller()
+        resp = api.send_request(
+            test["req_method"],
+            test["req_url"],
+            json_replace,
+            test["params"],
+            token=get_platform_token,
+        )
+        ResponseVerification.basic_assert(resp, test)
 
 
-@allure.feature("代理帳號上分紀錄")
-@allure.story("調整充值額度")
-@allure.title("{test[scenario]}")
-@pytest.mark.regression
-@pytest.mark.parametrize("test", test_data.get_case("proxy_edit_credit"))
-def test_proxy_edit_credit(test, get_platform_token):
-    json_replace = test_data.replace_json(test["json"], test["target"])
-    api = API_Controller()
-    resp = api.send_request(
-        test["req_method"],
-        test["req_url"],
-        json_replace,
-        test["params"],
-        token=get_platform_token,
-    )
-    clean = UserManage()
-    clean.clean_approval(plat_token=get_platform_token, optType="CREDIT_CHANGE")
-    ResponseVerification.basic_assert(resp, test)
+class TestProxyCredit:
+    @staticmethod
+    @allure.feature("代理帳號上分紀錄")
+    @allure.story("查詢上分紀錄")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("proxy_get_credit_detail"))
+    def test_proxy_get_credit_detail(test, get_platform_token):
+        params_replace = test_data.replace_json(test["params"], test["target"])
+        api = API_Controller()
+        resp = api.send_request(
+            test["req_method"],
+            test["req_url"],
+            test["json"],
+            params_replace,
+            token=get_platform_token,
+        )
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("代理帳號上分紀錄")
+    @allure.story("調整充值額度")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("proxy_edit_credit"))
+    def test_proxy_edit_credit(test, get_platform_token):
+        json_replace = test_data.replace_json(test["json"], test["target"])
+        api = API_Controller()
+        resp = api.send_request(
+            test["req_method"],
+            test["req_url"],
+            json_replace,
+            test["params"],
+            token=get_platform_token,
+        )
+        clean = UserManage()
+        clean.clean_approval(plat_token=get_platform_token, optType="CREDIT_CHANGE")
+        ResponseVerification.basic_assert(resp, test)
+
+
+class TestProxyDomain:
+    # 編輯域名
+    @staticmethod
+    @allure.feature("代理訊息")
+    @allure.story("編輯域名")
+    @allure.title("{test[scenario]}")
+    # @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("edit_proxy_domain"))
+    def test_edit_proxy_domain(test, get_platform_token):
+        json_replace = test_data.replace_json(test["json"], test["target"])
+        api = API_Controller()
+        resp = api.send_request(test["req_method"],
+                                test["req_url"],
+                                json_replace,
+                                test["params"],
+                                token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    # 取得推廣域名
+    @staticmethod
+    @allure.feature("代理訊息")
+    @allure.story("取得推廣域名")
+    @allure.title("{test[scenario]}")
+    # @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("get_proxy_domain_promotion_link"))
+    def test_get_proxy_domain_promotion_link(test, get_platform_token):
+        api = API_Controller()
+        resp = api.send_request(test["req_method"],
+                                test["req_url"],
+                                test["json"],
+                                test["params"],
+                                token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)

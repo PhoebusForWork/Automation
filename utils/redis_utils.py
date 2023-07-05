@@ -69,3 +69,4 @@ class RedisSentinel:
 if __name__ == '__main__':
     sentinel = RedisSentinel(platform='plt', select=0)
     print(sentinel.master.keys('*'))
+    sentinel.master.delete()
