@@ -167,6 +167,17 @@ class Game(PlatformAPI):
         response = self.send_request(**request_body)
         return response.json()
 
+    # 調整遊戲類型
+    def put_game_type(self, ):
+        request_body = {
+            "method": "put",
+            "url": f"/v1/game/type",
+            "json": {"gameTypes": [{"gameType": "SPORT", "sort": 2}, {"gameType": "LIVE", "sort": 1}, {"gameType": "ESPORT", "sort": 3}, {"gameType": "LOTTERY", "sort": 4}, {"gameType": "CARDS", "sort": 5}, {"gameType": "GAMING", "sort": 6}]}
+        }
+        response = self.send_request(**request_body)
+        print(response)
+        return response.json()
+
 
 class RebateTemplate(PlatformAPI):
     # 獲取返水模板配置
