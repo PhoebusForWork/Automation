@@ -174,7 +174,8 @@ class TestFileUpload:
             files = None
         else:
             files = [('file', ('upload_video_realshort.mp4',
-                               open('resources/upload_file/upload_video_realshort.mp4', 'rb'), 'application/octet-stream'))]
+                               open('resources/upload_file/upload_video_realshort.mp4', 'rb'),
+                               'application/octet-stream'))]
         api = API_Controller()
         api.request_session.headers.update({"Content-Type": None})
         resp = api.send_request(test['req_method'], test['req_url'], test['json'], test['params'],
@@ -278,3 +279,65 @@ class TestCountryCodeManagement:
         resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                                 test['params'], token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)
+
+
+class TestDomainManagement:
+    # @staticmethod
+    # @allure.feature("應用域名管理")
+    # @allure.story("編輯應用域名")
+    # @allure.title("{test[scenario]}")
+    # @pytest.mark.regression
+    # @pytest.mark.parametrize("test", test_data.get_case('edit_domain'))
+    # def test_edit_domain(test, get_platform_token):
+    #     api = API_Controller()
+    #     resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+    #                             test['params'], token=get_platform_token)
+    #     ResponseVerification.basic_assert(resp, test)
+    #
+    # @staticmethod
+    # @allure.feature("應用域名管理")
+    # @allure.story("刪除應用域名")
+    # @allure.title("{test[scenario]}")
+    # @pytest.mark.regression
+    # @pytest.mark.parametrize("test", test_data.get_case('delete_domain'))
+    # def test_delete_domain(test, get_platform_token):
+    #     api = API_Controller()
+    #     resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+    #                             test['params'], token=get_platform_token)
+    #     ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("應用域名管理")
+    @allure.story("應用域名列表")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.test
+    @pytest.mark.parametrize("test", test_data.get_case('get_domain'))
+    def test_get_domain(test, get_platform_token):
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    # @staticmethod
+    # @allure.feature("應用域名管理")
+    # @allure.story("新增應用域名")
+    # @allure.title("{test[scenario]}")
+    # @pytest.mark.regression
+    # @pytest.mark.parametrize("test", test_data.get_case('add_domain'))
+    # def test_add_domain(test, get_platform_token):
+    #     api = API_Controller()
+    #     resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+    #                             test['params'], token=get_platform_token)
+    #     ResponseVerification.basic_assert(resp, test)
+
+    # @staticmethod
+    # @allure.feature("應用域名管理")
+    # @allure.story("應用類型")
+    # @allure.title("{test[scenario]}")
+    # @pytest.mark.regression
+    # @pytest.mark.parametrize("test", test_data.get_case('get_type'))
+    # def test_get_type(test, get_platform_token):
+    #     api = API_Controller()
+    #     resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+    #                             test['params'], token=get_platform_token)
+    #     ResponseVerification.basic_assert(resp, test)
