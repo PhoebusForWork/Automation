@@ -11,16 +11,18 @@ env = EnvReader()
 
 
 class Postgresql:
-    def __init__(self, database="wallet", user="app_jr", platform="plt"):
+    def __init__(self, database="wallet", platform="plt"):
         self.database = database
-        self.user = user
+
         if platform == "plt":
             self.host = env.POSTGRES_PLT_HOST
             self.port = env.POSTGRES_PLT_PORT
+            self.user = env.POSTGRES_PLT_ACCOUNT
             self.password = env.POSTGRES_PLT_PASSWORD
         elif platform == "cs":
             self.host = env.POSTGRES_CS_HOST
             self.port = env.POSTGRES_CS_PORT
+            self.user = env.POSTGRES_CS_ACCOUNT
             self.password = env.POSTGRES_CS_PASSWORD
         else:
             raise "platform Error"

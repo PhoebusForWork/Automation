@@ -121,6 +121,8 @@ class EnvReader:
             self.POSTGRES_CS_HOST = config['postgres_connection']['postgres_cs_host']
             self.POSTGRES_PLT_PORT = config['postgres_connection']['postgres_plt_port']
             self.POSTGRES_CS_PORT = config['postgres_connection']['postgres_cs_port']
+            self.POSTGRES_PLT_ACCOUNT = config['postgres_connection']['postgres_plt_account']
+            self.POSTGRES_CS_ACCOUNT = config['postgres_connection']['postgres_cs_account']
             self.POSTGRES_PLT_PASSWORD = config['postgres_connection']['postgres_plt_password']
             self.POSTGRES_CS_PASSWORD = config['postgres_connection']['postgres_cs_password']
         else:
@@ -128,6 +130,8 @@ class EnvReader:
             self.POSTGRES_CS_HOST = os.getenv('POSTGRES_CS_HOST')
             self.POSTGRES_PLT_PORT = os.getenv('POSTGRES_PLT_PORT')
             self.POSTGRES_CS_PORT = os.getenv('POSTGRES_CS_PORT')
+            self.POSTGRES_PLT_ACCOUNT = os.getenv('POSTGRES_PLT_ACCOUNT')
+            self.POSTGRES_CS_ACCOUNT = os.getenv('POSTGRES_CS_ACCOUNT')
             self.POSTGRES_PLT_PASSWORD = os.getenv('POSTGRES_PLT_PASSWORD')
             self.POSTGRES_CS_PASSWORD = os.getenv('POSTGRES_CS_PASSWORD')
 

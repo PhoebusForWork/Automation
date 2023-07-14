@@ -1,6 +1,5 @@
 from .database_utils import Postgresql
 
-
 class UserWallet:
     @staticmethod
     def reset(balance="1000", user_id="29"):
@@ -23,7 +22,8 @@ class UserWallet:
             assert channel_code == "AWC"
             assert check_amount in [balance, freeze_balance]
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     @staticmethod
@@ -40,7 +40,8 @@ class UserWallet:
             assert amount == check_amount
             assert check_amount in [balance, freeze_balance]
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
 
