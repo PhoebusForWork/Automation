@@ -222,6 +222,16 @@
             {"scenario":"[weight]字串類型測試項目","target":{"weight":"abc"}, "params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[weight]正常值測試項目","target":{"weight":123.5}, "params": {},"code_status": 200,"keyword": "data"}
             ]
-
+    },
+    {
+        "test_case": "get_domain",
+        "req_method": "get",
+        "req_url": "/v1/application/domain",
+        "schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "domain": {"type": "string"}, "applicationType": {"type": "array", "items": {"type": "integer"}}, "purchaseTime": {"type": "string"}, "expiryTime": {"type": "string"}, "remainDay": {"type": "integer"}, "createTime": {"type": "string"}}, "required": ["applicationType", "createTime", "domain", "expiryTime", "id", "purchaseTime", "remainDay"]}}}, "required": ["data"]},
+        "json" : {},
+        "params": {},
+        "test_item": [
+            {"scenario":"正常查詢","code_status": 200,"keyword": "data"}
+        ]
     }
 ]
