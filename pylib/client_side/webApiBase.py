@@ -14,7 +14,7 @@ class WebAPI(API_Controller):
             self.request_session.headers.update({"token": token})
 
     def login(self, deviceId="123", osType="WEB",
-              username='qwe220805', password='abc123456', code=None):
+              username='qwe220805', password='abc123456', code=000000):
         self.request_session.headers.update({"device-id": deviceId})
         self.request_session.headers.update({"os-type": osType})
 
@@ -27,7 +27,7 @@ class WebAPI(API_Controller):
                 "captchaValidation":
                     {
                         "channelName": "string",
-                        "imgToken": "string"
+                        "imgToken": "000000"
                     },
                 "code": code
             }
