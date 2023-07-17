@@ -104,7 +104,6 @@ run() {
   JAVA_APP_PASSWORD=$4
 
   echo "ADDRESS: $PASS_ADDRESS"
-  echo "$JAVA_APP_PASSWORD,$4"
 
   if [ "$TEXT" == "CS" ]; then
     ARRAY="${CS[@]}";
@@ -129,4 +128,4 @@ run() {
   # done
 }
 
-run $1 $2 $3
+run $1 $2 $3 $4
