@@ -22,7 +22,7 @@ class XxlJobs(API_Controller):
     def sync_plt_basics_data(self, pltCode='ldpro'):
         executorParam = json.dumps({"pltCode": pltCode}, ensure_ascii=False)
         self.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
-                          json={}, params={"id": 11, "executorParam": executorParam, "addressList": None})
+                          json={}, params={"id": 26, "executorParam": executorParam, "addressList": None})
 
     # 設定風控環境
     def set_message_risk_env(self, pltCode='ldpro', is_pro: bool = False):
