@@ -3,9 +3,9 @@ from utils.database_utils import Postgresql
 
 def host_platform():
     # host_platform SQL
-    host_platform = Postgresql(database='host_platform')
+    host_platform = Postgresql(database='plt_basics')
     host_platform.run_sql('''
-        UPDATE host_platform.platform SET secret = '30BDCDFC4EC1A3164ADF6860741DA40C95A35D574AEEE9673A218ADA7738EAEC' WHERE id = 1;
+        UPDATE plt_basics.platform SET secret = '30BDCDFC4EC1A3164ADF6860741DA40C95A35D574AEEE9673A218ADA7738EAEC' WHERE id = 1;
         ''')
 
 

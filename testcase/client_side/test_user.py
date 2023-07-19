@@ -20,8 +20,10 @@ test_data.read_json5('test_user.json5', file_side='cs')
 
 @pytest.fixture(scope="class")
 def clear_address(get_user_token):
+def clear_address(get_user_token):
     clear = Address()
     clear.clear_user_address(
+        web_token=get_user_token)
         web_token=get_user_token)
 
 
@@ -94,11 +96,13 @@ class TestAddress:
     @pytest.mark.xfail(reason="確定一期不處理，二期到時再看著辦")
     @pytest.mark.parametrize("test", test_data.get_case('add_user_address'))
     def test_add_user_address(test, get_user_token, clear_address):
+    def test_add_user_address(test, get_user_token, clear_address):
 
         json_replace = test_data.replace_json(test['json'], test['target'])
 
         api = API_Controller(platform='cs')
         resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                                test['params'], token=get_user_token)
                                 test['params'], token=get_user_token)
 
         assert resp.status_code == test['code_status'], resp.text
@@ -113,11 +117,13 @@ class TestAddressOther:
     @pytest.mark.xfail(reason="確定一期不處理，二期到時再看著辦")
     @pytest.mark.parametrize("test", test_data.get_case('edit_user_address'))
     def test_edit_user_address(test, get_user_token, clear_address):
+    def test_edit_user_address(test, get_user_token, clear_address):
 
         json_replace = test_data.replace_json(test['json'], test['target'])
 
         api = API_Controller(platform='cs')
         resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                                test['params'], token=get_user_token)
                                 test['params'], token=get_user_token)
 
         assert resp.status_code == test['code_status'], resp.text
@@ -130,13 +136,16 @@ class TestAddressOther:
     @pytest.mark.xfail(reason="確定一期不處理，二期到時再看著辦")
     @pytest.mark.parametrize("test", test_data.get_case('delete_user_address'))
     def test_delete_user_address(test, get_user_token):
+    def test_delete_user_address(test, get_user_token):
         if "可刪除id" in test['req_url']:
             delete_id = Address()
             test['req_url'] = test['req_url'].replace("可刪除id", str(
                 delete_id.get_user_address_not_default(web_token=get_user_token)))
+                delete_id.get_user_address_not_default(web_token=get_user_token)))
 
         api = API_Controller(platform='cs')
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_user_token)
                                 test['params'], token=get_user_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
@@ -148,8 +157,10 @@ class TestAddressOther:
     @pytest.mark.xfail(reason="確定一期不處理，二期到時再看著辦")
     @pytest.mark.parametrize("test", test_data.get_case('get_user_address'))
     def test_get_user_address(test, get_user_token):
+    def test_get_user_address(test, get_user_token):
         api = API_Controller(platform='cs')
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_user_token)
                                 test['params'], token=get_user_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
@@ -161,8 +172,10 @@ class TestAddressOther:
     @pytest.mark.xfail(reason="確定一期不處理，二期到時再看著辦")
     @pytest.mark.parametrize("test", test_data.get_case('get_user_address_one'))
     def test_get_user_address_one(test, get_user_token):
+    def test_get_user_address_one(test, get_user_token):
         api = API_Controller(platform='cs')
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_user_token)
                                 test['params'], token=get_user_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
@@ -174,8 +187,10 @@ class TestAddressOther:
     @pytest.mark.xfail(reason="確定一期不處理，二期到時再看著辦")
     @pytest.mark.parametrize("test", test_data.get_case('get_provinces'))
     def test_get_provinces(test, get_user_token):
+    def test_get_provinces(test, get_user_token):
         api = API_Controller(platform='cs')
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_user_token)
                                 test['params'], token=get_user_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
@@ -187,8 +202,10 @@ class TestAddressOther:
     @pytest.mark.xfail(reason="確定一期不處理，二期到時再看著辦")
     @pytest.mark.parametrize("test", test_data.get_case('get_provinces_city'))
     def test_get_provinces_city(test, get_user_token):
+    def test_get_provinces_city(test, get_user_token):
         api = API_Controller(platform='cs')
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_user_token)
                                 test['params'], token=get_user_token)
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
@@ -200,6 +217,7 @@ class TestUserDetail:
     @allure.story("獲取用戶明細資料")
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", test_data.get_case('get_user_detail'))
+    def test_get_user_detail(test, get_user_token):
     @pytest.mark.regression
     def test_get_user_detail(test):
         validation_api = Validation()
@@ -313,7 +331,7 @@ class TestUserOperation:
     @allure.feature("用戶操作")
     @allure.story("忘記密碼重設")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('user_pwd'))
     def test_user_pwd(test, re_password_default):
         json_replace = test_data.replace_json(test['json'], test['target'])
@@ -334,12 +352,25 @@ class TestUserOperation:
     @allure.feature("用戶操作")
     @allure.story("用戶心跳")
     @allure.title("{test[scenario]}")
-    # @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('user_heartbeat'))
+    def test_user_heartbeat(test, get_user_token):
     def test_user_heartbeat(test, get_user_token):
         json_replace = test_data.replace_json(test['json'], test['target'])
         api = API_Controller(platform='cs')
         resp = api.send_request(test['req_method'], test['req_url'], json_replace, test['params'], token=get_user_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    # 取得用戶資訊
+    @staticmethod
+    @allure.feature("用戶操作")
+    @allure.story("取得用戶資訊")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('get_user_info'))
+    def test_get_user_info(test, get_user_token):
+        api = API_Controller(platform='cs')
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'], test['params'], token=get_user_token)
         ResponseVerification.basic_assert(resp, test)
 
 
