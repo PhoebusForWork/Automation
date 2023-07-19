@@ -349,3 +349,47 @@ class Make_config_data(PlatformAPI):
         report_resp = Report(token=plat_token)
         report_resp.post_report_type(reportType="PLT_REPORT_USER_FINANCE_REPORT_DOWNLOAD")  # 製造導出紀錄
         return
+
+
+class Domain(PlatformAPI):
+    # 新增應用域名
+    def add_domain(self, plat_token=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "post",
+            "url": "/v1/application/domain",
+            "json": {"domain": "http://" + Make.name(8) + ".com", "applicationType": [0],
+                     "purchaseTime": "2023-07-14T09:03:05.310Z", "expiryTime": "2023-07-14T09:03:05.310Z"}
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 應用域名列表
+    def get_domain(self, plat_token=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "get",
+            "url": "/v1/application/domain",
+            "params": ""
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 獲取域名 id
+    def find_domain_id(self, plat_token=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        response = self.get_domain()
+        ret = jsonpath.jsonpath(response, "$..id")
+        if ret is False:
+            self.add_domain()
+            response = self.get_domain()
+            ret = jsonpath.jsonpath(response, "$..id")
+        return ret[-1]

@@ -3,7 +3,7 @@ import allure
 from utils.data_utils import TestDataReader, ResponseVerification
 from utils.api_utils import API_Controller
 from utils.generate_utils import Make
-from pylib.platform.config import Avatar, Make_config_data
+from pylib.platform.config import Avatar, Make_config_data, Domain
 
 test_data = TestDataReader()
 test_data.read_json5('test_config.json5')
@@ -282,35 +282,46 @@ class TestCountryCodeManagement:
 
 
 class TestDomainManagement:
-    # @staticmethod
-    # @allure.feature("應用域名管理")
-    # @allure.story("編輯應用域名")
-    # @allure.title("{test[scenario]}")
-    # @pytest.mark.regression
-    # @pytest.mark.parametrize("test", test_data.get_case('edit_domain'))
-    # def test_edit_domain(test, get_platform_token):
-    #     api = API_Controller()
-    #     resp = api.send_request(test['req_method'], test['req_url'], test['json'],
-    #                             test['params'], token=get_platform_token)
-    #     ResponseVerification.basic_assert(resp, test)
-    #
-    # @staticmethod
-    # @allure.feature("應用域名管理")
-    # @allure.story("刪除應用域名")
-    # @allure.title("{test[scenario]}")
-    # @pytest.mark.regression
-    # @pytest.mark.parametrize("test", test_data.get_case('delete_domain'))
-    # def test_delete_domain(test, get_platform_token):
-    #     api = API_Controller()
-    #     resp = api.send_request(test['req_method'], test['req_url'], test['json'],
-    #                             test['params'], token=get_platform_token)
-    #     ResponseVerification.basic_assert(resp, test)
+    @staticmethod
+    @allure.feature("應用域名管理")
+    @allure.story("編輯應用域名")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('edit_domain'))
+    def test_edit_domain(test, get_platform_token):
+        if "存在id" in test['req_url']:
+            domain_id = Domain()
+            test['req_url'] = test['req_url'].replace("存在id", str(
+                domain_id.find_domain_id(plat_token=get_platform_token)))
+        domain = "http://" + Make.name(8) + ".com"
+        json_replace = test_data.replace_json(test['json'], test['target'])
+        json_replace['domain'] = domain
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                                test['params'], token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("應用域名管理")
+    @allure.story("刪除應用域名")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('delete_domain'))
+    def test_delete_domain(test, get_platform_token):
+        if "存在id" in test['req_url']:
+            domain_id = Domain()
+            test['req_url'] = test['req_url'].replace("存在id", str(
+                domain_id.find_domain_id(plat_token=get_platform_token)))
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
 
     @staticmethod
     @allure.feature("應用域名管理")
     @allure.story("應用域名列表")
     @allure.title("{test[scenario]}")
-    @pytest.mark.test
+    @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_domain'))
     def test_get_domain(test, get_platform_token):
         api = API_Controller()
@@ -318,26 +329,32 @@ class TestDomainManagement:
                                 test['params'], token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)
 
-    # @staticmethod
-    # @allure.feature("應用域名管理")
-    # @allure.story("新增應用域名")
-    # @allure.title("{test[scenario]}")
-    # @pytest.mark.regression
-    # @pytest.mark.parametrize("test", test_data.get_case('add_domain'))
-    # def test_add_domain(test, get_platform_token):
-    #     api = API_Controller()
-    #     resp = api.send_request(test['req_method'], test['req_url'], test['json'],
-    #                             test['params'], token=get_platform_token)
-    #     ResponseVerification.basic_assert(resp, test)
+    @staticmethod
+    @allure.feature("應用域名管理")
+    @allure.story("新增應用域名")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('add_domain'))
+    def test_add_domain(test, get_platform_token):
+        if test["scenario"] in ('[domain]null', '[domain]空值', "[domain]超過48字"):
+            json_replace = test_data.replace_json(test['json'], test['target'])
+        else:
+            domain = "http://" + Make.name(8) + ".com"
+            json_replace = test_data.replace_json(test['json'], test['target'])
+            json_replace['domain'] = domain
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                                test['params'], token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
 
-    # @staticmethod
-    # @allure.feature("應用域名管理")
-    # @allure.story("應用類型")
-    # @allure.title("{test[scenario]}")
-    # @pytest.mark.regression
-    # @pytest.mark.parametrize("test", test_data.get_case('get_type'))
-    # def test_get_type(test, get_platform_token):
-    #     api = API_Controller()
-    #     resp = api.send_request(test['req_method'], test['req_url'], test['json'],
-    #                             test['params'], token=get_platform_token)
-    #     ResponseVerification.basic_assert(resp, test)
+    @staticmethod
+    @allure.feature("應用域名管理")
+    @allure.story("應用類型")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('get_type'))
+    def test_get_type(test, get_platform_token):
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
