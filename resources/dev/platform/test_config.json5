@@ -92,6 +92,26 @@
             ]
     },
     {
+        "test_case": "edit_currency",
+        "req_method": "put",
+        "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
+        "json" : {},
+        "params": {"status":null},
+        "test_item": [
+            {"req_url": "/v1/platform/currency/USD","scenario":"[code]USD_0","target": {"status":0},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/platform/currency/USD","scenario":"[code]USD_1","target": {"status":1},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/platform/currency/THB","scenario":"[code]THB_0","target": {"status":0},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/platform/currency/THB","scenario":"[code]THB_1","target": {"status":1},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/platform/currency/CNY","scenario":"[code]CNY_0","target": {"status":0},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/platform/currency/CNY","scenario":"[code]CNY_1","target": {"status":1},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/platform/currency/USDT_ERC20","scenario":"[code]USDT_ERC20_0","target": {"status":0},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/platform/currency/USDT_ERC20","scenario":"[code]USDT_ERC20_1","target": {"status":1},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/platform/currency/USDT_TRC20","scenario":"[code]USDT_TRC20_0","target": {"status":0},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/platform/currency/USDT_TRC20","scenario":"[code]USDT_TRC20_1","target": {"status":1},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/platform/currency/unKnow","scenario":"[code]不存在","target": {"status":1},"code_status": 400,"keyword": "資料不存在"},
+            ]
+    },
+    {
         "test_case": "get_platform_currency",
         "req_method": "get",
         "req_url": "/v1/platform/currency",
@@ -100,6 +120,22 @@
         "test_item": [
             {"scenario":"普通查詢","params": {},"code_status": 200,"keyword": "data"}
         ]
+    },
+    {
+        "test_case": "get_drop_down",
+        "req_method": "get",
+        "req_url": "/v1/platform/currency/dropDown",
+        "schema": {"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"code":{"type":"string"},"name":{"type":"string"},"currencyType":{"type":"string"},"icon":{"type":"string"},"cnyExchangeRate":{"type":"number"},"status":{"type":"integer"}},"required":["cnyExchangeRate","code","currencyType","icon","name","status"]}}},"required":["data"]},
+        "json" : {},
+        "params": {"currency":null},
+        "test_item": [
+            {"scenario":"[currency]USD","target": {"currency":"USD"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]THB","target": {"currency":"THB"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]CNY","target": {"currency":"CNY"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]USDT_ERC20","target": {"currency":"USDT_ERC20"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]USDT_TRC20","target": {"currency":"USDT_TRC20"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]不存在","target": {"currency":"unknow"},"code_status": 400,"keyword": "无效的请求参数"},
+            ]
     },
     {
         "test_case": "get_platform_language",
