@@ -185,6 +185,19 @@ class TestFileUpload:
 class TestCurrencyManagement:
     @staticmethod
     @allure.feature("幣別管理")
+    @allure.story("站點幣別上下架修改")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('edit_currency'))
+    def test_edit_currency(test, get_platform_token):
+        parmas_replace = test_data.replace_json(test['params'], test['target'])
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                parmas_replace, token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("幣別管理")
     @allure.story("站點幣別查詢")
     @allure.title("{test[scenario]}")
     @pytest.mark.regression
@@ -193,6 +206,19 @@ class TestCurrencyManagement:
         api = API_Controller()
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                                 test['params'], token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("幣別管理")
+    @allure.story("站點幣別下拉選單(排序)")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('get_drop_down'))
+    def test_get_drop_down(test, get_platform_token):
+        parmas_replace = test_data.replace_json(test['params'], test['target'])
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                parmas_replace, token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)
 
 
