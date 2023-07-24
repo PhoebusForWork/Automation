@@ -376,7 +376,10 @@ class Domain(PlatformAPI):
         return response.json()
 
     # 獲取域名 id
-    def find_domain_id(self):
+    def find_domain_id(self, plat_token=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
         response = self.get_domain()
         ret = jsonpath.jsonpath(response, "$..id")
         if ret is False:
