@@ -300,7 +300,7 @@
         "test_case": "get_domain",
         "req_method": "get",
         "req_url": "/v1/application/domain",
-        "schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "domain": {"type": "string"}, "applicationType": {"type": "array", "items": {"type": "integer"}}, "purchaseTime": {"type": "string"}, "expiryTime": {"type": "string"}, "remainDay": {"type": "integer"}, "createTime": {"type": "string"}}, "required": ["applicationType", "createTime", "domain", "expiryTime", "id", "purchaseTime", "remainDay"]}}}, "required": ["data"]},
+        "schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "domain": {"type": "string"}, "applicationType": {"type": "array", "items": {"type": "integer"}}, "purchaseTime": {"type": ["string", "null"]}, "expiryTime": {"type": "string"}, "remainDay": {"type": "integer"}, "createTime": {"type": "string"}}, "required": ["applicationType", "createTime", "domain", "expiryTime", "id", "purchaseTime", "remainDay"]}}}, "required": ["data"]},
         "json" : {},
         "params": {},
         "test_item": [
