@@ -353,14 +353,11 @@ class Make_config_data(PlatformAPI):
 
 class Domain(PlatformAPI):
     # 新增應用域名
-    def add_domain(self, plat_token=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
+    def add_domain(self, domain="http://" + Make.name(8) + ".com"):
         request_body = {
             "method": "post",
             "url": "/v1/application/domain",
-            "json": {"domain": "http://" + Make.name(8) + ".com", "applicationType": [0],
+            "json": {"domain": domain, "applicationType": [0],
                      "purchaseTime": "2023-07-14T09:03:05.310Z", "expiryTime": "2023-07-14T09:03:05.310Z"}
         }
 
@@ -368,10 +365,7 @@ class Domain(PlatformAPI):
         return response.json()
 
     # 應用域名列表
-    def get_domain(self, plat_token=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
+    def get_domain(self):
         request_body = {
             "method": "get",
             "url": "/v1/application/domain",
@@ -382,10 +376,7 @@ class Domain(PlatformAPI):
         return response.json()
 
     # 獲取域名 id
-    def find_domain_id(self, plat_token=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
+    def find_domain_id(self):
         response = self.get_domain()
         ret = jsonpath.jsonpath(response, "$..id")
         if ret is False:
