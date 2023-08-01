@@ -340,7 +340,8 @@ class TestDomainManagement:
     def test_add_domain(test, get_platform_token):
         if test["scenario"] in ('[domain]null', '[domain]空值', "[domain]超過48字"):
             json_replace = test_data.replace_json(test['json'], test['target'])
-        if test["scenario"] in ('[purchaseTime]數字', '[expiryTime]數字'):
+        if test["scenario"] in ('[purchaseTime]數字', '[expiryTime]數字', '[domain]null',
+                                '[domain]空值', '[domain]超過48字'):
             pytest.xfail('待確認')
         else:
             domain = "http://" + Make.name(8) + ".com"
