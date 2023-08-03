@@ -365,3 +365,54 @@ class TestDomainManagement:
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                                 test['params'], token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)
+
+
+class TestAppVersion:
+    @staticmethod
+    @allure.feature("APP版本管理")
+    @allure.story("查詢APP版本")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('get_app_version'))
+    def test_get_app_version(test, get_platform_token):
+        if "存在id" in test['req_url']:
+            app_version_id = AppVersion()
+            test['req_url'] = test['req_url'].replace("存在id", str(
+                app_version_id.find_app_version_id(plat_token=get_platform_token)))
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("APP版本管理")
+    @allure.story("修改APP版本")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('edit_app_version'))
+    def test_edit_app_version(test, get_platform_token):
+        json_replace = test_data.replace_json(test['json'], test['target'])
+        if "存在id" in test['req_url']:
+            app_version_id = AppVersion()
+            test['req_url'] = test['req_url'].replace("存在id", str(
+                app_version_id.find_app_version_id(plat_token=get_platform_token)))
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                                test['params'], token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("APP版本管理")
+    @allure.story("刪除APP版本")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('delete_app_version'))
+    def test_delete_app_version(test, get_platform_token):
+        if "存在id" in test['req_url']:
+            app_version_id = AppVersion()
+            test['req_url'] = test['req_url'].replace("存在id", str(
+                app_version_id.find_app_version_id(plat_token=get_platform_token)))
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
