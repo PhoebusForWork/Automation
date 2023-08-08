@@ -359,11 +359,37 @@
         "req_method": "put",
         "req_url": "/v1/app/version",
         "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
-        "json" : {},
+        "json" : {"version": "9.9.9", "title": "Auto", "content": "<p>Auto</p>", "appType": 0, "osType": 2, "url": "https://auto.com", "isForce": false},
         "params": {},
         "test_item": [
             {"req_url": "/v1/app/version/9189414","scenario":"[id]不存在","target":{},"code_status": 400,"keyword": "資料不存在"},
-            {"req_url": "/v1/app/version/存在id","scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"}
+            {"req_url": "/v1/app/version/存在id","scenario":"正常編輯","target":{},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/app/version/存在id","scenario":"[version]不符版號格式","target":{"version":"456"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/app/version/存在id","scenario":"[version]null","target":{"version":null},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/app/version/存在id","scenario":"[version]空值","target":{"version":""},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/app/version/存在id","scenario":"[title]null","target":{"title":null},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/app/version/存在id","scenario":"[title]空值","target":{"title":""},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/app/version/存在id","scenario":"[title]超過 40 字","target":{"title":"AutoAutoAutoAutoAutoAutoAutoAutoAutoAutoAuto"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/app/version/存在id","scenario":"[content]null","target":{"content":null},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/app/version/存在id","scenario":"[content]空值","target":{"content":""},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/app/version/存在id","scenario":"[content]小於 10 字","target":{"content":"123"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/app/version/存在id","scenario":"[content]大於 500 字","target":{"content":"123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/app/version/存在id","scenario":"[appType]0","target":{"appType":0},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/app/version/存在id","scenario":"[appType]1","target":{"appType":1},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/app/version/存在id","scenario":"[appType]2","target":{"appType":2},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/app/version/存在id","scenario":"[appType]99","target":{"appType":99},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/app/version/存在id","scenario":"[osType]2","target":{"osType":2},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/app/version/存在id","scenario":"[osType]3","target":{"osType":3, "signType":0},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/app/version/存在id","scenario":"[osType]99","target":{"osType":99},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/app/version/存在id","scenario":"[signType]0","target":{"osType":3, "signType":0},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/app/version/存在id","scenario":"[signType]1","target":{"osType":3, "signType":1},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/app/version/存在id","scenario":"[signType]2","target":{"osType":3, "signType":2},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/app/version/存在id","scenario":"[signType]3","target":{"osType":3, "signType":3},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/app/version/存在id","scenario":"[signType]99","target":{"osType":3, "signType":99},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/app/version/存在id","scenario":"[url]小於 10 字","target":{"url":"url"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/app/version/存在id","scenario":"[url]大於 500 字","target":{"url":"https://123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/app/version/存在id","scenario":"[isForce]數字","target":{"isForce":123},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/app/version/存在id","scenario":"[isForce]字串","target":{"isForce":"abc"},"code_status": 400,"keyword": "无效的请求参数"}
         ]
     },
     {
@@ -411,7 +437,7 @@
             {"scenario":"[signType]99","target":{"osType":3, "signType":99},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[url]小於 10 字","target":{"url":"url"},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[url]大於 500 字","target":{"url":"https://123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[isForce]數字","target":{"isForce":123},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[isForce]數字","target":{"isForce":123},"code_status": 200,"keyword": "data"},
             {"scenario":"[isForce]字串","target":{"isForce":"abc"},"code_status": 400,"keyword": "无效的请求参数"}
         ]
     },
@@ -423,10 +449,10 @@
         "json" : {},
         "params": {"page": 1, "size": 20},
         "test_item": [
-            {"scenario":"[page]null","target":{"page":null},"json": {},"code_status": 200,"keyword": '"current":1'},
-            {"scenario":"[page]錯誤格式","target":{"page":"abc"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[size]null","target":{"size":null},"json": {},"code_status": 200,"keyword": '"size":20'},
-            {"scenario":"[size]錯誤格式","target":{"size":"abc"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[page]null","target":{"page":null},"json": {},"code_status": 400,"keyword": '无效的请求参数'},
+            {"scenario":"[page]5","target":{"page":5},"json": {},"code_status": 200,"keyword": '"current":5'},
+            {"scenario":"[size]null","target":{"size":null},"json": {},"code_status": 400,"keyword": '无效的请求参数'},
+            {"scenario":"[size]5","target":{"size":5},"json": {},"code_status": 200,"keyword": '"size":5'},
             {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"}
         ]
     }
