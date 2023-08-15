@@ -42,9 +42,8 @@ def create_account():
         accountAdmin.add_admin(account=account_name,
                                deptId=1,
                                displayName=account_name,
-                               phone=Make.mobile(),
                                password='abc1234567',
-                               isLeader=1,
+                               isLeader=True,
                                roleIds=[2])
 
 def login_account():
