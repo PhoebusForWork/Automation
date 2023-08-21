@@ -258,6 +258,88 @@
             {"scenario":"[weight]字串類型測試項目","target":{"weight":"abc"}, "params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[weight]正常值測試項目","target":{"weight":123.5}, "params": {},"code_status": 200,"keyword": "data"}
             ]
-
+    },
+    {
+        "test_case": "edit_domain",
+        "req_method": "put",
+        "req_url": "/v1/application/domain",
+        "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
+        "json" : {"domain": "string", "applicationType": [0], "purchaseTime": "2023-07-14T09:03:05.310Z", "expiryTime": "2023-07-14T09:03:05.310Z"},
+        "params": {},
+        "test_item": [
+            {"req_url": "/v1/application/domain/9189414","scenario":"[id]不存在","target":{},"code_status": 400,"keyword": "資料不存在"},
+            {"req_url": "/v1/application/domain/存在id","scenario":"正常編輯","target":{},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/application/domain/存在id","scenario":"[domain]null","target":{"domain":null},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/application/domain/存在id","scenario":"[domain]空值","target":{"domain":""},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/application/domain/存在id","scenario":"[domain]超過48字","target":{"domain":"http://yY5gUIvJyY5gUIvJyY5gUIvJyY5gUIvJyY5gUIvJ.com"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/application/domain/存在id","scenario":"[applicationType]null","target":{"applicationType": null},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/application/domain/存在id","scenario":"[applicationType]空值","target":{"applicationType": ""},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/application/domain/存在id","scenario":"[applicationType]數字","target":{"applicationType": 123},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/application/domain/存在id","scenario":"[applicationType]超出範圍","target":{"applicationType": [99]},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/application/domain/存在id","scenario":"[purchaseTime]null","target":{"purchaseTime":null},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/application/domain/存在id","scenario":"[purchaseTime]空值","target":{"purchaseTime": ""},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/application/domain/存在id","scenario":"[purchaseTime]數字","target":{"purchaseTime": 123},"code_status": 200,"keyword": "data"},
+            {"req_url": "/v1/application/domain/存在id","scenario":"[expiryTime]null","target":{"expiryTime":null},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/application/domain/存在id","scenario":"[expiryTime]空值","target":{"expiryTime": ""},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/application/domain/存在id","scenario":"[expiryTime]數字","target":{"expiryTime": 123},"code_status": 400,"keyword": "无效的请求参数"}
+        ]
+    },
+    {
+        "test_case": "delete_domain",
+        "req_method": "delete",
+        "req_url": "/v1/application/domain",
+        "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
+        "json" : {},
+        "params": {},
+        "test_item": [
+            {"req_url": "/v1/application/domain/9189414","scenario":"[id]不存在","target":{},"code_status": 400,"keyword": "資料不存在"},
+            {"req_url": "/v1/application/domain/存在id","scenario":"正常刪除","target":{},"code_status": 200,"keyword": "data"}
+        ]
+    },
+    {
+        "test_case": "get_domain",
+        "req_method": "get",
+        "req_url": "/v1/application/domain",
+        "schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "domain": {"type": "string"}, "applicationType": {"type": "array", "items": {"type": "integer"}}, "purchaseTime": {"type": ["string", "null"]}, "expiryTime": {"type": "string"}, "remainDay": {"type": "integer"}, "createTime": {"type": "string"}}, "required": ["applicationType", "createTime", "domain", "expiryTime", "id", "purchaseTime", "remainDay"]}}}, "required": ["data"]},
+        "json" : {},
+        "params": {},
+        "test_item": [
+            {"scenario":"正常查詢","code_status": 200,"keyword": "data"}
+        ]
+    },
+    {
+        "test_case": "add_domain",
+        "req_method": "post",
+        "req_url": "/v1/application/domain",
+        "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
+        "json" : {"domain": "string", "applicationType": [0], "purchaseTime": "2023-07-14T09:03:05.310Z", "expiryTime": "2023-07-14T09:03:05.310Z"},
+        "params": {},
+        "test_item": [
+            {"scenario":"正常新增","target":{"domain":""},"code_status": 200,"keyword": "data"},
+            {"scenario":"[domain]null","target":{"domain":null},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[domain]空值","target":{"domain":""},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[domain]超過48字","target":{"domain":"http://yY5gUIvJyY5gUIvJyY5gUIvJyY5gUIvJyY5gUIvJ.com"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[applicationType]null","target":{"applicationType": null},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[applicationType]空值","target":{"applicationType": ""},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[applicationType]數字","target":{"applicationType": 123},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[applicationType]超出範圍","target":{"applicationType": [99]},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[purchaseTime]null","target":{"purchaseTime":null},"code_status": 200,"keyword": "data"},
+            {"scenario":"[purchaseTime]空值","target":{"purchaseTime": ""},"code_status": 200,"keyword": "data"},
+            {"scenario":"[purchaseTime]數字","target":{"purchaseTime": 123},"code_status": 200,"keyword": "data"},
+            {"scenario":"[expiryTime]null","target":{"expiryTime":null},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[expiryTime]空值","target":{"expiryTime": ""},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[expiryTime]數字","target":{"expiryTime": 123},"code_status": 400,"keyword": "无效的请求参数"}
+        ]
+    },
+    {
+        "test_case": "get_type",
+        "req_method": "get",
+        "req_url": "/v1/application/type",
+        "schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"code": {"type": "integer"}, "applicationType": {"type": "string"}}, "required": ["applicationType", "code"]}}}, "required": ["data"]},
+        "json" : {},
+        "params": {},
+        "test_item": [
+            {"scenario":"正常查詢","code_status": 200,"keyword": "data"}
+        ]
     }
 ]
