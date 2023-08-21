@@ -2,7 +2,12 @@ from genson import SchemaBuilder
 
 # 餵入response body
 json_data = {
-  "data": "string"
+  "data": [
+    {
+      "code": 0,
+      "applicationType": "string"
+    }
+  ]
 }
 
 # 產生json Schema
