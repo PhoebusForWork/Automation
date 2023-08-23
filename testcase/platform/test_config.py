@@ -4,7 +4,7 @@ import allure
 from utils.data_utils import TestDataReader, ResponseVerification
 from utils.api_utils import API_Controller
 from utils.generate_utils import Make
-from pylib.platform.config import Avatar, Make_config_data, Domain, AppVersion
+from pylib.platform.config import Avatar, Make_config_data, Domain, App
 
 test_data = TestDataReader()
 test_data.read_json5('test_config.json5')
@@ -377,7 +377,7 @@ class TestAppVersion:
     @pytest.mark.parametrize("test", test_data.get_case('get_app_version'))
     def test_get_app_version(test, get_platform_token):
         if "存在id" in test['req_url']:
-            app_version = AppVersion()
+            app_version = App()
             test['req_url'] = test['req_url'].replace("存在id", str(
                 app_version.find_app_version_id(plat_token=get_platform_token)))
         api = API_Controller()
@@ -394,7 +394,7 @@ class TestAppVersion:
     def test_edit_app_version(test, get_platform_token):
         json_replace = test_data.replace_json(test['json'], test['target'])
         if "存在id" in test['req_url']:
-            app_version = AppVersion()
+            app_version = App()
             test['req_url'] = test['req_url'].replace("存在id", str(
                 app_version.find_app_version_id(plat_token=get_platform_token)))
         api = API_Controller()
@@ -410,7 +410,7 @@ class TestAppVersion:
     @pytest.mark.parametrize("test", test_data.get_case('delete_app_version'))
     def test_delete_app_version(test, get_platform_token):
         if "存在id" in test['req_url']:
-            app_version = AppVersion()
+            app_version = App()
             test['req_url'] = test['req_url'].replace("存在id", str(
                 app_version.find_app_version_id(plat_token=get_platform_token)))
         api = API_Controller()
@@ -431,7 +431,7 @@ class TestAppVersion:
                                 test['params'], token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)
         if "data" in json.loads(resp.text):
-            app_version = AppVersion()
+            app_version = App()
             app_version.delete_app_version(plat_token=get_platform_token)
 
     @staticmethod

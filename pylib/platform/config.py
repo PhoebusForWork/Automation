@@ -389,7 +389,7 @@ class Domain(PlatformAPI):
         return ret[-1]
 
 
-class AppVersion(PlatformAPI):
+class App(PlatformAPI):
     # 新增 App 版本
     def add_app_version(self):
         request_body = {
