@@ -217,4 +217,3 @@ class TestGameTransferFail:
 
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
-
