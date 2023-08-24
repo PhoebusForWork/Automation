@@ -33,13 +33,13 @@ def resetVIPConfig(get_platform_token):
 def resetVipPointRatio(get_platform_token):
     editCNY = UserVipPointRatio().get_vip_Point_Ratio(plat_token=get_platform_token,currency='CNY')
     yield
-    editVipInputParams = GetClassData.get_function_args(UserVipPointRatio().edit_point_ratio)
+    editVipInputParams = GetClassData.get_function_args(UserVipPointRatio().edit_vip_point_ratio)
     resetVipRatio = {}
     for arg in editVipInputParams:
         resetVipRatio[arg] = editCNY.get(arg, get_platform_token if arg == "plat_token" else None)
 
     reapi = UserVipPointRatio()
-    reapi.edit_point_ratio(**resetVipRatio)
+    reapi.edit_vip_point_ratio(**resetVipRatio)
 
 @pytest.fixture(scope="function")  # 清除用戶審核列表
 def clean(get_platform_token):

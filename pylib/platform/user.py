@@ -340,7 +340,7 @@ class User(PlatformAPI):
 # VIP積分
 class UserVipPointRatio(PlatformAPI):
     # VIP積分設定清單
-    def get_point_point_ratio(self, plat_token=None):
+    def get_vip_point_ratio(self, plat_token=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
@@ -353,7 +353,7 @@ class UserVipPointRatio(PlatformAPI):
         return response.json()
 
     #IP積分特定幣別修改記錄
-    def get_point_point_ratio_records(self, plat_token=None,currency="CNY"):
+    def get_vip_point_ratio_records(self, plat_token=None,currency="CNY"):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
@@ -366,7 +366,7 @@ class UserVipPointRatio(PlatformAPI):
         return response.json()
 
     #修改VIP積分幣別排序
-    def sort_point_point_ratio(self, plat_token=None,currency="CNY", position=0):
+    def sort_vip_point_ratio(self, plat_token=None,currency="CNY", position=0):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
@@ -379,7 +379,7 @@ class UserVipPointRatio(PlatformAPI):
         return response.json()
 
     # 修改VIP積分設定
-    def edit_point_ratio(self, plat_token=None, currency=None, ratio=0, showAmount=0 ):
+    def edit_vip_point_ratio(self, plat_token=None, currency=None, ratio=0, showAmount=0 ):
 
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
@@ -395,7 +395,7 @@ class UserVipPointRatio(PlatformAPI):
 
     # 獲取特定幣別的 vip_point_ratio
     def get_vip_Point_Ratio(self, plat_token=None, currency=None):
-        response = self.get_point_ratio(plat_token)
+        response = self.get_vip_point_ratio(plat_token)
         target = jsonpath.jsonpath(response, "$..data[?(@.currency=='"+ currency+"')]")
         return target[-1]
 
