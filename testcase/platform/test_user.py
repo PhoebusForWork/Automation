@@ -1,9 +1,9 @@
 import pytest
 import allure
 import jsonpath
-from pylib.platform.user import UserVip, User, UserManage
+from pylib.platform.user import UserVip, User, UserManage , UserVipPointRatio
 from pylib.platform.proxy import ProxyManage
-from utils.data_utils import TestDataReader, ResponseVerification
+from utils.data_utils import TestDataReader, ResponseVerification,GetClassData
 from utils.api_utils import API_Controller
 from utils.json_verification import validate_json
 
@@ -15,30 +15,45 @@ test_data.read_json5('test_user.json5')
 ######################
 
 
+@pytest.fixture(scope="class")  #取得VIP設定檔最後一筆資後，跑完TESTCASE需還原資料
+def resetVIPConfig(get_platform_token):
+    editVip = UserVip().get_vip_id_exist(plat_token=get_platform_token)
+    yield editVip['id']
+    editVipInputParams = GetClassData.get_function_args(UserVip().edit_vip)
+    resetVip = {}
+
+    for arg in editVipInputParams:
+        resetVip[arg] = editVip.get(arg, get_platform_token if arg == "plat_token" else None)
+
+    reapi = UserVip()
+    reapi.edit_vip(**resetVip)
+
+
+@pytest.fixture(scope="class")  #還原VIP積分設定檔
+def resetVipPointRatio(get_platform_token):
+    editCNY = UserVipPointRatio().get_vip_Point_Ratio(plat_token=get_platform_token,currency='CNY')
+    yield
+    editVipInputParams = GetClassData.get_function_args(UserVipPointRatio().edit_point_ratio)
+    resetVipRatio = {}
+    for arg in editVipInputParams:
+        resetVipRatio[arg] = editCNY.get(arg, get_platform_token if arg == "plat_token" else None)
+
+    reapi = UserVipPointRatio()
+    reapi.edit_point_ratio(**resetVipRatio)
+
 @pytest.fixture(scope="function")  # 清除用戶審核列表
 def clean(get_platform_token):
     yield
     clean = UserManage()
     clean.clean_approval(plat_token=get_platform_token)
+
+
 #############
 # test_case #
 #############
 
 # VIP層級
 class TestUserVipConfig:
-    @staticmethod
-    @allure.feature("客戶管理")
-    @allure.story("VIP層級")
-    @allure.title("{test[scenario]}")
-    @pytest.mark.regression
-    @pytest.mark.parametrize("test", test_data.get_case('add_vip_config'))
-    def test_add_vip_config(test, get_platform_token):
-        json_replace = test_data.replace_json(test['json'], test['target'])
-        api = API_Controller()
-        resp = api.send_request(test['req_method'], test['req_url'], json_replace,
-                                test['params'], token=get_platform_token)
-        ResponseVerification.basic_assert(resp, test)
-
     @staticmethod
     @allure.feature("客戶管理")
     @allure.story("VIP層級")
@@ -69,9 +84,9 @@ class TestUserVipConfig:
     @allure.title("{test[scenario]}")
     @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('edit_vip_config'))
-    def test_edit_vip_config(test, get_platform_token):
-        vip = UserVip()
-        test['req_url'] = test['req_url'].replace("存在vip_id", str(vip.get_vip_id_exist(plat_token=get_platform_token)))
+    def test_edit_vip_config(test, get_platform_token , resetVIPConfig):
+
+        test['req_url'] = test['req_url'].replace("存在vip_id", str(resetVIPConfig))
 
         json_replace = test_data.replace_json(test['json'], test['target'])
         api = API_Controller()
@@ -79,6 +94,71 @@ class TestUserVipConfig:
                                 test['params'], token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)
 
+# 客戶VIP層級變更紀錄
+class TestUserVipLevelRecord:
+    @staticmethod
+    @allure.feature("客戶管理")
+    @allure.story("客戶VIP層級變更紀錄")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('get_vip_level_record'))
+    def test_get_vip_level_record(test, get_platform_token):
+        params_replace = test_data.replace_json(test['params'], test['target'])
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                params_replace, token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+# VIP積分
+class TestUserVipRatio:
+    @staticmethod
+    @allure.feature("客戶管理")
+    @allure.story("VIP積分")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('get_vip_point_ratio'))
+    def test_get_vip_point_ratio(test, get_platform_token):
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("客戶管理")
+    @allure.story("VIP積分")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.not_regression
+    @pytest.mark.parametrize("test", test_data.get_case('edit_vip_point_ratio'))
+    def test_edit_vip_ratio_config(test, get_platform_token, resetVipPointRatio):
+        json_replace = test_data.replace_json(test['json'], test['target'])
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                                test['params'], token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("客戶管理")
+    @allure.story("VIP積分特定幣別修改記錄")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('get_vip_point_ratio_records'))
+    def test_get_vip_ratio_config_records(test, get_platform_token):
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("客戶管理")
+    @allure.story("修改VIP積分幣別排序")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('sort_vip_point_ratio'))
+    def test_get_vip_ratio_config_records(test, get_platform_token):
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
 
 # 客戶列表
 class TestUser:
@@ -274,32 +354,7 @@ class TestUser:
             assert validate_json(resp.json(), test['schema'])
 
 
-# VIP積分
-class TestUserVipRatio:
-    @staticmethod
-    @allure.feature("客戶管理")
-    @allure.story("VIP積分")
-    @allure.title("{test[scenario]}")
-    @pytest.mark.regression
-    @pytest.mark.parametrize("test", test_data.get_case('get_vip_ratio_config'))
-    def test_get_vip_ratio_config(test, get_platform_token):
-        api = API_Controller()
-        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
-                                test['params'], token=get_platform_token)
-        ResponseVerification.basic_assert(resp, test)
 
-    @staticmethod
-    @allure.feature("客戶管理")
-    @allure.story("VIP積分")
-    @allure.title("{test[scenario]}")
-    @pytest.mark.not_regression
-    @pytest.mark.parametrize("test", test_data.get_case('edit_vip_ratio_config'))
-    def test_edit_vip_ratio_config(test, get_platform_token):
-        json_replace = test_data.replace_json(test['json'], test['target'])
-        api = API_Controller()
-        resp = api.send_request(test['req_method'], test['req_url'], json_replace,
-                                test['params'], token=get_platform_token)
-        ResponseVerification.basic_assert(resp, test)
 
 
 # 審批操作
@@ -406,20 +461,7 @@ class TestUserManage:
 
 
 # 首頁彈窗消息
-# 客戶VIP層級變更紀錄
-class TestUserVipLevelRecord:
-    @staticmethod
-    @allure.feature("客戶管理")
-    @allure.story("客戶VIP層級變更紀錄")
-    @allure.title("{test[scenario]}")
-    @pytest.mark.regression
-    @pytest.mark.parametrize("test", test_data.get_case('get_vip_level_record'))
-    def test_get_vip_level_record(test, get_platform_token):
-        params_replace = test_data.replace_json(test['params'], test['target'])
-        api = API_Controller()
-        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
-                                params_replace, token=get_platform_token)
-        ResponseVerification.basic_assert(resp, test)
+
 
 
 # 客戶風控管理API

@@ -18,43 +18,15 @@
             ]
     },
     {
-        "test_case": "add_vip_config",
-        "req_method": "post",
-        "req_url": "/v1/user/vip/config",
-        "json": {"name":"auto_test","regStartTime":"2023-01-01T00:00:00Z","regEndTime":"2023-12-31T23:59:59Z","rechargeTotal":9999999999,"betTotal":9999999999,"levelGift":9999999999,"birthdayGift":9999999999,"festivalGift":9999999999,"redEnvelop":9999999999,"limitBet":9999999999,"limitRecharge":9999999999,"remark":"string"},
-        "schema": {"data": "string"},
-        "test_item": [
-            {"scenario":"VIP層級Map_[name]null","target":{"name":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"VIP層級Map_[name]超過20字","target":{"name":"123456789012345678901"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            // //#bug{"scenario":"VIP層級Map_[from,to]開始時間大於結束時間","target":{"regStartTime":"2023-12-31T23:59:59Z","regEndTime":"2023-01-01T00:00:00Z"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"VIP層級Map_[from,to]from,null","target":{"regStartTime":"2023-01-01T00:00:00Z","regEndTime":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"VIP層級Map_[from,to]null,to","target":{"regStartTime":null,"regEndTime":"2023-12-31T23:59:59Z"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"VIP層級Map_[rechargeTotal]null","target":{"rechargeTotal":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"VIP層級Map_[betTotal]null","target":{"betTotal":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"VIP層級Map_[levelGift]null","target":{"levelGift":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"VIP層級Map_[birthdayGift]null","target":{"birthdayGift":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"VIP層級Map_[festivalGift]null","target":{"festivalGift":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"VIP層級Map_[redEnvelop]null","target":{"redEnvelop":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"VIP層級Map_[limitBet]null","target":{"limitBet":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"VIP層級Map_[limitRecharge]null","target":{"limitRecharge":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"VIP層級Map_[limitBet]null","target":{"limitBet":null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"VIP層級Map_[remark]超過兩百字","target":{"remark":"123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            // {"scenario":"VIP層級Map_正常新增","target":{},"params": {},"code_status": 200,"keyword": "success"},
-        ]
-    },
-    {
         "test_case": "edit_vip_config",
         "req_method": "put",
-        "json": {"name":"auto_test","regStartTime":"2023-01-01T00:00:00Z","regEndTime":"2023-12-31T23:59:59Z","rechargeTotal":9999999999,"betTotal":9999999999,"levelGift":9999999999,"birthdayGift":9999999999,"festivalGift":9999999999,"redEnvelop":9999999999,"limitBet":9999999999,"limitRecharge":9999999999,"remark":"string"},
+        "json": {"name":"auto_test","levelGift":9999999999,"birthdayGift":9999999999,"festivalGift":9999999999,"redEnvelop":9999999999,"limitBet":9999999999,"limitRecharge":9999999999,"remark":"string"},
         "schema": {"data": "string"},
         "test_item": [
             {"scenario":"修改VIP層級_不存在id","target":{},"req_url": "/v1/user/vip/config/999999","params": {},"code_status": 400,"keyword": "資料不存在"},
             {"scenario":"修改VIP層級_存在id","target":{},"req_url": "/v1/user/vip/config/存在vip_id","params": {},"code_status": 200,"keyword": "success"},
             {"scenario":"修改VIP層級_存在id_[name]null","target":{"name":null},"req_url": "/v1/user/vip/config/存在vip_id","params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"修改VIP層級_存在id_[name]超過20字","target":{"name":"123456789012345678901"},"req_url": "/v1/user/vip/config/存在vip_id","params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"修改VIP層級_存在id_[from,to]開始時間大於結束時間","target":{"regStartTime":"2023-12-31T23:59:59Z","regEndTime":"2023-01-01T00:00:00Z"},"req_url": "/v1/user/vip/config/存在vip_id","params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"修改VIP層級_存在id_[from,to]from,null","target":{"regStartTime":"2023-01-01T00:00:00Z","regEndTime":null},"req_url": "/v1/user/vip/config/存在vip_id","params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"修改VIP層級_存在id_[from,to]null,to","target":{"regStartTime":null,"regEndTime":"2023-12-31T23:59:59Z"},"req_url": "/v1/user/vip/config/存在vip_id","params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"修改VIP層級_存在id_[rechargeTotal]null","target":{"rechargeTotal":null},"req_url": "/v1/user/vip/config/存在vip_id","params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"修改VIP層級_存在id_[betTotal]null","target":{"betTotal":null},"req_url": "/v1/user/vip/config/存在vip_id","params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"修改VIP層級_存在id_[levelGift]null","target":{"levelGift":null},"req_url": "/v1/user/vip/config/存在vip_id","params": {},"code_status": 400,"keyword": "无效的请求参数"},
@@ -63,7 +35,6 @@
             {"scenario":"修改VIP層級_存在id_[redEnvelop]null","target":{"redEnvelop":null},"req_url": "/v1/user/vip/config/存在vip_id","params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"修改VIP層級_存在id_[limitBet]null","target":{"limitBet":null},"req_url": "/v1/user/vip/config/存在vip_id","params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"修改VIP層級_存在id_[limitRecharge]null","target":{"limitRecharge":null},"req_url": "/v1/user/vip/config/存在vip_id","params": {},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"修改VIP層級_存在id_[limitBet]null","target":{"limitBet":null},"req_url": "/v1/user/vip/config/存在vip_id","params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"修改VIP層級_存在id_[remark]超過兩百字","target":{"remark":"123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901"},"req_url": "/v1/user/vip/config/存在vip_id","params": {},"code_status": 400,"keyword": "无效的请求参数"},
             ]
     },
@@ -498,28 +469,54 @@
             ]
     },
     {
-        "test_case": "get_vip_ratio_config",
+        "test_case": "get_vip_point_ratio",
         "req_method": "get",
-        "req_url": "/v1/user/vip/ratio/config",
+        "req_url": "/v1/vip/point-ratio",
         "params": {},
         "json":{},
-        "schema": {"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"currency":{"type":"string"},"ratio":{"type":"integer"}},"required":["currency","ratio"]}}},"required":["data"]},
+        "schema": {"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"currency":{"type":"string"},"status":{"type":"integer"},"ratio":{"type":"number"},"showAmount":{"type":"number"},"showPoint":{"type":"number"},"sort":{"type":"integer"},"lastModifiedName":{"type":["string","null"]},"lastModifiedTime":{"type":["string","null"]}},"required":["currency","status","ratio","showAmount","showPoint","sort","lastModifiedName","lastModifiedTime"]}}},",required":["data"]},
         "test_item": [
             {"scenario":"VIP積分設定清單[正常查詢]","target":{},"code_status":200,"keyword": 'data'},
             ]
     },
     {
-        "test_case": "edit_vip_ratio_config",
+        "test_case": "edit_vip_point_ratio",
         "req_method": "post",
-        "req_url": "/v1/user/vip/ratio/config",
-        "params": {},
-        "json":{"configs":[{"currency":"CNY","ratio":0}]},
+        "req_url": "/v1/vip/point-ratio",
+        "params": {"currency":"CNY"},
+        "json":{"ratio": "5.99999999", "showAmount": 123 },
         "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
         "test_item": [
-            {"scenario":"新增修改VIP積分設定[configs]null","target":{configs: null},"code_status":400,"keyword": '无效的请求参数'},
-            {"scenario":"新增修改VIP積分設定[configs]空陣列","target":{configs: []},"code_status":400,"keyword": '无效的请求参数'},
-            {"scenario":"新增修改VIP積分設定[currency]null","target":{configs: [{"currency":null,"ratio":0}]},"code_status":400,"keyword": '幣別不能為空'},
-            // 後續還要調整相關檢核
+            {"scenario":"新增修改VIP積分[currency]不存在之幣別","params": {"currency":"CNY1"},"target":{},"code_status":400,"keyword": '无效的请求参数'},
+            {"scenario":"新增修改VIP積分[currency]存在之幣別","target":{},"code_status": 200,"keyword": "success"},
+            {"scenario":"修改VIP層級_後台積分[ratio]null","target":{"ratio":null},  "code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"修改VIP層級_前台顯示金額[showAmount]null","target":{"showAmount":null},"code_status": 400,"keyword": "无效的请求参数"}
+        ]
+    },
+        {
+        "test_case": "sort_vip_point_ratio",
+        "req_method": "put",
+        "req_url": "/v1/vip/point-ratio",
+        "params": {},
+        "json":{},
+        "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
+        "test_item": [
+            {"scenario":"修改VIP積分-CNY幣別[position]排序向下移動","params": {"currency":"CNY","position": 1 },"target":{},"code_status":200,"keyword": 'success'},
+            {"scenario":"修改VIP積分-CNY幣別[position]排序向上移動","params": {"currency":"CNY","position": -1 },"target":{},"code_status": 200,"keyword": "success"},
+            {"scenario":"修改VIP積分-CNY幣別[position]null","params": {"currency":"CNY","position": null } ,"target":{},  "code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"修改VIP積分-CNY幣別[position]0","params": {"currency":"CNY","position": 0 },"target":{},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"修改VIP積分-CNY幣別[position]3","params": {"currency":"CNY","position": 3 },"target":{},"code_status": 400,"keyword": "无效的请求参数"}
+        ]
+    },
+    {
+        "test_case": "get_vip_point_ratio_records",
+        "req_method": "get",
+        "req_url": "/v1/vip/point-ratio/records",
+        "params": {"currency":"CNY"},
+        "json":{},
+        "schema": {"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"ratio":{"type":"number"},"lastModifiedName":{"type":["string","null"]},"lastModifiedTime":{"type":["string","null"]}},"required":["ratio","lastModifiedName","lastModifiedTime"]}}},",required":["data"]},
+        "test_item": [
+            {"scenario":"特定幣別VIP設定調整記錄[正常查詢]","target":{},"code_status":200,"keyword": 'data'},
             ]
     },
     {
@@ -546,6 +543,7 @@
             {"scenario":"搜尋客戶VIP層級變更紀錄[actionType]不存在","target":{actionType: 8},"code_status":400,"keyword": '无效的请求参数'},
             {"scenario":"搜尋客戶VIP層級變更紀錄[operator]空字串","target":{operator: ""},"code_status":200,"keyword": 'data'},
             {"scenario":"搜尋客戶VIP層級變更紀錄[operator]存在admin","target":{operator: "superAdmin"},"code_status":200,"keyword": 'data'},
+            {"scenario":"搜尋客戶VIP層級變更紀錄[operator]不存在admin","target":{operator: "superAdmin99999"},"code_status":200,"keyword": '"total":0'},
             {"scenario":"搜尋客戶VIP層級變更紀錄[page]預設","target":{},"json": {},"code_status": 200,"keyword": '"current":1'},
             {"scenario":"搜尋客戶VIP層級變更紀錄[page]3","target":{"page":3},"json": {},"code_status": 200,"keyword": '"current":3'},
             {"scenario":"搜尋客戶VIP層級變更紀錄[size]預設","target":{},"json": {},"code_status": 200,"keyword": '"size":10'},
