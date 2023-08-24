@@ -424,4 +424,17 @@ class AppVersion(PlatformAPI):
             self.add_app_version()
             response = self.get_app_versions()
             ret = jsonpath.jsonpath(response, "$..id")
-        return ret[-1]
+        return ret[0]
+
+    def delete_app_version(self, plat_token=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        app_version_id = self.find_app_version_id()
+        request_body = {
+            "method": "delete",
+            "url": f"/v1/app/version/{app_version_id}",
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
