@@ -27,7 +27,7 @@
         "req_method": "put",
         "req_url": "/v1/game",
         "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
-        "json": {"gameCode": "AI_SPORT_AI", "currency": "CNY", "detailList": [{"language": "ZH", "name": "AI體育", "gameDesc": "string", "gameDetail": "stringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstri", "gameIntro": "stringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstri", "navImg": "string", "navHoverImg": "string", "mbImg": "string", "hotImg": "string", "largeHotImg": "string", "mbGameImg": "string", "mbHotImg": "string", "icon": "string", "mainIntroImg": "string", "mainIntroVideo": "string", "subIntroImgs": ["string"], "maintainRemark": "string", "walletName": "AI體育", "walletImg": "必填參數"}], "fee": [{"gameType": 6, "fee": 1}, {"gameType": 5, "fee": 2}, {"gameType": 4, "fee": 3}, {"gameType": 3, "fee": 4}, {"gameType": 2, "fee": 5}, {"gameType": 1, "fee": 8}], "returnPrize": 0, "isHot": false, "isTesting": false, "isNewArrival": false, "isHit": false, "hotLevel": 1, "sort": 0, "maintainBufferStartTime": "2022-09-22T03:15:07.257Z", "maintainBufferEndTime": "2022-09-23T03:15:07.257Z", "maintainStartTime": "2022-09-22T03:15:07.257Z", "maintainEndTime": "2022-09-23T03:15:07.257Z",},
+        "json": {"gameCode": "AI_SPORT_AI", "currency": "CNY", "detailList": [{"language": "ZH", "name": "AI體育", "gameDesc": "string", "gameDetail": "stringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstri", "gameIntro": "stringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstri", "navImg": "string", "navHoverImg": "string", "mbImg": "string", "hotImg": "string", "largeHotImg": "string", "mbGameImg": "string", "mbHotImg": "string", "icon": "string", "mainIntroImg": "string", "mainIntroVideo": "string", "subIntroImgs": ["string"], "maintainRemark": "string", "walletName": "AI體育", "walletImg": "必填參數"}], "fee": [{"gameType": 6, "fee": 1}, {"gameType": 5, "fee": 2}, {"gameType": 4, "fee": 3}, {"gameType": 3, "fee": 4}, {"gameType": 2, "fee": 5}, {"gameType": 1, "fee": 8}], "returnPrize": 0, "isHot": false, "isTesting": false, "isNewArrival": false, "isHit": false, "hotLevel": 1, "sort": 0, "maintainBufferStartTime": "2022-09-22T03:15:07.257Z", "maintainBufferEndTime": "2022-09-23T03:15:07.257Z", "maintainStartTime": "2022-09-22T03:15:07.257Z", "maintainEndTime": "2022-09-23T03:15:07.257Z","open":true},
         "test_item": [
             {"scenario":"[gameCode]不存在","target":{"gameCode":"AWC"},"params": {},"code_status": 400,"keyword": "游戏信息不存在"},
             {"scenario":"[gameCode]存在","target":{"gameCode":"AI_SPORT_AI"},"params": {},"code_status": 200,"keyword": "success"},
@@ -188,10 +188,11 @@
     {
         "test_case": "game_sync",
         "req_method": "post",
+        "req_url": "/v1/game/sync",
         "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "test_item": [
-            {"req_url": "/v1/game/sync/noneCode","scenario":"[gameCode]不存在code","json": {},"params": {"isTesting": true},"code_status": 400,"keyword": "游戏信息不存在"},
-            {"req_url": "/v1/game/sync/AI_SPORT_AI","scenario":"[gameCode]存在code","json": {},"params": {"isTesting": true},"code_status": 200,"keyword": "success"},
+            {"scenario":"[gameCode]不存在code","json": {},"params": {"gameCode": "noneCode"},"code_status": 400,"keyword": "游戏信息不存在"},
+            {"scenario":"[gameCode]存在code","json": {},"params": {"gameCode": "AI_SPORT_AI"},"code_status": 200,"keyword": "success"},
             ]
     },
     {
