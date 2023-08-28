@@ -17,28 +17,29 @@ test_data.read_json5('test_user.json5')
 
 @pytest.fixture(scope="class")  #取得VIP設定檔最後一筆資後，跑完TESTCASE需還原資料
 def resetVIPConfig(get_platform_token):
-    editVip = UserVip().get_vip_id_exist(plat_token=get_platform_token)
+
+    editVip = UserVip(token=get_platform_token).get_vip_id_exist()
     yield editVip['id']
     editVipInputParams = GetClassData.get_function_args(UserVip().edit_vip)
     resetVip = {}
 
     for arg in editVipInputParams:
-        resetVip[arg] = editVip.get(arg, get_platform_token if arg == "plat_token" else None)
+        resetVip[arg] = editVip.get(arg)
 
-    reapi = UserVip()
+    reapi = UserVip(token=get_platform_token)
     reapi.edit_vip(**resetVip)
 
 
 @pytest.fixture(scope="class")  #還原VIP積分設定檔
 def resetVipPointRatio(get_platform_token):
-    editCNY = UserVipPointRatio().get_vip_Point_Ratio(plat_token=get_platform_token,currency='CNY')
+    editCNY = UserVipPointRatio(token=get_platform_token).get_vip_point_ratio_cur(currency='CNY')
     yield
     editVipInputParams = GetClassData.get_function_args(UserVipPointRatio().edit_vip_point_ratio)
     resetVipRatio = {}
     for arg in editVipInputParams:
-        resetVipRatio[arg] = editCNY.get(arg, get_platform_token if arg == "plat_token" else None)
+        resetVipRatio[arg] = editCNY.get(arg)
 
-    reapi = UserVipPointRatio()
+    reapi = UserVipPointRatio(token=get_platform_token)
     reapi.edit_vip_point_ratio(**resetVipRatio)
 
 @pytest.fixture(scope="function")  # 清除用戶審核列表

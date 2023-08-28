@@ -13,7 +13,7 @@ class TestDataReader:
     __test__ = False
 
     def __init__(self):
-        print("os.getenv('MODE')=",os.getenv('MODE'))
+
         if os.getenv('MODE') is None:
             self.file_path = os.path.join(
                 os.path.dirname(os.path.dirname(__file__)),
