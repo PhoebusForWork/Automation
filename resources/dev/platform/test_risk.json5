@@ -1,0 +1,74 @@
+[
+  {
+    "test_case": "edit_black_list",
+    "req_method": "put",
+    "req_url": "/v1/blackList/1",
+    "params": {},
+    "json": {"status": ""},
+    "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"[status]777","req_url":"/v1/blackList/777","target":{"status": 0},"code_status": 400,"keyword": "資料不存在"},
+      {"scenario":"[status]2","target":{"status": 2},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[status]1","target":{"status": 1},"code_status": 200,"keyword": "data"},
+      {"scenario":"[status]0","target":{"status": 0},"code_status": 200,"keyword": "data"}
+    ]
+  },
+  {
+    "test_case": "add_black_list",
+    "req_method": "post",
+    "req_url": "/v1/blackList",
+    "params": {},
+    "json": {"remark": "auto", "dimension": 0, "status": 0, "type": 0, "value": "string"},
+    "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"[remark]空字串","target": {"remark":""},"code_status": 200,"keyword": "data"},
+      {"scenario":"[remark]超過 500 字","target": {"remark":"123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[dimension]0","target": {"dimension": 0, "value":"255.10.22.34"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[dimension]1","target": {"dimension": 1, "value": "CA71ACCF-E52D-4A559321-98DB39E72D35"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[dimension]不存在","target": {"dimension": 777},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[dimension]字串","target": {"dimension": "OK"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[type]不存在","target": {"type": 777},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[type]字串","target": {"type": "OK"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[value]數字","target": {"value": 1},"code_status": 200,"keyword": "data"},
+      {"scenario":"[value]字串","target": {"value": "OK"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[value]超過 120 字","target": {"value": "1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"},"code_status": 400,"keyword": "无效的请求参数"}
+    ]
+  },
+  {
+    "test_case": "get_black_list",
+    "req_method": "get",
+    "req_url": "/v1/blackList/list",
+    "params": {"from":"2023-07-22T16:00:00+08:00", "to":"2033-07-22T16:00:00+08:00", "remark": "", "dimension": "", "type": "", "value": "", "page": "", "size": ""},
+    "json": {},
+    "schema": {"type": "object", "properties": {"data": {"type": "object", "properties": {"total": {"type": "integer"}, "size": {"type": "integer"}, "current": {"type": "integer"}, "pages": {"type": "integer"}, "records": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "dimension": {"type": "integer"}, "type": {"type": "integer"}, "value": {"type": "string"}, "remark": {"type": "string"}, "status": {"type": "integer"}, "createTime": {"type": "string"}}, "required": ["createTime", "dimension", "id", "remark", "status", "type", "value"]}}}, "required": ["current", "pages", "records", "size", "total"]}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"},
+      {"scenario":"[from]null","target": {"from": null},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[from]數字","target":{"from": 123},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[from]字串","target": {"from": "字串ABC"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[from]空值","target": {"from": ""},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[to]null","target": {"to": null},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[to]數字","target":{"to": 123},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[to]字串","target": {"to": "字串ABC"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[to]空值","target": {"to": ""},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[remark]空字串","target": {"remark":""},"code_status": 200,"keyword": "data"},
+      {"scenario":"[remark]200字","target": {"remark":"一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[remark]超過 500 字","target": {"remark":"123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[dimension]0","target": {"dimension": 0},"code_status": 200,"keyword": "data"},
+      {"scenario":"[dimension]1","target": {"dimension": 1},"code_status": 200,"keyword": "data"},
+      {"scenario":"[dimension]不存在","target": {"dimension": 777},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[dimension]字串","target": {"dimension": "OK"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[type]0","target": {"type": 0},"code_status": 200,"keyword": "data"},
+      {"scenario":"[type]不存在","target": {"type": 777},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[type]字串","target": {"type": "OK"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[value]數字","target": {"value": 1},"code_status": 200,"keyword": "data"},
+      {"scenario":"[value]字串","target": {"value": "OK"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[value]超過 120 字","target": {"value": "1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[page]正常查詢","target": {"page": "1"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[page]頁碼數小於1","target": {"page": "0"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[page]字串","target": {"page": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[size]正常查詢","target": {"size": "50"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[size]字串","target": {"size": "abc"},"code_status": 400,"keyword": "无效的请求参数"}
+    ]
+  }
+]
