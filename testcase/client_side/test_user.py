@@ -6,8 +6,9 @@ from utils.api_utils import API_Controller
 from pylib.client_side.user import Address
 from pylib.client_side.validation import Validation
 from pylib.client_side.user import Security
-from pylib.client_side.test import TransferMock
+from pylib.platform.config import CountryCodeRelation
 from utils.generate_utils import Make
+from ..platform.conftest import get_platform_token
 
 test_data = TestDataReader()
 test_data.read_json5('test_user.json5', file_side='cs')
@@ -74,6 +75,11 @@ def make_register_new_user():
         captchaValidation={"channelName": "string", "imgToken": "000000"})
     token = resp['data']['token']
     return token
+
+@pytest.fixture(scope='class')
+def set_country_code_relation(get_platform_token):
+    api = CountryCodeRelation(token=get_platform_token)
+    api.edit_manage(thirdPartyId=8, countryCodeId=5, weight=1)
 
 
 ######################
@@ -310,7 +316,7 @@ class TestUserOperation:
     @allure.title("{test[scenario]}")
     @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('user_pwd'))
-    def test_user_pwd(test, re_password_default):
+    def test_user_pwd(test, set_country_code_relation, re_password_default):
         json_replace = test_data.replace_json(test['json'], test['target'])
         if test['scenario'] == '驗證碼錯誤':
             json_replace['code'] = '123456'

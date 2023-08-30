@@ -292,11 +292,11 @@
         "json": {
                   "username": "user001",
                   "countryCode": 86,
-                  "telephone": "14547549549",
+                  "telephone": "18198977777",
                   "newPwd": "",
                   "confirmPwd": "",
                   "uuid": "",
-                  "code": ""
+                  "code": "000000"
                 },
         "test_item": [
             {"scenario":"忘記密碼重設[newPwd]黑名單測試項目","target":{"newPwd":"abc123456","confirmPwd":"abc123456"}, "params": {},"code_status": 400,"keyword": "不可使用此新密碼"},
