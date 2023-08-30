@@ -93,7 +93,8 @@ class Game(PlatformAPI):
 
         request_body = {
             "method": "post",
-            "url": f"/v1/game/sync/{game_code}"
+            "url": "/v1/game/sync",
+            "params": {"gameCode": game_code}
         }
 
         response = self.send_request(**request_body)
