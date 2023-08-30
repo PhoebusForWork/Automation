@@ -8,7 +8,6 @@ from pylib.client_side.validation import Validation
 from pylib.client_side.user import Security
 from pylib.client_side.test import TransferMock
 from utils.generate_utils import Make
-from utils.xxl_job_utils import XxlJobs
 
 test_data = TestDataReader()
 test_data.read_json5('test_user.json5', file_side='cs')
@@ -60,23 +59,19 @@ def re_security_pwd_default():
 
 
 @pytest.fixture(scope="class")
-def register_check_trigger():
-    xxl = XxlJobs()
-    xxl.set_user_risk_env(is_pro=False)
-    yield
-    xxl.set_user_risk_env(is_pro=True)
-
-
-@pytest.fixture(scope="class")
 def make_register_new_user():
     register_new_user = WebAPI()
     name_len = 10
     new_name = Make.name(name_len)
+    print(new_name)
+    deviceId = Make.mobile()
+    pwd = 'abc123456'
     resp = register_new_user.user_register(
+        deviceId=deviceId,
         username=new_name,
-        password="abc123456",
-        confirmPassword="abc123456",
-        captchaValidation={"channelName": str(123), "imgToken": str(123)})
+        password=pwd,
+        confirmPassword=pwd,
+        captchaValidation={"channelName": "string", "imgToken": "000000"})
     token = resp['data']['token']
     return token
 
@@ -201,7 +196,7 @@ class TestUserDetail:
     @allure.title("{test[scenario]}")
     @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_user_detail'))
-    def test_get_user_detail(test):
+    def test_get_user_detail(test, register_check_trigger):
         validation_api = Validation()
         resp = validation_api.login(username="generic003")
         admin_token = resp.json()['data']['token']
@@ -269,7 +264,7 @@ class TestUserOperation:
     @pytest.mark.regression
     @pytest.mark.usefixtures('register_check_trigger')
     @pytest.mark.parametrize("test", test_data.get_case('user_login'))
-    def test_user_login(test):
+    def test_user_login(test, register_check_trigger):
         json_replace = test_data.replace_json(test['json'], test['target'])
         api = API_Controller(platform='cs')
         resp = api.send_request(test['req_method'], test['req_url'], json_replace, test['params'])
@@ -283,7 +278,7 @@ class TestUserOperation:
     # @pytest.mark.test # 還缺設置手機號
     @pytest.mark.usefixtures('register_check_trigger')
     @pytest.mark.parametrize("test", test_data.get_case('user_login_by_mobile'))
-    def test_user_login_by_mobile(test):
+    def test_user_login_by_mobile(test, register_check_trigger):
         json_replace = test_data.replace_json(test['json'], test['target'])
         if json_replace['code'] == "正確驗證碼":
             api = Validation()
@@ -442,7 +437,7 @@ class TestUserSecurityCenter:
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", test_data.get_case('put_user_security_mobile_binding'))
     @pytest.mark.regression
-    def test_put_user_security_mobile_binding(test, make_register_new_user):
+    def test_put_user_security_mobile_binding(test, register_check_trigger, make_register_new_user):
         json_replace = test_data.replace_json(test['json'], test['target'])
         register_new_user_token = make_register_new_user
         if json_replace['mobile'] == "綁定號碼":
@@ -507,4 +502,3 @@ class TestUserLanguageAndCurrency:
         resp = api.send_request(test['req_method'], test['req_url'],
                                 test['json'], test['params'], token=get_user_token)
         ResponseVerification.basic_assert(resp, test)
-
