@@ -1,12 +1,9 @@
 from pylib.client_side.validation import Validation
-from pylib.client_side.test import TransferMock
 from pylib.client_side.user import Security
 from utils.generate_utils import Make
 
 
 def create_initial_user():
-    set_test_controller = TransferMock()
-    set_test_controller.set_env(is_pro=False)
     user_list = ["user001", "user002",
                  "wallet001", "wallet002",
                  "game001", "game002",
