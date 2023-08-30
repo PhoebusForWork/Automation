@@ -3,6 +3,7 @@ import traceback
 import pytest
 from pylib.client_side.webApiBase import WebAPI
 from utils.data_utils import EnvReader
+from utils.xxl_job_utils import XxlJobs
 
 env = EnvReader()
 cs_account = env.CS_TEST_ACCOUNT
@@ -39,3 +40,10 @@ def get_user_id(get_client_side_token):
     else:
         print('---用戶尚未登陸，或取得id失敗---')
         return 0
+
+@pytest.fixture(scope="class")
+def register_check_trigger():
+    xxl = XxlJobs()
+    xxl.set_user_risk_env(is_pro=False)
+    yield
+    xxl.set_user_risk_env(is_pro=True)
