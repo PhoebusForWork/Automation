@@ -3,6 +3,7 @@ import json5
 import copy
 import configparser
 from utils.json_verification import validate_json
+import inspect
 
 config = configparser.ConfigParser()
 config.read('config/config.ini')
@@ -12,6 +13,7 @@ class TestDataReader:
     __test__ = False
 
     def __init__(self):
+
         if os.getenv('MODE') is None:
             self.file_path = os.path.join(
                 os.path.dirname(os.path.dirname(__file__)),
@@ -223,3 +225,11 @@ class ResponseVerification:
         assert test_data['keyword'] in response.text
         if response.status_code == 200:
             assert validate_json(response.json(), test_data['schema'])
+
+
+class GetClassData:
+
+    def get_function_args(func):
+        sig = inspect.signature(func)
+        args = [param.name for param in sig.parameters.values()]
+        return args

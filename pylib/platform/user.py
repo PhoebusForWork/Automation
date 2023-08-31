@@ -8,36 +8,18 @@ env = EnvReader()
 platform_host = env.PLATFORM_HOST
 # VIP層級
 class UserVip(PlatformAPI):
-    # 新增VIP層級
-    def add_vip(
-            self, plat_token=None, name=None, regStartTime=None, regEndTime=None, rechargeTotal=None,
-            betTotal=None, levelGift=None, birthdayGift=None, festivalGift=None, redEnvelop=None,
-            limitBet=None, limitRecharge=None, isVip=None, remark=None
-    ):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
 
-        request_body = {
-            "method": "post",
-            "url": "/v1/user/vip/config",
-            "json": KeywordArgument.body_data()
-        }
-
-        response = self.send_request(**request_body)
-        return response.json()
 
     # 編輯VIP層級
     def edit_vip(
-            self, plat_token=None, vipId=None, name=None, regStartTime=None, regEndTime=None,
+            self, plat_token=None, id=None, name=None,
             rechargeTotal=None, betTotal=None, levelGift=None, birthdayGift=None, festivalGift=None,
             redEnvelop=None, limitBet=None, limitRecharge=None, isVip=None, remark=None
     ):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
 
         request_body = {
             "method": "put",
-            "url": f"/v1/user/vip/config/{vipId}",
+            "url": f"/v1/user/vip/config/{id}",
             "json": KeywordArgument.body_data()
         }
 
@@ -59,9 +41,7 @@ class UserVip(PlatformAPI):
         return response.json()
 
     # 獲取VIP配置
-    def get_vip_info(self, plat_token=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
+    def get_vip_info(self):
 
         request_body = {
             "method": "get",
@@ -72,7 +52,7 @@ class UserVip(PlatformAPI):
         return response.json()
 
     # 獲取VIP列表
-    def get_vip_list(self, plat_token=None):
+    def get_vip_list(self):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
@@ -85,9 +65,9 @@ class UserVip(PlatformAPI):
         return response.json()
 
     # 獲取存在vip_id
-    def get_vip_id_exist(self, plat_token=None):
-        response = self.get_vip_list(plat_token=plat_token)
-        target = jsonpath.jsonpath(response, '$..data[*].id')
+    def get_vip_id_exist(self):
+        response = self.get_vip_info()
+        target = jsonpath.jsonpath(response, '$..data[*]')
         return target[-1]
 
 # 客戶管理
@@ -354,36 +334,57 @@ class User(PlatformAPI):
         return client_user[0]
 
 # VIP積分
-class UserVipRatio(PlatformAPI):
+class UserVipPointRatio(PlatformAPI):
     # VIP積分設定清單
-    def get_ratio_config(self, plat_token=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
+    def get_vip_point_ratio(self):
 
         request_body = {
             "method": "get",
-            "url": "/v1/user/vip/ratio/config"
+            "url": "/v1/vip/point-ratio"
         }
 
         response = self.send_request(**request_body)
         return response.json()
 
-    # 新增修改VIP積分設定
-    def set_ratio_config(self, plat_token=None, configs: list = None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-        '''
-        configs object sample:
-        [{"currency": "string","ratio": 0}]
-        '''
+    #IP積分特定幣別修改記錄
+    def get_vip_point_ratio_records(self ,currency="CNY"):
+
+        request_body = {
+            "method": "get",
+            "url": f"/v1/vip/point-ratio/records?currency={currency}"
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    #修改VIP積分幣別排序
+    def sort_vip_point_ratio(self ,currency="CNY", position=0):
+
+        request_body = {
+            "method": "put",
+            "url": f"/v1/vip/point-ratio?currency={currency}&position={position}"
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 修改VIP積分設定
+    def edit_vip_point_ratio(self , currency=None, ratio=0, showAmount=0 ):
+
         request_body = {
             "method": "post",
-            "url": "/v1/user/vip/ratio/config",
-            "json": {"configs": configs}
+            "url": f"/v1/vip/point-ratio?currency={currency}",
+            "json": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
         return response.json()
+
+    # 獲取特定幣別的 vip_point_ratio_cur
+    def get_vip_point_ratio_cur(self , currency=None):
+        response = self.get_vip_point_ratio()
+        target = jsonpath.jsonpath(response, "$..data[?(@.currency=='"+ currency+"')]")
+        return target[-1]
 
 # 審批操作
 class UserManage(PlatformAPI):
