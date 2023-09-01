@@ -4,7 +4,7 @@ import allure
 from utils.data_utils import TestDataReader, ResponseVerification
 from utils.api_utils import API_Controller
 from utils.generate_utils import Make
-from pylib.platform.config import Avatar, Make_config_data, Domain
+from pylib.platform.config import Avatar, Make_config_data, Domain, AppVersion
 
 test_data = TestDataReader()
 test_data.read_json5('test_config.json5')
@@ -446,4 +446,3 @@ class TestAppVersion:
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                                 params_replace, token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)
-

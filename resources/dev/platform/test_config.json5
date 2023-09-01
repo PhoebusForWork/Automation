@@ -115,7 +115,7 @@
         "test_case": "get_platform_currency",
         "req_method": "get",
         "req_url": "/v1/platform/currency",
-        "schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"code": {"type": "string"}, "name": {"type": "string"}, "currencyType": {"type": "string"}, "icon": {"type": "string"}, "cnyExchangeRate": {"type": "number"}, "lastModifiedTime": {"type": "string"}}, "required": ["cnyExchangeRate", "code", "currencyType", "icon", "lastModifiedTime", "name"]}}}, "required": ["data"]},
+        "schema": {"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"cnyExchangeRate":{"type":"number"},"code":{"type":"string"},"currencyType":{"type":"string"},"icon":{"type":"string"},"lastModifiedTime":{"type":"string"},"name":{"type":"string"},"status":{"type":"integer"}},"required":["cnyExchangeRate","code","currencyType","icon","lastModifiedTime","name","status"]}}},"required":["data"]},
         "json" : {},
         "test_item": [
             {"scenario":"普通查詢","params": {},"code_status": 200,"keyword": "data"}
