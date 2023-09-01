@@ -103,11 +103,11 @@
     {
         "test_case": "get_user_account",
         "req_method": "get",
-        "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"totalBalance":{"type":"integer"},"balanceList":{"type":["array","null"],"items":{"type":"object","properties":{"currency":{"type":"string"},"balance":{"type":"number"},"freezeBalance":{"type":"number"}},"required":["balance","currency","freezeBalance"]}},"status":{"type":["integer","null"]},"withdrawWaterList":{"type":["array","null"],"items":{"type":"object","properties":{"currency":{"type":"string"},"validWater":{"type":"number"},"leftWater":{"type":"number"}},"required":["currency","leftWater","validWater"]}}},"required":["balanceList","status","totalBalance","withdrawWaterList"]}},"required":["data"]},
+        "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"balanceList":{"type":"array","items":{"type":"object","properties":{"balance":{"type":"number"},"currency":{"type":"string"},"freezeBalance":{"type":"number"},"status":{"type":"integer"}},"required":["balance","currency","freezeBalance","status"]}},"totalBalance":{"type":"number"},"withdrawWaterList":{"type":"array","items":{"type":"object","properties":{"currency":{"type":"string"},"leftWater":{"type":"number"},"validWater":{"type":"number"}},"required":["currency","leftWater","validWater"]}}},"required":["balanceList","totalBalance","withdrawWaterList"]}},"required":["data"]},
         "json" : {},
         "test_item": [
             {"req_url": "/v1/user/1/account","scenario":"查詢客戶財務資訊_存在userId","target":{"null":null},"params": {},"code_status": 200,"keyword": "data"},
-            {"req_url": "/v1/user/9999999/account","scenario":"查詢客戶財務資訊_不存在userId","target":{"null":null},"params": {},"code_status": 400,"keyword": "資料不存在"},
+            {"req_url": "/v1/user/9999999/account","scenario":"查詢客戶財務資訊_不存在userId","target":{"null":null},"params": {},"code_status": 400,"keyword": "该用户不存在"},
             ]
     },
     {

@@ -9,7 +9,6 @@ platform_host = env.PLATFORM_HOST
 # VIP層級
 class UserVip(PlatformAPI):
 
-
     # 編輯VIP層級
     def edit_vip(
             self, plat_token=None, id=None, name=None,
@@ -53,9 +52,6 @@ class UserVip(PlatformAPI):
 
     # 獲取VIP列表
     def get_vip_list(self):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
         request_body = {
             "method": "get",
             "url": "/v1/user/vip/config/mapList"
@@ -346,8 +342,8 @@ class UserVipPointRatio(PlatformAPI):
         response = self.send_request(**request_body)
         return response.json()
 
-    #IP積分特定幣別修改記錄
-    def get_vip_point_ratio_records(self ,currency="CNY"):
+    # IP積分特定幣別修改記錄
+    def get_vip_point_ratio_records(self, currency="CNY"):
 
         request_body = {
             "method": "get",
@@ -357,8 +353,8 @@ class UserVipPointRatio(PlatformAPI):
         response = self.send_request(**request_body)
         return response.json()
 
-    #修改VIP積分幣別排序
-    def sort_vip_point_ratio(self ,currency="CNY", position=0):
+    # 修改VIP積分幣別排序
+    def sort_vip_point_ratio(self, currency="CNY", position=0):
 
         request_body = {
             "method": "put",
@@ -369,7 +365,7 @@ class UserVipPointRatio(PlatformAPI):
         return response.json()
 
     # 修改VIP積分設定
-    def edit_vip_point_ratio(self , currency=None, ratio=0, showAmount=0 ):
+    def edit_vip_point_ratio(self, currency=None, ratio=0, showAmount=0):
 
         request_body = {
             "method": "post",
@@ -381,9 +377,9 @@ class UserVipPointRatio(PlatformAPI):
         return response.json()
 
     # 獲取特定幣別的 vip_point_ratio_cur
-    def get_vip_point_ratio_cur(self , currency=None):
+    def get_vip_point_ratio_cur(self, currency=None):
         response = self.get_vip_point_ratio()
-        target = jsonpath.jsonpath(response, "$..data[?(@.currency=='"+ currency+"')]")
+        target = jsonpath.jsonpath(response, "$..data[?(@.currency=='" + currency + "')]")
         return target[-1]
 
 # 審批操作
@@ -498,18 +494,18 @@ class UserManage(PlatformAPI):
             self.request_session.headers.update({"token": str(plat_token)})
         jsdata = self.get_user_manage_list(optType=optType, size=100, status=0)
         ret = jsonpath.jsonpath(jsdata, "$..id")
-        jsdata2 = self.get_user_manage_list(optType=optType, size=100, status=3)
+        jsdata2 = self.get_user_manage_list(optType=optType, size=100, status=1)
         ret2 = jsonpath.jsonpath(jsdata2, "$..id")
         if ret:
             for i in ret:
                 self.first_approval(id=i, status=2, remark="auto_rej")
         if ret2:
             for i in ret2:
-                self.second_approval(id=i, status=5, remark="auto_rej")
+                self.second_approval(id=i, status=4, remark="auto_rej")
 
     def get_manage_id(self, plat_token=None, phase=1):  # 一審訂單:1 二審訂單:2
         FIRST = 0
-        SECOND = 3
+        SECOND = 1
         userId = 12
         if env.env:
             userId = 2
