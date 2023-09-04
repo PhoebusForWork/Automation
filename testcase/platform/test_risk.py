@@ -2,8 +2,6 @@ import pytest
 import allure
 from utils.data_utils import TestDataReader, ResponseVerification
 from utils.api_utils import API_Controller
-from utils.generate_utils import Make
-from pylib.platform.config import Avatar, Make_config_data, Domain
 
 test_data = TestDataReader()
 test_data.read_json5('test_risk.json5')
