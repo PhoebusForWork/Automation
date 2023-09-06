@@ -3,12 +3,12 @@ import allure
 from pylib.client_side.webApiBase import WebAPI
 from utils.data_utils import TestDataReader, ResponseVerification
 from utils.api_utils import API_Controller
-from pylib.client_side.user import Address
+from pylib.client_side.user import Address, Vip
 from pylib.client_side.validation import Validation
 from pylib.client_side.user import Security
 from pylib.client_side.test import TransferMock
 from utils.generate_utils import Make
-from utils.xxl_job_utils import XxlJobs
+
 
 test_data = TestDataReader()
 test_data.read_json5('test_user.json5', file_side='cs')
@@ -84,6 +84,132 @@ def make_register_new_user():
 ######################
 #      testCase      #
 ######################
+
+class TestVIP:
+    @staticmethod
+    @allure.feature("VIP")
+    @allure.story("各VIP階層與幣別積分比例")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('get_user_vip_config'))
+    def test_get_user_vip_config(test, get_user_token):
+
+        api = API_Controller(platform='cs')
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_user_token)
+
+        assert resp.status_code == test['code_status'], resp.text
+        assert test['keyword'] in resp.text
+
+    @staticmethod
+    @allure.feature("VIP")
+    @allure.story("用戶VIP查詢")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('get_user_vip'))
+    def test_get_user_vip(test, get_user_token):
+
+        api = API_Controller(platform='cs')
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_user_token)
+
+        assert resp.status_code == test['code_status'], resp.text
+        assert test['keyword'] in resp.text
+
+    @staticmethod
+    @allure.feature("VIP")
+    @allure.story("用戶VIP未領點卷")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('get_user_vip_coupons'))
+    def test_get_user_vip_coupons(test, get_user_token):
+
+        api = API_Controller(platform='cs')
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_user_token)
+
+        assert resp.status_code == test['code_status'], resp.text
+        assert test['keyword'] in resp.text
+
+    @staticmethod
+    @allure.feature("VIP")
+    @allure.story("用戶VIP點卷詳情")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('get_user_vip_coupon_records'))
+    def test_get_user_vip_coupon_records(test, get_user_token):
+
+        api = API_Controller(platform='cs')
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_user_token)
+
+        assert resp.status_code == test['code_status'], resp.text
+        assert test['keyword'] in resp.text
+
+    @staticmethod
+    @allure.feature("VIP")
+    @allure.story("用戶VIP點卷可兌換詳情")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('get_user_vip_coupon_exchange'))
+    def test_get_user_vip_coupon_exchange(test, get_user_token):
+
+        api = API_Controller(platform='cs')
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                test['params'], token=get_user_token)
+
+        assert resp.status_code == test['code_status'], resp.text
+        assert test['keyword'] in resp.text
+
+
+    @staticmethod
+    @allure.feature("VIP")
+    @allure.story("VIP升降邏輯")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('get_user_vip_level'))
+    def test_get_user_vip_level(test):
+
+        user_name = test['params']['username']
+        resp = Validation().login(username=user_name)
+        token = resp.json()['data']['token']
+
+        user_Vip = Vip(token)
+        user_Vip.getVIPMapping(test)
+        user_Vip.setup_mongo_user_vip(username=user_name, vipjosn=test['json']) # Mongo update
+        user_Vip.run_Vip_XXL_JOB()  #打XXL-JOB VIP 升級
+
+        #取得USER VIP資訊,確認1.VIP等級2.升級点券數量3.升级点券金額
+        api = API_Controller(platform='cs')
+        resp = api.send_request(test['req_method'], test['req_url'], {},
+                                test['params'], token=token)
+
+        #1.VIP等級(一次升多等)
+        assert resp.status_code == test['code_status'], resp.text
+        assert (test['params']['vipName'] if test['keyword'] == "vipName" else test['keyword']) in resp.text
+
+        #2.升級点券數量
+        user_vip_id ,user_vip_name =  resp.json()['data']['vipId'],resp.json()['data']['vipName']
+        user_coupons ,available_coupons  = user_Vip.get_coupon(type=3, user_vip_id=user_vip_id ,user_vip_name=user_vip_name)
+        assert len(user_coupons) == len(available_coupons)
+
+        #3.升级点券金額(升多等，需補派各等級之點券)
+        user_coupon_points = set(int(coupon['point']) for coupon in user_coupons)
+        available_coupon_points = set(int(coupon['point']) for coupon in available_coupons)
+        assert available_coupon_points.issubset(user_coupon_points)
+
+        #動態產生測試資訊於報表
+        allure.dynamic.description(
+            f"User: {user_name}\n"
+            f"JSON: {str(test['json'])}\n"
+            f"Result: 1.VIP等級: {user_vip_name} \n"
+            f"2.升級点券數量 user_coupons: {len(user_coupons)} , available_coupons: {len(available_coupons)},\n"
+            f"3.升级点券金額 \n"
+            f"User coupon points: {user_coupon_points}\n"
+            f"Available coupon points: {available_coupon_points},\n"
+        )
+
+
 
 
 class TestAddress:

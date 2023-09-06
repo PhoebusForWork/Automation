@@ -39,3 +39,8 @@ class XxlJobs(API_Controller):
     def get_game_orders(self, pltCode='ldpro'):
         self.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
                           json={}, params={"id": 2, "executorParam": str({"pltCode": pltCode}), "addressList": None})
+
+    # 使用者VIP 升降級與点券派發
+    def sync_vip(self, syncVipDate = None):
+        self.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
+                          json={}, params={"id": 55, "executorParam": syncVipDate, "addressList": None})

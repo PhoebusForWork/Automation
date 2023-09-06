@@ -4,7 +4,13 @@ from ..client_side.webApiBase import WebAPI
 from utils.api_utils import KeywordArgument
 from utils.generate_utils import Make
 from utils.data_utils import EnvReader
-
+from utils.database_utils import Mongo
+from utils.xxl_job_utils import XxlJobs
+from decimal import Decimal
+from bson.decimal128 import Decimal128
+from datetime import datetime, timedelta
+import json
+import time
 
 env = EnvReader()
 web_host = env.WEB_HOST
@@ -142,24 +148,49 @@ class Currency(WebAPI):
 
 # VIP資訊
 class Vip(WebAPI):
-    # 用戶VIP紅利列表(每月紅利/佳節紅利)
-    def get_bonus_info(self):
+    # 用戶VIP點卷可兌換詳情
+    def get_coupon_exchange(self, currency=None):
         request_body = {
             "method": "get",
-            "url": "/v1/user/vip/bonus"
+            "url": "/v1/user/vip/coupon-exchange"
         }
         response = self.send_request(**request_body)
         return response.json()
 
-    # 領取VIP紅利
-    def get_bonus(self, type=None):
+    # 用戶兌換VIP點卷
+    def edit_coupon_exchange(self, currency=None):
         request_body = {
             "method": "put",
-            "url": "/v1/user/vip/bonus",
+            "url": "/v1/user/vip/coupon-exchange",
             "params": KeywordArgument.body_data()
         }
         response = self.send_request(**request_body)
         return response.json()
+
+    # 用戶VIP點卷詳情
+    def get_coupon_records(self, type=None):
+        request_body = {
+            "method": "get",
+            "url": "/v1/user/vip/coupon-records"
+        }
+        response = self.send_request(**request_body)
+        target = response.json()
+        if type is not None:
+            target = jsonpath.jsonpath(response.json(), "$..data[?(@.type==" + str(type) + ")]")
+        return target
+
+    #用戶VIP未領點卷
+    def get_coupons(self, source=None):
+        request_body = {
+            "method": "get",
+            "url": "/v1/user/vip/coupons",
+            "params": KeywordArgument.body_data()
+        }
+        response = self.send_request(**request_body)
+        target = response.json()
+        if source is not None:
+            target = jsonpath.jsonpath(response.json(), "$..data[?(@.source=='" + source + "')]")
+        return target
 
     # 用戶VIP
     def get_vip(self):
@@ -171,13 +202,83 @@ class Vip(WebAPI):
         return response.json()
 
     # 各VIP階層與幣別積分比例
-    def get_vip_config(self):
+    def get_vip_config(self, vipName = None):
         request_body = {
             "method": "get",
             "url": "/v1/user/vip/config"
         }
         response = self.send_request(**request_body)
-        return response.json()
+        target=response.json()
+
+        if vipName is not None:
+            target = jsonpath.jsonpath(response.json(), "$..data.vipLevels[?(@.name=='" + vipName + "')]")
+
+        return target
+
+
+    def setup_mongo_user_vip(self,username=None, vipjosn = None):
+        setup = Mongo(platform='plt')
+        setup.specify_db('plt_user')
+        setup.specify_collection('ldpro_user')
+
+        filter_query = {"username": username}
+        update_query = {"$set": vipjosn}
+        setup.update_one(filter_query, update_query)
+
+    def getVIPMapping(self, test,type=3):
+        # 取得VIP CONFIG 設定檔，並獎vipConfig 中的参数名轉为小写
+        vipConfig = self.get_vip_config(test['params']['getVip'])
+        vipConfig_lower = {k.lower().replace("_", ""): v for item in vipConfig for k, v in item.items()}
+
+        for test_key, test_value in test['json'].items():
+            keyname = test_key.replace("vip_info.", "").lower()
+            mapingkeyname = keyname.replace("_", "").lower()
+            if mapingkeyname in vipConfig_lower:
+                vip_value = Decimal(vipConfig_lower[mapingkeyname])
+                if keyname in test['params']:
+                    vip_value += Decimal(test['params'][keyname])
+                vip_value = vip_value.quantize(Decimal('0.00000000'))
+                test['json'][test_key] = Decimal128(vip_value)
+
+
+        # 获取当前日期和时间
+        current_date = datetime.now()
+        target_day = [1, 15, 10, 5][type]  # {0:每月点券(m/1) ,1:新年点券(m/15),2:生日点券(m/10),3:升级点券 (m/5)}
+        current_date = current_date.replace(day=target_day, hour=0, minute=15, second=0, microsecond=0)
+        new_date =current_date - timedelta(days=3)  # 减去 3 天
+        test['json']['vip_info.last_modified_time'] = new_date
+
+        return test
+
+    def run_Vip_XXL_JOB(self,type=3):
+
+        xxl = XxlJobs()
+        # 将时间固定为 00:15:00
+        current_date = datetime.now()
+        target_day = [1, 15, 10, 5][type]  # {0:每月点券(m/1) ,1:新年点券(m/15),2:生日点券(m/10),3:升级点券 (m/5)}
+        current_date = current_date.replace(day=target_day, hour=0, minute=15, second=0, microsecond=0)
+
+        # 格式化日期并手动添加时区信息
+        formatted_date = current_date.strftime('%Y-%m-%dT%H:%M:%S+08:00')
+        xxl.sync_vip(syncVipDate=formatted_date)
+        time.sleep(2)
+
+    def get_coupon(self,type=None, user_vip_id=None, user_vip_name=None):
+
+        available_coupons = []  # 获取用户可用的彩金清单
+        user_coupons = []  # 获取用户彩金清单
+        print("user_vip_id=",user_vip_id,"user_vip_name=",user_vip_name)
+        if user_vip_name is not None and user_vip_id is not None and user_vip_name != "VIP0" and user_vip_name.startswith("VIP"):
+            # 获取用户彩金清单
+            user_coupons =  self.get_coupon_records(type=type)
+            vipConfig = self.get_vip_config()
+            #print("user_coupons=",user_coupons,"vipConfig==",vipConfig)
+            # 遍历用户VIP等级及以下的VIP等级
+            for vip_level in vipConfig["data"]["vipLevels"]:
+                if vip_level["id"] <= user_vip_id and vip_level["levelGift"] > 0:
+                    available_coupons.append({"name": vip_level["name"], "point": vip_level["levelGift"]})
+        #print("user_coupons ==========",user_coupons,"available_coupons=", available_coupons)
+        return user_coupons, available_coupons
 
 
 # 客戶詳細資料

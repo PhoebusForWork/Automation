@@ -1,4 +1,78 @@
-[
+[   {
+        "test_case": "get_user_vip_config",
+        "req_method": "get",
+        "req_url": "/v1/user/vip/config",
+        "test_item": [
+            {"scenario":"各VIP階層與幣別積分比例","json": {},"params": {},"code_status": 200,"keyword": "data"}
+            ]
+    },
+    {
+        "test_case": "get_user_vip",
+        "req_method": "get",
+        "req_url": "/v1/user/vip",
+        "test_item": [
+            {"scenario":"用戶VIP查詢","json": {},"params": {},"code_status": 200,"keyword": "data"}
+            ]
+    },
+    {
+        "test_case": "get_user_vip_coupons",
+        "req_method": "get",
+        "req_url": "/v1/user/vip/coupons",
+        "test_item": [
+            {"scenario":"用戶VIP未領點卷","json": {},"params": {},"code_status": 200,"keyword": "data"}
+            ]
+    },
+        {
+        "test_case": "get_user_vip_coupon_records",
+        "req_method": "get",
+        "req_url": "/v1/user/vip/coupon-records",
+        "test_item": [
+            {"scenario":"用戶VIP點卷詳情","json": {},"params": {},"code_status": 200,"keyword": "data"}
+            ]
+    },
+    {
+        "test_case": "get_user_vip_coupon_exchange",
+        "req_method": "get",
+        "req_url": "/v1/user/vip/coupon-exchange",
+        "test_item": [
+            {"scenario":"用戶VIP點卷可兌換詳情","json": {},"params": {"currency": "USD"},"code_status": 200,"keyword": "data"}
+            ]
+    },
+    {
+        "test_case": "get_user_vip_level",
+        "req_method": "get",
+        "req_url": "/v1/user/vip",
+        "test_item": [
+            //type:{0:每月点券(m/1) ,1:新年点券(m/15),2:生日点券(m/10),3:升级点券 (m/5)}
+            //VIP升級與点券
+//            {"scenario":"IP升級與点券_VIP0","params": {"username": "ttt010" ,"type": 3 ,"getVip": "VIP0" , "vipName" : "VIP0","bet_total":1 , "recharge_total":2 },"json": {"vip_info.bet_total": 0, "vip_info.recharge_total": 0, "vip_info.last_modified_time": "2023-08-28T00:15:00+08:00"},"code_status": 200,"keyword": "vipName"},
+//            {"scenario":"VIP升級與点券_VIP1","params": {"username": "ttt011"  ,"type": 3 ,"getVip": "VIP1" , "vipName" : "VIP1","bet_total":0 , "recharge_total":0  },"json": {"vip_info.bet_total": 0, "vip_info.recharge_total": 0, "vip_info.last_modified_time": "2023-08-28T00:15:00+08:00"},"code_status": 200,"keyword": "vipName"},
+//            {"scenario":"VIP升級與点券_VIP2","params": {"username": "ttt012"  ,"type": 3 ,"getVip": "VIP2" , "vipName" : "VIP2","bet_total":0 , "recharge_total":0  },"json": {"vip_info.bet_total": 0, "vip_info.recharge_total": 0, "vip_info.last_modified_time": "2023-08-28T00:15:00+08:00"},"code_status": 200,"keyword": "vipName"},
+//            {"scenario":"VIP升級與点券_VIP3","params": {"username": "ttt013"  ,"type": 3 ,"getVip": "VIP3" , "vipName" : "VIP3","bet_total":0 , "recharge_total":0  },"json": {"vip_info.bet_total": 0, "vip_info.recharge_total": 0, "vip_info.last_modified_time": "2023-08-28T00:15:00+08:00"},"code_status": 200,"keyword": "vipName"},
+//            {"scenario":"VIP升級與点券_VIP4","params": {"username": "ttt014"  ,"type": 3 ,"getVip": "VIP4" , "vipName" : "VIP4","bet_total":0 , "recharge_total":0  },"json": {"vip_info.bet_total": 0, "vip_info.recharge_total": 0, "vip_info.last_modified_time": "2023-08-28T00:15:00+08:00"},"code_status": 200,"keyword": "vipName"},
+//            {"scenario":"VIP升級與点券_VIP5","params": {"username": "ttt015"  ,"type": 3 ,"getVip": "VIP5" , "vipName" : "VIP5","bet_total":0 , "recharge_total":0  },"json": {"vip_info.bet_total": 0, "vip_info.recharge_total": 0, "vip_info.last_modified_time": "2023-08-28T00:15:00+08:00"},"code_status": 200,"keyword": "vipName"},
+//            {"scenario":"VIP升級與点券_VIP6","params": {"username": "ttt016"  ,"type": 3 ,"getVip": "VIP6" , "vipName" : "VIP6","bet_total":0 , "recharge_total":0  },"json": {"vip_info.bet_total": 0, "vip_info.recharge_total": 0, "vip_info.last_modified_time": "2023-08-28T00:15:00+08:00"},"code_status": 200,"keyword": "vipName"},
+//            {"scenario":"VIP升級與点券_VIP7","params": {"username": "ttt017"  ,"type": 3 ,"getVip": "VIP7" , "vipName" : "VIP7","bet_total":0 , "recharge_total":0  },"json": {"vip_info.bet_total": 0, "vip_info.recharge_total": 0, "vip_info.last_modified_time": "2023-08-28T00:15:00+08:00"},"code_status": 200,"keyword": "vipName"},
+//            {"scenario":"VIP升級與点券_VIP8","params": {"username": "ttt018"  ,"type": 3 ,"getVip": "VIP8" , "vipName" : "VIP8","bet_total":0 , "recharge_total":0  },"json": {"vip_info.bet_total": 0, "vip_info.recharge_total": 0, "vip_info.last_modified_time": "2023-08-28T00:15:00+08:00"},"code_status": 200,"keyword": "vipName"},
+//            {"scenario":"VIP升級與点券_VIP9","params": {"username": "ttt019"  ,"type": 3 ,"getVip": "VIP9" , "vipName" : "VIP9","bet_total":0 , "recharge_total":0  },"json": {"vip_info.bet_total": 0, "vip_info.recharge_total": 0, "vip_info.last_modified_time": "2023-08-28T00:15:00+08:00"},"code_status": 200,"keyword": "vipName"},
+//            {"scenario":"VIP升級與点券_VIP10","params": {"username": "ttt020"  ,"type": 3 ,"getVip": "VIP10" , "vipName" : "VIP10","bet_total":0 , "recharge_total":0  },"json": {"vip_info.bet_total": 0, "vip_info.recharge_total": 0, "vip_info.last_modified_time": "2023-08-28T00:15:00+08:00"},"code_status": 200,"keyword": "vipName"},
+            {"scenario":"VIP升級邊介值確認_VIP0","params": {"username": "tt0006"  ,"type": 3 ,"getVip": "VIP1" , "vipName" : "VIP0","bet_total":-1 , "recharge_total":-1  },"json": {"vip_info.bet_total": 0, "vip_info.recharge_total": 0, "vip_info.last_modified_time": "2023-08-28T00:15:00+08:00"},"code_status": 200,"keyword": "vipName"},
+            {"scenario":"VIP升級邊介值確認_VIP0","params": {"username": "tt0006"  ,"type": 3 ,"getVip": "VIP1" , "vipName" : "VIP0","bet_total":-1 , "recharge_total":-1  },"json": {"vip_info.bet_total": 0, "vip_info.recharge_total": 0, "vip_info.last_modified_time": "2023-08-28T00:15:00+08:00"},"code_status": 200,"keyword": "vipName"},
+            {"scenario":"VIP升級邊介值確認_VIP0","params": {"username": "tt0006"  ,"type": 3 ,"getVip": "VIP1" , "vipName" : "VIP0","bet_total":-1 , "recharge_total":-1  },"json": {"vip_info.bet_total": 0, "vip_info.recharge_total": 0, "vip_info.last_modified_time": "2023-08-28T00:15:00+08:00"},"code_status": 200,"keyword": "vipName"},
+            {"scenario":"VIP升級邊介值確認_VIP1","params": {"username": "tt0006"  ,"type": 3 ,"getVip": "VIP2" , "vipName" : "VIP1","bet_total":-1 , "recharge_total":-1  },"json": {"vip_info.bet_total": 0, "vip_info.recharge_total": 0, "vip_info.last_modified_time": "2023-08-28T00:15:00+08:00"},"code_status": 200,"keyword": "vipName"},
+            {"scenario":"VIP升級邊介值確認_VIP1","params": {"username": "tt0006"  ,"type": 3 ,"getVip": "VIP2" , "vipName" : "VIP1","bet_total":-1 , "recharge_total":-1  },"json": {"vip_info.bet_total": 0, "vip_info.recharge_total": 0, "vip_info.last_modified_time": "2023-08-28T00:15:00+08:00"},"code_status": 200,"keyword": "vipName"},
+            {"scenario":"VIP升級邊介值確認_VIP1","params": {"username": "tt0006"  ,"type": 3 ,"getVip": "VIP2" , "vipName" : "VIP1","bet_total":-1 , "recharge_total":-1  },"json": {"vip_info.bet_total": 0, "vip_info.recharge_total": 0, "vip_info.last_modified_time": "2023-08-28T00:15:00+08:00"},"code_status": 200,"keyword": "vipName"},
+            {"scenario":"VIP升級邊介值確認_VIP2","params": {"username": "tt0006"  ,"type": 3 ,"getVip": "VIP3" , "vipName" : "VIP2","bet_total":-1 , "recharge_total":-1  },"json": {"vip_info.bet_total": 0, "vip_info.recharge_total": 0, "vip_info.last_modified_time": "2023-08-28T00:15:00+08:00"},"code_status": 200,"keyword": "vipName"},
+            {"scenario":"VIP升級邊介值確認_VIP3","params": {"username": "tt0006"  ,"type": 3 ,"getVip": "VIP4" , "vipName" : "VIP3","bet_total":-1 , "recharge_total":-1  },"json": {"vip_info.bet_total": 0, "vip_info.recharge_total": 0, "vip_info.last_modified_time": "2023-08-28T00:15:00+08:00"},"code_status": 200,"keyword": "vipName"},
+            {"scenario":"VIP升級邊介值確認_VIP4","params": {"username": "tt0006"  ,"type": 3 ,"getVip": "VIP5" , "vipName" : "VIP4","bet_total":-1 , "recharge_total":-1  },"json": {"vip_info.bet_total": 0, "vip_info.recharge_total": 0, "vip_info.last_modified_time": "2023-08-28T00:15:00+08:00"},"code_status": 200,"keyword": "vipName"},
+            {"scenario":"VIP升級邊介值確認_VIP5","params": {"username": "tt0006"  ,"type": 3 ,"getVip": "VIP6" , "vipName" : "VIP5","bet_total":-1 , "recharge_total":-1  },"json": {"vip_info.bet_total": 0, "vip_info.recharge_total": 0, "vip_info.last_modified_time": "2023-08-28T00:15:00+08:00"},"code_status": 200,"keyword": "vipName"},
+            {"scenario":"VIP升級邊介值確認_VIP6","params": {"username": "tt0006"  ,"type": 3 ,"getVip": "VIP7" , "vipName" : "VIP6","bet_total":-1 , "recharge_total":-1  },"json": {"vip_info.bet_total": 0, "vip_info.recharge_total": 0, "vip_info.last_modified_time": "2023-08-28T00:15:00+08:00"},"code_status": 200,"keyword": "vipName"},
+            {"scenario":"VIP升級邊介值確認_VIP7","params": {"username": "tt0006"  ,"type": 3 ,"getVip": "VIP8" , "vipName" : "VIP7","bet_total":-1 , "recharge_total":-1  },"json": {"vip_info.bet_total": 0, "vip_info.recharge_total": 0, "vip_info.last_modified_time": "2023-08-28T00:15:00+08:00"},"code_status": 200,"keyword": "vipName"},
+            {"scenario":"VIP升級邊介值確認_VIP8","params": {"username": "tt0006"  ,"type": 3 ,"getVip": "VIP9" , "vipName" : "VIP8","bet_total":-1 , "recharge_total":-1  },"json": {"vip_info.bet_total": 0, "vip_info.recharge_total": 0, "vip_info.last_modified_time": "2023-08-28T00:15:00+08:00"},"code_status": 200,"keyword": "vipName"},
+            {"scenario":"VIP升級邊介值確認_VIP9","params": {"username": "tt0006"  ,"type": 3 ,"getVip": "VIP10" , "vipName" : "VIP9","bet_total":-1 , "recharge_total":-1  },"json": {"vip_info.bet_total": 0, "vip_info.recharge_total": 0, "vip_info.last_modified_time": "2023-08-28T00:15:00+08:00"},"code_status": 200,"keyword": "vipName"},
+            {"scenario":"VIP升級邊介值確認_VIP9","params": {"username": "tt0006"  ,"type": 3 ,"getVip": "VIP9" , "vipName" : "VIP9","bet_total":1 , "recharge_total":1  },"json": {"vip_info.bet_total": 0, "vip_info.recharge_total": 0, "vip_info.last_modified_time": "2023-08-28T00:15:00+08:00"},"code_status": 200,"keyword": "vipName"},
+        ]
+    },
     {
         "test_case": "add_user_address",
         "req_method": "post",
