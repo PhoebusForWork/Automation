@@ -9,6 +9,7 @@ from utils.xxl_job_utils import XxlJobs
 from decimal import Decimal
 from bson.decimal128 import Decimal128
 from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
 import json
 import time
 
@@ -177,6 +178,9 @@ class Vip(WebAPI):
         target = response.json()
         if type is not None:
             target = jsonpath.jsonpath(response.json(), "$..data[?(@.type==" + str(type) + ")]")
+
+        target = target if target else {}
+
         return target
 
     #用戶VIP未領點卷
@@ -190,6 +194,9 @@ class Vip(WebAPI):
         target = response.json()
         if source is not None:
             target = jsonpath.jsonpath(response.json(), "$..data[?(@.source=='" + source + "')]")
+
+        target = target if target else {}
+
         return target
 
     # 用戶VIP
@@ -213,6 +220,8 @@ class Vip(WebAPI):
         if vipName is not None:
             target = jsonpath.jsonpath(response.json(), "$..data.vipLevels[?(@.name=='" + vipName + "')]")
 
+        target = target if target else {}
+
         return target
 
 
@@ -225,7 +234,7 @@ class Vip(WebAPI):
         update_query = {"$set": vipjosn}
         setup.update_one(filter_query, update_query)
 
-    def getVIPMapping(self, test,type=3):
+    def getVIPMapping(self, test):
         # 取得VIP CONFIG 設定檔，並獎vipConfig 中的参数名轉为小写
         vipConfig = self.get_vip_config(test['params']['getVip'])
         vipConfig_lower = {k.lower().replace("_", ""): v for item in vipConfig for k, v in item.items()}
@@ -242,12 +251,16 @@ class Vip(WebAPI):
 
 
         # 获取当前日期和时间
+        type = test['params']['type']
         current_date = datetime.now()
         target_day = [1, 15, 10, 5][type]  # {0:每月点券(m/1) ,1:新年点券(m/15),2:生日点券(m/10),3:升级点券 (m/5)}
         current_date = current_date.replace(day=target_day, hour=0, minute=15, second=0, microsecond=0)
-        new_date =current_date - timedelta(days=3)  # 减去 3 天
-        test['json']['vip_info.last_modified_time'] = new_date
+        test['json']['vip_info.last_modified_time'] = current_date - timedelta(days=3)  # 减去 3 天
+        if type == 2 :
+            test['json']['register_time'] = current_date - relativedelta(months=4)
+            print("test['json']['register_time']=",test['json']['register_time'])
 
+        print("current_date=",current_date,"test['json']=",test['json'])
         return test
 
     def run_Vip_XXL_JOB(self,type=3):
@@ -260,7 +273,9 @@ class Vip(WebAPI):
 
         # 格式化日期并手动添加时区信息
         formatted_date = current_date.strftime('%Y-%m-%dT%H:%M:%S+08:00')
+        xxl.sync_vip_festivalGift_date(syncVipDate=current_date) if type == 1 else None
         xxl.sync_vip(syncVipDate=formatted_date)
+        print("formatted_date=",formatted_date)
         time.sleep(2)
 
     def get_coupon(self,type=None, user_vip_id=None, user_vip_name=None):
@@ -275,9 +290,15 @@ class Vip(WebAPI):
             #print("user_coupons=",user_coupons,"vipConfig==",vipConfig)
             # 遍历用户VIP等级及以下的VIP等级
             for vip_level in vipConfig["data"]["vipLevels"]:
-                if vip_level["id"] <= user_vip_id and vip_level["levelGift"] > 0:
-                    available_coupons.append({"name": vip_level["name"], "point": vip_level["levelGift"]})
-        #print("user_coupons ==========",user_coupons,"available_coupons=", available_coupons)
+                couponsName = ['redEnvelop', 'festivalGift', 'birthdayGift','levelGift',][type]
+                if(type==3):
+                    if vip_level["id"] <= user_vip_id and vip_level[couponsName] > 0:
+                        available_coupons.append({"name": vip_level["name"], "point": vip_level[couponsName]})
+                else:
+                    if vip_level["id"] == user_vip_id and vip_level[couponsName] > 0:
+                        available_coupons.append({"name": vip_level["name"], "point": vip_level[couponsName]})
+
+        print("user_coupons ==========",user_coupons,"available_coupons=", available_coupons)
         return user_coupons, available_coupons
 
 

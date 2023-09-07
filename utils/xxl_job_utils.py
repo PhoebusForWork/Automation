@@ -40,6 +40,13 @@ class XxlJobs(API_Controller):
         self.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
                           json={}, params={"id": 2, "executorParam": str({"pltCode": pltCode}), "addressList": None})
 
+    # 使用者VIP 設定新年點卷發放日期
+    def sync_vip_festivalGift_date(self, syncVipDate = None):
+        form_date = syncVipDate.strftime('--%m-%d')
+        executorParam = '{"pltCode":"ldpro","monthDay":"' + form_date + '"}'
+        self.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
+                          json={}, params={"id": 57, "executorParam": executorParam, "addressList": None})
+
     # 使用者VIP 升降級與点券派發
     def sync_vip(self, syncVipDate = None):
         self.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
