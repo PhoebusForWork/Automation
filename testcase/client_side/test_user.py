@@ -6,6 +6,7 @@ from utils.api_utils import API_Controller
 from pylib.client_side.user import Address, Vip
 from pylib.client_side.validation import Validation
 from pylib.client_side.user import Security
+from pylib.client_side.wallet import FrontUser
 from pylib.client_side.test import TransferMock
 from utils.generate_utils import Make
 
@@ -175,9 +176,10 @@ class TestVIP:
         token = resp.json()['data']['token']
 
         user_Vip = Vip(token)
-        user_Vip.getVIPMapping(test)
+        org_user_Vip_data = user_Vip.get_vip()
+        user_Vip.getVIPMapping(test) #設定TESTCASE的要變更的VIP等級對金額設定
         user_Vip.setup_mongo_user_vip(username=user_name, vipjosn=test['json']) # Mongo update
-        user_Vip.run_Vip_XXL_JOB(test['params']['type'])  #打XXL-JOB VIP 升級
+        user_Vip.run_Vip_XXL_JOB(type=test['params']['type'])  #打XXL-JOB VIP
 
         #取得USER VIP資訊,確認1.VIP等級2.升級点券數量3.升级点券金額
         api = API_Controller(platform='cs')
@@ -190,13 +192,17 @@ class TestVIP:
 
         #2.升級点券數量
         user_vip_id ,user_vip_name =  resp.json()['data']['vipId'],resp.json()['data']['vipName']
-        user_coupons ,available_coupons  = user_Vip.get_coupon(type=test['params']['type'], user_vip_id=user_vip_id ,user_vip_name=user_vip_name)
+        user_coupons ,available_coupons  = user_Vip.get_coupon_data(type=test['params']['type'], org_user_Vip_id= org_user_Vip_data["data"]["vipId"],user_vip_id=user_vip_id ,user_vip_name=user_vip_name)
         assert len(user_coupons) == len(available_coupons)
 
         #3.升级点券金額(升多等，需補派各等級之點券)
         user_coupon_points = set(int(coupon['point']) for coupon in user_coupons)
         available_coupon_points = set(int(coupon['point']) for coupon in available_coupons)
         assert available_coupon_points.issubset(user_coupon_points)
+
+        # 4.兌換點卷
+        actual_balance, estimate_balance = user_Vip.get_coupon_exchange_bonus(token, test,available_coupons)
+        assert actual_balance == estimate_balance
 
         #動態產生測試資訊於報表
         allure.dynamic.description(
@@ -207,6 +213,7 @@ class TestVIP:
             f"3.升级点券金額 \n"
             f"User coupon points: {user_coupon_points}\n"
             f"Available coupon points: {available_coupon_points},\n"
+            f"4.兑换彩金確認 estimate-user_balances :{estimate_balance} ,actual-user_balances {actual_balance} \n"
         )
 
 
