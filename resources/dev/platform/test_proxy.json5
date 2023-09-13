@@ -699,5 +699,111 @@
             {"req_url":"/v1/proxy/domain/1/promotionLink","scenario":"[proxyId]存在id","target":{},"code_status": 200,"keyword": "data"},
             {"req_url":"/v1/proxy/domain/9999/promotionLink","scenario":"[proxyId]不存在id","target":{},"code_status": 400,"keyword": "資料不存在"},
             ]
-    }        
+    },
+    {
+        "test_case" : "get_commission_adjust_list",
+        "req_method" : "get",
+        "req_url": "/v1/commission/adjust",
+        "schema":{"type":"object","properties": {"data": {"type": "object", "properties": {"total": {"type": "integer"}, "size": {"type": "integer"}, "current": {"type": "integer"}, "pages": {"type": "integer"}, "records": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "proxyAccount": {"type": "string"}, "groupName": {"type": "string"}, "channelName": {"type": "string"}, "commissionName": {"type": "string"}, "currency": {"type": "string"}, "modifyAmount": {"type": "integer"}, "beforeAmount": {"type": "integer"}, "afterAmount": {"type": "integer"}, "applicant": {"type": "string"}, "reason": {"type": "string"}, "createTime": {"type": "string"}, "proxyManageStatus": {"type": "integer"}, "firstApprover": {"type": "string"}, "firstRemark": {"type": "string"}, "firstTime": {"type": "string"}, "secondApprover": {"type": "string"}, "secondRemark": {"type": "string"}, "secondTime": {"type": "string"}}, "required": ["afterAmount", "applicant", "beforeAmount", "channelName", "commissionName", "createTime", "currency", "firstApprover", "firstRemark", "firstTime", "groupName", "id", "modifyAmount", "proxyAccount", "proxyManageStatus", "reason", "secondApprover", "secondRemark", "secondTime"]}}}, "required": ["current", "pages", "records", "size", "total"]}}, "required": ["data"]},
+        "params": {"from":"2023-07-22T16:00:00+08:00", "to":"2033-07-22T16:00:00+08:00", "proxyAccount": "", "applicant": "", "approver": "", "status": "", "page": "", "size": ""},
+        "json":{},
+        "test_item" : [
+            {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"},
+            {"scenario":"[from]數字","target":{"from": 123},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[from]字串","target": {"from": "字串ABC"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[to]數字","target":{"to": 123},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[to]字串","target": {"to": "字串ABC"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[proxyAccount]數字","target":{"proxyAccount": 123},"code_status": 200,"keyword": "data"},
+            {"scenario":"[proxyAccount]字串","target": {"proxyAccount": "ABC"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[proxyAccount]null","target": {"proxyAccount": null},"code_status": 200,"keyword": "data"},
+            {"scenario":"[proxyAccount]空值","target": {"proxyAccount": ""},"code_status": 200,"keyword": "data"},
+            {"scenario":"[applicant]數字","target":{"applicant": 123},"code_status": 200,"keyword": "data"},
+            {"scenario":"[applicant]字串","target": {"applicant": "ABC"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[applicant]null","target": {"applicant": null},"code_status": 200,"keyword": "data"},
+            {"scenario":"[applicant]空值","target": {"applicant": ""},"code_status": 200,"keyword": "data"},
+            {"scenario":"[approver]數字","target":{"approver": 123},"code_status": 200,"keyword": "data"},
+            {"scenario":"[approver]字串","target": {"approver": "ABC"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[approver]null","target": {"approver": null},"code_status": 200,"keyword": "data"},
+            {"scenario":"[approver]空值","target": {"approver": ""},"code_status": 200,"keyword": "data"},
+            {"scenario":"[status]0","target":{"status": 0},"code_status": 200,"keyword": "data"},
+            {"scenario":"[status]1","target": {"status": 1},"code_status": 200,"keyword": "data"},
+            {"scenario":"[status]2","target": {"status": 2},"code_status": 200,"keyword": "data"},
+            {"scenario":"[status]3","target": {"status": 3},"code_status": 200,"keyword": "data"},
+            {"scenario":"[status]4","target": {"status": 4},"code_status": 200,"keyword": "data"},
+            {"scenario":"[status]777","target": {"status": 777},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[status]字串","target": {"status": "ABC"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[status]null","target": {"status": null},"code_status": 200,"keyword": "data"},
+            {"scenario":"[status]空值","target": {"status": ""},"code_status": 200,"keyword": "data"},
+            {"scenario":"[page]正常查詢","target": {"page": "1"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[page]字串","target": {"page": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[size]正常查詢","target": {"size": "50"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[size]字串","target": {"size": "abc"},"code_status": 400,"keyword": "无效的请求参数"}
+        ]
+    },
+    {
+        "test_case" : "get_proxy_manage_status",
+        "req_method" : "get",
+        "req_url": "/v1/commission/adjust/proxyManageStatus",
+        "schema":{"type": "object", "properties": {"data": {"type": "array", "items": {"type": "integer"}}}, "required": ["data"]},
+        "params": {},
+        "json":{},
+        "test_item" : [
+            {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"}
+        ]
+    },
+    {
+        "test_case" : "get_approver_list",
+        "req_method" : "get",
+        "req_url": "/v1/commission/adjust/approverList",
+        "schema":{"type": "object", "properties": {"data": {"type": "array", "items": {"type": "string"}}}, "required": ["data"]},
+        "params": {},
+        "json":{},
+        "test_item" : [
+            {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"}
+        ]
+    },
+    {
+        "test_case" : "commission_adjust",
+        "req_method" : "post",
+        "req_url": "/v1/commission/adjust/1",
+        "schema":{"type": "object", "properties": {"data": {"type": "object"}}, "required": ["data"]},
+        "params": {},
+        "json":{"reason": "string", "amount": 0},
+        "test_item" : [
+            {"scenario":"reason[數字]","target":{"reason": 1},"code_status": 400,"keyword": "message"},
+            {"scenario":"reason[null]","target":{"reason": null},"code_status": 400,"keyword": "message"},
+            {"scenario":"amount[字串]","target":{"amount": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"amount[空值]","target":{"amount": "0"},"code_status": 400,"keyword": "message"}
+        ]
+    },
+    {
+        "test_case" : "commission_adjust_first_approve",
+        "req_method" : "put",
+        "req_url": "/v1/commission/adjust/1/firstApprove",
+        "schema":{"type": "object", "properties": {"data": {"type": "object"}}, "required": ["data"]},
+        "params": {},
+        "json":{"remark": "string", "isPass": true},
+        "test_item" : [
+            {"scenario":"remark[數字]","target":{"remark": 1},"code_status": 400,"keyword": "message"},
+            {"scenario":"remark[null]","target":{"remark": null},"code_status": 400,"keyword": "message"},
+            {"scenario":"isPass[數字]","target":{"isPass": 123},"code_status": 400,"keyword": "message"},
+            {"scenario":"isPass[字串]","target":{"isPass": "abc"},"code_status": 400,"keyword": "message"},
+            {"scenario":"isPass[空值]","target":{"isPass": "0"},"code_status": 400,"keyword": "message"}
+        ]
+    },
+    {
+        "test_case" : "commission_adjust_second_approve",
+        "req_method" : "put",
+        "req_url": "/v1/commission/adjust/1/secondApprove",
+        "schema":{"type": "object", "properties": {"data": {"type": "object"}}, "required": ["data"]},
+        "params": {},
+        "json":{"remark": "string", "isPass": true},
+        "test_item" : [
+            {"scenario":"remark[數字]","target":{"remark": 1},"code_status": 400,"keyword": "message"},
+            {"scenario":"remark[null]","target":{"remark": null},"code_status": 400,"keyword": "message"},
+            {"scenario":"isPass[數字]","target":{"isPass": 123},"code_status": 400,"keyword": "message"},
+            {"scenario":"isPass[字串]","target":{"isPass": "abc"},"code_status": 400,"keyword": "message"},
+            {"scenario":"isPass[空值]","target":{"isPass": "0"},"code_status": 400,"keyword": "message"}
+        ]
+    }
 ]
