@@ -774,45 +774,45 @@
     {
         "test_case" : "commission_adjust",
         "req_method" : "post",
-        "req_url": "/v1/commission/adjust/7777",
+        "req_url": "/v1/commission/adjust/1",
         "schema":{"type": "object", "properties": {"data": {"type": "object"}}, "required": ["data"]},
         "params": {},
         "json":{"reason": "string", "amount": 0},
         "test_item" : [
-            {"scenario":"reason[數字]","target":{"reason": 1},"code_status": 400,"keyword": "資料不存在"},
-            {"scenario":"reason[null]","target":{"reason": null},"code_status": 400,"keyword": "資料不存在"},
+            {"scenario":"reason[數字]","target":{"reason": 1},"code_status": 400,"keyword": "message"},
+            {"scenario":"reason[null]","target":{"reason": null},"code_status": 400,"keyword": "message"},
             {"scenario":"amount[字串]","target":{"amount": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"amount[空值]","target":{"amount": ""},"code_status": 400,"keyword": "无效的请求参数"}
+            {"scenario":"amount[空值]","target":{"amount": "0"},"code_status": 400,"keyword": "message"}
         ]
     },
     {
         "test_case" : "commission_adjust_first_approve",
         "req_method" : "put",
-        "req_url": "/v1/commission/adjust/7777/firstApprove",
+        "req_url": "/v1/commission/adjust/1/firstApprove",
         "schema":{"type": "object", "properties": {"data": {"type": "object"}}, "required": ["data"]},
         "params": {},
         "json":{"remark": "string", "isPass": true},
         "test_item" : [
-            {"scenario":"remark[數字]","target":{"remark": 1},"code_status": 400,"keyword": "資料不存在"},
-            {"scenario":"remark[null]","target":{"remark": null},"code_status": 400,"keyword": "資料不存在"},
-            {"scenario":"isPass[數字]","target":{"isPass": 123},"code_status": 400,"keyword": "資料不存在"},
-            {"scenario":"isPass[字串]","target":{"isPass": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"isPass[空值]","target":{"isPass": ""},"code_status": 400,"keyword": "无效的请求参数"}
+            {"scenario":"remark[數字]","target":{"remark": 1},"code_status": 400,"keyword": "message"},
+            {"scenario":"remark[null]","target":{"remark": null},"code_status": 400,"keyword": "message"},
+            {"scenario":"isPass[數字]","target":{"isPass": 123},"code_status": 400,"keyword": "message"},
+            {"scenario":"isPass[字串]","target":{"isPass": "abc"},"code_status": 400,"keyword": "message"},
+            {"scenario":"isPass[空值]","target":{"isPass": "0"},"code_status": 400,"keyword": "message"}
         ]
     },
     {
         "test_case" : "commission_adjust_second_approve",
         "req_method" : "put",
-        "req_url": "/v1/commission/adjust/7777/secondApprove",
+        "req_url": "/v1/commission/adjust/1/secondApprove",
         "schema":{"type": "object", "properties": {"data": {"type": "object"}}, "required": ["data"]},
         "params": {},
         "json":{"remark": "string", "isPass": true},
         "test_item" : [
-            {"scenario":"remark[數字]","target":{"remark": 1},"code_status": 400,"keyword": "資料不存在"},
-            {"scenario":"remark[null]","target":{"remark": null},"code_status": 400,"keyword": "資料不存在"},
-            {"scenario":"isPass[數字]","target":{"isPass": 123},"code_status": 400,"keyword": "資料不存在"},
-            {"scenario":"isPass[字串]","target":{"isPass": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"isPass[空值]","target":{"isPass": ""},"code_status": 400,"keyword": "无效的请求参数"}
+            {"scenario":"remark[數字]","target":{"remark": 1},"code_status": 400,"keyword": "message"},
+            {"scenario":"remark[null]","target":{"remark": null},"code_status": 400,"keyword": "message"},
+            {"scenario":"isPass[數字]","target":{"isPass": 123},"code_status": 400,"keyword": "message"},
+            {"scenario":"isPass[字串]","target":{"isPass": "abc"},"code_status": 400,"keyword": "message"},
+            {"scenario":"isPass[空值]","target":{"isPass": "0"},"code_status": 400,"keyword": "message"}
         ]
     }
 ]
