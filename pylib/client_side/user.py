@@ -197,10 +197,9 @@ class Vip(WebAPI):
         }
         response = self.send_request(**request_body)
         target = response.json()
-        print("target=========",target)
-        if source is not None:
-            target =  jsonpath.jsonpath(response.json(), "$..data[?(@.source==" + str(source) + ")]")
 
+        if source is not None:
+            target = jsonpath.jsonpath(response.json(), "$..data[?(@.source==" + str(source) + ")]")
 
         target = target if target else {}
 
@@ -246,11 +245,24 @@ class Vip(WebAPI):
         update_query = {"$set": vipjosn}
         setup.update_one(filter_query, update_query)
 
-    def getVIPMapping(self, test):
+    def getVIPMappingName(self,test = None):
         # 取得VIP CONFIG 設定檔，並獎vipConfig 中的参数名轉为小写
         vipConfig = self.get_vip_config(test['params']['getVip'])
-        vipConfig_lower = {k.lower().replace("_", ""): v for item in vipConfig for k, v in item.items()}
 
+        if "降級" in test['scenario']:
+            for item in vipConfig:
+                item['limitRechargeTotal'] = item.pop('limitRecharge', 0)
+                item['limitBetTotal'] = item.pop('limitBet', 0)
+
+        vipConfig_lower = {k.lower().replace("_", ""): v for item in vipConfig for k, v in item.items()}
+        print("vipConfig_lower===",vipConfig_lower)
+        return vipConfig_lower
+
+    def getVIPMapping(self, test):
+
+        vipConfig_lower= self.getVIPMappingName(test)
+
+        # 取得VIP CONFIG 設定檔，並獎vipConfig 中的参数名轉为小写
         for test_key, test_value in test['json'].items():
             keyname = test_key.replace("vip_info.", "").lower()
             mapingkeyname = keyname.replace("_", "").lower()
@@ -264,103 +276,116 @@ class Vip(WebAPI):
 
         # 获取当前日期和时间
         type = test['params']['type']
-        current_date = datetime.now()
-        target_day = 1 # {0:每月点券 ,1:新年点券,2:生日点券,3:升级点券 }
-        current_date = current_date.replace(day=target_day, hour=0, minute=15, second=0, microsecond=0)
-        test['json']['vip_info.last_modified_time'] = current_date - timedelta(days=3)  # 减去 3 天
-        if type is not None and type == 2  :
-            test['json']['register_time'] = current_date - relativedelta(months=4)
-            print("test['json']['register_time']=",test['json']['register_time'])
+        if isinstance(type, int):
+            type = [type]
+        else:
+            type = [int(value.strip()) for value in type.split(',')]
+        test['params']['type']=type
 
-        print("current_date=",current_date,"test['json']=",test['json'])
+        current_date = datetime.now()
+        test['json']['vip_info.last_modified_time'] = current_date - timedelta(days=60)  # 减去 35 天
+
+        if 2 in type  : #生日點卷需註冊大於3個月
+            test['json']['register_time'] = current_date - relativedelta(months=6)
+
+        if "降級" in test['scenario']: # #降級stat_date需剛好等於30天
+            current_date = current_date.replace(day=5, hour=0, minute=15, second=0, microsecond=0)
+            test['json']['vip_info.stat_date'] = current_date - timedelta(days=30)
+
+        print("mongo test['json']=",test['json'])
+
         return test
 
-    def run_Vip_XXL_JOB(self,type=None ):
+    def run_Vip_XXL_JOB(self,test=None ):
 
         xxl = XxlJobs()
-        # 将时间固定为 00:15:00
         current_date = datetime.now()
 
+        target_day=0
+        type=test['params']['type']
+        if len(type) == 1:
+            target_day = [1, 15, 10, 5][type[0]]  # {0:每月点券(m/1) ,1:新年点券(m/15),2:生日点券(m/10),3:升级点券 (m/5)}
 
-        if type is not None    :
-            type= ast.literal_eval(type)
-            target_day=0
+        if 0 in type :
+            target_day=1
+
+        if 2 in type : #設定使用者生日
             birthdayDate = current_date.replace(year=(current_date.year - 30))
-            if  0 in type:
-                target_day = 1
-                if  2 in type :
-                    birthdayDate = birthdayDate.replace(day=target_day).strftime('%Y-%m-%d')
+            birthdayDate = birthdayDate.replace(month=(current_date.month - 1)) if "過期" in test['scenario'] else birthdayDate
+            birthdayDate = birthdayDate.replace(day=target_day).strftime('%Y-%m-%d')
+            user_detail=Detail(self.request_session.headers['token']).get_detail()
+            if user_detail['data']['birthday'] is None :
+                Detail(self.request_session.headers['token']).edit_detail(birthdayDate=birthdayDate)
 
-            if  2 in type : #設定使用者生日
-                user_detail=Detail(self.request_session.headers['token']).get_detail()
-                print("user_detail---", user_detail)
-                if user_detail['data']['birthday'] is None :
-                    Detail(self.request_session.headers['token']).edit_detail(birthdayDate=birthdayDate)
-
-            if target_day > 0 :
-                current_date = current_date.replace(day=target_day, hour=0, minute=15, second=0, microsecond=0)
+        if "過期" in test['scenario']:
+            current_date = current_date.replace(day=1, month=current_date.month - 1, hour=0, minute=15, second=0, microsecond=0)
+        elif target_day > 0:
+            current_date = current_date.replace(day=target_day, hour=0, minute=15, second=0, microsecond=0)
 
         # 格式化日期并手动添加时区信息
         formatted_date = current_date.strftime('%Y-%m-%dT%H:%M:%S+08:00')
         xxl.sync_vip_festivalGift_date(syncVipDate=current_date) if 1 in type else None
         xxl.sync_vip(syncVipDate=formatted_date)
-        print("formatted_date=",formatted_date)
         time.sleep(2)
 
-    def get_coupon_data(self,type=None, org_user_Vip_id = None ,user_vip_id=None, user_vip_name=None):
+    def get_coupon_data(self, test=None , type=None, org_user_Vip_id = None ,user_vip_id=None, user_vip_name=None):
 
         available_coupons = []  # 获取用户可用的彩金清单
         user_coupons = []  # 获取用户彩金清单
-        print("user_vip_id=",user_vip_id,"user_vip_name=",user_vip_name)
+
         if user_vip_name is not None and user_vip_id is not None and user_vip_name != "VIP0" and user_vip_name.startswith("VIP"):
             # 获取用户彩金清单
-            user_coupons =  self.get_coupons(source=type)
+            user_coupons =  self.get_coupons()['data']
             vipConfig = self.get_vip_config()
-            #print("user_coupons=",user_coupons,"vipConfig==",vipConfig)
             # 遍历用户VIP等级及以下的VIP等级
-            for vip_level in vipConfig["data"]["vipLevels"]:
-                couponsName = ['redEnvelop', 'festivalGift', 'birthdayGift','levelGift',][type]
-                if(type==3):
-                    if vip_level["id"] <= user_vip_id and vip_level["id"] > org_user_Vip_id and vip_level[couponsName] > 0:
-                        available_coupons.append({"name": vip_level["name"], "point": vip_level[couponsName]})
-                else:
-                    if vip_level["id"] == user_vip_id and vip_level[couponsName] > 0:
-                        available_coupons.append({"name": vip_level["name"], "point": vip_level[couponsName]})
+            if "降級" not in test['scenario'] and "降後升級" not in test['scenario'] and "過期" not in test['scenario']:
 
-        print("user_coupons ==========",user_coupons,"available_coupons=", available_coupons)
+                for vip_level in vipConfig["data"]["vipLevels"]:
+                    for type_value in type:
+                        couponsName = ['redEnvelop', 'festivalGift', 'birthdayGift','levelGift',][type_value]
+                        if(type_value==3): #升級可升多等VIP3->VIP5
+                            if vip_level["id"] <= user_vip_id and vip_level["id"] > org_user_Vip_id and vip_level[couponsName] > 0:
+                                available_coupons.append({"name": vip_level["name"], "point": vip_level[couponsName]})
+                        else: #其它點卷依當時的VIP等級派發
+                            if vip_level["id"] == user_vip_id and vip_level[couponsName] > 0:
+                                available_coupons.append({"name": vip_level["name"], "point": vip_level[couponsName]})
+
         return user_coupons, available_coupons
 
-    def get_coupon_exchange_bonus(self,token=None,test=None,available_coupons=None):
+    def get_coupon_exchange_bonus(self, token=None,test=None, available_coupons=None):
 
         user_balances = FrontUser(token).get_balance()
-
-        user_currency = "CNY"
-        user_balance = 0.0
+        be_user_currency=""
+        be_user_balance = 0.0
         for account in user_balances["data"]:
             if account["isPreferCurrency"]:
-                user_currency = account["currency"]
-                user_balance = float(account["balance"])  # 将余额转换为浮点数
-                break
+                be_user_currency = account["currency"]
+                be_user_balance = float(account["balance"])  # 将余额转换为浮点数
 
+        user_currency = "CNY"
+        if  test['params'].get('currency') is not None :
+            user_currency=test['params']['currency']
 
-        user_currency = test['params']['currency'] if 'currency' in test['params'] else user_currency
-        if user_currency is not None and not any(
-                account["isPreferCurrency"] and account["currency"] == user_currency for account in
-                user_balances["data"]):
+        if be_user_currency != user_currency:
             FrontUser(token).edit_user_currency(currency=user_currency)
-            print("change currency to ", user_currency)
+            user_balances = FrontUser(token).get_balance()
+            for account in user_balances["data"]:
+                if account["isPreferCurrency"]:
+                    be_user_currency = account["currency"]
+                    be_user_balance = float(account["balance"])  # 将余额转换为浮点数
+
+        #be_user_balance + (推算的彩金)/轉換比率
+        estimate_balance = be_user_balance
+        if available_coupons is not None :
+            # 換算幣別與轉換比率
+            VIPconfig = self.get_vip_config(currency=user_currency)
+            exchange_ratio = VIPconfig['showPoint'] / VIPconfig['showAmount']
+            total_points = sum(coupon["point"] for coupon in available_coupons)
+            estimate_balance += total_points / exchange_ratio
+            estimate_balance = round(estimate_balance, 4)
 
         # 兌換
         self.edit_coupon_exchange(currency=user_currency)
-
-        # 換算幣別與轉換比率
-        VIPconfig = self.get_vip_config(currency=user_currency)
-        print("VIPconfig============", VIPconfig, "currency=======", user_currency)
-        exchange_ratio = VIPconfig['showPoint'] / VIPconfig['showAmount']
-        total_points = sum(coupon["point"] for coupon in available_coupons)
-        estimate_balance += total_points / exchange_ratio
-        estimate_balance = round(estimate_balance, 4)
-
 
         user_balances = FrontUser(token).get_balance()
         actual_balance = next(
@@ -388,7 +413,7 @@ class Detail(WebAPI):
             "url": "/v1/user/detail",
             "json": KeywordArgument.body_data()
         }
-        print("request_body---",request_body)
+
         response = self.send_request(**request_body)
         return response.json()
 
