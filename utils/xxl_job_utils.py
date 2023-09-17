@@ -1,4 +1,5 @@
 from .api_utils import API_Controller
+from utils.generate_utils import Make
 import json
 
 
@@ -41,13 +42,13 @@ class XxlJobs(API_Controller):
                           json={}, params={"id": 2, "executorParam": str({"pltCode": pltCode}), "addressList": None})
 
     # 使用者VIP 設定新年點卷發放日期
-    def sync_vip_festivalGift_date(self, syncVipDate = None):
-        form_date = syncVipDate.strftime('--%m-%d')
+    def sync_vip_festivalGift_date(self, sync_vip_date=None):
+        form_date = Make.format_date(date=sync_vip_date, format='--%m-%d')
         executorParam = '{"pltCode":"ldpro","monthDay":"' + form_date + '"}'
         self.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
                           json={}, params={"id": 57, "executorParam": executorParam, "addressList": None})
 
     # 使用者VIP 升降級與点券派發
-    def sync_vip(self, syncVipDate = None):
+    def sync_vip(self, sync_vip_date=None):
         self.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
-                          json={}, params={"id": 55, "executorParam": syncVipDate, "addressList": None})
+                          json={}, params={"id": 55, "executorParam": sync_vip_date, "addressList": None})

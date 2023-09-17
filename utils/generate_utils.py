@@ -42,15 +42,29 @@ class Make:
             return time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
 
     @staticmethod
-    def generate_custom_date(months=0, weeks=0, days=0):
-        # 獲取當前日期時間
+    def format_date(date=None, format='%Y-%m-%d %H:%M:%S'):
         now = datetime.datetime.now()
-        # 進行日期計算
-        target_date = now + relativedelta(months=months, weeks=weeks, days=days)
+        if date is not None:
+            now = datetime.datetime.strptime(date, '%Y-%m-%dT%H:%M:%S%z')
+
+        return now.strftime(format)
+
+    @staticmethod
+    def generate_custom_date(years=0, months=0, weeks=0, days=0, hours=0, minutes=0, seconds=0,
+                             operation=None, date=None, format='%Y-%m-%dT%H:%M:%SZ', is_format =True):
+        # 獲取當前日期時間
+        now = datetime.datetime.now() if date is None else date
+        if operation == "replace":
+            target_date = now.replace(year=years) if years != 0 else now
+            target_date = now.replace(month=months) if months != 0 else now
+            target_date = now.replace(day=days) if days != 0 else now
+        else:  # 進行日期計算
+            target_date = now + relativedelta(year=years, months=months, weeks=weeks, days=days)
         # 將小時、分鐘和秒設定為 00:00:00
-        target_date = target_date.replace(hour=0, minute=0, second=0)
-        # 格式化日期為指定格式
-        formatted_date = target_date.strftime('%Y-%m-%dT%H:%M:%SZ')
+        target_date = target_date.replace(hour=hours, minute=minutes, second=seconds)
+        formatted_date = target_date
+        if is_format:  # 格式化日期為指定格式
+            formatted_date = target_date.strftime(format)
         return formatted_date
 
     @staticmethod
