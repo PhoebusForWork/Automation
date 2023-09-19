@@ -254,7 +254,7 @@ class Vip(WebAPI):
         xxl.sync_vip(sync_vip_date=job_date)
         time.sleep(2)
 
-    def run_vip_process(self, token=None, test=None, user_name=None ):
+    def run_vip_process(self, token=None, test=None, user_name=None):
 
         job_date = self.getVIPMapping(token=token, test=test)
         mongo_scripts.setup_mongo(username=user_name, vip_json=test['json'])  # Mongo update
