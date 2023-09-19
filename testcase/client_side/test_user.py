@@ -6,7 +6,6 @@ from utils.api_utils import API_Controller
 from pylib.client_side.user import Address, Vip
 from pylib.client_side.validation import Validation
 from pylib.client_side.user import Security
-from pylib.client_side.wallet import FrontUser
 from pylib.client_side.test import TransferMock
 from utils.generate_utils import Make
 from utils.xxl_job_utils import XxlJobs

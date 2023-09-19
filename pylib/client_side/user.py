@@ -7,7 +7,6 @@ from utils.data_utils import EnvReader
 from utils.xxl_job_utils import XxlJobs
 from decimal import Decimal
 from bson.decimal128 import Decimal128
-from datetime import datetime
 from pylib.client_side.wallet import FrontUser
 from scripts.automation.mongo import mongo_scripts
 import time
