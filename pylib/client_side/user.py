@@ -4,15 +4,12 @@ from ..client_side.webApiBase import WebAPI
 from utils.api_utils import KeywordArgument
 from utils.generate_utils import Make
 from utils.data_utils import EnvReader
-from utils.database_utils import Mongo
 from utils.xxl_job_utils import XxlJobs
 from decimal import Decimal
 from bson.decimal128 import Decimal128
-from datetime import datetime, timedelta
-from dateutil.relativedelta import relativedelta
+from datetime import datetime
 from pylib.client_side.wallet import FrontUser
 from scripts.automation.mongo import mongo_scripts
-import json
 import time
 
 env = EnvReader()
@@ -171,20 +168,13 @@ class Vip(WebAPI):
         return response.json()
 
     # 用戶VIP點卷詳情
-    def get_coupon_records(self, type=None):
+    def get_coupon_records(self):
         request_body = {
             "method": "get",
             "url": "/v1/user/vip/coupon-records"
         }
         response = self.send_request(**request_body)
         target = response.json()
-
-        if type is not None:
-            target = jsonpath.jsonpath(response.json(), "$..data[?(@.type==" + str(type) + ")]")
-            if type != 3 and target:
-                target = max(target, key=lambda x: datetime.datetime.fromisoformat(x["time"]))
-            else:
-                target = target if target is not None else {}
 
         return target
 
@@ -235,18 +225,18 @@ class Vip(WebAPI):
 
         return target
 
-    def set_job_date(self, token=None, test=None, type=None):
+    def set_job_date(self, token=None, test=None, type_id=None):
 
         job_date = Make.generate_custom_date(minutes=15, operation="replace", is_format=False)
         if "過期" in test['scenario']:
             job_date = Make.generate_custom_date(date=job_date, months=-1, is_format=False)
 
         target_day = 0
-        if len(type) == 1:  # {0:每月点券(m/1) ,1:新年点券(m/15),2:生日点券(m/10),3:升级点券 (m/5)}
-            target_day = [1, 15, 10, 5][type[0]]
-        if 0 in type:  # 每月點卷發放日為1號
+        if len(type_id) == 1:  # {0:每月点券(m/1) ,1:新年点券(m/15),2:生日点券(m/10),3:升级点券 (m/5)}
+            target_day = [1, 15, 10, 5][type_id[0]]
+        if 0 in type_id:  # 每月點卷發放日為1號
             target_day = 1
-        if 2 in type:  # 設定使用者生日
+        if 2 in type_id:  # 設定使用者生日
             user_detail = Detail(token).get_detail()
             if user_detail['data']['birthdayDate'] is None:  # 若無資料才可修改
                 birthday_date = Make.generate_custom_date(
@@ -258,10 +248,10 @@ class Vip(WebAPI):
 
         return job_date
 
-    def run_vip_xxl_job(self, job_date=None, type=3):
+    def run_vip_xxl_job(self, job_date=None, type_id=3):
 
         xxl = XxlJobs()
-        xxl.sync_vip_festivalGift_date(sync_vip_date=job_date) if 1 in type else None  # 設定新年彩金發放日
+        xxl.sync_vip_festivalGift_date(sync_vip_date=job_date) if 1 in type_id else None  # 設定新年彩金發放日
         xxl.sync_vip(sync_vip_date=job_date)
         time.sleep(2)
 
@@ -269,7 +259,7 @@ class Vip(WebAPI):
 
         job_date = self.getVIPMapping(token=token, test=test)
         mongo_scripts.setup_mongo(username=user_name, vip_json=test['json'])  # Mongo update
-        self.run_vip_xxl_job(job_date=job_date, type=test['params']['type'])  # 打XXL-JOB VIP
+        self.run_vip_xxl_job(job_date=job_date, type_id=test['params']['type'])  # 打XXL-JOB VIP
 
     def getVIPMapping(self, token=None, test=None):
 
@@ -284,12 +274,12 @@ class Vip(WebAPI):
                                                     + Decimal(vip_config[0][mapped_key]))
 
         test['params']['type'] = [int(value.strip()) for value in str(test['params']['type']).split(',')]
-        type = test['params']['type']
+        type_id = test['params']['type']
 
         # 計算JOB時間與各彩金類型需調整的時間
-        job_date = self.set_job_date(token=token, test=test, type=type)
+        job_date = self.set_job_date(token=token, test=test, type_id=type_id)
         test['json']['vip_info.last_modified_time'] = Make.generate_custom_date(date=job_date, days=-3, is_format=False)
-        if 2 in type:  # 生日點卷需註冊大於3個月
+        if 2 in type_id:  # 生日點卷需註冊大於3個月
             print("run_vip_process=1.6", job_date)
             test['json']['register_time'] = Make.generate_custom_date(date=job_date, months=-6, is_format=False)
         if "降級" in test['scenario']:  # 降級stat_date需剛好等於30天
@@ -297,7 +287,7 @@ class Vip(WebAPI):
         job_date = Make.generate_custom_date(date=job_date, minutes=15, format='%Y-%m-%dT%H:%M:%S+08:00')
         return job_date
 
-    def get_coupon_data(self, test=None, type=None, org_user_vip=None, user_vip_id=None, user_vip_name=None):
+    def get_coupon_data(self, test=None, type_id=None, org_user_vip=None, user_vip_id=None, user_vip_name=None):
 
         available_coupons = []  # 获取用户可用的彩金清单
         user_coupons = []  # 获取用户彩金清单
@@ -309,7 +299,7 @@ class Vip(WebAPI):
             # 遍历用户VIP等级及以下的VIP等级
             if not any(scenario in test['scenario'] for scenario in ["降級", "降後升級", "過期"]):
                 for vip_level in vip_config["data"]["vipLevels"]:
-                    for type_value in type:
+                    for type_value in type_id:
                         coupons_name = ['redEnvelop', 'festivalGift', 'birthdayGift', 'levelGift'][type_value]
                         if type_value == 3:  # 升級可升多等VIP3->VIP5
                             if org_user_vip < vip_level["id"] <= user_vip_id and vip_level[coupons_name] > 0:

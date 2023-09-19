@@ -9,7 +9,6 @@ from pylib.client_side.user import Security
 from pylib.client_side.wallet import FrontUser
 from pylib.client_side.test import TransferMock
 from utils.generate_utils import Make
-from datetime import datetime
 from utils.xxl_job_utils import XxlJobs
 
 test_data = TestDataReader()
@@ -206,7 +205,7 @@ class TestVIP:
         user_vip_id, user_vip_name = resp.json()['data']['vipId'], resp.json()['data']['vipName']
         user_coupons, available_coupons = user_vip.get_coupon_data(
             test=test,
-            type=test['params']['type'],
+            type_id=test['params']['type'],
             org_user_vip=org_user_vip["data"]["vipId"],
             user_vip_id=user_vip_id,
             user_vip_name=user_vip_name
