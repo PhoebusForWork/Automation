@@ -907,7 +907,8 @@ class TestCommission:
     @allure.feature("佣金調整審核")
     @allure.story("佣金調整申請")
     @allure.title("{test[scenario]}")
-    @pytest.mark.regression
+    # @pytest.mark.regression
+    # 後續有佣金再補上
     @pytest.mark.parametrize("test", test_data.get_case("commission_adjust"))
     def test_commission_adjust(test, get_platform_token):
         json_replace = test_data.replace_json(test['json'], test['target'])
@@ -920,7 +921,8 @@ class TestCommission:
     @allure.feature("佣金調整審核")
     @allure.story("佣金調整一審")
     @allure.title("{test[scenario]}")
-    @pytest.mark.regression
+    # @pytest.mark.regression
+    # 後續有佣金再補上
     @pytest.mark.parametrize("test", test_data.get_case("commission_adjust_first_approve"))
     def test_commission_adjust_first_approve(test, get_platform_token):
         json_replace = test_data.replace_json(test['json'], test['target'])
@@ -933,7 +935,8 @@ class TestCommission:
     @allure.feature("佣金調整審核")
     @allure.story("佣金調整二審")
     @allure.title("{test[scenario]}")
-    @pytest.mark.regression
+    # @pytest.mark.regression
+    # 後續有佣金再補上
     @pytest.mark.parametrize("test", test_data.get_case("commission_adjust_second_approve"))
     def test_commission_adjust_second_approve(test, get_platform_token):
         json_replace = test_data.replace_json(test['json'], test['target'])
