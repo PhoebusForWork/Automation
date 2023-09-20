@@ -131,6 +131,16 @@ class FrontUser(WebAPI):
         response = self.send_request(**request_body)
         return response.json()
 
+    # 用戶選擇幣別
+    def edit_user_currency(self,currency="CNY"):
+        request_body = {
+            "method": "put",
+            "url": "/v1/user/currency",
+            "params": { "currency": currency }
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
 
 class TestGameTransferMock(WebAPI):
     # 顯示中心錢包及各遊戲錢包金額和渠道狀態
