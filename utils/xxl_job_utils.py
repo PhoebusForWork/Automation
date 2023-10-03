@@ -18,7 +18,13 @@ class XxlJobs(API_Controller):
         transfer_executor_count = 3
         for _ in range(transfer_executor_count):
             self.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
-                              json={}, params={"id": 1, "executorParam": None, "addressList": None})
+                              json={}, params={"id": 5, "executorParam": None, "addressList": None})
+
+    # 異常轉帳請求限制開關
+    def game_transfer_fail(self, pltCode='ldpro', isTesting: bool = True):
+        executorParam = json.dumps({"pltCode": pltCode, "isTesting": isTesting}, ensure_ascii=False)
+        self.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
+                          json={}, params={"id": 23, "executorParam": executorParam, "addressList": None})
 
     def sync_plt_basics_data(self, pltCode='ldpro'):
         executorParam = json.dumps({"pltCode": pltCode}, ensure_ascii=False)
