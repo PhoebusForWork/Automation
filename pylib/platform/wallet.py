@@ -328,7 +328,7 @@ class WalletGameTransferFailed(PlatformAPI):
         set_plt_irregular_transfer.master.delete('IrregularTransfer::isTesting')
 
     @staticmethod
-    def _create_failed_transfer_record_v2(cs_user='AutoTester'):
+    def _create_failed_transfer_record_v2(cs_user='ptest01'):
         if os.getenv('MODE'):
             cs_user = 'wallet001'
         cs_wallet = GameTransfer()
@@ -345,22 +345,24 @@ class WalletGameTransferFailed(PlatformAPI):
                               result='UNKNOWN',
                               recheckResult='UNKNOWN')
         set_cs_mock = CsMock()
-        set_cs_mock.add_mock(user_id=3,
-                             channel_code='AI',
+        set_cs_mock.add_mock(channel_code='AI',
                              gameBalance=10,
                              result='UNKNOWN')
-        set_plt_mock.irregular_testing(is_testing=True)
+        # 以廢棄改xxl_job
+        # set_plt_mock.irregular_testing(is_testing=True)
+        xxl.game_transfer_fail(isTesting=True)
         retry_times = 6  # 目前case是消耗3以倍數定值
         for _ in range(retry_times):
             cs_wallet.wallet_game_transfer_deposit(channelCode="AI",
                                                    amount=10)
-
         xxl.game_transfer_executor()
         time.sleep(2)
 
         set_plt_mock.delete_mock(channelCode='AI')
         set_cs_mock.delete_mock(channelCode='AI')
-        set_plt_mock.irregular_testing(is_testing=False)
+        # 以廢棄改xxl_job
+        # set_plt_mock.irregular_testing(is_testing=False)
+        xxl.game_transfer_fail(isTesting=False)
 
     # 顯示所有異常處理人
     def get_approver(self, plat_token=None):
@@ -377,14 +379,11 @@ class WalletGameTransferFailed(PlatformAPI):
 
     # 轉帳異常處理列表
     def get_failed_list(
-            self, plat_token=None, timeType=None, startTime=None,
+            self, timeType=None, currency=None, startTime=None,
             endTime=None, failedTransferStatus=None,
             operator=None, fromChannelCode=None, toChannelCode=None,
             tradeId=None, page=None, size=None
     ):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
         request_body = {
             "method": "get",
             "url": "/v1/wallet/game/transfer/failed",
@@ -395,17 +394,22 @@ class WalletGameTransferFailed(PlatformAPI):
         return response.json()
 
     # 手動處理異常轉帳
-    def trade_manual_result(self, plat_token=None,
-                            tradeId=None, result=None, remark=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
+    def trade_manual_result(self, tradeId=None, result=None, remark=None):
         request_body = {
             "method": "post",
             "url": f"/v1/wallet/game/transfer/failed/tradeId/{tradeId}/manual/result",
             "json": KeywordArgument.body_data()
         }
 
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 查詢第三方結果
+    def get_fail_tradeid_status(self, tradeId=None):
+        request_body = {
+            "method": "get",
+            "url": f"/v1/wallet/game/transfer/failed/tradeId/{tradeId}"
+        }
         response = self.send_request(**request_body)
         return response.json()
 
@@ -417,13 +421,13 @@ class WalletGameTransferFailed(PlatformAPI):
         return ret
 
     def get_failed_id_unused(self, plat_token=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
+        # if plat_token is not None:
+        #     self.request_session.headers.update({"token": str(plat_token)})
+        # target = self.get_failed_list(failedTransferStatus=0)
+        # ret = jsonpath.jsonpath(target, "$..tradeId")
+        # if ret is False:
+        self._create_failed_transfer_record_v2()
         target = self.get_failed_list(failedTransferStatus=0)
         ret = jsonpath.jsonpath(target, "$..tradeId")
-        if ret is False:
-            self._create_failed_transfer_record_v2()
-            target = self.get_failed_list(failedTransferStatus=0)
-            ret = jsonpath.jsonpath(target, "$..tradeId")
 
         return ret[-1]
