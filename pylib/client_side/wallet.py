@@ -61,11 +61,25 @@ class GameTransfer(WebAPI):
 
     # 顯示中心錢包及各遊戲錢包金額和渠道狀態
     def get_wallet_user_info(self,
-                             currency=None):
+                             currency=None,
+                             language=None):
         request_body = {
             "method": "get",
             "url": "/v1/wallet/game/transfer/user/info",
             "params": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 同步三方餘額(單一渠道)
+    def sync_balance(self,
+                     channelCode=None,
+                     currency=None):
+        request_body = {
+            "method": "put",
+            "url": f"/v1/wallet/game/transfer/user/channel-sync-balance/{channelCode}",
+            "params": {"currency": currency}
         }
 
         response = self.send_request(**request_body)
@@ -79,7 +93,7 @@ class FrontUser(WebAPI):
                                currency=None):
         request_body = {
             "method": "get",
-            "url": f"/v1/wallet/front/user/{userId}/refundable/balance",
+            "url": "/v1/wallet/front/user/refundable/balance",
             "params": KeywordArgument.body_data()
         }
         response = self.send_request(**request_body)
@@ -132,11 +146,11 @@ class FrontUser(WebAPI):
         return response.json()
 
     # 用戶選擇幣別
-    def edit_user_currency(self,currency="CNY"):
+    def edit_user_currency(self, currency="CNY"):
         request_body = {
             "method": "put",
             "url": "/v1/user/currency",
-            "params": { "currency": currency }
+            "params": {"currency": currency}
         }
         response = self.send_request(**request_body)
         return response.json()
