@@ -4,6 +4,7 @@ from utils.api_utils import KeywordArgument
 from utils.redis_utils import RedisSentinel
 from utils.xxl_job_utils import XxlJobs
 from utils.data_utils import EnvReader
+from utils.generate_utils import Make
 import time
 import jsonpath
 import os
@@ -379,8 +380,8 @@ class WalletGameTransferFailed(PlatformAPI):
 
     # 轉帳異常處理列表
     def get_failed_list(
-            self, timeType=None, currency=None, startTime=None,
-            endTime=None, failedTransferStatus=None,
+            self, timeType=None, currency=None, dateType=1,
+            startTime=Make.date('start'), endTime=Make.date('end'), failedTransferStatus=None,
             operator=None, fromChannelCode=None, toChannelCode=None,
             tradeId=None, page=None, size=None
     ):

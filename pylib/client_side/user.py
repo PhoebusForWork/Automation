@@ -399,6 +399,17 @@ class Security(WebAPI):
         response = self.send_request(**request_body)
         return response.json()
 
+    # 解綁銀行卡地址
+    def unbind_bank_card(self, cardId=None, currency=None, code=None):
+        request_body = {
+            "method": "put",
+            "url": "/v1/user/security/unBind/bankCard",
+            "json": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
     # 解綁虛擬幣地址
     def unbind_address(self, addressId=None):
         request_body = {
@@ -445,7 +456,7 @@ class Security(WebAPI):
 
     # 綁定手機號碼
     def mobile_binding(self, countryCode=None, mobile=None,
-                       code=None,  web_token=None):
+                       code=None, web_token=None):
         if web_token is not None:
             self.request_session.headers.update({"token": str(web_token)})
         request_body = {
@@ -493,7 +504,7 @@ class Security(WebAPI):
         return response.json()
 
     # 綁定銀行卡
-    def bind_bank_card(self, userId=None, userName=None,
+    def bind_bank_card(self, userName=None,
                        realName=None, bankId=None,
                        bankName=None, bankAddress=None, cardNo=None,
                        cardOwnerName=None, cardType=None,
@@ -501,6 +512,7 @@ class Security(WebAPI):
         request_body = {
             "method": "post",
             "url": "/v1/user/security/bind/bankCard",
+            "params": {"currency": 'CNY'},
             "json": KeywordArgument.body_data()
         }
 

@@ -382,6 +382,50 @@ class UserVipPointRatio(PlatformAPI):
         target = jsonpath.jsonpath(response, "$..data[?(@.currency=='" + currency + "')]")
         return target[-1]
 
+# 客戶群組
+class UserGroup(PlatformAPI):
+    # 更新群組
+    def update(self, id=None, groupName=None, groupType=None,
+               beginRegisterTime=None, endRegisterTime=None,
+               withdrawType=None, isRebate=None,
+               isUsdtRestricted=None, reason=None, proxyGroupId=None,
+               weight=None, lockUser=None,
+               tagList: list = [{"tagId": 0, "tagName": "string", "tagLevel": 0}]):
+        request_body = {
+            "method": "put",
+            "url": "/v1/user/group/update",
+            "json": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 新增群組
+    def save(self, groupName=None, groupType=None,
+             beginRegisterTime=None, endRegisterTime=None,
+             withdrawType=None, isRebate=None,
+             isUsdtRestricted=None, reason=None, proxyGroupId=None,
+             weight=None, lockUser=None,
+             tagList: list = [{"tagId": 0, "tagName": "string", "tagLevel": 0}]):
+        request_body = {
+            "method": "post",
+            "url": "/v1/user/group/save",
+            "json": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 檢查鎖定用戶
+    def check_lock_user(self, users=None):
+        request_body = {
+            "method": "get",
+            "url": "/v1/user/group/check/lockUsers",
+            "params": KeywordArgument.body_data()
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
 # 審批操作
 class UserManage(PlatformAPI):
     # 查詢審批列表
