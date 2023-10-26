@@ -79,32 +79,46 @@ class Recharge(WebAPI):
         response = self.send_request(**request_body)
         return response.json()
 
+# 充題操作
+class Ratio(WebAPI):
+    # 充值比例
+    def get_ratio(self, currency=None):
+        request_body = {
+            "method": "get",
+            "url": "/v1/fund/ratio",
+            "params": {"currency": currency},
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+
 # 提現操作
 class Withdraw(WebAPI):
     # 發起提現
     def submit(self, device_id=None, os_type=None,
                amount=None, otpCode=None,
                # 提現方式 TRADITIONAL, USDT, TRANS_CENTER
-               categoryCode=None,
+               categoryCode=None, ratio=None, currency=None,
                cardId=None, addressId=None):
         request_body = {
             "method": "post",
             "url": "/v1/fund/withdraw/submit",
-            "params": {"device-id": device_id, "os-type": os_type},
+            "params": {"device-id": device_id, "os-type": os_type, "currency": currency},
             "json": KeywordArgument.body_data()
         }
         response = self.send_request(**request_body)
         return response.json()
 
     # 提現配置
-    def submit_info(self, withdrawAmount,
+    def submit_info(self, withdrawAmount=None,
                     # 提現方式類型（TRADITIONAL、USDT、TRANS_CENTER）
-                    categoryCode,
+                    categoryCode=None,
                     # TRADITIONAL請帶入BANKCARD、USDT時請帶入TRC、ERC其中一個、TRANS_CENTER請帶入GAOBAO
-                    protocol):
+                    protocol=None, currency=None):
         request_body = {
             "method": "post",
             "url": "/v1/fund/withdraw/info",
+            "params": {"currency": currency},
             "json": KeywordArgument.body_data()
         }
         response = self.send_request(**request_body)
@@ -170,6 +184,7 @@ class Withdraw(WebAPI):
         request_body = {
             "method": "get",
             "url": "/v1/fund/withdraw/address/info",
+            "params": {"currency": "CNY"}
         }
 
         response = self.send_request(**request_body)
