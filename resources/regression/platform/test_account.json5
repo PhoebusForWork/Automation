@@ -237,7 +237,7 @@
         "json" : {"phone":null,"sipNum":"","fixSipNum":"","isLeader":false,"deptId":1,"roleIds":[2],"expiredTime":""},
         "test_item": [
             {"scenario":"[phone]null","target": {"phone":null},"params": {},"code_status": 200,"keyword": "success"},
-            {"scenario":"[phone]格式不正確","target": {"countryCode":"86","phone":"12345678901"},"params": {},"code_status": 400,"keyword": "'phone' 手機號碼格式不正確"},
+            {"scenario":"[phone]格式不正確","target": {"countryCode":"86","phone":"13495678901"},"params": {},"code_status": 400,"keyword": "'phone' 手機號碼格式不正確"},
             {"scenario":"[phone]正常11碼","target": {"countryCode":"86","phone":"18756784756"},"params": {},"code_status": 200,"keyword": "success"},
             {"scenario":"[phone]超出11碼","target": {"countryCode":"86","phone":"187567847562"},"params": {},"code_status": 400,"keyword": "'phone' 手機號碼格式不正確"},
             {"scenario":"[sipNum]20字","target": {"sipNum":"12345678901234567890"},"params": {},"code_status": 200,"keyword": "success"},
@@ -266,7 +266,7 @@
         "json" : {"countryCode":"86","phone":"15279277599","sipNum":"","fixSipNum":"","isLeader":false,"deptId":1,"roleIds":[2],"expiredTime":"","account":"AutoTest","password":"abc123456","displayName":"AutoTest"},
         "test_item": [
             {"scenario":"[phone]null","target": {"countryCode":null,"phone":null},"params": {},"code_status": 200,"keyword": "success"},
-            {"scenario":"[phone]格式不符","target": {"phone":"12345678901"},"params": {},"code_status": 400,"keyword": "'phone' 手機號碼格式不正確"},
+            {"scenario":"[phone]格式不符","target": {"phone":"13495678901"},"params": {},"code_status": 400,"keyword": "'phone' 手機號碼格式不正確"},
             {"scenario":"[sipNum]20字","target": {"sipNum":"12345678901234567890"},"params": {},"code_status": 200,"keyword": "success"},
             {"scenario":"[sipNum]21字","target": {"sipNum":"123456789012345678901"},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[sipNum]null","target": {"sipNum":null},"params": {},"code_status": 200,"keyword": "success"},
