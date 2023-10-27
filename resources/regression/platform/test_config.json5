@@ -449,9 +449,9 @@
         "json" : {},
         "params": {"page": 1, "size": 20},
         "test_item": [
-            {"scenario":"[page]null","target":{"page":null},"json": {},"code_status": 200,"keyword": '无效的请求参数'},
+            {"scenario":"[page]null","target":{"page":null},"json": {},"code_status": 400,"keyword": '无效的请求参数'},
             {"scenario":"[page]5","target":{"page":5},"json": {},"code_status": 200,"keyword": '"current":5'},
-            {"scenario":"[size]null","target":{"size":null},"json": {},"code_status": 200,"keyword": '无效的请求参数'},
+            {"scenario":"[size]null","target":{"size":null},"json": {},"code_status": 400,"keyword": '无效的请求参数'},
             {"scenario":"[size]5","target":{"size":5},"json": {},"code_status": 200,"keyword": '"size":5'},
             {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"}
         ]
