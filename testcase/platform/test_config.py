@@ -75,6 +75,7 @@ class TestBasicConfiguration:
     @allure.title("{test[scenario]}")
     @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('add_config_avatar'))
+    @pytest.mark.xfail(reason="目前權限尚未定案,待後續確認在調整")
     def test_add_config_avatar(test, get_platform_token):
 
         json_replace = test_data.replace_json(test['json'], test['target'])
@@ -90,6 +91,7 @@ class TestBasicConfiguration:
     @allure.title("{test[scenario]}")
     @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('edit_config_avatar'))
+    @pytest.mark.xfail(reason="目前權限尚未定案,待後續確認在調整")
     def test_edit_config_avatar(test, get_platform_token):
 
         json_replace = test_data.replace_json(test['json'], test['target'])
@@ -105,6 +107,7 @@ class TestBasicConfiguration:
     @allure.title("{test[scenario]}")
     @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('delete_config_avatar'))
+    @pytest.mark.xfail(reason="目前權限尚未定案,待後續確認在調整")
     def test_delete_config_avatar(test, get_platform_token):
         if "存在id" in test['req_url']:
             id = Avatar()
@@ -121,6 +124,7 @@ class TestBasicConfiguration:
     @allure.title("{test[scenario]}")
     @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_config_avatars'))
+    @pytest.mark.xfail(reason="目前權限尚未定案,待後續確認在調整")
     def test_get_config_avatars(test, get_platform_token):
         json_replace = test_data.replace_json(test['params'], test['target'])
         api = API_Controller()
@@ -134,6 +138,7 @@ class TestBasicConfiguration:
     @allure.title("{test[scenario]}")
     @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_config_avatar_one'))
+    @pytest.mark.xfail(reason="目前權限尚未定案,待後續確認在調整")
     def test_get_config_avatar_one(test, get_platform_token):
         if "存在id" in test['req_url']:
             id = Avatar()
@@ -245,6 +250,7 @@ class TestOperationLog:
     @allure.title("{test[scenario]}")
     @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_admin_action_log'))
+    @pytest.mark.xfail(reason="目前權限尚未定案,待後續確認在調整")
     def test_get_admin_action_log(test, get_platform_token, make_config_action_log_data):
         if test["params"]["to"] == "today_date_to":
             test["params"].update({"from": Make.date('start'), "to": Make.date('end')})
