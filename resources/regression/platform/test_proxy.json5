@@ -380,7 +380,7 @@
         "req_url" : "/v1/proxy",
         "schema":{"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
         "params": {},
-        "json":{"proxyAccount": "不重複名稱","proxyName": null,"password": "abc123456","telephone": "不重複手機號","proxyChannelId": 2,"commissionId": 2,"registerIp": null},
+        "json":{"proxyAccount": "不重複名稱","proxyName": null,"password": "abc123456", "countryCode": "81", "telephone": "不重複手機號","proxyChannelId": 2,"commissionId": 2,"registerIp": null},
         "test_item" : [
             {"scenario":"[proxyAccount]不存在的代理帳號","target":{"proxyAccount": "proxy001"},"code_status": 200,"keyword": "success"},
             {"scenario":"[proxyAccount]存在的代理帳號","target":{"proxyAccount": "proxy001"},"code_status": 500,"keyword": "该代理名已存在"},
