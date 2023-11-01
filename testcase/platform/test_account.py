@@ -314,7 +314,9 @@ def test_admin(test, get_platform_token):
 @pytest.mark.regression
 @pytest.mark.parametrize("test", test_data.get_case('test_edit_admin'))
 def test_edit_admin(test, get_platform_token):
-
+    fail_scenario = ['[phone]格式不正確', '[phone]超出11碼']
+    if test['scenario'] in fail_scenario:
+        pytest.xfail("#38848")
     json_replace = test_data.replace_json(test['json'], test['target'])
     api = API_Controller()
     resp = api.send_request(test['req_method'],
