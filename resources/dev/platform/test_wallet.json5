@@ -139,7 +139,8 @@
         "test_item": [
             {"req_url": "/v1/wallet/game/transfer/user/99999/withdraw/all","scenario":"不存在的userId","json": {},"params": {},"code_status": 400,"keyword": "该用户不存在"},
             {"req_url": "/v1/wallet/game/transfer/user/3/withdraw/all","scenario":"存在的userId","json": {},"params": {"currency":null},"code_status": 200,"keyword": "data"},
-            {"req_url": "/v1/wallet/game/transfer/user/3/withdraw/all","scenario":"[currency]USD","json": {},"params": {"currency":"USD"},"code_status": 200,"keyword": "data"},
+            // USD AI暫時不支援
+            // {"req_url": "/v1/wallet/game/transfer/user/3/withdraw/all","scenario":"[currency]USD","json": {},"params": {"currency":"USD"},"code_status": 200,"keyword": "data"},
             // 目前尚無泰達幣
             // {"req_url": "/v1/wallet/game/transfer/user/3/withdraw/all","scenario":"[currency]USDT_TRC20","json": {},"params": {"currency":"USDT_TRC20"},"code_status": 200,"keyword": "data"},
             // {"req_url": "/v1/wallet/game/transfer/user/3/withdraw/all","scenario":"[currency]USDT_ERC20","json": {},"params": {"currency":"USDT_ERC20"},"code_status": 200,"keyword": "data"},
@@ -151,6 +152,7 @@
         "req_method": "post",
         "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
         "json": {"channelCode":"AI","amount":10},
+        "params": {"currency": "CNY"},
         "test_item": [
             {"req_url": "/v1/wallet/game/transfer/user/99999/deposit","scenario":"不存在的userId","target": {},"params": {},"code_status": 400,"keyword": "该用户不存在"},
             {"req_url": "/v1/wallet/game/transfer/user/3/deposit","scenario":"[amount]0","target": {"amount":0},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
@@ -177,13 +179,13 @@
         "test_case": "get_game_transfer_fail_list",
         "req_method": "get",
         "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"total":{"type":"integer"},"size":{"type":"integer"},"current":{"type":"integer"},"pages":{"type":"integer"},"records":{"type":"array","items":{"type":"object","properties":{"tradeId":{"type":"integer"},"createTime":{"type":"string"},"userType":{"type":"integer"},"username":{"type":"string"},"merUsername":{"type":"string"},"fromChannelCode":{"type":"string"},"toChannelCode":{"type":"string"},"amount":{"type":"integer"},"balanceBeforeTransfer":{"type":"integer"},"balanceAfterTransfer":{"type":"integer"},"lastModifiedTime":{"type":"string"},"transactionStatus":{"type":"integer"},"currency":{"type":"string"},"operator":{"type":"string"},"failedTransferStatus":{"type":"integer"},"failedTransferLastModifiedTime":{"type":"string"},"remark":{"type":"string"}},"required":["amount","balanceAfterTransfer","balanceBeforeTransfer","createTime","currency","failedTransferLastModifiedTime","failedTransferStatus","fromChannelCode","lastModifiedTime","merUsername","operator","remark","toChannelCode","tradeId","transactionStatus","userType","username"]}}},"required":["current","pages","records","size","total"]}},"required":["data"]},
-        "params" : {"timeType":1,"startTime":"2022-01-01T00:00:00+08:00","endTime":"2023-01-01T00:00:00+08:00","failedTransferStatus":null,"operator":null,"fromChannelCode":null,"toChannelCode":null,"tradeId":null,"currency":null,"page":null,"size":null},
+        "params" : {"dateType":1,"startTime":"2022-01-01T00:00:00+08:00","endTime":"2023-01-01T00:00:00+08:00","failedTransferStatus":null,"operator":null,"fromChannelCode":null,"toChannelCode":null,"tradeId":null,"currency":null,"page":null,"size":null},
         "req_url": "/v1/wallet/game/transfer/failed",
         "test_item": [
-            {"scenario":"[timeType]null","target":{"timeType":null},"json": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"[timeType]1","target":{"timeType":1},"json": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"[timeType]2","target":{"timeType":2},"json": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"[timeType]3","target":{"timeType":3},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[dateType]null","target":{"dateType":null},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[dateType]1","target":{"dateType":1},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[dateType]2","target":{"dateType":2},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[dateType]3","target":{"dateType":3},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[startTime]null","target":{"startTime":null},"json": {},"code_status": 200,"keyword": "data"},
             {"scenario":"[startTime]不符格式","target":{"startTime":"string"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[endTime]null","target":{"endTime":null},"json": {},"code_status": 200,"keyword": "data"},
