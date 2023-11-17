@@ -252,7 +252,7 @@ class Vip(WebAPI):
         xxl = XxlJobs()
         xxl.sync_vip_festivalGift_date(sync_vip_date=job_date) if 1 in type_id else None  # 設定新年彩金發放日
         xxl.sync_vip(sync_vip_date=job_date)
-        time.sleep(2)
+        time.sleep(3)
 
     def run_vip_process(self, token=None, test=None, user_name=None):
 
@@ -300,7 +300,7 @@ class Vip(WebAPI):
                 for vip_level in vip_config["data"]["vipLevels"]:
                     for type_value in type_id:
                         coupons_name = ['redEnvelop', 'festivalGift', 'birthdayGift', 'levelGift'][type_value]
-                        if type_value == 3:  # 升級可升多等VIP3->VIP5
+                        if type_value == 3:  # 升級可升多等VIP2->VIP9
                             if org_user_vip < vip_level["id"] <= user_vip_id and vip_level[coupons_name] > 0:
                                 available_coupons.append({"name": vip_level["name"], "point": vip_level[coupons_name]})
                         else:  # 其它點卷依當時的VIP等級派發

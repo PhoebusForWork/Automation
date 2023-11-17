@@ -1,0 +1,190 @@
+﻿[
+  {
+        "test_case": "add_activity",
+        "req_method": "post",
+        "req_url": "/v1/activity",
+        "params": {},
+        "json": {
+          "osTypes": [0, 1], "environment": 1, "vipLevel": 0, "code": "autotest661", "categoryIds": [2, 9], "type": 1, "sort": 2, "status": 1,
+          "gameCodes": ["LHDJ_ESPORT_LHDJ", "AI_SPORT_AI", "SABA_SPORT_SABA", "AWC_LIVE_SEXY", "JDB_FISHING_JDB", "VR_LOTTERY_VR", "FC_GAMING_FC"],
+          "currency": "CNY", "videoUrl": "", "pcUrl": "https://tw.news.yahoo.com/", "h5Url": "https://www.google.com.tw/?hl=zh_TW",
+          "detail": [ {"language": "EN", "name": "autotestactivity", "platformDisplay": "ChildrenDayevent-platforms ", "pcContent": "ChildrenDayevent-web", "mbContent": "ChildrenDayevent-smaillweb", "description": "ChildrenDayevent-conetxt", "pcListImage": "/static/img/game/243d68a2fa/6f741993450e5577.jpg", "pcDetailImage": "/static/img/game/243d68a2fa/7bbf0a3ff3d2dde9.png", "mbHomepageImage": "/static/img/game/243d68a2fa/0ee6805f24309d09.png", "mbDetailImage": "/static/img/game/243d68a2fa/7bbf0a3ff3d2dde9.png", "mbSpecialOfferListImage": "/static/img/game/243d68a2fa/50daed98708eceb2.png", "mbVipImage": "/static/img/game/243d68a2fa/37cf04969879045c.png", "mbRechargeWithdrawImage": "/static/img/game/243d68a2fa/7b959dda03951eef.png"},
+                      {"language": "ZH", "name": "六一測試活動", "platformDisplay": "六一活動-适用平台显示", "pcContent": "六一活動-大網", "mbContent": "六一活動-小網", "description": "六一活動-大網活动说明", "pcListImage": "/static/img/game/243d68a2fa/1ba2aab94232f84d.jpg", "pcDetailImage": "/static/img/game/243d68a2fa/7f9463df9fb4bda9.png", "mbHomepageImage": "/static/img/game/243d68a2fa/782b522f21db6107.png", "mbDetailImage": "/static/img/game/243d68a2fa/5319679ef0b2679e.png", "mbSpecialOfferListImage": "/static/img/game/243d68a2fa/eb7b1c8d3d4c80bd.png", "mbVipImage": "/static/img/game/243d68a2fa/54f57741b9223f08.png", "mbRechargeWithdrawImage": "/static/img/game/243d68a2fa/7b959dda03951eef.png"}
+          ],
+          "startTime": "2023-11-07T00:00:00+08:00", "endTime": "2023-11-10T00:00:00+08:00", "displayStartTime": "2023-10-24T00:00:00+08:00", "displayEndTime": "2023-12-01T00:00:00+08:00"
+        },
+      "schema": {"data": "string"},
+      "test_item": [
+          {"scenario":"新增活動" ,"target":{},"code_status": 200,"keyword": "data"},
+          {"scenario":"新增活動2" ,"target":{"code":"autotestdel661"},"code_status": 200,"keyword": "data"}
+      ]
+    },{
+        "test_case": "update_activity",
+        "req_method": "put",
+        "req_url": "/v1/activity",
+        "params": {},
+        "json": {
+          "osTypes": [0, 1], "environment": 1, "vipLevel": 0, "code": "autotest661", "categoryIds": [2, 9], "type": 1, "sort": 2, "status": 1,
+          "gameCodes": ["LHDJ_ESPORT_LHDJ", "AI_SPORT_AI", "SABA_SPORT_SABA", "AWC_LIVE_SEXY", "JDB_FISHING_JDB", "VR_LOTTERY_VR", "FC_GAMING_FC"],
+          "currency": "CNY", "videoUrl": "", "pcUrl": "https://tw.news.yahoo.com/", "h5Url": "https://www.google.com.tw/?hl=zh_TW",
+          "detail": [ {"language": "EN", "name": "autotestactivity", "platformDisplay": "ChildrenDayevent-platforms ", "pcContent": "ChildrenDayevent-web", "mbContent": "ChildrenDayevent-smaillweb", "description": "ChildrenDayevent-conetxt", "pcListImage": "/static/img/game/243d68a2fa/6f741993450e5577.jpg", "pcDetailImage": "/static/img/game/243d68a2fa/7bbf0a3ff3d2dde9.png", "mbHomepageImage": "/static/img/game/243d68a2fa/0ee6805f24309d09.png", "mbDetailImage": "/static/img/game/243d68a2fa/7bbf0a3ff3d2dde9.png", "mbSpecialOfferListImage": "/static/img/game/243d68a2fa/50daed98708eceb2.png", "mbVipImage": "/static/img/game/243d68a2fa/37cf04969879045c.png", "mbRechargeWithdrawImage": "/static/img/game/243d68a2fa/7b959dda03951eef.png"},
+                      {"language": "ZH", "name": "六一活動", "platformDisplay": "六一活動-适用平台显示", "pcContent": "六一活動-大網", "mbContent": "六一活動-小網", "description": "六一活動-大網活动说明", "pcListImage": "/static/img/game/243d68a2fa/1ba2aab94232f84d.jpg", "pcDetailImage": "/static/img/game/243d68a2fa/7f9463df9fb4bda9.png", "mbHomepageImage": "/static/img/game/243d68a2fa/782b522f21db6107.png", "mbDetailImage": "/static/img/game/243d68a2fa/5319679ef0b2679e.png", "mbSpecialOfferListImage": "/static/img/game/243d68a2fa/eb7b1c8d3d4c80bd.png", "mbVipImage": "/static/img/game/243d68a2fa/54f57741b9223f08.png", "mbRechargeWithdrawImage": "/static/img/game/243d68a2fa/7b959dda03951eef.png"}
+          ],
+          "id": "存在activity_id", "startTime": "2023-11-07T00:00:00+08:00", "endTime": "2023-11-10T00:00:00+08:00", "displayStartTime": "2023-10-24T00:00:00+08:00", "displayEndTime": "2023-12-01T00:00:00+08:00"
+        },
+      "schema": {"data": "string"},
+      "test_item": [
+          {"scenario":"修改活動","url":"","target":{ },"code_status": 200,"keyword": "data"},
+      ]
+  },{
+        "test_case": "get_activity_list",
+        "req_method": "post",
+        "schema": {"data": "string"},
+        "req_url": "/v1/activity/list",
+        "test_item": [
+          {"scenario":"取得活動列表","json": {},"params": {},"code_status": 200,"keyword": "data"}
+        ]
+    },{
+        "test_case": "get_activity",
+        "req_method": "get",
+        "schema": {"data": "string"},
+        "req_url": "/v1/activity/1",
+        "test_item": [
+          {"scenario":"取得單一活動列表_存在", "req_url": "/v1/activity/存在activity_id","json": {},"params": {},"code_status": 200,"keyword": "data"},
+          {"scenario":"取得單一活動列表_不存在", "req_url": "/v1/activity/999999","json": {},"params": {},"code_status": 400,"keyword": "資料不存在"}
+        ]
+    }
+    ,{
+        "test_case": "update_activity_status",
+        "req_method": "post",
+        "schema": {"data": "string"},
+        "params": {},
+        "req_url": "/v1/activity/update/status",
+        "json": { "id": "存在activity_id", "status": 0},
+        "test_item": [
+          {"scenario":"[status]3","target":{"status": 3},"code_status": 400,"keyword": "无效的请求参数"},
+          {"scenario":"[status]2","target":{"status": 2},"code_status": 200,"keyword": "data"},
+          {"scenario":"[status]1","target":{"status": 1},"code_status": 200,"keyword": "data"}
+        ]
+    },{
+        "test_case": "get_activity_category",
+        "req_method": "get",
+        "schema": {"data": "string"},
+        "params": {},
+        "req_url": "/v1/activity/category",
+        "test_item": [
+          {"scenario":"取得活動類型列表","json": {},"target": {},"code_status": 200,"keyword": "data"},
+          {"scenario":"取得活動類型列表_階層0","json": {},"target": {"level": 0},"code_status": 200,"keyword": "data"},
+          {"scenario":"取得活動類型列表_階層1","json": {},"target": {"level": 2},"code_status": 200,"keyword": "data"},
+          {"scenario":"取得活動類型列表_階層2","json": {},"target": {"level": 2},"code_status": 200,"keyword": "data"}
+        ]
+    },{
+    "test_case": "delete_activity",
+    "req_method": "delete",
+    "req_url": "/v1/activity/存在activity_id",
+    "params": {},
+    "json": {},
+    "schema": {"data": "string"},
+    "test_item": [
+      {"scenario":"刪除推薦活動列表","target": {},"code_status": 200,"keyword": "data"},
+      {"scenario":"刪除推薦活動列表","target": { "req_url": "/v1/activity/9999"},"code_status": 400,"keyword": "資料不存在"}
+    ]
+    },{
+        "test_case": "get_activity_list_operator",
+        "req_method": "get",
+        "schema": {"data": "string"},
+        "params": {},
+        "req_url": "/v1/activity/list/operator",
+        "test_item": [
+          {"scenario":"顯示所有操作者","json": {},"target": {},"code_status": 200,"keyword": "data"}
+        ]
+    }
+  ,{
+        "test_case": "get_select_activity_list",
+        "req_method": "get",
+        "schema": {"data": "string"},
+        "params": {},
+        "req_url": "/v1/activity/select",
+        "test_item": [
+          {"scenario":"活動推薦下拉選單","json": {},"target": {},"code_status": 200,"keyword": "data"}
+        ]
+    }
+  ,{
+    "test_case": "add_recommend_activity",
+    "req_method": "post",
+    "req_url": "/v1/activity/recommend",
+    "params": {},
+    "json": {"activityId": "存在activity_id", "recommendSort": 1},
+     "schema": {"data": "string"},
+    "test_item": [
+      {"scenario":"新增推薦活動","code_status": 200,"keyword": "data"},
+      {"scenario":"重覆新增推薦活動","code_status": 400,"keyword": "資料已存在"}
+    ]
+  },{
+    "test_case": "update_recommend_activity",
+    "req_method": "put",
+    "req_url": "/v1/activity/recommend",
+    "params": {},
+    "json": {"activityRecommendId": "1", "recommendSort": 22},
+     "schema": {"data": "string"},
+    "test_item": [
+      {"scenario":"修改推薦活動","target": {},"code_status": 200,"keyword": "data"},
+      {"scenario":"修改不存在的推薦活動","target": {"activityRecommendId": 9999},"code_status": 400,"keyword": "資料不存在"}
+    ]
+  },{
+    "test_case": "get_recommend_list",
+    "req_method": "post",
+    "req_url": "/v1/activity/recommend/list",
+    "params": {},
+    "json": {"activityId": null, "activityName": null},
+    "schema": {"data": "string"},
+    "test_item": [
+      {"scenario":"推薦活動列表","code_status": 200,"keyword": "data"}
+    ]
+  },{
+    "test_case": "delete_recommend_activity",
+    "req_method": "delete",
+    "req_url": "/v1/activity/recommend/存在recommend_id",
+    "params": {},
+    "json": {},
+    "schema": {"data": "string"},
+    "test_item": [
+      {"scenario":"刪除推薦活動列表","target": {},"code_status": 200,"keyword": "data"},
+      {"scenario":"刪除推薦活動列表","target": { "req_url": "/v1/activity/recommend/9999"},"code_status": 400,"keyword": "資料不存在"}
+    ]
+  },{
+        "test_case": "get_reward_list",
+        "req_method": "post",
+        "schema": {"data": "string"},
+        "params": {"currency":"CNY"},
+        "json": {},
+        "req_url": "/v1/activity/reward/list",
+        "test_item": [
+          {"scenario":"活動獎勵列表CNY","target": {},"code_status": 200,"keyword": "data"},
+          {"scenario":"活動獎勵列表USD","target": {"currency":"USD"},"code_status": 200,"keyword": "data"},
+          {"scenario":"活動獎勵列表THB","target": {"currency":"THB"},"code_status": 200,"keyword": "data"},
+          {"scenario":"活動獎勵列表USDT_ERC20","target": {"currency":"USDT_ERC20"},"code_status": 200,"keyword": "data"}
+        ]
+    },{
+        "test_case": "get_activity_participation_list",
+        "req_method": "post",
+        "schema": {"data": "string"},
+        "params": {},
+        "req_url": "/v1/activity/participation/page",
+        "test_item": [
+          {"scenario":"活動參加列表","json": {},"target": {},"code_status": 200,"keyword": "data"}
+        ]
+    }
+  ,{
+        "test_case": "get_active_activities",
+        "req_method": "get",
+        "schema": {"data": "string"},
+        "params": {},
+        "req_url": "/v1/activity/active/list",
+        "test_item": [
+          {"scenario":"資金配置管理-活動列表","json": {},"target": {},"code_status": 200,"keyword": "data"}
+        ]
+    }
+]
+
+

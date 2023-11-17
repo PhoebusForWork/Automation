@@ -72,6 +72,7 @@ class WebAPI(API_Controller):
         }
 
         response = self.send_request(**request_body)
+
         self.request_session.headers.update(
             {"uid": str(response.json()['data']['userId'])})
         self.request_session.headers.update(
