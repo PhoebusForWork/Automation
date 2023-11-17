@@ -1,8 +1,9 @@
 import pytest
 import allure
 import random
+import jsonpath
 from pylib.platform.user import UserManage
-from pylib.platform.proxy import ProxyChannel, ProxyGroup, ProxyManage
+from pylib.platform.proxy import Proxy, ProxyChannel, ProxyGroup, ProxyManage
 from utils.data_utils import TestDataReader, ResponseVerification
 from utils.api_utils import API_Controller
 from utils.generate_utils import Make
@@ -608,6 +609,13 @@ class TestProxy:
     @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case("proxy_get_edit_detail"))
     def test_proxy_get_edit_detail(test, get_platform_token):
+        if test['scenario'] == '存在的id':
+            # 直接獲取一個存在指定的proxy
+            get_user = Proxy(token=get_platform_token)
+            user_id = get_user.get_proxy(queryType=0, input='proxy001')
+            user_id = jsonpath.jsonpath(user_id, "$.data.[0].userId")[0]
+            test["req_url"] = test["req_url"].replace(
+                "存在的id", str(user_id))
         api = API_Controller()
         resp = api.send_request(
             test["req_method"],
@@ -625,6 +633,13 @@ class TestProxy:
     @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case("proxy_get_edit_display"))
     def test_proxy_get_edit_display(test, get_platform_token):
+        if test['scenario'] == '存在的id':
+            # 直接獲取一個存在指定的proxy
+            get_user = Proxy(token=get_platform_token)
+            user_id = get_user.get_proxy(queryType=0, input='proxy001')
+            user_id = jsonpath.jsonpath(user_id, "$.data.[0].userId")[0]
+            test["req_url"] = test["req_url"].replace(
+                "存在的id", str(user_id))
         api = API_Controller()
         resp = api.send_request(
             test["req_method"],
@@ -815,6 +830,11 @@ class TestProxyCredit:
     @pytest.mark.parametrize("test", test_data.get_case("proxy_edit_credit"))
     def test_proxy_edit_credit(test, get_platform_token):
         json_replace = test_data.replace_json(test["json"], test["target"])
+        if "存在id" == test["json"]['userId']:
+            proxy = Proxy()
+            ret = proxy.get_proxy(queryType=0,input='proxy001')
+            user_id = jsonpath.jsonpath(ret, "$.data.[0].userId")
+            test["json"]['userId'] = user_id[0]
         api = API_Controller()
         resp = api.send_request(
             test["req_method"],
