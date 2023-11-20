@@ -55,19 +55,15 @@ class CountryCodeRelation(PlatformAPI):
         return response.json()
 
     # 修改電信商
-    def edit_manage(self, plat_token=None, thirdPartyId=None, countryCodeId=None, weight=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
+    def edit_manage(self, plat_token=None, item: list = []):
+        """
+        範例
+        [{"thirdPartyId":1,"countryCodeId":2},{"thirdPartyId":1,"countryCodeId":3,"weight":0}]
+        """
         request_body = {
             "method": "put",
             "url": "/v1/countryCodeRelationManage",
-            "json": [
-                {"thirdPartyId": thirdPartyId,
-                 "countryCodeId": countryCodeId,
-                 "weight": weight
-                 }
-            ]
+            "json": item
         }
 
         response = self.send_request(**request_body)

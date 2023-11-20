@@ -4,7 +4,7 @@
         "req_method": "get",
         "req_url": "/v1/userValidCode",
         "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
-        "params" : {"type": 1, "userName": null, "device": "66-987654321"},
+        "params" : {"type": 2, "userName": null, "device": "66-987654321"},
         "json": {},
         "test_item": [
             {"scenario":"[userName,device]null","target":{"userName": null, "device": null}, "code_status": 400,"keyword": "无效的请求参数"},
@@ -141,7 +141,7 @@
         "test_case": "get_bank_card",
         "req_method": "get",
         "req_url": "/v1/thirdPartyManage/bankcard",
-        "schema": {"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"name":{"type":"string"},"isEnabled":{"type":"boolean"},"url":{"type":"string"},"username":{"type":"string"}},"required":["id","isEnabled","name","url","username"]}}},"required":["data"]    },
+        "schema": {"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"name":{"type":"string"},"isEnabled":{"type":"boolean"},"url":{"type":"string"},"username":{"type":["string","null"]}},"required":["id","isEnabled","name","url","username"]}}},"required":["data"]},
         "json" : {},
         "params": {"language": null},
         "test_item": [

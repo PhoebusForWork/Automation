@@ -65,6 +65,7 @@ class Validation(WebAPI):
     def build_all_valid(self):
         # 請求種類 1:註冊, 2:手機快捷登陸, 3:重設密碼, 4:撞庫驗證, 5:原手機號解綁, 6:綁定新手機號, 7:原郵箱地址解綁, 8:綁定新郵箱地址, 9:提款短信驗證
         no_phone_type = [1, 2, 3, 4, 5, 6, 7, 8]
+        self.valid_sms(mobile='18198977777', requestType=2, countryCode=86, uuid=123)
         for Type in no_phone_type:
             self.valid_sms(mobile='987654321', requestType=Type, countryCode=66, uuid=123)
         if self.request_session.headers['telephone'] is None:

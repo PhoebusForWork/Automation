@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from ..platform.platApiBase import PlatformAPI
+from utils.generate_utils import Make
 from utils.api_utils import KeywordArgument
 from utils.data_utils import EnvReader
 import jsonpath
@@ -385,8 +386,8 @@ class UserVipPointRatio(PlatformAPI):
 # 客戶群組
 class UserGroup(PlatformAPI):
     # 更新群組
-    def update(self, id=None, groupName=None, groupType=None,
-               beginRegisterTime=None, endRegisterTime=None,
+    def update(self, id=None, groupName=None, groupType=2,
+               beginRegisterTime=Make.generate_custom_date(days=-30), endRegisterTime=Make.generate_custom_date(days=30),
                withdrawType=None, isRebate=None,
                isUsdtRestricted=None, reason=None, proxyGroupId=None,
                weight=None, lockUser=None,
@@ -401,9 +402,9 @@ class UserGroup(PlatformAPI):
         return response.json()
 
     # 新增群組
-    def save(self, groupName=None, groupType=None,
-             beginRegisterTime=None, endRegisterTime=None,
-             withdrawType=None, isRebate=None,
+    def save(self, groupName=None, groupType=2,
+             beginRegisterTime=Make.generate_custom_date(days=-30), endRegisterTime=Make.generate_custom_date(days=30),
+             withdrawType=0, isRebate: bool=True,
              isUsdtRestricted=None, reason=None, proxyGroupId=None,
              weight=None, lockUser=None,
              tagList: list = [{"tagId": 0, "tagName": "string", "tagLevel": 0}]):
