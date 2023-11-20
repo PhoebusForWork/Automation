@@ -58,7 +58,7 @@ class ThirdPartyManage(PlatformAPI):
                            page=None, size=None, language=None):
         request_body = {
             "method": "get",
-            "url": "/v1/customer-service-group",
+            "url": "/v1/thirdPartyManage/customerServiceGroup",
             "params": KeywordArgument.body_data()
         }
         response = self.send_request(**request_body)
@@ -68,7 +68,7 @@ class ThirdPartyManage(PlatformAPI):
     def save_customer_group(self, id=None, customerServiceId=None, language=None):
         request_body = {
             "method": "put",
-            "url": "/v1/customer-service-group",
+            "url": "/v1/thirdPartyManage/customerServiceGroup",
             "parmas": {"language": language},
             "json": [{"id": id, "customerServiceId": customerServiceId}]
         }
@@ -107,7 +107,7 @@ class ThirdPartyManage(PlatformAPI):
     def get_customer_group_last_update_time(self, language=None):
         request_body = {
             "method": "get",
-            "url": "/v1/customer-service-group/last-update-time",
+            "url": "/v1/thirdPartyManage/customerServiceGroup/lastUpdateTime",
             "params": KeywordArgument.body_data()
         }
         response = self.send_request(**request_body)
@@ -117,7 +117,7 @@ class ThirdPartyManage(PlatformAPI):
     def get_customer_group_type(self, language=None):
         request_body = {
             "method": "get",
-            "url": "/v1/customer-service-group/group-type",
+            "url": "/v1/thirdPartyManage/customerServiceGroup/groupType",
             "params": KeywordArgument.body_data()
         }
         response = self.send_request(**request_body)
@@ -127,7 +127,7 @@ class ThirdPartyManage(PlatformAPI):
     def get_customer_service_list(self, language=None):
         request_body = {
             "method": "get",
-            "url": "/v1/customer-service-group/customer-service-list",
+            "url": "/v1/thirdPartyManage/customerServiceGroup/customerServiceList",
             "params": KeywordArgument.body_data()
         }
         response = self.send_request(**request_body)

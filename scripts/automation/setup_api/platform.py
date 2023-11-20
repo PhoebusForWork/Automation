@@ -91,4 +91,4 @@ def sync_relation_manage():
     sync_relation.login(username="superAdmin",
                         password="abc123456",
                         imgCode=code)
-    sync_relation.edit_manage(thirdPartyId=1, countryCodeId=5)
+    sync_relation.edit_manage(item=[{"thirdPartyId":8,"countryCodeId":5}])

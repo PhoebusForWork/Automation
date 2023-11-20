@@ -4,7 +4,7 @@ import jsonpath
 
 from pylib.platform.thirdPartyManage import ThirdPartyManage
 from pylib.platform.config import CountryCodeRelation
-from pylib.platform.fund import UserGroup
+from pylib.platform.user import UserGroup
 from pylib.client_side.validation import Validation
 from utils.data_utils import TestDataReader, ResponseVerification, EnvReader
 from utils.api_utils import API_Controller
@@ -27,7 +27,7 @@ def check_customer_group(get_platform_token):
     ret = jsonpath.jsonpath(target, "$..groupName")
     if ret is False:
         add_user_group = UserGroup(get_platform_token)
-        add_user_group.save_group(groupName='客服測試-群組類型測試-客服群組名稱測試')
+        add_user_group.save(groupName='客服測試-群組類型測試-客服群組名稱測試')
 
 @pytest.fixture(scope="class")
 def make_vaild_code(get_platform_token):
@@ -36,7 +36,7 @@ def make_vaild_code(get_platform_token):
     xxl.set_message_risk_env()
     # 開啟後台66(泰國)國碼三方簡訊商
     update_sms = CountryCodeRelation(get_platform_token)
-    update_sms.edit_manage(thirdPartyId=8, countryCodeId=6)
+    update_sms.edit_manage(item=[{"thirdPartyId":8,"countryCodeId":5},{"thirdPartyId":8,"countryCodeId":6}])
     # 前台發送各類型驗證
     valid_build = Validation()
     valid_build.login(username=env.CS_TEST_ACCOUNT)

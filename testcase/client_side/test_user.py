@@ -79,7 +79,7 @@ def make_register_new_user():
 @pytest.fixture(scope='class')
 def set_country_code_relation(get_platform_token):
     api = CountryCodeRelation(token=get_platform_token)
-    api.edit_manage(thirdPartyId=8, countryCodeId=5, weight=1)
+    api.edit_manage(item=[{"thirdPartyId":8,"countryCodeId":6}])
 
 
 @pytest.fixture(scope="class")
