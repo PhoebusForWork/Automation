@@ -387,7 +387,7 @@ class Proxy(PlatformAPI):
     # 獲取代理列表
     def get_proxy(
             self, plat_token=None,
-            From="2022-01-01T00:00:00Z", to="2022-12-31T00:00:00Z",
+            From="2023-01-01T00:00:00Z", to="2023-12-31T00:00:00Z",
             minBalance=None, maxBalance=None,
             creditStatus=None, queryType=None,
             input=None, groupName=None,
@@ -423,7 +423,7 @@ class Proxy(PlatformAPI):
     def add_proxy(
             self, plat_token=None,
             proxyAccount=None, proxyName=None, password=None,
-            telephone=None, proxyChannelId=None,
+            countryCode=None, telephone=None, proxyChannelId=None,
             commissionId=None, registerIp=None,
     ):
         if plat_token is not None:
@@ -638,7 +638,7 @@ class ProxyManage(PlatformAPI):
         if ret is False:
             add = Proxy()
             add.add_proxy(plat_token=token, proxyAccount="AutoTestProxy" + str(random.randrange(99999)),
-                          password="abc123456", telephone=str(random.randrange(10000000000, 19999999999)), commissionId=1)
+                          password="abc123456", countryCode='+886', telephone=str(random.randrange(10000000000, 19999999999)), commissionId=1)
             jsdata = self.get_manage_list(plat_token=token, proxyManageStatus=0)
             ret = jsonpath.jsonpath(jsdata, "$..id")
         return str(ret[0])
@@ -649,7 +649,7 @@ class ProxyManage(PlatformAPI):
         if ret is False:
             add = Proxy()
             add.add_proxy(plat_token=token, proxyAccount="AutoTestProxy" + str(random.randrange(99999)),
-                          password="abc123456", telephone=str(random.randrange(10000000000, 19999999999)), commissionId=1)
+                          password="abc123456", countryCode='+886', telephone=str(random.randrange(10000000000, 19999999999)), commissionId=1)
 
             jsdata = self.get_manage_list(plat_token=token, proxyManageStatus=0)  # 獲取待一審訂單
             ret = jsonpath.jsonpath(jsdata, "$..id")
@@ -665,7 +665,7 @@ class ProxyManage(PlatformAPI):
         if ret is False:
             add = Proxy()
             add.add_proxy(plat_token=token, proxyAccount="AutoTestProxy" + str(random.randrange(99999)),
-                          password="abc123456", telephone=str(random.randrange(10000000000, 19999999999)), commissionId=1)
+                          password="abc123456", countryCode='+886', telephone=str(random.randrange(10000000000, 19999999999)), commissionId=1)
 
             jsdata = self.get_manage_list(plat_token=token, proxyManageStatus=0)  # 獲取待一審訂單
             ret = jsonpath.jsonpath(jsdata, "$..id")

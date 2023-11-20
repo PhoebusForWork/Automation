@@ -38,7 +38,7 @@ class WebAPI(API_Controller):
             self.request_session.headers.update(
                 # {"token": str(response.json()['data']['token'])}
                 # 測試把所有資訊夾帶至header
-                {str(key): str(value) for key, value in response.json()['data'].items() if key != 'reallyName'}
+                {str(key): str(value) for key, value in response.json()['data'].items() if key not in ['reallyName', 'nickname']}
             )
         except Exception:
             print("登錄失敗")
