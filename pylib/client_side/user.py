@@ -252,7 +252,7 @@ class Vip(WebAPI):
         xxl = XxlJobs()
         xxl.sync_vip_festivalGift_date(sync_vip_date=job_date) if 1 in type_id else None  # 設定新年彩金發放日
         xxl.sync_vip(sync_vip_date=job_date)
-        time.sleep(3)
+        time.sleep(2)
 
     def run_vip_process(self, token=None, test=None, user_name=None):
 
