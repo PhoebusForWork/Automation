@@ -231,5 +231,192 @@
             // {"req_url": "/v1/wallet/game/transfer/failed/tradeId/存在ID/manual/result","scenario":"[remark]201字","target":{"remark":'123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901'},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             // {"req_url": "/v1/wallet/game/transfer/failed/tradeId/存在ID/manual/result","scenario":"[remark]200字","target":{"remark":'12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890'},"params": {},"code_status": 200,"keyword": "success"},
             ]
+    },
+    {
+        "test_case": "waterAndValidWaterClear",
+        "req_method": "post",
+        "req_url": "/v1/water/manage/withdrawWater/waterAndValidWater/clear",
+        "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
+        "json" : {"userId": 16, "remark": "string"},
+        "params": {currency: "CNY"},
+        "test_item": [
+            {"scenario":"[userId]不存在ID","target":{"userId": 654321},"code_status": 400,"keyword": "資料不存在"},
+            {"scenario":"正常清零","target":{},"code_status": 200,"keyword": "data"},
+            {"scenario":"清零審批中","target":{"userId": 16},"code_status": 400,"keyword": "该会员有未审核的操作，请先审核相关记录"},
+            {"scenario":"[remark]null","target":{"remark":null, "userId": 17},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]null","target":{"currency":null},"json": {"userId": 18},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]CNY","target":{"currency":"CNY"},"json": {"userId": 19},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]USD","target":{"currency":"USD"},"json": {"userId": 20},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]THB","target":{"currency":"THB"},"json": {"userId": 21},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]USDT_TRC20","target":{"currency":"USDT_TRC20"},"json": {"userId": 22},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]USDT_ERC20","target":{"currency":"USDT_ERC20"},"json": {"userId": 23},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]不存在","target":{"currency":"ABC"},"json": {},"code_status": 400,"keyword": "无效的请求参数"}
+        ]
+    },
+    {
+        "test_case": "waterClear",
+        "req_method": "post",
+        "req_url": "/v1/water/manage/withdrawWater/water/clear",
+        "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
+        "json" : {"userId": 18, "remark": "string", "orderIds": ["1"]},
+        "params": {},
+        "test_item": [
+            {"scenario":"[userId]不存在ID","target":{"userId": 654321},"code_status": 400,"keyword": "資料不存在"},
+            {"scenario":"[orderIds]不存在ID","target":{"orderIds": ["777"]},"code_status": 400,"keyword": "資料不存在"}
+        ]
+    },
+    {
+        "test_case": "limitWaterClear",
+        "req_method": "post",
+        "req_url": "/v1/water/manage/withdrawLimitWater/water/clear",
+        "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
+        "json" : {"userId": 19, "remark": "string", "orderIds": ["1"]},
+        "params": {},
+        "test_item": [
+            {"scenario":"[userId]不存在ID","target":{"userId": 654321},"code_status": 400,"keyword": "資料不存在"},
+            {"scenario":"[orderIds]不存在ID","target":{"orderIds": ["777"]},"code_status": 400,"keyword": "資料不存在"}
+        ]
+    },
+    {
+        "test_case": "waterTotal",
+        "req_method": "get",
+        "req_url": "/v1/water/manage/withdrawWater/total",
+        "schema": {"type": "object", "properties": {"data": {"type": "object", "properties": {"currency": {"type": "string"}, "balance": {"type": "integer"}, "water": {"type": "integer"}, "validWater": {"type": "integer"}, "clearWaterTotal": {"type": "integer"}, "firstCreateTime": {"type": ["string", "null"]}}, "required": ["balance", "clearWaterTotal", "currency", "firstCreateTime", "validWater", "water"]}}, "required": ["data"]},
+        "json" : {},
+        "params": {userId: 15,currency: "CNY"},
+        "test_item": [
+            {"scenario":"[userId]不存在ID","target":{"userId": 654321},"code_status": 400,"keyword": "该用户不存在"},
+            {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]null","target":{"currency":null},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]CNY","target":{"currency":"CNY"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]USD","target":{"currency":"USD"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]THB","target":{"currency":"THB"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]USDT_TRC20","target":{"currency":"USDT_TRC20"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]USDT_ERC20","target":{"currency":"USDT_ERC20"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]不存在","target":{"currency":"ABC"},"json": {},"code_status": 400,"keyword": "Unsupported Currency"}
+        ]
+    },
+    {
+        "test_case": "clearPendingList",
+        "req_method": "get",
+        "req_url": "/v1/water/manage/withdrawWater/clearPendingList",
+        "schema": {"type": "object", "properties": {"data": {"type": "object", "properties": {"total": {"type": "integer"}, "size": {"type": "integer"}, "current": {"type": "integer"}, "pages": {"type": "integer"}, "records": {"type": "array", "items": {"type": "object", "properties": {"orderId": {"type": "string"}, "userId": {"type": "integer"}, "orderType": {"type": "integer"}, "orderDesc": {"type": "string"}, "amount": {"type": "integer"}, "currency": {"type": "string"}, "water": {"type": "integer"}, "waterStatus": {"type": "integer"}, "beforeLeftWater": {"type": "integer"}, "afterLeftWater": {"type": "integer"}, "leftWater": {"type": "integer"}, "remark": {"type": "string"}, "adminName": {"type": "string"}, "createTime": {"type": "string"}, "lastModifiedTime": {"type": "string"}}, "required": ["adminName", "afterLeftWater", "amount", "beforeLeftWater", "createTime", "currency", "lastModifiedTime", "leftWater", "orderDesc", "orderId", "orderType", "remark", "userId", "water", "waterStatus"]}}}, "required": ["current", "pages", "records", "size", "total"]}}, "required": ["data"]},
+        "json" : {},
+        "params": {page: 1,size: 20,startTime: "2023-07-24T00:00:00.613Z",endTime: "2023-07-25T23:59:59.613Z",userId: 15,orderId: null,orderType: null,adminName: null,waterStatus: null,currency: null},
+        "test_item": [
+            {"scenario":"[page]null","target":{"page":null},"json": {},"code_status": 200,"keyword": '"current":1'},
+            {"scenario":"[page]錯誤格式","target":{"page":"abc"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[size]null","target":{"size":null},"json": {},"code_status": 200,"keyword": '"size":10'},
+            {"scenario":"[size]錯誤格式","target":{"size":"abc"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[startTime]null","target":{"startTime":null},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[startTime]不符格式","target":{"startTime":"string"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[endTime]null","target":{"endTime":null},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[endTime]不符格式","target":{"endTime":"string"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[userId]null","target":{"userId":null},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[orderId]存在","target":{"orderId":71},"json": {},"code_status": 200,"keyword": "data"},
+            //資金變更類型 : 返水6、存款7、紅利8、提款9、上分10、充值補分11、充值減分12、加幣13、減幣14
+            {"scenario":"[orderType]6","target":{"orderType":6},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[orderType]7","target":{"orderType":7},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[orderType]8","target":{"orderType":8},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[orderType]9","target":{"orderType":9},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[orderType]10","target":{"orderType":10},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[orderType]11","target":{"orderType":11},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[orderType]12","target":{"orderType":12},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[orderType]13","target":{"orderType":13},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[orderType]14","target":{"orderType":14},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[orderType]不存在","target":{"orderType":777},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[adminName]有輸入","target":{"adminName":"generic005"},"json": {},"code_status": 200,"keyword": "data"},
+            // 流水變更裝態 : 正常0、已完成1、審核中2
+            {"scenario":"[waterStatus]0","target":{"waterStatus":0},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[waterStatus]1","target":{"waterStatus":1},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[waterStatus]2","target":{"waterStatus":2},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[waterStatus]777","target":{"waterStatus":777},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[currency]CNY","target":{"currency":"CNY"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]USD","target":{"currency":"USD"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]THB","target":{"currency":"THB"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]USDT_TRC20","target":{"currency":"USDT_TRC20"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]USDT_ERC20","target":{"currency":"USDT_ERC20"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]不存在","target":{"currency":"ABC"},"json": {},"code_status": 400,"keyword": "Unsupported Currency"},
+            {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"}
+        ]
+    },
+    {
+        "test_case": "limitWaterTotalNoData",
+        "req_method": "get",
+        "req_url": "/v1/water/manage/withdrawLimitWater/total",
+        "schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"currency": {"type": "string"}, "leftWaterTotal": {"type": "string"}, "leftWater": {"type": "integer"}}, "required": ["currency", "leftWater", "leftWaterTotal"]}}}, "required": ["data"]},
+        "json" : {},
+        "params": {userId: 15,currency: "CNY"},
+        "test_item": [
+            {"scenario":"[userId]不存在ID","target":{"userId": 654321},"code_status": 400,"keyword": "该用户不存在"},
+            {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]null","target":{"currency":null},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]CNY","target":{"currency":"CNY"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]USD","target":{"currency":"USD"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]THB","target":{"currency":"THB"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]USDT_TRC20","target":{"currency":"USDT_TRC20"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]USDT_ERC20","target":{"currency":"USDT_ERC20"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]不存在","target":{"currency":"ABC"},"json": {},"code_status": 400,"keyword": "Unsupported Currency"}
+        ]
+    },
+    {
+        "test_case": "limitWaterTotalWithData",
+        "req_method": "get",
+        "req_url": "/v1/water/manage/withdrawLimitWater/total",
+        "schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"currency": {"type": "string"}, "leftWaterTotal": {"type": "string"}, "leftWater": {"type": "integer"}}, "required": ["currency", "leftWater", "leftWaterTotal"]}}}, "required": ["data"]},
+        "json" : {},
+        "params": {userId: 15,currency: "CNY"},
+        "test_item": [
+            {"scenario":"[userId]不存在ID","target":{"userId": 654321},"code_status": 400,"keyword": "该用户不存在"},
+            {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]null","target":{"currency":null},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]CNY","target":{"currency":"CNY"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]USD","target":{"currency":"USD"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]THB","target":{"currency":"THB"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]USDT_TRC20","target":{"currency":"USDT_TRC20"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]USDT_ERC20","target":{"currency":"USDT_ERC20"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]不存在","target":{"currency":"ABC"},"json": {},"code_status": 400,"keyword": "Unsupported Currency"},
+        ]
+    },
+    {
+        "test_case": "limitWaterClearPendingList",
+        "req_method": "get",
+        "req_url": "/v1/water/manage/withdrawLimitWater/clearPendingList",
+        "schema": {"properties": {"data": {"type": "object", "properties": {"total": {"type": "integer"}, "size": {"type": "integer"}, "current": {"type": "integer"}, "pages": {"type": "integer"}, "records": {"type": "array", "items": {"type": "object", "properties": {"orderId": {"type": "string"}, "userId": {"type": "integer"}, "limitGameType": {"type": "integer"}, "limitGameCode": {"type": "string"}, "currency": {"type": "string"}, "water": {"type": "integer"}, "waterStatus": {"type": "integer"}, "beforeLeftWater": {"type": "integer"}, "afterLeftWater": {"type": "integer"}, "leftWater": {"type": "integer"}, "remark": {"type": "string"}, "adminName": {"type": "string"}, "createTime": {"type": "string"}, "lastModifiedTime": {"type": "string"}}, "required": ["adminName", "afterLeftWater", "beforeLeftWater", "createTime", "currency", "lastModifiedTime", "leftWater", "limitGameCode", "limitGameType", "orderId", "remark", "userId", "water", "waterStatus"]}}}, "required": ["current", "pages", "records", "size", "total"]}}, "required": ["data"]},
+        "json" : {},
+        "params": {page: 1,size: 20,userId: 15,orderId: null,orderType: null,adminName: null,waterStatus: 2,startTime: "2022-07-24T00:00:00.475Z",endTime: "2033-07-25T23:59:59.475Z","limitGameType": 1001, "limitGameCode": null},
+        "test_item": [
+            {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"},
+            {"scenario":"[page]null","target":{"page":null},"json": {},"code_status": 200,"keyword": '"current":1'},
+            {"scenario":"[page]錯誤格式","target":{"page":"abc"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[size]null","target":{"size":null},"json": {},"code_status": 200,"keyword": '"size":10'},
+            {"scenario":"[size]錯誤格式","target":{"size":"abc"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[userId]null","target":{"userId":null},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[orderId]存在","target":{"orderId":71},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[adminName]有輸入","target":{"adminName":"generic005"},"json": {},"code_status": 200,"keyword": "data"},
+            // 流水變更裝態 : 正常0、已完成1、審核中2
+            {"scenario":"[waterStatus]0","target":{"waterStatus":0},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[waterStatus]1","target":{"waterStatus":1},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[waterStatus]2","target":{"waterStatus":2},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[waterStatus]777","target":{"waterStatus":777},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[startTime]null","target":{"startTime":null},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[startTime]不符格式","target":{"startTime":"string"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[endTime]null","target":{"endTime":null},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[endTime]不符格式","target":{"endTime":"string"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            // 1, "體育" 2, "真人" 3, "電競" 4, "彩票" 5, "棋牌" 6, "電子", 1001, "全平台(不含彩票)" 1002, "全平台(不含彩票、真人)",
+            {"scenario":"[limitGameType]不存在","target":{"limitGameType":"777"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[limitGameType]1","target":{"limitGameType":"1"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[limitGameType]2","target":{"limitGameType":"2"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[limitGameType]3","target":{"limitGameType":"3"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[limitGameType]4","target":{"limitGameType":"4"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[limitGameType]5","target":{"limitGameType":"5"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[limitGameType]6","target":{"limitGameType":"6"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[limitGameType]1001","target":{"limitGameType":"1001"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[limitGameType]1002","target":{"limitGameType":"1002"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[limitGameCode]AI_SPORT_AI","target":{"limitGameType":"1","limitGameCode":"AI_SPORT_AI"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[limitGameCode]CQ9_GAMING_CQ9","target":{"limitGameType":"3","limitGameCode":"CQ9_GAMING_CQ9"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[limitGameCode]KM_CARDS_KM","target":{"limitGameType":"6","limitGameCode":"KM_CARDS_KM"},"json": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[limitGameCode]LUCKY7_LIVE_BACCARAT","target":{"limitGameType":"2","limitGameCode":"LUCKY7_LIVE_BACCARAT"},"json": {},"code_status": 200,"keyword": "data"}
+        ]
     }
 ]

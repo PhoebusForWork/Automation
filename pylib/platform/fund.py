@@ -148,3 +148,142 @@ class ChangeAudit(PlatformAPI):
                 remark = '自動審核駁回'
                 self.approve_first(id=i, status=status, remark=remark)
         return response
+
+
+class WithdrawConfig(PlatformAPI):
+    def common_config_setting(self, plat_token=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "put",
+            "url": "/v1/fund/withdraw/manage/config/update",
+            "json": {"config": "{\"isOpenWithdraw\":1,\"multiple\":3,\"dailyMaxLimit\":10000000}", "type": 1}
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    def get_common_config_setting(self, plat_token=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "get",
+            "url": "/v1/fund/withdraw/manage/config/common"
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    def virtual_config_setting(self, plat_token=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "put",
+            "url": "/v1/fund/withdraw/manage/config/update",
+            "json": {"config": "{\"list\":[{\"usdtType\":2,\"feeType\":\"fix\",\"fee\":4,\"minLimit\":100,"
+                               "\"maxLimit\":1000}]}", "type": 4}
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    def get_virtual_config_setting(self, plat_token=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "get",
+            "url": "/v1/fund/withdraw/manage/config/virtual"
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    def proxy_virtual_config_setting(self, plat_token=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "put",
+            "url": "/v1/fund/withdraw/manage/config/update",
+            "json": {"config": "{\"list\":[{\"usdtType\":2,\"feeType\":\"fix\",\"fee\":4,\"minLimit\":100,"
+                               "\"maxLimit\":1000}]}", "type": 6}
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    def get_proxy_virtual_config_setting(self, plat_token=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "get",
+            "url": "/v1/fund/withdraw/manage/config/proxy/virtual"
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 新增小額白名單
+    def add_small_white(self):
+        request_body = {
+            "method": "post",
+            "url": "/v1/fund/withdraw/manage/config/white/small/add",
+            "json": {"list": ["una001"]}
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    def get_small_white(self):
+        request_body = {
+            "method": "post",
+            "url": "/v1/fund/withdraw/manage/config/white/small/list",
+            "json": {"page": 1, "size": 100, "username": ""}
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 獲取小額白名單 id
+    def find_small_white_list_id(self, plat_token=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        response = self.get_small_white()
+        ret = jsonpath.jsonpath(response, "$..userId")
+        if ret is False:
+            self.add_small_white()
+            response = self.get_small_white()
+            ret = jsonpath.jsonpath(response, "$..userId")
+        return ret[-1]
+
+    # 新增大額白名單
+    def add_large_white(self):
+        request_body = {
+            "method": "post",
+            "url": "/v1/fund/withdraw/manage/config/white/large/add",
+            "json": {"list": ["una001"]}
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    def get_large_white(self):
+        request_body = {
+            "method": "post",
+            "url": "/v1/fund/withdraw/manage/config/white/large/list",
+            "json": {"page": 1, "size": 100, "username": ""}
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+    # 獲取大額白名單 id
+    def find_large_white_list_id(self, plat_token=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        response = self.get_small_white()
+        ret = jsonpath.jsonpath(response, "$..userId")
+        if ret is False:
+            self.add_small_white()
+            response = self.get_small_white()
+            ret = jsonpath.jsonpath(response, "$..userId")
+        return ret[-1]

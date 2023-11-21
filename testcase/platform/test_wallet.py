@@ -217,3 +217,119 @@ class TestGameTransferFail:
 
         assert resp.status_code == test['code_status'], resp.text
         assert test['keyword'] in resp.text
+
+
+class TestWater:
+    @staticmethod
+    @allure.feature("流水相關操作")
+    @allure.story("一鍵流水清零")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('waterAndValidWaterClear'))
+    def test_water_and_valid_water_clear(test, get_platform_token):
+        if "currency" in test['scenario']:
+            params_replace = test_data.replace_json(test['params'], test['target'])
+            api = API_Controller()
+            resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                    params_replace, token=get_platform_token)
+            ResponseVerification.basic_assert(resp, test)
+
+        else:
+            json_replace = test_data.replace_json(test['json'], test['target'])
+            params_replace = test_data.replace_json(test['params'], test['target'])
+            api = API_Controller()
+            resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                                    params_replace, token=get_platform_token)
+            ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("流水相關操作")
+    @allure.story("提現流水清零")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('waterClear'))
+    def test_water_clear(test, get_platform_token):
+        json_replace = test_data.replace_json(test['json'], test['target'])
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                                test['params'], token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("流水相關操作")
+    @allure.story("限制流水清零")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('limitWaterClear'))
+    def test_limit_water_clear(test, get_platform_token):
+        json_replace = test_data.replace_json(test['json'], test['target'])
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                                test['params'], token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("流水相關操作")
+    @allure.story("獲取提現流水匯總")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('waterTotal'))
+    def test_water_total(test, get_platform_token):
+        params_replace = test_data.replace_json(test['params'], test['target'])
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                params_replace, token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("流水相關操作")
+    @allure.story("獲取提現流水清零列表")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('clearPendingList'))
+    def test_clear_pending_list(test, get_platform_token):
+        params_replace = test_data.replace_json(test['params'], test['target'])
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                params_replace, token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("流水相關操作")
+    @allure.story("獲取提現限制流水匯總(無資料)")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('limitWaterTotalNoData'))
+    def test_limit_water_total_no_data(test, get_platform_token):
+        params_replace = test_data.replace_json(test['params'], test['target'])
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                params_replace, token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("流水相關操作")
+    @allure.story("獲取提現限制流水匯總(有資料)")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('limitWaterTotalWithData'))
+    # @pytest.mark.xfail(reason='待修復')
+    def test_limit_water_total_with_data(test, get_platform_token):
+        params_replace = test_data.replace_json(test['params'], test['target'])
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                params_replace, token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("流水相關操作")
+    @allure.story("獲取提現限制流水清零列表")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('limitWaterClearPendingList'))
+    def test_limit_water_clear_pending_list(test, get_platform_token):
+        params_replace = test_data.replace_json(test['params'], test['target'])
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+                                params_replace, token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
