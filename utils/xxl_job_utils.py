@@ -52,9 +52,9 @@ class XxlJobs(API_Controller):
         form_date = Make.format_date(date=sync_vip_date, format='--%m-%d')
         executorParam = '{"pltCode":"ldpro","monthDay":"' + form_date + '"}'
         self.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
-                          json={}, params={"id": 57, "executorParam": executorParam, "addressList": None})
+                          json={}, params={"id": 35, "executorParam": executorParam, "addressList": None})
 
     # 使用者VIP 升降級與点券派發
     def sync_vip(self, sync_vip_date=None):
         self.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
-                          json={}, params={"id": 55, "executorParam": sync_vip_date, "addressList": None})
+                          json={}, params={"id": 33, "executorParam": sync_vip_date, "addressList": None})
