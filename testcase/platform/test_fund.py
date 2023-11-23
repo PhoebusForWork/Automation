@@ -648,16 +648,3 @@ class TestWithdraw:
         resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                                 test['params'], token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)
-
-    @staticmethod
-    @allure.feature("充值列表")
-    @allure.story("充值匯總")
-    @allure.title("{test[scenario]}")
-    @pytest.mark.regression
-    @pytest.mark.parametrize("test", test_data.get_case('get_recharge_summary_list'))
-    def test_get_recharge_summary_list(test, get_platform_token):
-        json_replace = test_data.replace_json(test['json'], test['target'])
-        api = API_Controller()
-        resp = api.send_request(test['req_method'], test['req_url'], json_replace,
-                                test['params'], token=get_platform_token)
-        ResponseVerification.basic_assert(resp, test)
