@@ -228,19 +228,14 @@ class TestWater:
     @pytest.mark.parametrize("test", test_data.get_case('waterAndValidWaterClear'))
     def test_water_and_valid_water_clear(test, get_platform_token):
         if "currency" in test['scenario']:
-            params_replace = test_data.replace_json(test['params'], test['target'])
-            api = API_Controller()
-            resp = api.send_request(test['req_method'], test['req_url'], test['json'],
-                                    params_replace, token=get_platform_token)
-            ResponseVerification.basic_assert(resp, test)
+            json_replace = test['json']
 
         else:
             json_replace = test_data.replace_json(test['json'], test['target'])
-            params_replace = test_data.replace_json(test['params'], test['target'])
-            api = API_Controller()
-            resp = api.send_request(test['req_method'], test['req_url'], json_replace,
-                                    params_replace, token=get_platform_token)
-            ResponseVerification.basic_assert(resp, test)
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                                token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
 
     @staticmethod
     @allure.feature("流水相關操作")
@@ -313,7 +308,6 @@ class TestWater:
     @allure.title("{test[scenario]}")
     @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('limitWaterTotalWithData'))
-    # @pytest.mark.xfail(reason='待修復')
     def test_limit_water_total_with_data(test, get_platform_token):
         params_replace = test_data.replace_json(test['params'], test['target'])
         api = API_Controller()

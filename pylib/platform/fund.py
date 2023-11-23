@@ -151,73 +151,19 @@ class ChangeAudit(PlatformAPI):
 
 
 class WithdrawConfig(PlatformAPI):
-    def common_config_setting(self, plat_token=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
+    def common_config_setting(self, config="{\"isOpenWithdraw\":1,\"multiple\":3,\"dailyMaxLimit\":10000000}", type=1):
         request_body = {
             "method": "put",
             "url": "/v1/fund/withdraw/manage/config/update",
-            "json": {"config": "{\"isOpenWithdraw\":1,\"multiple\":3,\"dailyMaxLimit\":10000000}", "type": 1}
+            "json": KeywordArgument.body_data()
         }
         response = self.send_request(**request_body)
         return response.json()
 
-    def get_common_config_setting(self, plat_token=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
+    def get_common_config_setting(self):
         request_body = {
             "method": "get",
             "url": "/v1/fund/withdraw/manage/config/common"
-        }
-        response = self.send_request(**request_body)
-        return response.json()
-
-    def virtual_config_setting(self, plat_token=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
-        request_body = {
-            "method": "put",
-            "url": "/v1/fund/withdraw/manage/config/update",
-            "json": {"config": "{\"list\":[{\"usdtType\":2,\"feeType\":\"fix\",\"fee\":4,\"minLimit\":100,"
-                               "\"maxLimit\":1000}]}", "type": 4}
-        }
-        response = self.send_request(**request_body)
-        return response.json()
-
-    def get_virtual_config_setting(self, plat_token=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
-        request_body = {
-            "method": "get",
-            "url": "/v1/fund/withdraw/manage/config/virtual"
-        }
-        response = self.send_request(**request_body)
-        return response.json()
-
-    def proxy_virtual_config_setting(self, plat_token=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
-        request_body = {
-            "method": "put",
-            "url": "/v1/fund/withdraw/manage/config/update",
-            "json": {"config": "{\"list\":[{\"usdtType\":2,\"feeType\":\"fix\",\"fee\":4,\"minLimit\":100,"
-                               "\"maxLimit\":1000}]}", "type": 6}
-        }
-        response = self.send_request(**request_body)
-        return response.json()
-
-    def get_proxy_virtual_config_setting(self, plat_token=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
-        request_body = {
-            "method": "get",
-            "url": "/v1/fund/withdraw/manage/config/proxy/virtual"
         }
         response = self.send_request(**request_body)
         return response.json()
@@ -243,10 +189,7 @@ class WithdrawConfig(PlatformAPI):
         return response.json()
 
     # 獲取小額白名單 id
-    def find_small_white_list_id(self, plat_token=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
+    def find_small_white_list_id(self):
         response = self.get_small_white()
         ret = jsonpath.jsonpath(response, "$..userId")
         if ret is False:
@@ -276,10 +219,7 @@ class WithdrawConfig(PlatformAPI):
         return response.json()
 
     # 獲取大額白名單 id
-    def find_large_white_list_id(self, plat_token=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
+    def find_large_white_list_id(self):
         response = self.get_small_white()
         ret = jsonpath.jsonpath(response, "$..userId")
         if ret is False:

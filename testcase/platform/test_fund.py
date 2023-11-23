@@ -36,10 +36,15 @@ class TestWithdraw:
                                 test['params'], token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)
 
-    def test_modified_config_common(self, get_platform_token):
-        config_setting = WithdrawConfig()
-        config_setting.common_config_setting(get_platform_token)
-        res = config_setting.get_common_config_setting(get_platform_token)
+    @staticmethod
+    @allure.feature("提現相關配置")
+    @allure.story("通用配置修改確認")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    def test_modified_config_common(get_platform_token):
+        config_setting = WithdrawConfig(token=get_platform_token)
+        config_setting.common_config_setting()
+        res = config_setting.get_common_config_setting()
         daily_max_limit = res["data"]["dailyMaxLimit"]
         is_open_withdraw = res["data"]["isOpenWithdraw"]
         multiple = res["data"]["multiple"]
@@ -108,9 +113,9 @@ class TestWithdraw:
     def test_delete_config_white_small(test, get_platform_token):
         json_replace = test_data.replace_json(test['json'], test['target'])
         if "存在id" in test['req_url']:
-            white_small = WithdrawConfig()
+            white_small = WithdrawConfig(token=get_platform_token)
             test['req_url'] = test['req_url'].replace("存在id", str(
-                white_small.find_small_white_list_id(plat_token=get_platform_token)))
+                white_small.find_small_white_list_id()))
         api = API_Controller()
         resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                                 test['params'], token=get_platform_token)
@@ -177,9 +182,9 @@ class TestWithdraw:
     def test_delete_config_white_large(test, get_platform_token):
         json_replace = test_data.replace_json(test['json'], test['target'])
         if "存在id" in test['req_url']:
-            white_large = WithdrawConfig()
+            white_large = WithdrawConfig(token=get_platform_token)
             test['req_url'] = test['req_url'].replace("存在id", str(
-                white_large.find_large_white_list_id(plat_token=get_platform_token)))
+                white_large.find_large_white_list_id()))
         api = API_Controller()
         resp = api.send_request(test['req_method'], test['req_url'], json_replace,
                                 test['params'], token=get_platform_token)
@@ -638,6 +643,19 @@ class TestWithdraw:
     @pytest.mark.xfail(reason="尚未实现该请求所需功能")
     @pytest.mark.parametrize("test", test_data.get_case('error_recovery'))
     def test_error_recovery(test, get_platform_token):
+        json_replace = test_data.replace_json(test['json'], test['target'])
+        api = API_Controller()
+        resp = api.send_request(test['req_method'], test['req_url'], json_replace,
+                                test['params'], token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("充值列表")
+    @allure.story("充值匯總")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case('get_recharge_summary_list'))
+    def test_get_recharge_summary_list(test, get_platform_token):
         json_replace = test_data.replace_json(test['json'], test['target'])
         api = API_Controller()
         resp = api.send_request(test['req_method'], test['req_url'], json_replace,
