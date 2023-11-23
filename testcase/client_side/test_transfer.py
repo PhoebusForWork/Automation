@@ -17,31 +17,31 @@ test_data.read_json5('test_wallet.json5', file_side='cs')
 @pytest.fixture(scope="class")
 def reset_user_wallet_for_deposit(get_user_token):
     do_withdraw = GameTransfer(token=get_user_token)
-    do_withdraw.wallet_game_transfer_withdraw_all()
+    do_withdraw.wallet_game_transfer_withdraw_all(currency="USD")
     reset = UserWallet()
     reset.reset(balance=100)
     yield
-    do_withdraw.wallet_game_transfer_withdraw_all()
+    do_withdraw.wallet_game_transfer_withdraw_all(currency="USD")
 
 
 @pytest.fixture(scope="class")
 def reset_user_wallet_for_withdraw(get_user_token, get_user_id):
     do_withdraw = GameTransfer(token=get_user_token)
-    do_withdraw.wallet_game_transfer_withdraw_all()
+    do_withdraw.wallet_game_transfer_withdraw_all(currency="USD")
     reset = UserWallet()
     reset.reset(balance=100, user_id=get_user_id)
     do_withdraw.wallet_game_transfer_deposit(
-        channelCode='AI', amount=100)
+        channelCode='AI', amount=100, currency="USD")
 
 
 @pytest.fixture(scope="class")
 def reset_user_wallet_for_withdraw_all(get_user_token, get_user_id):
     do_withdraw = GameTransfer(token=get_user_token)
-    do_withdraw.wallet_game_transfer_withdraw_all()
+    do_withdraw.wallet_game_transfer_withdraw_all(currency="USD")
     reset = UserWallet()
     reset.reset(balance=150, user_id=get_user_id)
     do_withdraw.wallet_game_transfer_deposit(
-        channelCode='AI', amount=50)
+        channelCode='AI', amount=50, currency="USD")
 
 
 ######################

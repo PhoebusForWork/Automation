@@ -504,15 +504,14 @@ class Security(WebAPI):
         return response.json()
 
     # 綁定銀行卡
-    def bind_bank_card(self, userName=None,
-                       realName=None, bankId=None,
-                       bankName=None, bankAddress=None, cardNo=None,
-                       cardOwnerName=None, cardType=None,
+    def bind_bank_card(self, currency='USD',
+                       bankId=None, bankName=None, bankAddress=None,
+                       cardNo=None, cardOwnerName=None, cardType=None,
                        default=None, first=None):
         request_body = {
             "method": "post",
             "url": "/v1/user/security/bind/bankCard",
-            "params": {"currency": 'CNY'},
+            "params": {"currency": 'currency'},
             "json": KeywordArgument.body_data()
         }
 
