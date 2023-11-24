@@ -87,9 +87,11 @@
         "req_method": "get",
         "req_url": "/v1/validation/captcha",
         "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"channelName":{"type":"string"},"additionalParams":{"type":"object"}},"required":["additionalParams","channelName"]}},"required":["data"]},
-        "json" : {"device": "","requestType": ""},
+        "json": {},
+        // 這邊先針對預設flyway語系進行測試，之後預期可以有個語系防呆
+        "params": {"language":"ZH"},
         "test_item": [
-            {"scenario":"[]","target":{},"params": {},"code_status": 200,"keyword": "data"}
+            {"scenario":"[]","target":{},"code_status": 200,"keyword": "data"}
         ]
     }
 ]
