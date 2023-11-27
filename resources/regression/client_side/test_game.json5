@@ -25,7 +25,7 @@
         "test_case": "game_redirect",
         "req_method": "get",
         "json" : {},
-        "params":{"backUrl":"https://cs-qa-h5.prj300.xyz/", "subGameCode": ""},//subGameCode參數目前尚未用到
+        "params":{"backUrl":"https://cs-auto-h5.prj300.xyz/", "subGameCode": ""},//subGameCode參數目前尚未用到
         "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "test_item": [
             {"scenario":"AI體育-正常遊戲跳轉","req_url": "/v1/game/redirect/AI_SPORT_AI/url","code_status": 200,"keyword": "https://"},
