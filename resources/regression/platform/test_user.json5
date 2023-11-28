@@ -162,7 +162,7 @@
             {"req_url": "/v1/user/2/login/info","scenario":"登入日誌_[from_to]開始時間大於結束時間","target":{"from":null,"to":null},"code_status": 400,"keyword": "无效的请求参数"},
             {"req_url": "/v1/user/2/login/info","scenario":"登入日誌_[type]0","target":{"type":0},"code_status": 400,"keyword": "无效的请求参数"},
             {"req_url": "/v1/user/2/login/info","scenario":"登入日誌_[type]1","target":{"type":1},"code_status": 200,"keyword": "data"},
-            {"req_url": "/v1/user/2/login/info","scenario":"登入日誌_[type]1","target":{"type":1,"keyword":"10.3.1.73"},"code_status": 200,"keyword": "10.3.1.73"},
+            {"req_url": "/v1/user/2/login/info","scenario":"登入日誌_[type]1","target":{"type":1,"keyword":"10.24.129.168"},"code_status": 200,"keyword": "10.24.129.168"},
             {"req_url": "/v1/user/2/login/info","scenario":"登入日誌_[type]2","target":{"type":2},"code_status": 200,"keyword": "data"},
             {"req_url": "/v1/user/2/login/info","scenario":"登入日誌_[type]2","target":{"type":2,"keyword":"https://cs-api-qa.prj300.xyz/"},"code_status": 200,"keyword": "data"},
             {"req_url": "/v1/user/2/login/info","scenario":"登入日誌_[osType]0","target":{"osType":0},"code_status": 200,"keyword": "data"},
@@ -206,8 +206,8 @@
         "test_item": [
             {"req_url": "/v1/user/9999999/remark","scenario":"更新客戶備註(不需審核)_不存在id","json": {"remark": "string"},"code_status": 400,"keyword": '该用户不存在'},
             {"req_url": "/v1/user/2/remark","scenario":"更新客戶備註(不需審核)_[remark]null","json": {"remark": null},"code_status": 400,"keyword": '无效的请求参数'},
-            {"req_url": "/v1/user/2/remark","scenario":"更新客戶備註(不需審核)_[remark]兩百字","json": {"remark": "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"},"code_status": 200,"keyword": 'success'},
-            {"req_url": "/v1/user/2/remark","scenario":"更新客戶備註(不需審核)_[remark]超過兩百字","json": {"remark": "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901"},"code_status": 400,"keyword": '无效的请求参数'},
+            {"req_url": "/v1/user/2/remark","scenario":"更新客戶備註(不需審核)_[remark]五百字","json": {"remark": "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"},"code_status": 200,"keyword": 'success'},
+            {"req_url": "/v1/user/2/remark","scenario":"更新客戶備註(不需審核)_[remark]超過五百字","json": {"remark": "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901"},"code_status": 400,"keyword": '无效的请求参数'},
             {"req_url": "/v1/user/2/remark","scenario":"更新客戶備註(不需審核)_存在id","json": {"remark": "test_string"},"code_status": 200,"keyword": 'success'},
             ]
     },
@@ -245,7 +245,7 @@
         "params": {},
         "test_item": [
             {"scenario":"開通代理角色_不存在id","json": {"userId": 0},"code_status": 400,"keyword": '该用户不存在'},
-            {"scenario":"開通代理角色_用戶為proxy","json": {"userId": 67},"code_status": 400,"keyword": '该用户已是代理'},
+            {"scenario":"開通代理角色_用戶為proxy","json": {"userId": "proxy_id"},"code_status": 400,"keyword": '该用户已是代理'},
             {"scenario":"開通代理角色_用戶為client","json": {"userId": "client_id"},"code_status": 200,"keyword": 'success'},
             ]
     },
