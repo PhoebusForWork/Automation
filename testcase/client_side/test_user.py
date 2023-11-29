@@ -181,7 +181,7 @@ class TestVIP:
     @allure.title("{test[scenario]}")
     @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_user_vip_level'))
-    def test_get_user_vip_level(test, vip_register_new_user):
+    def test_get_user_vip_level(test, register_check_trigger, vip_register_new_user):
 
         account = vip_register_new_user
         user_name = account[test['params']['username']]

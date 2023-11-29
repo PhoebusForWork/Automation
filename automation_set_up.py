@@ -40,7 +40,8 @@ postgres_scripts.plt_game()
 postgres_scripts.wallet()
 platform.sync_relation_manage()
 xxl.get_game_orders()
-
+postgres_scripts.plt_user()
+postgres_scripts.cs_user()
 # #############
 #    mongo    #
 # #############

@@ -43,7 +43,9 @@ def plt_game():
     plt_game.run_sql('''
         UPDATE plt_game.ldpro_game SET status = true::boolean;
         UPDATE plt_game.ldpro_game_merchant SET urls['getSportOrderList'] = to_jsonb('https://mock-game-merchant-auto.prj300.xyz/getGameOrderList/1'::text), urls['getTransferOrderStatus'] = to_jsonb('https://mock-game-merchant-auto.prj300.xyz/getTransferOrderList/1'::text) WHERE currency = 'CNY';
+        UPDATE plt_game.platform set timezone = 8 , is_enabled =true where id=1;
         ''')
+    # Xxl-job 站點sync有問題，暫時使用plt_game.platform sql設定
 
 
 def wallet():
@@ -51,6 +53,21 @@ def wallet():
     wallet.run_sql('''
         UPDATE wallet.ldpro_wallet SET balance = 100.0000::numeric(21,4) WHERE user_id in (1,2,3,4,5,6)
         ''')
+
+
+def plt_user():
+    plt_vip_user = Postgresql(database='plt_user')
+    plt_vip_user.run_sql(''' 
+        UPDATE plt_user.ldpro_vip_point_ratio SET created_time = '2023-01-01 04:01:21.203101 +00:00'
+        ''')
+
+
+def cs_user():
+    cs_vip_user = Postgresql(database='cs_user', platform="cs")
+    cs_vip_user.run_sql('''
+        UPDATE cs_user.ldpro_vip_point_ratio SET created_time = '2023-01-01 04:01:21.203101 +00:00'
+        ''')
+
 
 def edit_the_default_platform():
     edit_the_default_platform = Postgresql(database='plt_basics')
