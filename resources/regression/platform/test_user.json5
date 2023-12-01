@@ -162,7 +162,7 @@
             {"req_url": "/v1/user/2/login/info","scenario":"登入日誌_[from_to]開始時間大於結束時間","target":{"from":null,"to":null},"code_status": 400,"keyword": "无效的请求参数"},
             {"req_url": "/v1/user/2/login/info","scenario":"登入日誌_[type]0","target":{"type":0},"code_status": 400,"keyword": "无效的请求参数"},
             {"req_url": "/v1/user/2/login/info","scenario":"登入日誌_[type]1","target":{"type":1},"code_status": 200,"keyword": "data"},
-            {"req_url": "/v1/user/2/login/info","scenario":"登入日誌_[type]1","target":{"type":1,"keyword":"10.3.1.73"},"code_status": 200,"keyword": "10.3.1.73"},
+            {"req_url": "/v1/user/2/login/info","scenario":"登入日誌_[type]1","target":{"type":1,"keyword":"10.24.129.143"},"code_status": 200,"keyword": "10.24.129.143"},
             {"req_url": "/v1/user/2/login/info","scenario":"登入日誌_[type]2","target":{"type":2},"code_status": 200,"keyword": "data"},
             {"req_url": "/v1/user/2/login/info","scenario":"登入日誌_[type]2","target":{"type":2,"keyword":"https://cs-api-qa.prj300.xyz/"},"code_status": 200,"keyword": "data"},
             {"req_url": "/v1/user/2/login/info","scenario":"登入日誌_[osType]0","target":{"osType":0},"code_status": 200,"keyword": "data"},
@@ -187,17 +187,18 @@
             {"scenario":"取得[查詢客戶列表]查詢條件的下拉選單_正常查詢","target":{},"code_status": 200,"keyword": 'data'},
             ]
     },
-    {
-        "test_case": "get_user_login_stat",
-        "req_method": "get",
-        "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"loginPeriodStat":{"type":"array","items":{"type":"object","properties":{"period":{"type":"integer"},"count":{"type":"integer"}},"required":["count","period"]}},"loginWeekStat":{"type":"array","items":{"type":"object","properties":{"day":{"type":"string"},"count":{"type":"integer"}},"required":["count","day"]}},"osTypeCount":{"type":"array","items":{"type":"object","properties":{"type":{"type":"integer"},"count":{"type":"integer"}},"required":["count","type"]}}},"required":["loginPeriodStat","loginWeekStat","osTypeCount"]}},"required":["data"]},
-        "json" : {},
-        "params": {},
-        "test_item": [
-            {"req_url": "/v1/user/login/stat/999999","scenario":"客戶登入統計_不存在id","target":{},"code_status": 200,"keyword": '"count":0'},
-            {"req_url": "/v1/user/login/stat/1","scenario":"客戶登入統計_存在id","target":{},"code_status": 200,"keyword": '"osTypeCount":[{"type":'},
-            ]
-    },
+    // 目前這邊被移除了
+    // {
+    //     "test_case": "get_user_login_stat",
+    //     "req_method": "get",
+    //     "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"loginPeriodStat":{"type":"array","items":{"type":"object","properties":{"period":{"type":"integer"},"count":{"type":"integer"}},"required":["count","period"]}},"loginWeekStat":{"type":"array","items":{"type":"object","properties":{"day":{"type":"string"},"count":{"type":"integer"}},"required":["count","day"]}},"osTypeCount":{"type":"array","items":{"type":"object","properties":{"type":{"type":"integer"},"count":{"type":"integer"}},"required":["count","type"]}}},"required":["loginPeriodStat","loginWeekStat","osTypeCount"]}},"required":["data"]},
+    //     "json" : {},
+    //     "params": {},
+    //     "test_item": [
+    //         {"req_url": "/v1/user/login/stat/999999","scenario":"客戶登入統計_不存在id","target":{},"code_status": 200,"keyword": '"count":0'},
+    //         {"req_url": "/v1/user/login/stat/1","scenario":"客戶登入統計_存在id","target":{},"code_status": 200,"keyword": '"osTypeCount":[{"type":'},
+    //         ]
+    // },
     {
         "test_case": "edit_user_remark",
         "req_method": "put",
@@ -206,8 +207,8 @@
         "test_item": [
             {"req_url": "/v1/user/9999999/remark","scenario":"更新客戶備註(不需審核)_不存在id","json": {"remark": "string"},"code_status": 400,"keyword": '该用户不存在'},
             {"req_url": "/v1/user/2/remark","scenario":"更新客戶備註(不需審核)_[remark]null","json": {"remark": null},"code_status": 400,"keyword": '无效的请求参数'},
-            {"req_url": "/v1/user/2/remark","scenario":"更新客戶備註(不需審核)_[remark]兩百字","json": {"remark": "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"},"code_status": 200,"keyword": 'success'},
-            {"req_url": "/v1/user/2/remark","scenario":"更新客戶備註(不需審核)_[remark]超過兩百字","json": {"remark": "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901"},"code_status": 400,"keyword": '无效的请求参数'},
+            {"req_url": "/v1/user/2/remark","scenario":"更新客戶備註(不需審核)_[remark]五百字","json": {"remark": "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"},"code_status": 200,"keyword": 'success'},
+            {"req_url": "/v1/user/2/remark","scenario":"更新客戶備註(不需審核)_[remark]超過五百字","json": {"remark": "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901"},"code_status": 400,"keyword": '无效的请求参数'},
             {"req_url": "/v1/user/2/remark","scenario":"更新客戶備註(不需審核)_存在id","json": {"remark": "test_string"},"code_status": 200,"keyword": 'success'},
             ]
     },
@@ -245,7 +246,7 @@
         "params": {},
         "test_item": [
             {"scenario":"開通代理角色_不存在id","json": {"userId": 0},"code_status": 400,"keyword": '该用户不存在'},
-            {"scenario":"開通代理角色_用戶為proxy","json": {"userId": 67},"code_status": 400,"keyword": '该用户已是代理'},
+            {"scenario":"開通代理角色_用戶為proxy","json": {"userId": "proxy_id"},"code_status": 400,"keyword": '该用户已是代理'},
             {"scenario":"開通代理角色_用戶為client","json": {"userId": "client_id"},"code_status": 200,"keyword": 'success'},
             ]
     },
@@ -556,7 +557,7 @@
         "req_url": "/v1/user/risk/login-log",
         "params": {"userType":null,"username":null,"ip":null,"osType":null,"from":"2023-01-01T00:00:00Z","to":"2023-12-31T23:59:50Z","page":null,"size":null},
         "json": {},
-        "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"total":{"type":"integer"},"size":{"type":"integer"},"current":{"type":"integer"},"pages":{"type":"integer"},"records":{"type":"array","items":{"type":"object","properties":{"userType":{"type":"string"},"username":{"type":"string"},"reallyName":{"type":["string","null"]},"ip":{"type":"string"},"ipLocation":{"type":"string"},"loginTime":{"type":"string"},"osType":{"type":"string"},"remark":{"type":["string","null"]}},"required":["ip","ipLocation","loginTime","osType","reallyName","remark","userType","username"]}}},"required":["current","pages","records","size","total"]}},"required":["data"]},
+        "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"total":{"type":"integer"},"size":{"type":"integer"},"current":{"type":"integer"},"pages":{"type":"integer"},"records":{"type":"array","items":{"type":"object","properties":{"userType":{"type":"integer"},"username":{"type":"string"},"reallyName":{"type":["string","null"]},"ip":{"type":"string"},"ipLocation":{"type":"string"},"loginTime":{"type":"string"},"osType":{"type":"string"},"remark":{"type":["string","null"]}},"required":["ip","ipLocation","loginTime","osType","reallyName","remark","userType","username"]}}},"required":["current","pages","records","size","total"]}},"required":["data"]},
         "test_item": [
             {"scenario":"客戶登录日志[userType]CLIENT","target":{userType: 0},"code_status":200,"keyword": 'data'},
             {"scenario":"客戶登录日志[userType]PROXY","target":{userType: 1},"code_status":200,"keyword": 'data'},
@@ -564,7 +565,7 @@
             {"scenario":"客戶登录日志[username]空字串","target":{username: ""},"code_status":200,"keyword": 'data'},
             {"scenario":"客戶登录日志[username]存在用戶","target":{username: "AutoTester"},"code_status":200,"keyword": 'data'},
             {"scenario":"客戶登录日志[ip]空字串","target":{ip: ""},"code_status":200,"keyword": 'data'},
-            {"scenario":"客戶登录日志[ip]存在ip","target":{ip: "61.220.72.61"},"code_status":200,"keyword": 'data'},
+            {"scenario":"客戶登录日志[ip]存在ip","target":{ip: "10.24.129.143"},"code_status":200,"keyword": 'data'},
             {"scenario":"客戶登录日志[osType]WEB","target":{osType: 0},"code_status":200,"keyword": 'data'},
             {"scenario":"客戶登录日志[osType]H5","target":{osType: 1},"code_status":200,"keyword": 'data'},
             {"scenario":"客戶登录日志[osType]ANDROID","target":{osType: 2},"code_status":200,"keyword": 'data'},

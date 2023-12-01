@@ -2,7 +2,7 @@ import pytest
 import allure
 import jsonpath
 from pylib.platform.user import UserVip, User, UserManage , UserVipPointRatio
-from pylib.platform.proxy import ProxyManage
+from pylib.platform.proxy import ProxyManage, Proxy
 from utils.data_utils import TestDataReader, ResponseVerification,GetClassData
 from utils.api_utils import API_Controller
 from utils.json_verification import validate_json
@@ -251,18 +251,20 @@ class TestUser:
                                 test['params'], token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)
 
-    @staticmethod
-    @allure.feature("客戶管理")
-    @allure.story("客戶管理")
-    @allure.title("{test[scenario]}")
-    @pytest.mark.regression
-    @pytest.mark.parametrize("test", test_data.get_case('get_user_login_stat'))
-    def test_get_user_login_stat(test, get_platform_token):
-        params_replace = test_data.replace_json(test['params'], test['target'])
-        api = API_Controller()
-        resp = api.send_request(test['req_method'], test['req_url'], test['json'],
-                                params_replace, token=get_platform_token)
-        ResponseVerification.basic_assert(resp, test)
+    # 目前被移除
+    # @staticmethod
+    # @allure.feature("客戶管理")
+    # @allure.story("客戶管理")
+    # @allure.title("{test[scenario]}")
+    # @pytest.mark.regression
+    # @pytest.mark.parametrize("test", test_data.get_case('get_user_login_stat'))
+    # def test_get_user_login_stat(test, get_platform_token):
+    #     params_replace = test_data.replace_json(test['params'], test['target'])
+    #     api = API_Controller()
+    #     resp = api.send_request(test['req_method'], test['req_url'], test['json'],
+    #                             params_replace, token=get_platform_token)
+    #     ResponseVerification.basic_assert(resp, test)
+    
 
     @staticmethod
     @allure.feature("客戶管理")
@@ -308,9 +310,15 @@ class TestUser:
     @pytest.mark.parametrize("test", test_data.get_case('edit_user_convertProxy'))
     def test_edit_user_convertProxy(test, get_platform_token):
         if test['json']['userId'] == 'client_id':
-            user = User()
-            user_id = user.get_client_user(plat_token=get_platform_token)
+            user = User(token=get_platform_token)
+            user_id = user.get_client_user()
             test['json']['userId'] = user_id
+        elif test['json']['userId'] == 'proxy_id':
+            user = Proxy(token=get_platform_token)
+            user_id = user.get_proxy(queryType=0, input='proxy001')
+            user_id = jsonpath.jsonpath(user_id, "$.data.[0].userId")[0]
+            test['json']['userId'] = user_id
+
         api = API_Controller()
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
                                 test['params'], token=get_platform_token)
