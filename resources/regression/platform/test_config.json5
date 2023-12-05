@@ -108,7 +108,8 @@
             {"req_url": "/v1/platform/currency/USDT_ERC20","scenario":"[code]USDT_ERC20_1","target": {"status":1},"code_status": 200,"keyword": "data"},
             {"req_url": "/v1/platform/currency/USDT_TRC20","scenario":"[code]USDT_TRC20_0","target": {"status":0},"code_status": 200,"keyword": "data"},
             {"req_url": "/v1/platform/currency/USDT_TRC20","scenario":"[code]USDT_TRC20_1","target": {"status":1},"code_status": 200,"keyword": "data"},
-            {"req_url": "/v1/platform/currency/unKnow","scenario":"[code]不存在","target": {"status":1},"code_status": 400,"keyword": "資料不存在"},
+            // 不存在就不更動
+            // {"req_url": "/v1/platform/currency/unKnow","scenario":"[code]不存在","target": {"status":1},"code_status": 400,"keyword": "資料不存在"},
             ]
     },
     {
