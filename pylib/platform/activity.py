@@ -12,7 +12,7 @@ platform_host = env.PLATFORM_HOST
 
 class ActivityManagement(PlatformAPI):
     # 取得活動列表
-    def test_get_activity_list(self, name=None, currency="USD"):
+    def get_activity_list(self, name=None, currency="USD"):
         request_body = {
             "method": "post",
             "url": "/v1/activity/list",
@@ -22,7 +22,7 @@ class ActivityManagement(PlatformAPI):
         return response.json()
 
     # 新增活動
-    def test_add_activity(self):
+    def add_activity(self):
         request_body = {
             "method": "post",
             "url": "/v1/activity",
@@ -33,7 +33,7 @@ class ActivityManagement(PlatformAPI):
         return response.json()
 
     # 修改活動
-    def test_update_activity(self):
+    def update_activity(self):
         request_body = {
             "method": "put",
             "url": "/v1/activity",
@@ -44,7 +44,7 @@ class ActivityManagement(PlatformAPI):
         return response.json()
 
     # 活動類型列表
-    def test_get_activity_category(self):
+    def get_activity_category(self):
         request_body = {
             "method": "get",
             "url": "/v1/activity/category",
@@ -55,7 +55,7 @@ class ActivityManagement(PlatformAPI):
         return response.json()
 
     # 顯示所有操作者
-    def test_get_activity_list_operator(self):
+    def get_activity_list_operator(self):
         request_body = {
             "method": "get",
             "url": "/v1/activity/list/operator",
@@ -66,7 +66,7 @@ class ActivityManagement(PlatformAPI):
         return response.json()
 
     # 活動參賽名單-取消
-    def test_get_activity_participation_cancel(self):
+    def get_activity_participation_cancel(self):
         request_body = {
             "method": "get",
             "url": "/v1/activity/participation/cancel",
@@ -77,7 +77,7 @@ class ActivityManagement(PlatformAPI):
         return response.json()
 
     # 活動參賽名單
-    def test_get_activity_participation_list(self):
+    def get_activity_participation_list(self, userName=None):
         request_body = {
             "method": "post",
             "url": "/v1/activity/participation/page",
@@ -88,7 +88,7 @@ class ActivityManagement(PlatformAPI):
         return response.json()
 
     # 新增推薦活動
-    def test_add_recommend_activity(self):
+    def add_recommend_activity(self):
         request_body = {
             "method": "post",
             "url": "/v1/activity/recommend",
@@ -99,7 +99,7 @@ class ActivityManagement(PlatformAPI):
         return response.json()
 
     # 調整推薦活動
-    def test_update_recommend_activity(self):
+    def update_recommend_activity(self):
         request_body = {
             "method": "put",
             "url": "/v1/activity/recommend",
@@ -110,7 +110,7 @@ class ActivityManagement(PlatformAPI):
         return response.json()
 
     # 推薦活動列表
-    def test_get_recommend_list(self, activityId=None, activityName=None):
+    def get_recommend_list(self, activityId=None, activityName=None):
         request_body = {
             "method": "post",
             "url": "/v1/activity/recommend/list",
@@ -121,7 +121,7 @@ class ActivityManagement(PlatformAPI):
         return response.json()
 
     # 刪除推薦活動
-    def test_delete_recommend_activity(self, activityRecommendId=None):
+    def delete_recommend_activity(self, activityRecommendId=None):
         request_body = {
             "method": "delete",
             "url": f"/v1/activity/recommend/{activityRecommendId}",
@@ -132,7 +132,7 @@ class ActivityManagement(PlatformAPI):
         return response.json()
 
     # 活動獎勵
-    def test_get_reward_list(self):
+    def get_reward_list(self):
         request_body = {
             "method": "post",
             "url": "/v1/activity/reward/list",
@@ -143,7 +143,7 @@ class ActivityManagement(PlatformAPI):
         return response.json()
 
     # 活動下拉選單
-    def test_get_select_activity_list(self):
+    def get_select_activity_list(self):
         request_body = {
             "method": "get",
             "url": "/v1/activity/select",
@@ -154,7 +154,7 @@ class ActivityManagement(PlatformAPI):
         return response.json()
 
     # 修改活動狀態
-    def test_update_activity_status(self):
+    def update_activity_status(self):
         request_body = {
             "method": "post",
             "url": "/v1/activity/update/status",
@@ -165,7 +165,7 @@ class ActivityManagement(PlatformAPI):
         return response.json()
 
     # 刪除活動
-    def test_delete_activity(self, id=None):
+    def delete_activity(self, id=None):
         request_body = {
             "method": "delete",
             "url": f"/v1/activity/{id}",
@@ -176,7 +176,7 @@ class ActivityManagement(PlatformAPI):
         return response.json()
 
     # 取得單一活動資訊
-    def test_get_activity(self, id=None):
+    def get_activity(self, id=None):
         request_body = {
             "method": "get",
             "url": f"/v1/activity/{id}",
@@ -187,7 +187,7 @@ class ActivityManagement(PlatformAPI):
         return response.json()
 
     # 取得活動ID
-    def test_get_activity_id(self, code=None, name=None, currency="USD"):
+    def get_activity_id(self, code=None, name=None, currency="CNY"):
         request_body = {
             "method": "post",
             "url": "/v1/activity/list",
@@ -199,8 +199,8 @@ class ActivityManagement(PlatformAPI):
         return activity_id[0]
 
     # 取得推薦活動ID
-    def test_get_recommend_id(self, code=None, activityId=None, activityName=None ):
-        activity_id = self.test_get_activity_id(code=code, name=activityName)
+    def get_recommend_id(self, code=None, activityId=None, activityName=None ):
+        activity_id = self.get_activity_id(code=code, name=activityName)
         request_body = {
             "method": "post",
             "url": "/v1/activity/recommend/list",

@@ -11,7 +11,7 @@
           "detail": [ {"language": "EN", "name": "autotestactivity", "platformDisplay": "ChildrenDayevent-platforms ", "pcContent": "ChildrenDayevent-web", "mbContent": "ChildrenDayevent-smaillweb", "description": "ChildrenDayevent-conetxt", "pcListImage": "/static/img/game/243d68a2fa/6f741993450e5577.jpg", "pcDetailImage": "/static/img/game/243d68a2fa/7bbf0a3ff3d2dde9.png", "mbHomepageImage": "/static/img/game/243d68a2fa/0ee6805f24309d09.png", "mbDetailImage": "/static/img/game/243d68a2fa/7bbf0a3ff3d2dde9.png", "mbSpecialOfferListImage": "/static/img/game/243d68a2fa/50daed98708eceb2.png", "mbVipImage": "/static/img/game/243d68a2fa/37cf04969879045c.png", "mbRechargeWithdrawImage": "/static/img/game/243d68a2fa/7b959dda03951eef.png"},
                       {"language": "ZH", "name": "六一測試活動", "platformDisplay": "六一活動-适用平台显示", "pcContent": "六一活動-大網", "mbContent": "六一活動-小網", "description": "六一活動-大網活动说明", "pcListImage": "/static/img/game/243d68a2fa/1ba2aab94232f84d.jpg", "pcDetailImage": "/static/img/game/243d68a2fa/7f9463df9fb4bda9.png", "mbHomepageImage": "/static/img/game/243d68a2fa/782b522f21db6107.png", "mbDetailImage": "/static/img/game/243d68a2fa/5319679ef0b2679e.png", "mbSpecialOfferListImage": "/static/img/game/243d68a2fa/eb7b1c8d3d4c80bd.png", "mbVipImage": "/static/img/game/243d68a2fa/54f57741b9223f08.png", "mbRechargeWithdrawImage": "/static/img/game/243d68a2fa/7b959dda03951eef.png"}
           ],
-          "startTime": "2023-11-07T00:00:00+08:00", "endTime": "2023-11-10T00:00:00+08:00", "displayStartTime": "2023-10-24T00:00:00+08:00", "displayEndTime": "2023-12-01T00:00:00+08:00"
+          "startTime": "2023-11-07T00:00:00+08:00", "endTime": "2099-11-10T00:00:00+08:00", "displayStartTime": "2023-10-24T00:00:00+08:00", "displayEndTime": "2099-12-01T00:00:00+08:00"
         },
       "schema": {"data": "string"},
       "test_item": [
@@ -30,11 +30,11 @@
           "detail": [ {"language": "EN", "name": "autotestactivity", "platformDisplay": "ChildrenDayevent-platforms ", "pcContent": "ChildrenDayevent-web", "mbContent": "ChildrenDayevent-smaillweb", "description": "ChildrenDayevent-conetxt", "pcListImage": "/static/img/game/243d68a2fa/6f741993450e5577.jpg", "pcDetailImage": "/static/img/game/243d68a2fa/7bbf0a3ff3d2dde9.png", "mbHomepageImage": "/static/img/game/243d68a2fa/0ee6805f24309d09.png", "mbDetailImage": "/static/img/game/243d68a2fa/7bbf0a3ff3d2dde9.png", "mbSpecialOfferListImage": "/static/img/game/243d68a2fa/50daed98708eceb2.png", "mbVipImage": "/static/img/game/243d68a2fa/37cf04969879045c.png", "mbRechargeWithdrawImage": "/static/img/game/243d68a2fa/7b959dda03951eef.png"},
                       {"language": "ZH", "name": "六一活動", "platformDisplay": "六一活動-适用平台显示", "pcContent": "六一活動-大網", "mbContent": "六一活動-小網", "description": "六一活動-大網活动说明", "pcListImage": "/static/img/game/243d68a2fa/1ba2aab94232f84d.jpg", "pcDetailImage": "/static/img/game/243d68a2fa/7f9463df9fb4bda9.png", "mbHomepageImage": "/static/img/game/243d68a2fa/782b522f21db6107.png", "mbDetailImage": "/static/img/game/243d68a2fa/5319679ef0b2679e.png", "mbSpecialOfferListImage": "/static/img/game/243d68a2fa/eb7b1c8d3d4c80bd.png", "mbVipImage": "/static/img/game/243d68a2fa/54f57741b9223f08.png", "mbRechargeWithdrawImage": "/static/img/game/243d68a2fa/7b959dda03951eef.png"}
           ],
-          "id": "存在activity_id", "startTime": "2023-11-07T00:00:00+08:00", "endTime": "2023-11-10T00:00:00+08:00", "displayStartTime": "2023-10-24T00:00:00+08:00", "displayEndTime": "2023-12-01T00:00:00+08:00"
+          "id": "存在activity_id", "startTime": "2023-11-07T00:00:00+08:00", "endTime": "2099-11-10T00:00:00+08:00", "displayStartTime": "2023-10-24T00:00:00+08:00", "displayEndTime": "2099-12-01T00:00:00+08:00"
         },
       "schema": {"data": "string"},
       "test_item": [
-          {"scenario":"修改活動","url":"","target":{ },"code_status": 200,"keyword": "data"},
+          {"scenario":"修改活動","target":{ },"code_status": 200,"keyword": "data"},
       ]
   },{
         "test_case": "get_activity_list",
@@ -183,6 +183,18 @@
         "req_url": "/v1/activity/active/list",
         "test_item": [
           {"scenario":"資金配置管理-活動列表","json": {},"target": {},"code_status": 200,"keyword": "data"}
+        ]
+    },
+  {
+        "test_case": "delete_activity_participation",
+        "req_method": "get",
+        "req_method": "get",
+        "schema": {"data": "string"},
+        "params": {},
+        "json": {},
+        "req_url": "/v1/activity/participation/cancel",
+        "test_item": [
+          {"scenario":"活動參賽名單-參加後取消","params": {"id":-1},"target": { "username":"generic020",activitycode:"autotest661"},"code_status": 200,"keyword": "data"}
         ]
     }
 ]

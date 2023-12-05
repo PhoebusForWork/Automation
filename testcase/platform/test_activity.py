@@ -1,6 +1,7 @@
 import pytest
 import allure
 from pylib.platform.activity import ActivityManagement
+from pylib.client_side.activity import Activity
 from utils.data_utils import TestDataReader, ResponseVerification
 from utils.api_utils import API_Controller
 
@@ -14,21 +15,21 @@ test_data.read_json5("test_activity.json5")
 @pytest.fixture(scope="class")
 def get_activity_id(get_platform_token):
     activity_id = ActivityManagement(token=get_platform_token).\
-        test_get_activity_id(code="autotest661", name="autotestactivity")
+        get_activity_id(code="autotest661", name="autotestactivity")
     yield activity_id
 
 
 @pytest.fixture(scope="class")
 def get_activity_del_id(get_platform_token):
     activity_del_id = ActivityManagement(token=get_platform_token).\
-        test_get_activity_id(code="autotestdel661", name="autotestactivity")
+        get_activity_id(code="autotestdel661", name="autotestactivity")
     yield activity_del_id
 
 
 @pytest.fixture(scope="class")
 def get_recommend_activity_id(get_platform_token):
     recommend_activity_id = ActivityManagement(token=get_platform_token).\
-        test_get_recommend_id(code="autotest661", activityName="autotestactivity")
+        get_recommend_id(code="autotest661", activityName="autotestactivity")
     yield recommend_activity_id
 
 
@@ -310,21 +311,50 @@ class TestActivityManagement:
             token=get_platform_token,
         )
         ResponseVerification.basic_assert(resp, test)
-    #
-    # @staticmethod
-    # @allure.feature("活動管理")
-    # @allure.story("資金配置管理 - 添加活動紅利")
-    # @allure.title("{test[scenario]}")
-    # @pytest.mark.regression
-    # @pytest.mark.parametrize("test", test_data.get_case("get_active_activities"))
-    # def test_get_active_activities(test, get_platform_token):
-    #     api = API_Controller()
-    #     resp = api.send_request(
-    #         test["req_method"],
-    #         test["req_url"],
-    #         test["json"],
-    #         test["params"],
-    #         token=get_platform_token,
-    #     )
-    #     ResponseVerification.basic_assert(resp, test)
-    #
+
+    @staticmethod
+    @allure.feature("活動管理")
+    @allure.story("活動參賽名單")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("get_activity_participation_list"))
+    def test_get_activity_participation_list(test, get_platform_token):
+        api = API_Controller()
+        resp = api.send_request(
+            test["req_method"],
+            test["req_url"],
+            test["json"],
+            test["params"],
+            token=get_platform_token,
+        )
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("活動推薦管理")
+    @allure.story("活動參賽名單-取消")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("delete_activity_participation"))
+    def test_delete_activity_participationy(test, get_platform_token ):
+
+        user_name = test['target']['username']
+        activity_code = test['target']['activitycode']
+        # 申請API
+        cs_token = Activity().login(username=user_name).json()['data']['token']
+        user_activity = Activity(cs_token).join_activity(code=activity_code)
+
+        # 查詢活動參賽名單
+        apply_list = ActivityManagement(get_platform_token).get_activity_participation_list(userName=user_name)
+        appy_id = apply_list["data"]["records"][0]["id"]
+
+        # 活動參賽名單-取消
+        test['params']['id'] = str(appy_id)
+        api = API_Controller()
+        resp = api.send_request(
+            test["req_method"],
+            test["req_url"],
+            test["json"],
+            test["params"],
+            token=get_platform_token,
+        )
+        ResponseVerification.basic_assert(resp, test)
