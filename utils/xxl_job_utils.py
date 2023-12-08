@@ -1,5 +1,6 @@
 from .api_utils import API_Controller
 from utils.generate_utils import Make
+import time
 import json
 
 
@@ -24,7 +25,7 @@ class XxlJobs(API_Controller):
     def game_transfer_fail(self, pltCode='ldpro', isTesting: bool = True):
         executorParam = json.dumps({"pltCode": pltCode, "isTesting": isTesting}, ensure_ascii=False)
         self.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
-                          json={}, params={"id": 23, "executorParam": executorParam, "addressList": None})
+                          json={}, params={"id": 18, "executorParam": executorParam, "addressList": None})
 
     def sync_plt_basics_data(self, pltCode='ldpro'):
         executorParam = json.dumps({"pltCode": pltCode}, ensure_ascii=False)
