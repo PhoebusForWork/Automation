@@ -416,9 +416,9 @@
         "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "test_item": [
             {"scenario":"切換為USDT_TRC20","target": {},"json": {},"params" : {"currency": "USDT_TRC20"},"code_status": 200,"keyword": "data"},
-            {"scenario":"切換為USD","target": {},"json": {},"params" : {"currency": "USD"},"code_status": 200,"keyword": "data"},
             {"scenario":"切換為USDT_ERC20","target": {},"json": {},"params" : {"currency": "USDT_ERC20"},"code_status": 200,"keyword": "data"},
             {"scenario":"切換為CNY","target": {},"json": {},"params" : {"currency": "CNY"},"code_status": 200,"keyword": "data"},
+            {"scenario":"切換為USD","target": {},"json": {},"params" : {"currency": "USD"},"code_status": 200,"keyword": "data"},
             {"scenario":"不給值","target": {},"json": {},"params" : {"currency": null},"code_status": 400,"keyword": "无效的请求参数"}
         ]
     },

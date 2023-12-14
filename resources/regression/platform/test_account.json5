@@ -440,9 +440,9 @@
         "params" : {"currency": "USDT_TRC20"},
         "test_item": [
             {"scenario":"[currency]USDT_TRC20","target": {"currency":"USDT_TRC20"},"code_status": 200,"keyword": "data"},
-            {"scenario":"[currency]USD","target": {"currency":"USD"},"code_status": 200,"keyword": "data"},
-            {"scenario":"[currency]USDT_ERC20","target": {"currency":"USDT_ERC20"},"code_status": 200,"keyword": "data"},
             {"scenario":"[currency]CNY","target": {"currency":"CNY"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]USDT_ERC20","target": {"currency":"USDT_ERC20"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]USD","target": {"currency":"USD"},"code_status": 200,"keyword": "data"},
             {"scenario":"[currency]null","target": {"currency":null},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[currency]不存在","target": {"currency":"ABC"},"code_status": 400,"keyword": "无效的请求参数"}
         ]
