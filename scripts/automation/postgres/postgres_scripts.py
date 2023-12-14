@@ -152,4 +152,5 @@ def edit_the_default_platform():
     edit_the_default_platform.run_sql('''
         UPDATE plt_basics.platform SET domains = 'api30-auto.prj300.xyz,admin-auto.prj300.xyz'::varchar(128) WHERE id = 1::integer;
         UPDATE plt_basics.platform_currency SET status = 'ENABLE'::varchar(16);
+        UPDATE plt_basics.platform_currency SET is_default = true WHERE code = 'USD';
         ''')
