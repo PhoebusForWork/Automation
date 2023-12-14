@@ -20,7 +20,7 @@ class Report(PlatformAPI):
             "json":
                 {"startTime": Make.date('start'),
                  "endTime": Make.date('end'),
-                 "currency": "CNY"
+                 "currency": "USD"
                  }
         }
         response = self.send_request(**request_body)
@@ -340,7 +340,7 @@ class Make_config_data(PlatformAPI):
         resp_Avatar.delete_avatar(id=get_id)  # 製造刪除頭像紀錄
 
         water_clear_resp = WalletManage(token=plat_token)
-        water_clear_resp.water_clear_all(userId=1, currency="CNY")  # 製造一鍵流水清零紀錄
+        water_clear_resp.water_clear_all(userId=1, currency="USD")  # 製造一鍵流水清零紀錄
 
         report_resp = Report(token=plat_token)
         report_resp.post_report_type(reportType="PLT_REPORT_USER_FINANCE_REPORT_DOWNLOAD")  # 製造導出紀錄

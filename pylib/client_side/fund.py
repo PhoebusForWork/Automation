@@ -184,7 +184,7 @@ class Withdraw(WebAPI):
         request_body = {
             "method": "get",
             "url": "/v1/fund/withdraw/address/info",
-            "params": {"currency": "CNY"}
+            "params": {"currency": "USD"}
         }
 
         response = self.send_request(**request_body)
