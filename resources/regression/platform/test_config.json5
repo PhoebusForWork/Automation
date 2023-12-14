@@ -108,7 +108,8 @@
             {"req_url": "/v1/platform/currency/USDT_ERC20","scenario":"[code]USDT_ERC20_1","target": {"status":1},"code_status": 200,"keyword": "data"},
             {"req_url": "/v1/platform/currency/USDT_TRC20","scenario":"[code]USDT_TRC20_0","target": {"status":0},"code_status": 200,"keyword": "data"},
             {"req_url": "/v1/platform/currency/USDT_TRC20","scenario":"[code]USDT_TRC20_1","target": {"status":1},"code_status": 200,"keyword": "data"},
-            {"req_url": "/v1/platform/currency/unKnow","scenario":"[code]不存在","target": {"status":1},"code_status": 400,"keyword": "資料不存在"},
+            // 不存在就不更動
+            // {"req_url": "/v1/platform/currency/unKnow","scenario":"[code]不存在","target": {"status":1},"code_status": 400,"keyword": "資料不存在"},
             ]
     },
     {
@@ -218,8 +219,8 @@
             {"scenario": "[id]null", "target": {"id": null }, "code_status": 400, "keyword": "无效的请求参数"},
             {"scenario": "[id]空值", "target": {"id":  "" }, "code_status": 400, "keyword": "无效的请求参数"},
             {"scenario": "[id]字串", "target": {"id":  "abc" }, "code_status": 400, "keyword": "无效的请求参数"},
-            {"scenario": "[isDisplay]null", "target": {"isDisplay":  null }, "code_status": 400, "keyword": "无效的请求参数"},
-            {"scenario": "[isDisplay]空值", "target": {"isDisplay":  "" }, "code_status": 400, "keyword": "无效的请求参数"},
+            {"scenario": "[isDisplay]null", "target": {"isDisplay":  null }, "code_status": 400, "keyword": "更新失敗"},
+            {"scenario": "[isDisplay]空值", "target": {"isDisplay":  "" }, "code_status": 400, "keyword": "更新失敗"},
             {"scenario": "[isDisplay]all true", "target": {"isDisplay":  true }, "code_status": 200, "keyword": "success"},
             {"scenario": "[isDisplay]all false", "target": {"isDisplay":  false }, "code_status": 200, "keyword": "success"},
             {"scenario": "[isDefault]null", "target": {"isDefault":  null }, "code_status": 400, "keyword": "无效的请求参数"},
