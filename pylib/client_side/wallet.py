@@ -146,7 +146,7 @@ class FrontUser(WebAPI):
         return response.json()
 
     # 用戶選擇幣別
-    def edit_user_currency(self, currency="CNY"):
+    def edit_user_currency(self, currency="USD"):
         request_body = {
             "method": "put",
             "url": "/v1/user/currency",
