@@ -136,14 +136,16 @@ def wallet():
 def plt_user():
     plt_vip_user = Postgresql(database='plt_user')
     plt_vip_user.run_sql(''' 
-        UPDATE plt_user.ldpro_vip_point_ratio SET created_time = '2023-01-01 04:01:21.203101 +00:00'
+        UPDATE plt_user.ldpro_vip_point_ratio SET created_time = '2023-01-01 04:01:21.203101 +00:00';
+        UPDATE plt_user.ldpro_vip_point_ratio set ratio= 1,show_amount= 1 where ratio = 0 and show_amount = 0 ;
         ''')
 
 
 def cs_user():
     cs_vip_user = Postgresql(database='cs_user', platform="cs")
     cs_vip_user.run_sql('''
-        UPDATE cs_user.ldpro_vip_point_ratio SET created_time = '2023-01-01 04:01:21.203101 +00:00'
+        UPDATE cs_user.ldpro_vip_point_ratio SET created_time = '2023-01-01 04:01:21.203101 +00:00';
+        UPDATE cs_user.ldpro_vip_point_ratio set ratio= 1,show_amount= 1 where ratio = 0 and show_amount = 0 ;
         ''')
 
 

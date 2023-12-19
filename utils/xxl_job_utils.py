@@ -48,6 +48,11 @@ class XxlJobs(API_Controller):
         self.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
                           json={}, params={"id": 2, "executorParam": str({"pltCode": pltCode}), "addressList": None})
 
+    def sync_activity_category(self, pltCode='ldpro'):
+        executorParam = json.dumps({"pltCode": pltCode}, ensure_ascii=False)
+        self.send_request(method='post', url='/xxl-job-admin/jobinfo/trigger',
+                          json={}, params={"id": 34, "executorParam": executorParam, "addressList": None})
+
     # 使用者VIP 設定新年點卷發放日期
     def sync_vip_festivalGift_date(self, sync_vip_date=None):
         form_date = Make.format_date(date=sync_vip_date, format='--%m-%d')

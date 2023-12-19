@@ -1,0 +1,107 @@
+[
+    {
+        "test_case": "get_activity_category",
+        "req_method": "get",
+        "req_url": "/v1/activity/category",
+        "schema": {"type":"object","properties":{"data":{"type":"array"}},"required":["data"]},
+        "json" : {},
+        "params": {"currecny":"USD"},
+        "test_item": [
+             {"scenario":"活動類型列表[currecny]USD","target":{"currecny":"USD"},"code_status": 200,"keyword": "data"},
+            {"scenario":"活動類型列表[currecny]CNY","target":{"countryCode":"CNY"},"code_status": 200,"keyword": "data"},
+            {"scenario":"活動類型列表[isShowRechargeAndWithdraw]","target":{},"code_status": 200,"keyword": "data"},
+            {"scenario":"活動類型列表[isShowRechargeAndWithdraw]true","target":{"isShowRechargeAndWithdraw":"true"},"code_status": 200,"keyword": "data"},
+            {"scenario":"活動類型列表[isShowRechargeAndWithdraw]false","target":{"isShowRechargeAndWithdraw":"false"},"code_status": 200,"keyword": "data"}
+        ]
+    },
+
+    {
+        "test_case": "get_activity_info",
+        "req_method": "get",
+        "req_url": "/v1/activity/info",
+        "schema": {"type": "object", "properties": {"data": {"type": "object"}}, "required": ["data"]},
+        "json" : {},
+        "params": {"language":"EN","code": "autotest661forClient"},
+        "test_item": [
+            {"scenario":"單一活動-存在","target":{},"code_status": 200,"keyword": "data"},
+            {"scenario":"單一活動-不存在","target":{"code":"autotest661forClientno"},"code_status": 400,"keyword": "活动不存在或已下架"}
+        ]
+    },
+
+    {
+        "test_case": "join_activity",
+        "req_method": "post",
+        "req_url": "/v1/activity/join",
+        "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
+        "json" : {},
+        "params": {},
+        "test_item": [
+            {"scenario":"參加活動","json": {},"target":{"code": "autotest661forClient","timeType": 0},"params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"參加活動-重覆參加","json": {},"target":{"code": "autotest661forClient","timeType": 0},"params": {},"code_status": 400,"keyword": "您已参与过该活动"},
+            {"scenario":"參加不存在的活動","json": {},"target":{"code": "autotest661no","timeType": 0},"params": {},"code_status": 400,"keyword": "活动不存在或已下架"}
+        ]
+    },
+
+    {
+        "test_case": "get_join_activity_status",
+        "req_method": "get",
+        "req_url": "/v1/activity/join/status",
+        "schema": {"type": "object", "properties": {"data": {"type": "object"}}, "required": ["data"]},
+        "json" : {},
+        "params": {},
+        "test_item": [
+            {"scenario":"參加活動狀態","json": {},"target":{"code": "autotest661forClient","timeType": 0},"params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"參加活動-不存在的活動","json": {},"target":{"code": "autotest661no","timeType": 0},"params": {},"code_status": 400,"keyword": "活动不存在或已下架"}
+        ]
+    },
+
+    {
+        "test_case": "get_activity_list",
+        "req_method": "post",
+        "req_url": "/v1/activity/list",
+        "schema": {"type": "object", "properties": {"data": {"type": "array"}}, "required": ["data"]},
+        "json" :  {"currency":"USD","categoryId": null},
+        "params": {},
+        "test_item": [ // 1:全部|2:精选|3:新人|4:限时|5:指定|6:贵宾独享|7:返水|8:充值|9:提款|10:电子|11:真人|12:体育|13:棋牌|14:电竞|15:彩票
+             {"scenario":"活動列表[categoryId]1","json": {},"target":{"categoryId":9},"params": {"categoryId": 1},"code_status": 200,"keyword": "data"},
+             {"scenario":"活動列表[categoryId]2","json": {},"target":{"categoryId":2},"params": {"categoryId": 1},"code_status": 200,"keyword": "data"},
+             {"scenario":"活動列表[categoryId]3","json": {},"target":{"categoryId":3},"params": {"categoryId": 1},"code_status": 200,"keyword": "data"},
+             {"scenario":"活動列表[categoryId]4","json": {},"target":{"categoryId":4},"params": {"categoryId": 1},"code_status": 200,"keyword": "data"},
+             {"scenario":"活動列表[categoryId]5","json": {},"target":{"categoryId":5},"params": {"categoryId": 1},"code_status": 200,"keyword": "data"},
+             {"scenario":"活動列表[categoryId]6","json": {},"target":{"categoryId":6},"params": {"categoryId": 1},"code_status": 200,"keyword": "data"},
+             {"scenario":"活動列表[categoryId]7","json": {},"target":{"categoryId":7},"params": {"categoryId": 1},"code_status": 200,"keyword": "data"},
+             {"scenario":"活動列表[categoryId]8","json": {},"target":{"categoryId":8},"params": {"categoryId": 1},"code_status": 200,"keyword": "data"},
+             {"scenario":"活動列表[categoryId]9","json": {},"target":{"categoryId":9},"params": {"categoryId": 1},"code_status": 200,"keyword": "data"},
+             {"scenario":"活動列表[categoryId]10","json": {},"target":{"categoryId":10},"params": {"categoryId": 1},"code_status": 200,"keyword": "data"},
+             {"scenario":"活動列表[categoryId]11","json": {},"target":{"categoryId":11},"params": {"categoryId": 1},"code_status": 200,"keyword": "data"},
+             {"scenario":"活動列表[categoryId]12","json": {},"target":{"categoryId":12},"params": {"categoryId": 1},"code_status": 200,"keyword": "data"},
+             {"scenario":"活動列表[categoryId]13","json": {},"target":{"categoryId":13},"params": {"categoryId": 1},"code_status": 200,"keyword": "data"},
+             {"scenario":"活動列表[categoryId]14","json": {},"target":{"categoryId":14},"params": {"categoryId": 1},"code_status": 200,"keyword": "data"},
+             {"scenario":"活動列表[categoryId]15","json": {},"target":{"categoryId":15},"params": {"categoryId": 1},"code_status": 200,"keyword": "data"}
+        ]
+    },
+
+    {
+        "test_case": "get_recommend_list",
+        "req_method": "get",
+        "req_url": "/v1/activity/recommend/list",
+        "schema": {"type": "object", "properties": {"data": {"type": "array"}}, "required": ["data"]},
+        "json" : {},
+        "params": {},
+        "test_item": [
+            {"scenario":"推薦活動列表","json": {},"target":{},"params": {},"code_status": 200,"keyword": "data"}
+        ]
+    },
+
+    {
+        "test_case": "get_unclaimed_reward_list",
+        "req_method": "get",
+        "req_url": "/v1/activity/reward/unclaimed/list",
+        "schema": {"type": "object", "properties": {"data": {"type": "array"}}, "required": ["data"]},
+        "json" : {},
+        "params": {},
+        "test_item": [
+            {"scenario":"彈窗未領取的彩金","json": {},"target":{},"params": {},"code_status": 200,"keyword": "data"}
+        ]
+    }
+]
