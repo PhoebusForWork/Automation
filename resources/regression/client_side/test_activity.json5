@@ -21,10 +21,10 @@
         "req_url": "/v1/activity/info",
         "schema": {"type": "object", "properties": {"data": {"type": "object"}}, "required": ["data"]},
         "json" : {},
-        "params": {"language":"EN","code": "autotest661forClient"},
+        "params": {"language":"EN","currency":"CNY","code": "autotest661"},
         "test_item": [
             {"scenario":"單一活動-存在","target":{},"code_status": 200,"keyword": "data"},
-            {"scenario":"單一活動-不存在","target":{"code":"autotest661forClientno"},"code_status": 400,"keyword": "活动不存在或已下架"}
+            {"scenario":"單一活動-不存在","target":{"code":"autotest661no"},"code_status": 400,"keyword": "活动不存在或已下架"}
         ]
     },
 
@@ -36,8 +36,8 @@
         "json" : {},
         "params": {},
         "test_item": [
-            {"scenario":"參加活動","json": {},"target":{"code": "autotest661forClient","timeType": 0},"params": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"參加活動-重覆參加","json": {},"target":{"code": "autotest661forClient","timeType": 0},"params": {},"code_status": 400,"keyword": "您已参与过该活动"},
+            {"scenario":"參加活動","json": {},"target":{"code": "autotest661","timeType": 0},"params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"參加活動-重覆參加","json": {},"target":{"code": "autotest661","timeType": 0},"params": {},"code_status": 400,"keyword": "您已参与过该活动"},
             {"scenario":"參加不存在的活動","json": {},"target":{"code": "autotest661no","timeType": 0},"params": {},"code_status": 400,"keyword": "活动不存在或已下架"}
         ]
     },
@@ -50,7 +50,7 @@
         "json" : {},
         "params": {},
         "test_item": [
-            {"scenario":"參加活動狀態","json": {},"target":{"code": "autotest661forClient","timeType": 0},"params": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"參加活動狀態","json": {},"target":{"code": "autotest661","timeType": 0},"params": {},"code_status": 200,"keyword": "data"},
             {"scenario":"參加活動-不存在的活動","json": {},"target":{"code": "autotest661no","timeType": 0},"params": {},"code_status": 400,"keyword": "活动不存在或已下架"}
         ]
     },

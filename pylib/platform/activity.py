@@ -4,7 +4,7 @@ import jsonpath
 from pylib.platform.platApiBase import PlatformAPI
 from utils.api_utils import KeywordArgument
 from utils.data_utils import EnvReader
-from utils.data_utils import TestDataReader
+import jsonpath
 
 env = EnvReader()
 platform_host = env.PLATFORM_HOST
@@ -31,25 +31,6 @@ class ActivityManagement(PlatformAPI):
 
         response = self.send_request(**request_body)
         return response.json()
-
-    # 跑前端活動時_自動新增活動
-    def add_auto_activity(self, code = None , name = None):
-        test_data = TestDataReader()
-        test_data.read_json5("test_activity.json5")
-        test_activity = test_data.get_case("add_activity")
-        activity_json = test_data.replace_json(test_activity[0]['json'], {"code":code, "name": name})
-
-        request_body = {
-            "method": "post",
-            "url": "/v1/activity",
-            "json": activity_json
-        }
-        response = self.send_request(**request_body)
-
-        activiy_id = self.get_activity_id(code)
-        self.update_activity_status(id=activiy_id, status=1)
-
-        return activiy_id
 
     # 修改活動
     def update_activity(self):
@@ -173,7 +154,7 @@ class ActivityManagement(PlatformAPI):
         return response.json()
 
     # 修改活動狀態
-    def update_activity_status(self, id=None, status=None):
+    def update_activity_status(self):
         request_body = {
             "method": "post",
             "url": "/v1/activity/update/status",
@@ -206,7 +187,7 @@ class ActivityManagement(PlatformAPI):
         return response.json()
 
     # 取得活動ID
-    def get_activity_id(self, code=None, name=None, currency="USD"):
+    def get_activity_id(self, code=None, name=None, currency="CNY"):
         request_body = {
             "method": "post",
             "url": "/v1/activity/list",

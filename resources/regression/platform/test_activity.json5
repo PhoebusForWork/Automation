@@ -7,7 +7,7 @@
         "json": {
           "osTypes": [0, 1], "environment": 1, "vipLevel": 0, "code": "autotest661", "categoryIds": [2, 9], "type": 1, "sort": 2, "status": 1,
           "gameCodes": ["LHDJ_ESPORT_LHDJ", "AI_SPORT_AI", "SABA_SPORT_SABA", "AWC_LIVE_SEXY", "JDB_FISHING_JDB", "VR_LOTTERY_VR", "FC_GAMING_FC"],
-          "currency": "USD", "videoUrl": "", "pcUrl": "https://tw.news.yahoo.com/", "h5Url": "https://www.google.com.tw/?hl=zh_TW",
+          "currency": "CNY", "videoUrl": "", "pcUrl": "https://tw.news.yahoo.com/", "h5Url": "https://www.google.com.tw/?hl=zh_TW",
           "detail": [ {"language": "EN", "name": "autotestactivity", "platformDisplay": "ChildrenDayevent-platforms ", "pcContent": "ChildrenDayevent-web", "mbContent": "ChildrenDayevent-smaillweb", "description": "ChildrenDayevent-conetxt", "pcListImage": "/static/img/game/243d68a2fa/6f741993450e5577.jpg", "pcDetailImage": "/static/img/game/243d68a2fa/7bbf0a3ff3d2dde9.png", "mbHomepageImage": "/static/img/game/243d68a2fa/0ee6805f24309d09.png", "mbDetailImage": "/static/img/game/243d68a2fa/7bbf0a3ff3d2dde9.png", "mbSpecialOfferListImage": "/static/img/game/243d68a2fa/50daed98708eceb2.png", "mbVipImage": "/static/img/game/243d68a2fa/37cf04969879045c.png", "mbRechargeWithdrawImage": "/static/img/game/243d68a2fa/7b959dda03951eef.png"},
                       {"language": "ZH", "name": "六一測試活動", "platformDisplay": "六一活動-适用平台显示", "pcContent": "六一活動-大網", "mbContent": "六一活動-小網", "description": "六一活動-大網活动说明", "pcListImage": "/static/img/game/243d68a2fa/1ba2aab94232f84d.jpg", "pcDetailImage": "/static/img/game/243d68a2fa/7f9463df9fb4bda9.png", "mbHomepageImage": "/static/img/game/243d68a2fa/782b522f21db6107.png", "mbDetailImage": "/static/img/game/243d68a2fa/5319679ef0b2679e.png", "mbSpecialOfferListImage": "/static/img/game/243d68a2fa/eb7b1c8d3d4c80bd.png", "mbVipImage": "/static/img/game/243d68a2fa/54f57741b9223f08.png", "mbRechargeWithdrawImage": "/static/img/game/243d68a2fa/7b959dda03951eef.png"}
           ],
@@ -15,8 +15,7 @@
         },
       "schema": {"data": "string"},
       "test_item": [
-          {"scenario":"新增活動-USD" ,"target":{},"code_status": 200,"keyword": "data"},
-          {"scenario":"新增活動-CNY" ,"target":{"currency": "CNY"},"code_status": 200,"keyword": "data"},
+          {"scenario":"新增活動" ,"target":{},"code_status": 200,"keyword": "data"},
           {"scenario":"新增活動2" ,"target":{"code":"autotestdel661"},"code_status": 200,"keyword": "data"}
       ]
     },{
@@ -27,7 +26,7 @@
         "json": {
           "osTypes": [0, 1], "environment": 1, "vipLevel": 0, "code": "autotest661", "categoryIds": [2, 9], "type": 1, "sort": 2, "status": 1,
           "gameCodes": ["LHDJ_ESPORT_LHDJ", "AI_SPORT_AI", "SABA_SPORT_SABA", "AWC_LIVE_SEXY", "JDB_FISHING_JDB", "VR_LOTTERY_VR", "FC_GAMING_FC"],
-          "currency": "USD", "videoUrl": "", "pcUrl": "https://tw.news.yahoo.com/", "h5Url": "https://www.google.com.tw/?hl=zh_TW",
+          "currency": "CNY", "videoUrl": "", "pcUrl": "https://tw.news.yahoo.com/", "h5Url": "https://www.google.com.tw/?hl=zh_TW",
           "detail": [ {"language": "EN", "name": "autotestactivity", "platformDisplay": "ChildrenDayevent-platforms ", "pcContent": "ChildrenDayevent-web", "mbContent": "ChildrenDayevent-smaillweb", "description": "ChildrenDayevent-conetxt", "pcListImage": "/static/img/game/243d68a2fa/6f741993450e5577.jpg", "pcDetailImage": "/static/img/game/243d68a2fa/7bbf0a3ff3d2dde9.png", "mbHomepageImage": "/static/img/game/243d68a2fa/0ee6805f24309d09.png", "mbDetailImage": "/static/img/game/243d68a2fa/7bbf0a3ff3d2dde9.png", "mbSpecialOfferListImage": "/static/img/game/243d68a2fa/50daed98708eceb2.png", "mbVipImage": "/static/img/game/243d68a2fa/37cf04969879045c.png", "mbRechargeWithdrawImage": "/static/img/game/243d68a2fa/7b959dda03951eef.png"},
                       {"language": "ZH", "name": "六一活動", "platformDisplay": "六一活動-适用平台显示", "pcContent": "六一活動-大網", "mbContent": "六一活動-小網", "description": "六一活動-大網活动说明", "pcListImage": "/static/img/game/243d68a2fa/1ba2aab94232f84d.jpg", "pcDetailImage": "/static/img/game/243d68a2fa/7f9463df9fb4bda9.png", "mbHomepageImage": "/static/img/game/243d68a2fa/782b522f21db6107.png", "mbDetailImage": "/static/img/game/243d68a2fa/5319679ef0b2679e.png", "mbSpecialOfferListImage": "/static/img/game/243d68a2fa/eb7b1c8d3d4c80bd.png", "mbVipImage": "/static/img/game/243d68a2fa/54f57741b9223f08.png", "mbRechargeWithdrawImage": "/static/img/game/243d68a2fa/7b959dda03951eef.png"}
           ],
@@ -157,11 +156,11 @@
         "test_case": "get_reward_list",
         "req_method": "post",
         "schema": {"data": "string"},
-        "params": {"currency":"USD"},
+        "params": {"currency":"CNY"},
         "json": {},
         "req_url": "/v1/activity/reward/list",
         "test_item": [
-          {"scenario":"活動獎勵列表CNY","target": {"currency":"CNY"},"code_status": 200,"keyword": "data"},
+          {"scenario":"活動獎勵列表CNY","target": {},"code_status": 200,"keyword": "data"},
           {"scenario":"活動獎勵列表USD","target": {"currency":"USD"},"code_status": 200,"keyword": "data"},
           {"scenario":"活動獎勵列表THB","target": {"currency":"THB"},"code_status": 200,"keyword": "data"},
           {"scenario":"活動獎勵列表USDT_ERC20","target": {"currency":"USDT_ERC20"},"code_status": 200,"keyword": "data"}

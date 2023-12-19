@@ -2,25 +2,13 @@ import pytest
 import allure
 from utils.data_utils import TestDataReader, ResponseVerification
 from utils.api_utils import API_Controller
-from pylib.platform.activity import ActivityManagement
-from pylib.platform.platApiBase import PlatformAPI
 
 test_data = TestDataReader()
 test_data.read_json5('test_activity.json5', file_side='cs')
 
-
 ######################
 #  setup & teardown  #
 ######################
-@pytest.fixture(scope="class")
-def get_activity_id():
-    api = PlatformAPI()
-    code = api.imgcode()
-    resp = api.login(username='superAdmin', password='abc123456', imgCode=code)
-    token = resp.json()['data']['token']
-    activity_id = ActivityManagement(token).\
-        add_auto_activity(code="autotest661forClient", name="autotestactivityforClient")
-
 
 
 #############
@@ -33,7 +21,7 @@ class TestActivity:
     @allure.title("{test[scenario]}")
     @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case("get_activity_category"))
-    def test_get_activity_category(test, get_user_token, get_activity_id):
+    def test_get_activity_category(test, get_user_token):
         params_replace = test_data.replace_json(test['params'], test['target'])
         api = API_Controller(platform='cs')
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
