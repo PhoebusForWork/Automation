@@ -80,13 +80,14 @@ class WebAPI(API_Controller):
         return response.json()
 
     # 忘記密碼,發送驗證碼
-    def user_send_code(self, username=None, telephone=None):
+    def user_send_code(self, username=None, telephone=None, countryCode=None):
         request_body = {
             "method": "post",
-            "url": "/v1/user/sendCode",
+            "url": "/v1/user/valid/account",
             "json": {
                 "username": username,
                 "telephone": telephone,
+                "countryCode": countryCode,
                 "captchaValidation":
                     {
                         "channelName": "string",
