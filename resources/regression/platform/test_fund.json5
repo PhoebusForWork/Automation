@@ -865,9 +865,10 @@
     "req_method": "post",
     "req_url": "/v1/fund/withdraw/manage/action/exception/pass",
     "params": {},
-    "json": {"orderId": "1779517307140358162", "userId": 84, "remark": "string"},
+    "json": {"orderId": "1888812783034318882", "userId": 1238, "remark": "string"},
     "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
     "test_item": [
+      {"scenario":"重複審核","target":{},"code_status": 400,"keyword": "无效的请求参数"},
       {"scenario":"[orderId]null","target":{"orderId": null},"code_status": 400,"keyword": "无效的请求参数"},
       {"scenario":"[userId]null","target":{"userId": null},"code_status": 400,"keyword": "无效的请求参数"},
 //      39051
@@ -992,6 +993,557 @@
       {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"},
       {"scenario":"[orderId]null","target":{"orderId": null},"code_status": 400,"keyword": "无效的请求参数"},
       {"scenario":"[remark]字串","target":{"remark": "abc"},"code_status": 200,"keyword": "data"},
+    ]
+  },
+  {
+    "test_case": "get_recharge_manage_list",
+    "req_method": "post",
+    "req_url": "/v1/fund/recharge/manage/list",
+    "params": {},
+    "json": {"dateType": 0, "startTime": "2023-11-21T08:25:43.563Z", "endTime": "2023-11-21T08:25:43.563Z", "userType": 0, "paymentId": 0, "paymentType": 0, "minAmount": 0, "maxAmount": 0, "clientType": 0, "status": 0, "orderId": "string", "orderIdList": ["string"], "userName": "string", "remark": "string", "apvOperator": "string", "page": 1, "size": 50, "currency": "string", "bankInfo": "string"},
+    "schema": {"type": "object", "properties": {"data": {"type": "object", "properties": {"totalAmount": {"type": "integer"}, "totalFee": {"type": "integer"}, "pageVo": {"type": "object", "properties": {"total": {"type": "integer"}, "size": {"type": "integer"}, "current": {"type": "integer"}, "pages": {"type": "integer"}, "records": {"type": "array", "items": {"type": "object", "properties": {"orderId": {"type": "string"}, "userId": {"type": "integer"}, "userType": {"type": "integer"}, "proxyId": {"type": "integer"}, "userName": {"type": "string"}, "reallyName": {"type": "string"}, "amount": {"type": "integer"}, "fee": {"type": "integer"}, "reward": {"type": "integer"}, "payAmount": {"type": "integer"}, "keyword": {"type": "string"}, "paymentId": {"type": "integer"}, "paymentType": {"type": "integer"}, "paymentName": {"type": "string"}, "channelId": {"type": "integer"}, "channelName": {"type": "string"}, "merchantId": {"type": "integer"}, "merchantCode": {"type": "string"}, "merchantName": {"type": "string"}, "merchantOrder": {"type": "string"}, "bankId": {"type": "integer"}, "bankName": {"type": "string"}, "clientType": {"type": "integer"}, "ip": {"type": "string"}, "status": {"type": "integer"}, "createDate": {"type": "string"}, "lastModifiedTime": {"type": "string"}, "lastOperator": {"type": "integer"}, "lastOperatorName": {"type": "string"}, "proxyName": {"type": "string"}, "remark": {"type": "string"}, "payTime": {"type": "string"}, "address": {"type": "string"}, "currency": {"type": "string"}, "errorMsg": {"type": "string"}, "groupId": {"type": "integer"}, "groupName": {"type": "string"}, "rechargeTypeName": {"type": "string"}, "sucReqTime": {"type": "string"}, "sucReqOperator": {"type": "string"}, "sucReqAmount": {"type": "integer"}, "sucReqRemark": {"type": "string"}, "sucApvTime": {"type": "string"}, "sucApvOperator": {"type": "string"}, "sucApvAmount": {"type": "integer"}, "sucApvRemark": {"type": "string"}, "sucStatus": {"type": "integer"}, "exchangeRate": {"type": "integer"}, "exchangeAmount": {"type": "integer"}, "exchangeCurrency": {"type": "string"}, "paramReqAndResp": {"type": "string"}}, "required": ["address", "amount", "bankId", "bankName", "channelId", "channelName", "clientType", "createDate", "currency", "errorMsg", "exchangeAmount", "exchangeCurrency", "exchangeRate", "fee", "groupId", "groupName", "ip", "keyword", "lastModifiedTime", "lastOperator", "lastOperatorName", "merchantCode", "merchantId", "merchantName", "merchantOrder", "orderId", "paramReqAndResp", "payAmount", "payTime", "paymentId", "paymentName", "paymentType", "proxyId", "proxyName", "reallyName", "rechargeTypeName", "remark", "reward", "status", "sucApvAmount", "sucApvOperator", "sucApvRemark", "sucApvTime", "sucReqAmount", "sucReqOperator", "sucReqRemark", "sucReqTime", "sucStatus", "userId", "userName", "userType"]}}}, "required": ["current", "pages", "records", "size", "total"]}}, "required": ["pageVo", "totalAmount", "totalFee"]}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"},
+      {"scenario":"[dateType]1","target" : {"dateType": 1},"code_status": 200,"keyword": "data"},
+      {"scenario":"[dateType]2","target" : {"dateType": 2},"code_status": 200,"keyword": "data"},
+      {"scenario":"[dateType]3","target" : {"dateType": 3},"code_status": 200,"keyword": "data"},
+      {"scenario":"[dateType]字串","target" : {"dateType": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[startTime]時間","target" : {"startTime": "2023-10-04T07:38:59.405Z"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[startTime]字串","target" : {"startTime": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[endTime]時間","target" : {"endTime": "2023-10-24T07:38:59.405Z"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[endTime]字串","target" : {"endTime": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[userType]0","target" : {"userType": 0},"code_status": 200,"keyword": "data"},
+      {"scenario":"[userType]777","target" : {"userType": 777},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[userType]1","target" : {"userType": 1},"code_status": 200,"keyword": "data"},
+      {"scenario":"[userType]字串","target" : {"userType": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[paymentId]0","target" : {"paymentId": 31},"code_status": 200,"keyword": "data"},
+      {"scenario":"[paymentId]字串","target" : {"paymentId": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[paymentType]10","target" : {"paymentType": 10},"code_status": 200,"keyword": "data"},
+      {"scenario":"[paymentType]20","target" : {"paymentType": 20},"code_status": 200,"keyword": "data"},
+      {"scenario":"[paymentType]30","target" : {"paymentType": 30},"code_status": 200,"keyword": "data"},
+      {"scenario":"[paymentType]40","target" : {"paymentType": 40},"code_status": 200,"keyword": "data"},
+      {"scenario":"[paymentType]50","target" : {"paymentType": 50},"code_status": 200,"keyword": "data"},
+      {"scenario":"[paymentType]字串","target" : {"paymentType": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[minAmount]數字","target" : {"minAmount": 1},"code_status": 200,"keyword": "data"},
+      {"scenario":"[minAmount]字串","target" : {"minAmount": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[maxAmount]數字","target" : {"maxAmount": 1000},"code_status": 200,"keyword": "data"},
+      {"scenario":"[maxAmount]字串","target" : {"maxAmount": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[clientType]0","target" : {"clientType": 0},"code_status": 200,"keyword": "data"},
+      {"scenario":"[clientType]1","target" : {"clientType": 1},"code_status": 200,"keyword": "data"},
+      {"scenario":"[clientType]2","target" : {"clientType": 2},"code_status": 200,"keyword": "data"},
+      {"scenario":"[clientType]3","target" : {"clientType": 3},"code_status": 200,"keyword": "data"},
+      {"scenario":"[clientType]777","target" : {"clientType": 777},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[clientType]字串","target" : {"clientType": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[status]0","target" : {"status": 0},"code_status": 200,"keyword": "data"},
+      {"scenario":"[status]1","target" : {"status": 1},"code_status": 200,"keyword": "data"},
+      {"scenario":"[status]2","target" : {"status": 2},"code_status": 200,"keyword": "data"},
+      {"scenario":"[status]3","target" : {"status": 3},"code_status": 200,"keyword": "data"},
+      {"scenario":"[status]字串","target" : {"status": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[orderId]","target":{"orderId": 1},"code_status": 200,"keyword": "data"},
+      {"scenario":"[orderIdList]","target":{"orderIdList": null},"code_status": 200,"keyword": "data"},
+      {"scenario":"[userName]字串","target":{"userName": "abd"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[apvOperator]字串","target":{"apvOperator": "abc"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[remark]字串","target":{"remark": "abc"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[page]正常查詢","target" : {"page": "1"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[page]頁碼數小於1","target" : {"page": "0"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[page]字串","target" : {"page": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[size]正常查詢","target" : {"size": "50"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[size]字串","target" : {"size": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[currency]USD","target":{"currency": "USD"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[bankInfo]null","target":{"bankInfo": null},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[bankInfo]USD","target":{"bankInfo": "USD"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[searchType]1","target" : {"searchType": 1},"code_status": 200,"keyword": "data"}
+//      39858
+//      {"scenario":"[searchType]字串","target" : {"searchType": "abc"},"code_status": 400,"keyword": "无效的请求参数"}
+    ]
+  },
+  {
+    "test_case": "get_recharge_manage_supplement_list",
+    "req_method": "post",
+    "req_url": "/v1/fund/recharge/manage/list/supplement",
+    "params": {},
+    "json": {"page": 1, "size": 1, "startTime": "2023-11-27T07:04:27.607Z", "endTime": "2023-11-27T07:04:27.607Z", "applicant": "string", "auditor": "string", "status": 0, "currency": "string"},
+    "schema": {"type": "object", "properties": {"data": {"type": "object", "properties": {"total": {"type": "integer"}, "size": {"type": "integer"}, "current": {"type": "integer"}, "pages": {"type": "integer"}, "records": {"type": "array", "items": {"type": "object", "properties": {"orderId": {"type": "string"}, "userId": {"type": "integer"}, "userName": {"type": "string"}, "userType": {"type": "integer"}, "remark": {"type": "string"}, "status": {"type": "integer"}, "amount": {"type": "integer"}, "firstApprover": {"type": "string"}, "firstRemark": {"type": "string"}, "firstTime": {"type": "string"}, "secondApprover": {"type": "string"}, "secondRemark": {"type": "string"}, "secondTime": {"type": "string"}, "operatorId": {"type": "integer"}, "operator": {"type": "string"}, "createTime": {"type": "string"}, "lastModifiedTime": {"type": "string"}, "currency": {"type": "string"}, "exchangeRate": {"type": "integer"}, "exchangeAmount": {"type": "integer"}, "exchangeCurrency": {"type": "string"}}, "required": ["amount", "createTime", "currency", "exchangeAmount", "exchangeCurrency", "exchangeRate", "firstApprover", "firstRemark", "firstTime", "lastModifiedTime", "operator", "operatorId", "orderId", "remark", "secondApprover", "secondRemark", "secondTime", "status", "userId", "userName", "userType"]}}}, "required": ["current", "pages", "records", "size", "total"]}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"},
+      {"scenario":"[page]正常查詢","target" : {"page": "1"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[page]頁碼數小於1","target" : {"page": "0"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[page]字串","target" : {"page": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[size]正常查詢","target" : {"size": "50"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[size]字串","target" : {"size": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[startTime]時間","target" : {"startTime": "2023-10-04T07:38:59.405Z"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[startTime]字串","target" : {"startTime": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[endTime]時間","target" : {"endTime": "2023-10-24T07:38:59.405Z"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[endTime]字串","target" : {"endTime": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[applicant]字串","target" : {"applicant": "abc"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[auditor]字串","target" : {"auditor": "abc"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[status]null","target" : {"status": null},"code_status": 200,"keyword": "data"},
+      {"scenario":"[status]0","target" : {"status": 0},"code_status": 200,"keyword": "data"},
+      {"scenario":"[status]1","target" : {"status": 1},"code_status": 200,"keyword": "data"},
+      {"scenario":"[status]2","target" : {"status": 2},"code_status": 200,"keyword": "data"},
+      {"scenario":"[status]3","target" : {"status": 3},"code_status": 200,"keyword": "data"},
+      {"scenario":"[status]4","target" : {"status": 3},"code_status": 200,"keyword": "data"},
+      {"scenario":"[status]字串","target" : {"status": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[currency]USD","target":{"currency": "USD"},"code_status": 200,"keyword": "data"},
+    ]
+  },
+  {
+    "test_case": "get_recharge_manage_proxy_replace_list",
+    "req_method": "post",
+    "req_url": "/v1/fund/recharge/manage/list/proxy/replace",
+    "params": {},
+    "json": {"dateType": 1, "status": null, "tradeType": 9, "currency": "CNY", "startTime": "2023-10-27T00:00:00+08:00", "endTime": "2023-11-27T23:59:59+08:00", "page": 1, "size": 50},
+    "schema": {"type": "object", "properties": {"data": {"type": "object", "properties": {"total": {"type": "integer"}, "size": {"type": "integer"}, "current": {"type": "integer"}, "pages": {"type": "integer"}, "records": {"type": "array", "items": {"type": "object", "properties": {"tradeId": {"type": "string"}, "proxyId": {"type": "integer"}, "proxy": {"type": "string"}, "userId": {"type": "integer"}, "tradeType": {"type": "integer"}, "username": {"type": "string"}, "amount": {"type": "integer"}, "chargeType": {"type": "integer"}, "beforeBalance": {"type": "integer"}, "afterBalance": {"type": "integer"}, "remark": {"type": "string"}, "creditType": {"type": "integer"}, "createTime": {"type": "string"}, "status": {"type": "integer"}, "currency": {"type": "string"}}, "required": ["afterBalance", "amount", "beforeBalance", "chargeType", "createTime", "creditType", "currency", "proxy", "proxyId", "remark", "status", "tradeId", "tradeType", "userId", "username"]}}}, "required": ["current", "pages", "records", "size", "total"]}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"},
+      {"scenario":"[page]正常查詢","target" : {"page": "1"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[page]頁碼數小於1","target" : {"page": "0"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[page]字串","target" : {"page": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[size]正常查詢","target" : {"size": "50"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[size]字串","target" : {"size": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[startTime]時間","target" : {"startTime": "2023-10-04T07:38:59.405Z"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[startTime]字串","target" : {"startTime": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[endTime]時間","target" : {"endTime": "2023-10-24T07:38:59.405Z"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[endTime]字串","target" : {"endTime": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[minAmount]數字","target" : {"minAmount": 1},"code_status": 200,"keyword": "data"},
+      {"scenario":"[minAmount]字串","target" : {"minAmount": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[maxAmount]數字","target" : {"maxAmount": 1000},"code_status": 200,"keyword": "data"},
+      {"scenario":"[maxAmount]字串","target" : {"maxAmount": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[status]null","target" : {"status": null},"code_status": 200,"keyword": "data"},
+      {"scenario":"[status]0","target" : {"status": 0},"code_status": 200,"keyword": "data"},
+      {"scenario":"[status]1","target" : {"status": 1},"code_status": 200,"keyword": "data"},
+      {"scenario":"[status]2","target" : {"status": 2},"code_status": 200,"keyword": "data"},
+      {"scenario":"[status]字串","target" : {"status": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[orderId]","target":{"orderId": 1},"code_status": 200,"keyword": "data"},
+      {"scenario":"[auditor]字串","target" : {"auditor": "abc"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[userName]字串","target":{"userName": "abd"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[currency]USD","target":{"currency": "USD"},"code_status": 200,"keyword": "data"},
+    ]
+  },
+  {
+    "test_case": "get_recharge_manage_query_third_party_list",
+    "req_method": "post",
+    "req_url": "/v1/fund/recharge/manage/query/thirdParty",
+    "params": {},
+    "json": {"orderId": 0},
+    "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"資料不存在","target":{},"code_status": 400,"keyword": "資料不存在"}
+    ]
+  },
+  {
+    "test_case": "get_recharge_manage_query_third_party_list",
+    "req_method": "post",
+    "req_url": "/v1/fund/recharge/manage/query/thirdParty",
+    "params": {},
+    "json": {"orderId": 0},
+    "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"資料不存在","target":{},"code_status": 400,"keyword": "資料不存在"}
+    ]
+  },
+  {
+    "test_case": "get_recharge_manage_request_supplement_list",
+    "req_method": "post",
+    "req_url": "/v1/fund/recharge/manage/request/supplement",
+    "params": {},
+    "json": {"orderId": 0, "remark": "string"},
+    "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"資料不存在","target":{},"code_status": 400,"keyword": "資料不存在"}
+    ]
+  },
+  {
+    "test_case": "get_recharge_manage_request_supplement_reject_list",
+    "req_method": "post",
+    "req_url": "/v1/fund/recharge/manage/request/supplement/reject",
+    "params": {},
+    "json": {"orderId": 0, "remark": "string"},
+    "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"資料不存在","target":{},"code_status": 400,"keyword": "資料不存在"}
+    ]
+  },
+  {
+    "test_case": "get_recharge_manage_auditor_list",
+    "req_method": "get",
+    "req_url": "/v1/fund/recharge/manage/list/auditor",
+    "params": {},
+    "json": {},
+    "schema": {"type": "object", "properties": {"data": {"type": ["string", "array"]}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"}
+    ]
+  },
+  {
+    "test_case": "get_recharge_manage_applicant_list",
+    "req_method": "get",
+    "req_url": "/v1/fund/recharge/manage/list/applicant",
+    "params": {},
+    "json": {},
+    "schema": {"type": "object", "properties": {"data": {"type": ["string", "array"]}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"}
+    ]
+  },
+  {
+    "test_case": "recharge_manage_supplement_approve_first",
+    "req_method": "put",
+    "req_url": "/v1/fund/recharge/manage/supplement/approve/first",
+    "params": {},
+    "json": {"orderId": 0, "isApprove": true, "remark": "string"},
+    "schema": {"type": "object", "properties": {"data": {"type": ["string", "array"]}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"資料不存在","target":{},"code_status": 400,"keyword": "資料不存在"}
+    ]
+  },
+  {
+    "test_case": "recharge_manage_supplement_approve_second",
+    "req_method": "put",
+    "req_url": "/v1/fund/recharge/manage/supplement/approve/second",
+    "params": {},
+    "json": {"orderId": 0, "isApprove": true, "remark": "string"},
+    "schema": {"type": "object", "properties": {"data": {"type": ["string", "array"]}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"資料不存在","target":{},"code_status": 400,"keyword": "資料不存在"}
+    ]
+  },
+  {
+    "test_case": "risk_manage_recharge_limit_record",
+    "req_method": "post",
+    "req_url": "/v1/fund/risk/manage/recharge/limit/record",
+    "params": {},
+    "json": {"page": 1, "size": 1, "startTime": "2023-12-01T06:51:07.053Z", "endTime": "2023-12-01T06:51:07.053Z", "limitType": 0, "userName": "string", "nickName": "string", "telephone": "string", "operator": "string", "isRisk": 0, "userIdLIst": [0], "currency": "string"},
+    "schema": {"type": "object", "properties": {"data": {"type": "object", "properties": {"total": {"type": "integer"}, "size": {"type": "integer"}, "current": {"type": "integer"}, "pages": {"type": "integer"}, "records": {"type": "array", "items": {"type": "object", "properties": {"userId": {"type": "integer"}, "userType": {"type": "integer"}, "username": {"type": "string"}, "nickName": {"type": "string"}, "reallyName": {"type": "string"}, "countryCode": {"type": "string"}, "telephone": {"type": "string"}, "vipName": {"type": "string"}, "groupName": {"type": "string"}, "remark": {"type": "string"}, "status": {"type": "integer"}, "lockStatus": {"type": "array", "items": {"type": "object", "properties": {"type": {"type": "integer"}, "lock": {"type": "boolean"}}, "required": ["lock", "type"]}}, "limitType": {"type": "integer"}, "limitRemark": {"type": "string"}, "limitOverTime": {"type": "string"}, "limitOperator": {"type": "string"}, "limitCreateTime": {"type": "string"}, "currency": {"type": "string"}}, "required": ["countryCode", "currency", "groupName", "limitCreateTime", "limitOperator", "limitOverTime", "limitRemark", "limitType", "lockStatus", "nickName", "reallyName", "remark", "status", "telephone", "userId", "userType", "username", "vipName"]}}}, "required": ["current", "pages", "records", "size", "total"]}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"},
+      {"scenario":"[page]正常查詢","target" : {"page": "1"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[page]頁碼數小於1","target" : {"page": "0"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[page]字串","target" : {"page": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[size]正常查詢","target" : {"size": "50"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[size]字串","target" : {"size": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[startTime]時間","target" : {"startTime": "2023-10-04T07:38:59.405Z"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[startTime]字串","target" : {"startTime": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[endTime]時間","target" : {"endTime": "2023-10-24T07:38:59.405Z"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[endTime]字串","target" : {"endTime": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[limitType]0","target" : {"limitType": 0},"code_status": 200,"keyword": "data"},
+      {"scenario":"[limitType]1","target" : {"limitType": 1},"code_status": 200,"keyword": "data"},
+      {"scenario":"[limitType]2","target" : {"limitType": 2},"code_status": 200,"keyword": "data"},
+      {"scenario":"[limitType]3","target" : {"limitType": 3},"code_status": 200,"keyword": "data"},
+      {"scenario":"[userName]字串","target":{"userName": "abc"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[nickName]字串","target":{"nickName": "abc"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[telephone]字串","target":{"telephone": "abc"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[operator]字串","target":{"operator": "abc"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[operator]字串","target":{"operator": "abc"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[isRisk]0","target":{"isRisk": 0},"code_status": 200,"keyword": "data"},
+      {"scenario":"[isRisk]1","target":{"isRisk": 1},"code_status": 200,"keyword": "data"},
+      {"scenario":"[userIdLIst]","target":{"userIdLIst": [123]},"code_status": 200,"keyword": "data"},
+      {"scenario":"[userIdLIst]","target":{"userIdLIst": ["abc"]},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[currency]USD","target":{"currency": "USD"},"code_status": 200,"keyword": "data"}
+    ]
+  },
+  {
+    "test_case": "risk_manage_config_save",
+    "req_method": "post",
+    "req_url": "/v1/fund/risk/manage/config/save",
+    "params": {},
+    "json": {"configVo": {"id": 0, "isRealName": 0, "orderNum": 0, "isLimit": 0, "limitMinute": 0, "status": 0}, "touchVo": {"id": 0, "isRealName": 0, "orderNum": 0, "isLimit": 0, "limitMinute": 0, "status": 0}, "unRealNameLimitConfigVo": [{"id": 0, "isRealName": 0, "orderNum": 0, "isLimit": 0, "limitMinute": 0, "status": 0}], "currency": "string"},
+    "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"正常修改","target":{"configVo":{"id":1,"isRealName":null,"orderNum":3,"isLimit":null,"limitMinute":null,"status":1},"touchVo":{"id":2,"isRealName":null,"orderNum":1,"isLimit":null,"limitMinute":null,"status":0},"unRealNameLimitConfigVo":[]},"code_status": 200,"keyword": "data"},
+      {"scenario":"[configVo]null","target":{"configVo": null},"code_status": 200,"keyword": "data"},
+      {"scenario":"[configVo]id字串","target":{"configVo": {"id": "abc"}},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[configVo]isRealName字串","target":{"configVo": {"isRealName": "abc"}},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[configVo]orderNum字串","target":{"configVo": {"orderNum": "abc"}},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[configVo]isLimit字串","target":{"configVo": {"isLimit": "abc"}},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[configVo]limitMinute字串","target":{"configVo": {"limitMinute": "abc"}},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[configVo]status字串","target":{"configVo": {"status": "abc"}},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[touchVo]null","target":{"touchVo": null},"code_status": 200,"keyword": "data"},
+      {"scenario":"[touchVo]id字串","target":{"touchVo": {"id": "abc"}},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[touchVo]isRealName字串","target":{"touchVo": {"isRealName": "abc"}},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[touchVo]orderNum字串","target":{"touchVo": {"orderNum": "abc"}},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[touchVo]isLimit字串","target":{"touchVo": {"isLimit": "abc"}},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[touchVo]limitMinute字串","target":{"touchVo": {"limitMinute": "abc"}},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[touchVo]status字串","target":{"touchVo": {"status": "abc"}},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[unRealNameLimitConfigVo]null","target":{"unRealNameLimitConfigVo": null},"code_status": 200,"keyword": "data"},
+      {"scenario":"[unRealNameLimitConfigVo]id字串","target":{"unRealNameLimitConfigVo": {"id": "abc"}},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[unRealNameLimitConfigVo]isRealName字串","target":{"unRealNameLimitConfigVo": {"isRealName": "abc"}},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[unRealNameLimitConfigVo]orderNum字串","target":{"unRealNameLimitConfigVo": {"orderNum": "abc"}},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[unRealNameLimitConfigVo]isLimit字串","target":{"unRealNameLimitConfigVo": {"isLimit": "abc"}},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[unRealNameLimitConfigVo]limitMinute字串","target":{"unRealNameLimitConfigVo": {"limitMinute": "abc"}},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[unRealNameLimitConfigVo]status字串","target":{"unRealNameLimitConfigVo": {"status": "abc"}},"code_status": 400,"keyword": "无效的请求参数"}
+    ]
+  },
+  {
+    "test_case": "risk_manage_config",
+    "req_method": "get",
+    "req_url": "/v1/fund/risk/manage/config",
+    "params": {"currency": "USD"},
+    "json": {},
+    "schema": {"type": "object", "properties": {"data": {"type": "object", "properties": {"configVo": {"type": "object", "properties": {"id": {"type": "integer"}, "isRealName": {"type": ["integer","null"]}, "orderNum": {"type": "integer"}, "isLimit": {"type": ["integer","null"]}, "limitMinute": {"type": ["integer","null"]}, "status": {"type": "integer"}}, "required": ["id", "isLimit", "isRealName", "limitMinute", "orderNum", "status"]}, "touchVo": {"type": "object", "properties": {"id": {"type": "integer"}, "isRealName": {"type": ["integer","null"]}, "orderNum": {"type": "integer"}, "isLimit": {"type": ["integer","null"]}, "limitMinute": {"type": ["integer","null"]}, "status": {"type": "integer"}}, "required": ["id", "isLimit", "isRealName", "limitMinute", "orderNum", "status"]}, "unRealNameLimitConfigVo": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "isRealName": {"type": ["integer","null"]}, "orderNum": {"type": "integer"}, "isLimit": {"type": ["integer","null"]}, "limitMinute": {"type": ["integer","null"]}, "status": {"type": "integer"}}, "required": ["id", "isLimit", "isRealName", "limitMinute", "orderNum", "status"]}}}, "required": ["configVo", "touchVo", "unRealNameLimitConfigVo"]}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"[currency]null","target" : {"currency": null},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"}
+    ]
+  },
+  {
+    "test_case": "recharge_type_list",
+    "req_method": "get",
+    "req_url": "/v1/fund/recharge/type/list",
+    "params": {},
+    "json": {},
+    "schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "typeLangMap": {"type": "object", "properties": {"additionalProp1": {"type": "object", "properties": {"id": {"type": "integer"}, "pcName": {"type": "string"}, "mbName": {"type": "string"}, "labelName": {"type": "string"}, "labelColor": {"type": "string"}, "lang": {"type": "string"}, "createOperator": {"type": "integer"}, "lastOperator": {"type": "integer"}, "lastOperatorName": {"type": "string"}, "createOperatorName": {"type": "string"}, "createTime": {"type": "string"}, "lastModifiedTime": {"type": "string"}, "notes": {"type": "string"}, "channelDescription": {"type": "string"}}, "required": ["channelDescription", "createOperator", "createOperatorName", "createTime", "id", "labelColor", "labelName", "lang", "lastModifiedTime", "lastOperator", "lastOperatorName", "mbName", "notes", "pcName"]}, "additionalProp2": {"type": "object", "properties": {"id": {"type": "integer"}, "pcName": {"type": "string"}, "mbName": {"type": "string"}, "labelName": {"type": "string"}, "labelColor": {"type": "string"}, "lang": {"type": "string"}, "createOperator": {"type": "integer"}, "lastOperator": {"type": "integer"}, "lastOperatorName": {"type": "string"}, "createOperatorName": {"type": "string"}, "createTime": {"type": "string"}, "lastModifiedTime": {"type": "string"}, "notes": {"type": "string"}, "channelDescription": {"type": "string"}}, "required": ["channelDescription", "createOperator", "createOperatorName", "createTime", "id", "labelColor", "labelName", "lang", "lastModifiedTime", "lastOperator", "lastOperatorName", "mbName", "notes", "pcName"]}, "additionalProp3": {"type": "object", "properties": {"id": {"type": "integer"}, "pcName": {"type": "string"}, "mbName": {"type": "string"}, "labelName": {"type": "string"}, "labelColor": {"type": "string"}, "lang": {"type": "string"}, "createOperator": {"type": "integer"}, "lastOperator": {"type": "integer"}, "lastOperatorName": {"type": "string"}, "createOperatorName": {"type": "string"}, "createTime": {"type": "string"}, "lastModifiedTime": {"type": "string"}, "notes": {"type": "string"}, "channelDescription": {"type": "string"}}, "required": ["channelDescription", "createOperator", "createOperatorName", "createTime", "id", "labelColor", "labelName", "lang", "lastModifiedTime", "lastOperator", "lastOperatorName", "mbName", "notes", "pcName"]}}, "required": ["additionalProp1", "additionalProp2", "additionalProp3"]}, "sort": {"type": "integer"}, "status": {"type": "integer"}, "isOneRecharge": {"type": "boolean"}, "verify": {"type": "string"}, "createOperator": {"type": "integer"}, "lastOperator": {"type": "integer"}, "lastOperatorName": {"type": "string"}, "createOperatorName": {"type": "string"}, "createTime": {"type": "string"}, "lastModifiedTime": {"type": "string"}, "currency": {"type": "string"}, "viewType": {"type": "string"}, "rechargeAmountLimitType": {"type": "integer"}}, "required": ["createOperator", "createOperatorName", "createTime", "currency", "id", "isOneRecharge", "lastModifiedTime", "lastOperator", "lastOperatorName", "rechargeAmountLimitType", "sort", "status", "typeLangMap", "verify", "viewType"]}}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"}
+    ]
+  },
+  {
+    "test_case": "recharge_type_list_view_type",
+    "req_method": "get",
+    "req_url": "/v1/fund/recharge/type/list/viewType",
+    "params": {},
+    "json": {},
+    "schema": {"type": "object", "properties": {"data": {"type": "object", "properties": {"rechargeViewTypeMap": {"type": "object", "properties": {"basic": {"type": "string"}, "convenience": {"type": "string"}, "fullOrigin": {"type": "string"}, "safe": {"type": "string"}}, "required": ["basic", "convenience", "fullOrigin", "safe"]}}, "required": ["rechargeViewTypeMap"]}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"}
+    ]
+  },
+  {
+    "test_case": "recharge_type_list_verify_type",
+    "req_method": "get",
+    "req_url": "/v1/fund/recharge/type/list/verifyType",
+    "params": {},
+    "json": {},
+    "schema": {"type": "object", "properties": {"data": {"type": "object", "properties": {"rechargeVerifyTypeMap": {"type": "object", "properties": {"1": {"type": "string"}, "2": {"type": "string"}}, "required": ["1", "2"]}}, "required": ["rechargeVerifyTypeMap"]}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"}
+    ]
+  },
+  {
+    "test_case": "recharge_type_save",
+    "req_method": "post",
+    "req_url": "/v1/fund/recharge/type/save",
+    "params": {},
+    "json": {"rechargeAmountLimitType":2,"isOneRecharge":false,"viewType":"basic","verify":"","typeLangMap":{"EN":{"channelDescription":"","id":null,"labelColor":"","labelName":"","lang":"EN","mbName":"auto","notes":"auto","pcName":"auto","labelFlag":0},"ZH":{"channelDescription":"","id":null,"labelColor":"","labelName":"","lang":"ZH","mbName":"auto","notes":"auto","pcName":"auto","labelFlag":0}}},
+    "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"正常新增","target":{},"code_status": 200,"keyword": "data"},
+      {"scenario":"[rechargeAmountLimitType]null","target":{"rechargeAmountLimitType": null},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[rechargeAmountLimitType]字串","target":{"rechargeAmountLimitType": 'abc'},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[isOneRecharge]字串","target":{"isOneRecharge": 'abc'},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[viewType]null","target":{"viewType": null},"code_status": 200,"keyword": "data"},
+      {"scenario":"[verify]null","target":{"verify": null},"code_status": 200,"keyword": "data"},
+      {"scenario":"[typeLangMap]字串","target":{"typeLangMap": 'abc'},"code_status": 400,"keyword": "无效的请求参数"},
+    ]
+  },
+  {
+    "test_case": "recharge_type_update",
+    "req_method": "put",
+    "req_url": "/v1/fund/recharge/type/update",
+    "params": {},
+    "json": {"rechargeAmountLimitType": 2, "isOneRecharge": false, "viewType": "basic", "verify": "", "typeLangMap": {"EN": {"id": 1, "pcName": "auto", "mbName": "auto", "labelName": "", "labelColor": "", "lang": "EN", "createOperator": 1, "lastOperator": 1, "lastOperatorName": "superAdmin", "createOperatorName": "superAdmin", "createTime": "2023-12-12T09:42:37.643653Z", "lastModifiedTime": "2023-12-12T09:42:37.827487Z", "notes": "auto", "channelDescription": "", "labelFlag": 0}, "ZH": {"id": 2, "pcName": "auto", "mbName": "auto", "labelName": "", "labelColor": "", "lang": "ZH", "createOperator": 1, "lastOperator": 1, "lastOperatorName": "superAdmin", "createOperatorName": "superAdmin", "createTime": "2023-12-12T09:42:37.643653Z", "lastModifiedTime": "2023-12-12T09:42:37.884269Z", "notes": "auto", "channelDescription": "", "labelFlag": 0}}, "id": 1},
+    "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"正常修改","target":{},"code_status": 200,"keyword": "data"},
+      {"scenario":"[id]null","target":{"id": null},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[id]字串","target":{"id": 'abc'},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[rechargeAmountLimitType]null","target":{"rechargeAmountLimitType": null},"code_status": 200,"keyword": "data"},
+      {"scenario":"[rechargeAmountLimitType]字串","target":{"rechargeAmountLimitType": 'abc'},"code_status": 200,"keyword": "data"},
+      {"scenario":"[isOneRecharge]null","target":{"isOneRecharge": null},"code_status": 200,"keyword": "data"},
+      {"scenario":"[isOneRecharge]字串","target":{"isOneRecharge": 'abc'},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[viewType]null","target":{"viewType": null},"code_status": 200,"keyword": "data"},
+      {"scenario":"[verify]null","target":{"verify": null},"code_status": 200,"keyword": "data"},
+      {"scenario":"[typeLangMap]字串","target":{"typeLangMap": 'abc'},"code_status": 400,"keyword": "无效的请求参数"}
+    ]
+  },
+  {
+    "test_case": "recharge_type_sort",
+    "req_method": "put",
+    "req_url": "/v1/fund/recharge/type/sort",
+    "params": {},
+    "json": {"id": 2, "flag": 2},
+    "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"正常修改","target":{},"code_status": 200,"keyword": "data"},
+      {"scenario":"[id]null","target":{"id": null},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[id]字串","target":{"id": 'abc'},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[flag]0","target":{"flag": 1},"code_status": 200,"keyword": "data"},
+      {"scenario":"[flag]null","target":{"flag": null},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[flag]字串","target":{"flag": 'abc'},"code_status": 400,"keyword": "无效的请求参数"}
+    ]
+  },
+  {
+    "test_case": "blockchain_currency_list",
+    "req_method": "get",
+    "req_url": "/v1/fund/payment/manage/list/blockchain/currency",
+    "params": {},
+    "json": {},
+    "schema": {"type": "object", "properties": {"data": {"type": "object", "properties": {"currencyIdList": {"type": "array", "items": {"type": "integer"}}}, "required": ["currencyIdList"]}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"}
+    ]
+  },
+  {
+    "test_case": "payment_manage_list",
+    "req_method": "post",
+    "req_url": "/v1/fund/payment/manage/list",
+    "params": {},
+    "json": {"payType": 0},
+    "schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "paymentName": {"type": "string"}, "sort": {"type": "integer"}, "status": {"type": "integer"}, "icon": {"type": "string"}, "noSelectIcon": {"type": "string"}, "selectIcon": {"type": "string"}, "payType": {"type": "integer"}}, "required": ["icon", "id", "noSelectIcon", "payType", "paymentName", "selectIcon", "sort", "status"]}}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"},
+      {"scenario":"[payType]0","target":{"payType": 0},"code_status": 200,"keyword": "data"},
+      {"scenario":"[payType]1","target":{"payType": 1},"code_status": 200,"keyword": "data"},
+      {"scenario":"[payType]字串","target":{"payType": 'abc'},"code_status": 400,"keyword": "无效的请求参数"}
+    ]
+  },
+  {
+    "test_case": "payment_merchant_manage_list",
+    "req_method": "post",
+    "req_url": "/v1/fund/payment/manage/list/merchant",
+    "params": {},
+    "json": {"paymentId": null, "channelId": null, "currencyName": "USD", "merchantCode": null, "nickName": null, "clientTypes": [], "status": null, "merchantType": 10, "page": 1, "size": 50, "currency": "USD"},
+    "schema": {"type": "object", "properties": {"data": {"type": "object", "properties": {"total": {"type": "integer"}, "size": {"type": "integer"}, "current": {"type": "integer"}, "pages": {"type": "integer"}, "records": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "paymentId": {"type": "integer"}, "paymentName": {"type": "string"}, "channelId": {"type": "integer"}, "channelName": {"type": "string"}, "rechargeTypeId": {"type": "integer"}, "typePcName": {"type": "string"}, "typeMbName": {"type": "string"}, "channelMerchantAccountId": {"type": "integer"}, "merchantCode": {"type": "string"}, "companyReceivingBankcardId": {"type": "integer"}, "clientTypes": {"type": "array", "items": {"type": "integer"}}, "status": {"type": "integer"}, "remark": {"type": "string"}, "nickName": {"type": "string"}, "minAmount": {"type": "integer"}, "maxAmount": {"type": "integer"}, "fixAmount": {"type": "integer"}, "amountType": {"type": "integer"}, "curCount": {"type": "integer"}, "totalCount": {"type": "integer"}, "amountFormat": {"type": "integer"}, "currency": {"type": "string"}, "creator": {"type": "string"}, "createTime": {"type": "string"}, "creatorId": {"type": "integer"}, "lastModifiedName": {"type": "string"}, "lastModifiedId": {"type": "integer"}, "lastModifiedTime": {"type": "string"}, "sucPercent": {"type": "integer"}, "currencyType": {"type": "integer"}, "thirdPartyCode": {"type": "string"}, "rechargeAmountLimitType": {"type": "integer"}}, "required": ["amountFormat", "amountType", "channelId", "channelMerchantAccountId", "channelName", "clientTypes", "companyReceivingBankcardId", "createTime", "creator", "creatorId", "curCount", "currency", "currencyType", "fixAmount", "id", "lastModifiedId", "lastModifiedName", "lastModifiedTime", "maxAmount", "merchantCode", "minAmount", "nickName", "paymentId", "paymentName", "rechargeAmountLimitType", "rechargeTypeId", "remark", "status", "sucPercent", "thirdPartyCode", "totalCount", "typeMbName", "typePcName"]}}}, "required": ["current", "pages", "records", "size", "total"]}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"},
+      {"scenario":"[page]正常查詢","target" : {"page": "1"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[page]頁碼數小於1","target" : {"page": "0"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[page]字串","target" : {"page": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[size]正常查詢","target" : {"size": "50"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[size]字串","target" : {"size": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[channelMerchantAccountId]字串","target" : {"channelMerchantAccountId": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[channelId]字串","target" : {"channelId": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[status]字串","target":{"status": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[merchantType]字串","target":{"merchantType": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[paymentId]字串","target":{"paymentId": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[clientTypes]字串","target":{"clientTypes": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[merchantCode]數字","target":{"merchantCode": "abc"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[nickName]數字","target":{"nickName": "abc"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[currency]數字","target":{"currency": "abc"},"code_status": 200,"keyword": "data"}
+    ]
+  },
+  {
+    "test_case": "payment_merchant_account_manage_list",
+    "req_method": "post",
+    "req_url": "/v1/fund/payment/manage/list/merchant/account",
+    "params": {},
+    "json": {"channelId": 0},
+    "schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "channelId": {"type": "integer"}, "channelName": {"type": "string"}, "merchantCode": {"type": "string"}, "nickName": {"type": "string"}, "payUrl": {"type": "string"}, "merchantType": {"type": "integer"}, "remark": {"type": "string"}, "status": {"type": "integer"}, "lastModifiedTime": {"type": "string"}, "lastOperator": {"type": "string"}, "amountType": {"type": "integer"}, "privateKey": {"type": "string"}, "publicKey": {"type": "string"}}, "required": ["amountType", "channelId", "channelName", "id", "lastModifiedTime", "lastOperator", "merchantCode", "merchantType", "nickName", "payUrl", "privateKey", "publicKey", "remark", "status"]}}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"},
+      {"scenario":"[channelId]字串","target":{"channelId": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[channelId]null","target":{"channelId": null},"code_status": 400,"keyword": "无效的请求参数"}
+    ]
+  },
+  {
+    "test_case": "payment_merchant_all_currency_manage_list",
+    "req_method": "post",
+    "req_url": "/v1/fund/payment/manage/list/merchant-all-currency",
+    "params": {},
+    "json": {"paymentId": null, "channelId": null, "currencyName": "USD", "merchantCode": null, "nickName": null, "clientTypes": [], "status": null, "merchantType": 10, "page": 1, "size": 50, "currency": "USD"},
+    "schema": {"type": "object", "properties": {"data": {"type": "object", "properties": {"total": {"type": "integer"}, "size": {"type": "integer"}, "current": {"type": "integer"}, "pages": {"type": "integer"}, "records": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "paymentId": {"type": "integer"}, "paymentName": {"type": "string"}, "channelId": {"type": "integer"}, "channelName": {"type": "string"}, "rechargeTypeId": {"type": "integer"}, "typePcName": {"type": "string"}, "typeMbName": {"type": "string"}, "channelMerchantAccountId": {"type": "integer"}, "merchantCode": {"type": "string"}, "companyReceivingBankcardId": {"type": "integer"}, "clientTypes": {"type": "array", "items": {"type": "integer"}}, "status": {"type": "integer"}, "remark": {"type": "string"}, "nickName": {"type": "string"}, "minAmount": {"type": "integer"}, "maxAmount": {"type": "integer"}, "fixAmount": {"type": "integer"}, "amountType": {"type": "integer"}, "curCount": {"type": "integer"}, "totalCount": {"type": "integer"}, "amountFormat": {"type": "integer"}, "currency": {"type": "string"}, "creator": {"type": "string"}, "createTime": {"type": "string"}, "creatorId": {"type": "integer"}, "lastModifiedName": {"type": "string"}, "lastModifiedId": {"type": "integer"}, "lastModifiedTime": {"type": "string"}, "sucPercent": {"type": "integer"}, "currencyType": {"type": "integer"}, "thirdPartyCode": {"type": "string"}, "rechargeAmountLimitType": {"type": "integer"}}, "required": ["amountFormat", "amountType", "channelId", "channelMerchantAccountId", "channelName", "clientTypes", "companyReceivingBankcardId", "createTime", "creator", "creatorId", "curCount", "currency", "currencyType", "fixAmount", "id", "lastModifiedId", "lastModifiedName", "lastModifiedTime", "maxAmount", "merchantCode", "minAmount", "nickName", "paymentId", "paymentName", "rechargeAmountLimitType", "rechargeTypeId", "remark", "status", "sucPercent", "thirdPartyCode", "totalCount", "typeMbName", "typePcName"]}}}, "required": ["current", "pages", "records", "size", "total"]}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"},
+      {"scenario":"[page]正常查詢","target" : {"page": "1"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[page]頁碼數小於1","target" : {"page": "0"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[page]字串","target" : {"page": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[size]正常查詢","target" : {"size": "50"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[size]字串","target" : {"size": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[channelMerchantAccountId]字串","target" : {"channelMerchantAccountId": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[channelId]字串","target" : {"channelId": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[status]字串","target":{"status": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[merchantType]字串","target":{"merchantType": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[paymentId]字串","target":{"paymentId": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[clientTypes]字串","target":{"clientTypes": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[merchantCode]數字","target":{"merchantCode": "abc"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[nickName]數字","target":{"nickName": "abc"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[currency]數字","target":{"currency": "abc"},"code_status": 200,"keyword": "data"}
+    ]
+  },
+  {
+    "test_case": "payment_merchant_channel_list",
+    "req_method": "post",
+    "req_url": "/v1/fund/payment/manage/list/channel",
+    "params": {},
+    "json": {"payType": 10},
+    "schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "channelName": {"type": "string"}, "sort": {"type": "integer"}, "status": {"type": "integer"}, "payType": {"type": "integer"}, "keys": {"type": "string"}}, "required": ["channelName", "id", "keys", "payType", "sort", "status"]}}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"},
+      {"scenario":"[payType]字串","target" : {"payType": "abc"},"code_status": 400,"keyword": "无效的请求参数"}
+    ]
+  },
+  {
+    "test_case": "payment_manage_bank_list",
+    "req_method": "post",
+    "req_url": "/v1/fund/payment/manage/list/bank",
+    "params": {},
+    "json": {"channelId": 0},
+    "schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "channelId": {"type": "integer"}, "bankId": {"type": "integer"}, "bankName": {"type": "string"}, "sort": {"type": "integer"}}, "required": ["bankId", "bankName", "channelId", "id", "sort"]}}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"},
+      {"scenario":"[payType]字串","target" : {"payType": "abc"},"code_status": 400,"keyword": "无效的请求参数"}
+    ]
+  },
+  {
+    "test_case": "payment_manage_channel_report",
+    "req_method": "post",
+    "req_url": "/v1/fund/payment/manage/channel/report",
+    "params": {"currency": "USD"},
+    "json": {"page": 1, "size": 1, "paymentId": 0, "channelId": 0, "startTime": "2023-12-19T07:54:50.919Z", "endTime": "2023-12-19T07:54:50.919Z"},
+    "schema": {"type": "object", "properties": {"data": {"type": "object"}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"正常查詢","target":{},"code_status": 200,"keyword": "data"},
+      {"scenario":"[page]正常查詢","target" : {"page": "1"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[page]頁碼數小於1","target" : {"page": "0"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[page]字串","target" : {"page": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[size]正常查詢","target" : {"size": "50"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[size]字串","target" : {"size": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[paymentId]字串","target":{"paymentId": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[channelId]字串","target" : {"channelId": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[startTime]時間","target" : {"startTime": "2023-10-04T07:38:59.405Z"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[startTime]字串","target" : {"startTime": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[endTime]時間","target" : {"endTime": "2023-10-24T07:38:59.405Z"},"code_status": 200,"keyword": "data"},
+      {"scenario":"[endTime]字串","target" : {"endTime": "abc"},"code_status": 400,"keyword": "无效的请求参数"}
+    ]
+  },
+  {
+    "test_case": "payment_manage_add_merchant",
+    "req_method": "post",
+    "req_url": "/v1/fund/payment/manage/add/merchant",
+    "params": {},
+    "json": {"paymentId": 0, "channelMerchantAccountId": "string", "rechargeTypeId": 0, "clientTypes": [0], "nickName": "string", "remark": "string", "minAmount": 0, "maxAmount": 0, "fixAmount": 0, "rechargeAmountLimitType": 2, "amountType": 0, "amountFormat": 0, "currency": "string", "thirdPartyCode": "string"},
+    "schema": {"type": "object", "properties": {"data": {"type": "object"}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"充值渠道不存在","target":{},"code_status": 400,"keyword": "该充值渠道不存在，请尝试其他渠道"},
+      {"scenario":"[paymentId]字串","target":{"paymentId": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[channelMerchantAccountId]null","target":{"channelMerchantAccountId": null},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[rechargeTypeId]字串","target":{"rechargeTypeId": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[clientTypes]字串","target":{"clientTypes": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[minAmount]字串","target":{"minAmount": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[maxAmount]字串","target":{"maxAmount": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[fixAmount]字串","target":{"fixAmount": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[rechargeAmountLimitType]字串","target":{"rechargeAmountLimitType": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[amountType]字串","target":{"amountType": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[amountFormat]字串","target":{"amountFormat": "abc"},"code_status": 400,"keyword": "无效的请求参数"}
+    ]
+  },
+  {
+    "test_case": "payment_manage_update_merchant",
+    "req_method": "put",
+    "req_url": "/v1/fund/payment/manage/update/merchant",
+    "params": {},
+    "json": {"id": 0, "paymentId": 0, "channelMerchantAccountId": 0, "rechargeTypeId": 0, "clientTypes": [], "nickName": "string", "remark": "string", "minAmount": 0, "maxAmount": 0, "fixAmount": 0, "rechargeAmountLimitType": 2, "amountType": 0, "amountFormat": 0, "currency": "USD", "thirdPartyCode": "00107"},
+    "schema": {"type": "object", "properties": {"data": {"type": "object"}}, "required": ["data"]},
+    "test_item": [
+      {"scenario":"資料不存在","target":{},"code_status": 400,"keyword": "資料不存在"},
+      {"scenario":"[paymentId]字串","target":{"paymentId": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[rechargeTypeId]字串","target":{"rechargeTypeId": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[clientTypes]字串","target":{"clientTypes": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[minAmount]字串","target":{"minAmount": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[maxAmount]字串","target":{"maxAmount": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[fixAmount]字串","target":{"fixAmount": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[amountType]字串","target":{"amountType": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+      {"scenario":"[amountFormat]字串","target":{"amountFormat": "abc"},"code_status": 400,"keyword": "无效的请求参数"}
     ]
   }
 ]
