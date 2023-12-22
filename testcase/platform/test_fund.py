@@ -650,7 +650,7 @@ class TestWithdraw:
         ResponseVerification.basic_assert(resp, test)
 
 
-class TestRecharge:
+class TestRechargeList:
     @staticmethod
     @allure.feature("充值列表")
     @allure.story("充值匯總列表")
@@ -781,9 +781,11 @@ class TestRecharge:
                                 test['params'], token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)
 
+
+class TestRechargeLimit:
     @staticmethod
     @allure.feature("充值受限")
-    @allure.story("充值受限配置列表")
+    @allure.story("充值受限紀錄列表")
     @allure.title("{test[scenario]}")
     @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('risk_manage_recharge_limit_record'))
@@ -809,7 +811,7 @@ class TestRecharge:
 
     @staticmethod
     @allure.feature("充值受限")
-    @allure.story("保存充值受限配置列表")
+    @allure.story("充值受限配置列表")
     @allure.title("{test[scenario]}")
     @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('risk_manage_config'))
@@ -820,6 +822,8 @@ class TestRecharge:
                                 params_replace, token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)
 
+
+class TestRechargeType:
     @staticmethod
     @allure.feature("充值方式類型")
     @allure.story("充值方式類型列表")
@@ -898,6 +902,8 @@ class TestRecharge:
                                 test['params'], token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)
 
+
+class TestRechargeConfig:
     @staticmethod
     @allure.feature("充值設置")
     @allure.story("區塊鏈幣值")

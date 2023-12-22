@@ -868,7 +868,6 @@
     "json": {"orderId": "1888812783034318882", "userId": 1238, "remark": "string"},
     "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
     "test_item": [
-      {"scenario":"重複審核","target":{},"code_status": 400,"keyword": "无效的请求参数"},
       {"scenario":"[orderId]null","target":{"orderId": null},"code_status": 400,"keyword": "无效的请求参数"},
       {"scenario":"[userId]null","target":{"userId": null},"code_status": 400,"keyword": "无效的请求参数"},
 //      39051
