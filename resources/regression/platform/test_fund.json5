@@ -865,7 +865,7 @@
     "req_method": "post",
     "req_url": "/v1/fund/withdraw/manage/action/exception/pass",
     "params": {},
-    "json": {"orderId": "1888812783034318882", "userId": 1238, "remark": "string"},
+    "json": {"orderId": "1779517307140358162", "userId": 84, "remark": "string"},
     "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
     "test_item": [
       {"scenario":"[orderId]null","target":{"orderId": null},"code_status": 400,"keyword": "无效的请求参数"},
