@@ -276,19 +276,21 @@
         "test_item": [
             {"scenario": "用戶註冊[username]null", "target": {"username": null}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
             // 這邊註解不適合用在qa環境，可能只用在auto比較適合
-            {"scenario": "用戶註冊[username]英文开头，6个字符", "target": {"username": "test01"}, "params": {}, "code_status": 200, "keyword": "data"},
-            {"scenario": "用戶註冊[username]英文开头，6个字符，无数字", "target": {"username": "testaa"}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
+            {"scenario": "用戶註冊[username]數字开头，5个字符", "target": {"username": "1test"}, "params": {}, "code_status": 200, "keyword": "data"},
+            {"scenario": "用戶註冊[username]英文开头，5个字符", "target": {"username": "test1"}, "params": {}, "code_status": 200, "keyword": "data"},
+            {"scenario": "用戶註冊[username]英文开头，5个字符，无数字", "target": {"username": "testa"}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
             {"scenario": "用戶註冊[username]英文开头，19个字符", "target": {"username": "test1234567890123456"}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
-            {"scenario": "用戶註冊[username]英文开头，5个字符", "target": {"username": "test0"}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
-            {"scenario": "用戶註冊[username]无英文，6个字符", "target": {"username": "123456"}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
-            {"scenario": "用戶註冊[username]中文字符，6个字符", "target": {"username": "测试测试"}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
-            {"scenario": "用戶註冊[username]英文开头，含有特殊字符，6个字符", "target": {"username": "test@02"}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
+            {"scenario": "用戶註冊[username]英文开头，4个字符", "target": {"username": "t000"}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
+            {"scenario": "用戶註冊[username]无英文，5个字符", "target": {"username": "12345"}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
+            {"scenario": "用戶註冊[username]中文字符，5个字符", "target": {"username": "测试测试测"}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
+            {"scenario": "用戶註冊[username]英文开头，含有特殊字符，5个字符", "target": {"username": "tes@02"}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
             {"scenario": "用戶註冊[password]正確格式", "target": {"password": "a1b2c3d4", "confirmPassword": "a1b2c3d4"}, "params": {}, "code_status": 200, "keyword": "data"},
             {"scenario": "用戶註冊[password]長度不足", "target": {"password": "a1b2c", "confirmPassword": "a1b2c"}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
             {"scenario": "用戶註冊[password]長度超過限制", "target": {"password": "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9", "confirmPassword": "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9"}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
             {"scenario": "用戶註冊[password]不包含數字", "target": {"password": "abcdefg", "confirmPassword": "abcdefg"}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
             {"scenario": "用戶註冊[password]不包含字母", "target": {"password": "123456", "confirmPassword": "123456"}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
-            {"scenario": "用戶註冊[password]包含特殊字符", "target": {"password": "a1b2c3#4", "confirmPassword": "a1b2c3#4"}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
+            // #36645 調整為可輸入特殊符號
+            {"scenario": "用戶註冊[password]包含特殊字符", "target": {"password": "a1b2c3#4", "confirmPassword": "a1b2c3#4"}, "params": {}, "code_status": 200, "keyword": "data"},
             {"scenario": "用戶註冊[password,confirmPassword]兩次輸入不同", "target": {"password": "a1b2c3d4", "confirmPassword": "a1b2423rg4"}, "params": {}, "code_status": 400, "keyword": "两次输入的密码不正确"},
             {"scenario": "用戶註冊[countryCode]参数为null", "target": {"countryCode": null}, "params": {}, "code_status": 200, "keyword": "data"},
             {"scenario": "用戶註冊[countryCode]长度为0的字符串", "target": {"countryCode": ""}, "params": {}, "code_status": 200, "keyword": "data"},
@@ -317,7 +319,7 @@
         "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "req_url": "/v1/user/logout",
         "json": {},
-        "login_user": "user001",
+        "login_user": "generic001",
         "test_item": [
             {"scenario": "帳號登出", "target": {}, "params": {}, "code_status": 200, "keyword": "success"},
         ]
@@ -328,25 +330,24 @@
         "req_url": "/v1/user/login",
         "schema": {"type": "object", "properties": {"data": {"type": "object", "properties": {"userId": {"type": "integer"}, "username": {"type": "string"}, "userType": {"type": "integer"}, "status": {"type": "object", "properties": {"loginStatus": {"type": "boolean"}, "rechargeStatus": {"type": "boolean"}, "withdrawStatus": {"type": "boolean"}, "transferStatus": {"type": "boolean"}, "bonusStatus": {"type": "boolean"}}, "required": ["bonusStatus", "loginStatus", "rechargeStatus", "transferStatus", "withdrawStatus"]}, "avatar": {"type": ["string", "null"]}, "nickname": {"type": "string"}, "reallyName": {"type": ["string", "null"]}, "countryCode": {"type": ["string", "null"]}, "telephone": {"type": ["string", "null"]}, "language": {"type": "string"}, "currency": {"type": "string"}, "balance": {"type": "integer"}, "token": {"type": "string"}, "credentialStuffing": {"type": "boolean"}}, "required": ["avatar", "balance", "countryCode", "credentialStuffing", "currency", "language", "nickname", "reallyName", "status", "telephone", "token", "userId", "userType", "username"]}}, "required": ["data"]},
         "json": {
-            "username": "user001",
+            "username": "generic001",
             "pwd": "abc123456",
             "captchaValidation":
                 {"channelName": "string", "imgToken": "string"},
             "code": ""
         },
         "test_item": [
-            {"scenario": "帳戶名登入[username]正確登入", "target": {"username": "user001"}, "params": {}, "code_status": 200, "keyword": "data"},
+            {"scenario": "帳戶名登入[username]正確登入", "target": {"username": "generic001"}, "params": {}, "code_status": 200, "keyword": "data"},
             {"scenario": "帳戶名登入[username]空字串測試項目", "target": {"username": ""}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
             {"scenario": "帳戶名登入[username]無數字測試項目", "target": {"username": "abcdef"}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
             {"scenario": "帳戶名登入[username]無字母測試項目", "target": {"username": "123456"}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
-            {"scenario": "帳戶名登入[username]數字開頭測試項目", "target": {"username": "1abcde2"}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
+            {"scenario": "帳戶名登入[username]數字開頭測試項目", "target": {"username": "1test"}, "params": {}, "code_status": 200, "keyword": "data"},
             {"scenario": "帳戶名登入[username]超過最大長度測試項目", "target": {"username": "a1b2c3d4e5f6g7h8i9j0"}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
             {"scenario": "帳戶名登入[username]含有特殊字符測試項目", "target": {"username": "abc*123"}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
             {"scenario": "帳戶名登入[pwd]空字串測試項目", "target": {"pwd": ""}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
             {"scenario": "帳戶名登入[pwd]無數字測試項目", "target": {"pwd": "abcdef"}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
             {"scenario": "帳戶名登入[pwd]無字母測試項目", "target": {"pwd": "123456"}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
             {"scenario": "帳戶名登入[pwd]超過最大長度測試項目", "target": {"pwd": "a1b2c3d4e5f6g7h8i9j0"}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
-            {"scenario": "帳戶名登入[pwd]含有特殊字符測試項目", "target": {"pwd": "abc*123"}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
             {"scenario": "帳戶名登入[pwd]最小長度測試項目", "target": {"pwd": "a1b2c3"}, "params": {}, "code_status": 400, "keyword": "您输入的用户名和密码不匹配，请检查后重试"},
             {"scenario": "帳戶名登入[pwd]正常長度測試項目", "target": {"pwd": "abc123def456"}, "params": {}, "code_status": 400, "keyword": "您输入的用户名和密码不匹配，请检查后重试"},
             {"scenario": "帳戶名登入[pwd]最大長度測試項目", "target": {"pwd": "a1b2c3d4e5f6g7h8i9"}, "params": {}, "code_status": 400, "keyword": "您输入的用户名和密码不匹配，请检查后重试"}
@@ -358,7 +359,7 @@
         "req_url": "/v1/user/loginByMobile",
         "schema": {"type": "object", "properties": {"data": {"type": "object", "properties": {"userId": {"type": "integer"}, "username": {"type": "string"}, "userType": {"type": "integer"}, "status": {"type": "object", "properties": {"loginStatus": {"type": "boolean"}, "rechargeStatus": {"type": "boolean"}, "withdrawStatus": {"type": "boolean"}, "transferStatus": {"type": "boolean"}, "bonusStatus": {"type": "boolean"}}, "required": ["bonusStatus", "loginStatus", "rechargeStatus", "transferStatus", "withdrawStatus"]}, "avatar": {"type": ["string", "null"]}, "nickname": {"type": "string"}, "reallyName": {"type": ["string", "null"]}, "countryCode": {"type": ["string", "null"]}, "telephone": {"type": ["string", "null"]}, "language": {"type": "string"}, "currency": {"type": "string"}, "balance": {"type": "integer"}, "token": {"type": "string"}, "credentialStuffing": {"type": "boolean"}}, "required": ["avatar", "balance", "countryCode", "credentialStuffing", "currency", "language", "nickname", "reallyName", "status", "telephone", "token", "userId", "userType", "username"]}}, "required": ["data"]},
         "json": {
-            "telephone": "14547549549",
+            "telephone": "18198977777",
             "code": "000000",
             "countryCode": 86
         },
@@ -406,7 +407,7 @@
         "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "req_url": "/v1/user/pwd",
         "json": {
-                  "username": "user001",
+                  "username": "generic012",
                   "countryCode": 86,
                   "telephone": "18198977777",
                   "newPwd": "",
@@ -423,11 +424,11 @@
             {"scenario": "忘記密碼重設[newPwd]最小長度測試項目", "target": {"newPwd": "a1b2c3", "confirmPwd": "a1b2c3"}, "params": {}, "code_status": 200, "keyword": "data"},
             {"scenario": "忘記密碼重設[newPwd]最大長度測試項目", "target": {"newPwd": "a1b2c3d4e5f6g7h8i9", "confirmPwd": "a1b2c3d4e5f6g7h8i9"}, "params": {}, "code_status": 200, "keyword": "data"},
             {"scenario": "忘記密碼重設[newPwd]超過最大長度測試項目", "target": {"newPwd": "a1b2c3d4e5f6g7h8i9j0", "confirmPwd": "a1b2c3d4e5f6g7h8i9j0"}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
-            {"scenario": "忘記密碼重設[newPwd]含有特殊字符測試項目", "target": {"newPwd": "abc*123", "confirmPwd": "abc*123"}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
+            // 這邊需求改成可接受特殊字符了
+            // {"scenario": "忘記密碼重設[newPwd]含有特殊字符測試項目", "target": {"newPwd": "abc*123", "confirmPwd": "abc*123"}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
             {"scenario": "忘記密碼重設[newPwd]數字類型測試項目", "target": {"newPwd": 12345678901, "confirmPwd": 12345678901}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
             {"scenario": "忘記密碼重設[newPwd]空值測試項目", "target": {"newPwd": null, "confirmPwd": null}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
             {"scenario": "忘記密碼重設[newPwd]布林類型測試項目", "target": {"newPwd": true, "confirmPwd": true}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
-
             // {"scenario": "用戶名錯誤", "target": {"username": "CCuserpwd0", "newPwd": "abc12345", "code": ""}, "params": {}, "code_status": 400, "keyword": "该用户不存在"},
             // {"scenario": "驗證碼錯誤", "target": {"username": "CCuserpwd01", "newPwd": "abc12345", "code": ""}, "params": {}, "code_status": 400, "keyword": "訊息驗證碼錯誤"},
             // {"scenario": "密碼重複", "target": {"newPwd": "abc123456", "code": ""}, "params": {}, "code_status": 400, "keyword": "不可使用此新密碼"}
