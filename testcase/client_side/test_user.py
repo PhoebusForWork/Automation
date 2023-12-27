@@ -79,7 +79,7 @@ def make_register_new_user():
 @pytest.fixture(scope='class')
 def set_country_code_relation(get_platform_token):
     api = CountryCodeRelation(token=get_platform_token)
-    api.edit_manage(item=[{"thirdPartyId":8,"countryCodeId":6}])
+    api.edit_manage(item=[{"thirdPartyId":8,"countryCodeId":6},{"thirdPartyId":8,"countryCodeId":5}])
 
 
 @pytest.fixture(scope="class")
@@ -365,11 +365,8 @@ class TestUserDetail:
     @pytest.mark.regression
     def test_put_user_detail(test, make_register_new_user):
         validation_api = Validation()
-        if test["scenario"] == "[birthday]首次修改":
-            token = make_register_new_user
-        else:
-            resp = validation_api.login(username="generic001")
-            token = resp.json()['data']['token']
+        resp = validation_api.login(username="generic001")
+        token = resp.json()['data']['token']
         api = API_Controller(platform='cs')
         resp = api.send_request(test['req_method'], test['req_url'], test['json'], test['params'], token=token)
         ResponseVerification.basic_assert(resp, test)
