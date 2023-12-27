@@ -23,7 +23,7 @@ def create_initial_user():
 
 def binding_mobile():
     validation_api = Validation()
-    resp = validation_api.login(username='user001', password="abc123456")
+    resp = validation_api.login(username='generic012', password="abc123456")
     admin_token = resp.json()['data']['token']
     set_test_binding = Security(admin_token)
     go = set_test_binding.mobile_binding(countryCode=86, mobile=18198977777, code="000000")
