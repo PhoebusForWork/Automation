@@ -437,4 +437,248 @@ class GameRecover(PlatformAPI):
             return False
 
 
+class SubGame(PlatformAPI):
+    #子遊戲管理
+    def get_subGames(self,id="必填字串"):
+
+        request_body = {
+            "method": "get",
+            "url": f"/v1/game/subgames/{id}",
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+    
+    #子遊戲編輯
+    def edit_subGames(self,id="必填字串",gameId=None,
+                     subGameCode="必填字串",thirdPartyPlatformCode=None,
+                     thirdPartyGameCode="必填字串",subGameDetailList=[{"language":"必填字串","subGameName":"必填字串","img":"必填字串"}]
+                     ,isHot=None,isNewArrival=None,subGameProperty=[None],subGameType=None):
+
+        request_body={
+            "method":"put",
+            "url":f"/v1/game/subgames/{id}",
+            "json": KeywordArgument.body_data()
+        }
+    
+        response = self.send_request(**request_body)
+        return response.json()
+
+    #子遊戲刪除
+    def delete_subGames(self,id="必填字串"):
+
+        request_body={
+            "method":"delete",
+            "url":f"/v1/game/subgames{id}",
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    #子遊戲列表
+    def get_subGames_list(self,gameId=None,subGameCode=None,subGameName=None,language=None,
+                         subGameType=None,status=None,page=None,size=None):
+
+        request_body={
+            "method":"get",
+            "url":"/v1/game/subgames",
+            "params":{"gameId":gameId,"subGameCode":subGameCode,"subGameName":subGameName,
+                      "language:":language,"subGameType":subGameType,"status":status,
+                      "page":page,"size":size}
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+    
+    #子遊戲新增
+    def add_subGames(self,gameId=None,subGameCode="必填字串",thirdPartyPlatformCode=None,thirdPartyGameCode="必填字串",
+                     subGameDetailList=[{"language":"必填字串","subGameName":"必填字串","img":"必填字串"}],
+                     isHot=None,isNewArrival=None,subGameProperty=[None],subGameType=None):
+        request_body={
+            "method":"post",
+            "url":"/v1/game/subgames",
+            "json": KeywordArgument.body_data()
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+    
+    #子遊戲開啟關閉狀態
+    def control_subGames_status(self,id="必填字串",switchEnum="必填字串"):
+
+        request_body={
+            "method":"post",
+            "url":f"/v1/game/subgames/{id}/switch/{switchEnum}"
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+    
+    #子遊戲開啟關閉新上架
+    def control_subGames_new(self,id="必填字串",switchEnum="必填字串"):
+
+        request_body={
+            "method":"post",
+            "url":f"/v1/game/subgames/{id}/new-switch/{switchEnum}"
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    #子遊戲開啟關閉熱門
+    def control_subGames_hot(self,id="必填字串",switchEnum="必填字串"):
+         
+        request_body={
+            "method":"post",
+            "url":f"/v1/game/subgames/{id}/hot-switch/{switchEnum}"
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+    
+    #子遊戲功能開關
+    def control_subGames(self,gameCode="必填字串",switchEnum="必填字串"):
+
+        request_body={
+            "method":"post",
+            "url":f"/v1/game/{gameCode}/subgame-switch/{switchEnum}"
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+    
+    #子遊戲類型列表單一查詢
+    def inquire_subGames_single(self,subGameType="必填字串"):
+        
+        request_body={
+            "method":"get",
+            "url":f"/v1/game/subgames/types/{subGameType}"
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+    
+    #編輯子遊戲類型
+    def edit_subGames_type(self,subGameType="必填字串",gameType=[None],
+                           updateSubGameTypeDetailDto=[{"subGameTypeName":None,"language":None}]):
+        request_body={
+            "method":"put",
+            "url":f"/v1/game/subgames/types/{subGameType}",
+            "json":KeywordArgument.body_data()
+
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+    
+    #刪除子遊戲類型
+    def delete_subGames_type(self,subGameType="必填字串"):
+        request_body={
+            "method":"delete",
+            "url":f"/v1/game/subgames/types/{subGameType}"
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+    
+    #子遊戲類型列表
+    def get_subGames_type_list(self,gameId=None,subGameType=None,subGameTypeName=None,
+                               language=None,status=None,page=None,size=None):
+        request_body={
+            "method":"get",
+            "url":"/v1/game/subgames/types",
+            "params":{"gameId":gameId,"subGameType":subGameType,"subGameTypeName":subGameTypeName,
+                      "language:":language,"status":status,
+                      "page":page,"size":size}
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+    
+    #新增子遊戲類型
+    def add_subGames_type(self,subGameType="必填字串",gameType=[None],
+                           updateSubGameTypeDetailDto=[{"subGameTypeName":None,"language":None}]):
+        request_body={
+            "method":"post",
+            "url":"/v1/game/subgames/types",
+            "json":KeywordArgument.body_data()
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    #子遊戲類型開關狀態
+    def control_subGames_type_status(self,subGameType="必填字串",switchEnum="必填字串"):
+        request_body={
+            "method":"post",
+            "url":f"/v1/game/subgames/types/{subGameType}/switch/{switchEnum}",
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+        
+    #子遊戲類型選擇下拉列表
+    def get_subGames_type_options(self,):
+        request_body={
+            "method":"get",
+            "url":"/v1/game/subgames/types/options"
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+    
+    #取得子遊戲屬性詳情
+    def inquire_subGames_properties(self,subGameProperty="必填字串"):
+        request_body={
+            "method":"get",
+            "url":f"/v1/game/subgames/properties/{subGameProperty}"
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+    
+    #編輯子遊戲屬性
+    def edit_subGames_properties(self,subGameProperty="必填字串",gameTypes=["必填字串"],subGamePropertyDetails=[{"subGamePropertyName":None,"language":None}]):
+        request_body={
+            "method":"put",
+            "url":f"/v1/game/subgames/properties/{subGameProperty}",
+            "json":KeywordArgument.body_data()
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+    
+    #刪除子遊戲屬性
+    def delete_subGames_properties(self,subGameProperty="必填字串"):
+        request_body={
+            "method":"delete",
+            "url":f"/v1/game/subgames/properties/{subGameProperty}"
+        }
+        response = self.send_request(**request_body)
+        return response.json()
+
+    #取得子遊戲屬性列表
+    def get_subGames_properties_list(self,gameTypes=None,subGameProperty=None,subGamePropertyName=None,
+                                     language=None,status=None,page=None,size=None):
+        request_body={
+            "method":"get",
+            "url":"/v1/game/subgames/properties",
+            "params":{"gameTypes":gameTypes,"subGameProperty":subGameProperty,"subGamePropertyName":subGamePropertyName,
+                      "language":language,"status":status,"page":page,"size":size}
+
+        }
+        response = self.send_request(**request_body)
+        return response.json() 
+    
+    #新增子遊戲屬性
+    def add_subGames_properties(self,subGameProperty="必填字串",gameTypes=["必填字串"],subGamePropertyDetails=[{"subGamePropertyName":None,"language":None}]):
+        request_body={
+            "method":"post",
+            "url":f"/v1/game/subgames/properties/{subGameProperty}",
+            "json":KeywordArgument.body_data()
+        }
+        response = self.send_request(**request_body)
+        return response.json() 
+    
+    #子遊戲屬性開啟關閉狀態
+    def control_subGames_properties_status(self,subGameProperty="必填字串",switchEnum="必填字串"):
+        request_body={
+            "method":"post",
+            "url":f"/v1/game/subgames/properties/{subGameProperty}/switch/{switchEnum}",
+        }
+        response = self.send_request(**request_body)
+        return response.json() 
+    
+    #子遊戲屬性選擇下拉列表
+    def get_subGames_type_options(self,):
+        request_body={
+            "method":"get",
+            "url":"/v1/game/subgames/properties/options"
+        }
+        response = self.send_request(**request_body)
+        return response.json()
 
