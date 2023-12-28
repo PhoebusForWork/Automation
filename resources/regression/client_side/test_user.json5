@@ -614,11 +614,11 @@
         "json": {},
         "test_item": [
             {"scenario": "[language]EN", "params": {"language": "EN"}, "code_status": 200, "keyword": "success"},
-            {"scenario": "[language]ZH", "params": {"language": "ZH"}, "code_status": 200, "keyword": "success"},
             {"scenario": "[language]TH", "params": {"language": "TH"}, "code_status": 200, "keyword": "success"},
             {"scenario": "[language]非資料庫有的語系", "params": {"language": "JP"}, "code_status": 500, "keyword": "語言為空"},
             {"scenario": "[language]空值", "params": {"language": ""}, "code_status": 400, "keyword": "无效的请求参数"},
-            {"scenario": "[language]null", "params": {"language": null}, "code_status": 400, "keyword": "无效的请求参数"}
+            {"scenario": "[language]null", "params": {"language": null}, "code_status": 400, "keyword": "无效的请求参数"},
+            {"scenario": "[language]ZH", "params": {"language": "ZH"}, "code_status": 200, "keyword": "success"},
         ]
     },
     {
@@ -628,14 +628,14 @@
         "schema": {"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "json": {},
         "test_item": [
-            {"scenario": "[currency]USD", "params": {"currency": "USD"}, "code_status": 200, "keyword": "success"},
             {"scenario": "[currency]USDT_ERC20", "params": {"currency": "USDT_ERC20"}, "code_status": 200, "keyword": "success"},
             {"scenario": "[currency]USDT_TRC20", "params": {"currency": "USDT_TRC20"}, "code_status": 200, "keyword": "success"},
             {"scenario": "[currency]THB", "params": {"currency": "THB"}, "code_status": 200, "keyword": "success"},
             {"scenario": "[currency]CNY", "params": {"currency": "CNY"}, "code_status": 200, "keyword": "success"},
             {"scenario": "[currency]非資料庫有的資料", "params": {"currency": "TWD"}, "code_status": 500, "keyword": "幣別為空"},
             {"scenario": "[currency]空值", "params": {"currency": ""}, "code_status": 400, "keyword": "无效的请求参数"},
-            {"scenario": "[currency]null", "params": {"currency": null}, "code_status": 400, "keyword": "无效的请求参数"}
+            {"scenario": "[currency]null", "params": {"currency": null}, "code_status": 400, "keyword": "无效的请求参数"},
+            {"scenario": "[currency]USD", "params": {"currency": "USD"}, "code_status": 200, "keyword": "success"},
         ]
     },
     {
