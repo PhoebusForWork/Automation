@@ -180,11 +180,11 @@ class Withdraw(WebAPI):
         return response.json()
 
     # 虛擬幣地址、銀行卡、交易所地址
-    def address_info(self):
+    def address_info(self,currency='USD'):
         request_body = {
             "method": "get",
             "url": "/v1/fund/withdraw/address/info",
-            "params": {"currency": "USD"}
+            "params": {"currency": currency}
         }
 
         response = self.send_request(**request_body)
