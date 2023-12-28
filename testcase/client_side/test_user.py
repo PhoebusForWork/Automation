@@ -363,7 +363,7 @@ class TestUserDetail:
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", test_data.get_case('put_user_detail'))
     @pytest.mark.regression
-    def test_put_user_detail(test, make_register_new_user):
+    def test_put_user_detail(test):
         validation_api = Validation()
         resp = validation_api.login(username="generic001")
         token = resp.json()['data']['token']
@@ -514,12 +514,12 @@ class TestUserSecurityCenter:
                                 json_replace, test['params'], token=get_user_token)
         ResponseVerification.basic_assert(resp, test)
 
+    # 已廢棄
     @staticmethod
     @allure.feature("用戶安全中心")
     @allure.story("获取用户安全中心信息")
     @allure.title("{test[scenario]}")
     @pytest.mark.parametrize("test", test_data.get_case('user_security_info'))
-    @pytest.mark.regression
     def test_user_security_info(test, get_user_token):
         json_replace = test_data.replace_json(test['json'], test['target'])
         api = API_Controller(platform='cs')
