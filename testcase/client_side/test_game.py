@@ -136,6 +136,9 @@ class TestGameOrder:
     @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_game_order_summary'))
     def test_get_game_order_summary(test):
+        startime = Make.generate_custom_date(months=-3)
+        endtime = Make.generate_custom_date(days=1)
+        test['param'].update({'from':startime, 'to':endtime})
         web_api = WebAPI()
         resp = web_api.login(username='generic001')
         token = resp.json()['data']['token']
