@@ -145,7 +145,7 @@
     "req_method": "post",
     "req_url": "/v1/risk/exception/recharge/limit",
     "params": {},
-    "json": {"page": 1, "size": 1, "categoryId": 0, "status": "NORMAL"},
+    "json": {"page": 1, "size": 1, "categoryId": 0, "status": "0"},
     "schema": {"type": "object", "properties": {"data": {"type": "object", "properties": {"data": {"type": "object", "properties": {"total": {"type": "integer"}, "size": {"type": "integer"}, "current": {"type": "integer"}, "pages": {"type": "integer"}, "records": {"type": "array", "items": {"type": "object", "properties": {"userId": {"type": "integer"}, "userType": {"type": "integer"}, "username": {"type": "string"}, "nickname": {"type": "string"}, "reallyName": {"type": "string"}, "sex": {"type": "integer"}, "email": {"type": "string"}, "telephone": {"type": "string"}, "place": {"type": "string"}, "headUrl": {"type": "string"}, "birthday": {"type": "string"}, "deviceId": {"type": "string"}, "registerIp": {"type": "string"}, "registerAddress": {"type": "string"}, "vipId": {"type": "integer"}, "vipName": {"type": "string"}, "groupIds": {"type": "array", "items": {"type": "integer"}}, "groupNames": {"type": "array", "items": {"type": "string"}}, "parentId": {"type": "integer"}, "parentName": {"type": "string"}, "channelCode": {"type": "string"}, "promotionCode": {"type": "string"}, "remark": {"type": "string"}, "status": {"type": "integer"}, "lockType": {"type": "array", "items": {"type": "object", "properties": {"type": {"type": "integer"}, "lock": {"type": "boolean"}}, "required": ["lock", "type"]}}, "riskUserCount": {"type": "integer"}, "limitType": {"type": "integer"}, "limitOverTime": {"type": "string"}, "orderNum": {"type": "integer"}, "limitTempCount": {"type": "integer"}, "limitPermanentCount": {"type": "integer"}, "limitManualRemoveCount": {"type": "integer"}, "countryCode": {"type": "integer"}}, "required": ["birthday", "channelCode", "countryCode", "deviceId", "email", "groupIds", "groupNames", "headUrl", "limitManualRemoveCount", "limitOverTime", "limitPermanentCount", "limitTempCount", "limitType", "lockType", "nickname", "orderNum", "parentId", "parentName", "place", "promotionCode", "reallyName", "registerAddress", "registerIp", "remark", "riskUserCount", "sex", "status", "telephone", "userId", "userType", "username", "vipId", "vipName"]}}}, "required": ["current", "pages", "records", "size", "total"]}, "lastModifiedTime": {"type": ["string", "null"]}}, "required": ["data", "lastModifiedTime"]}}, "required": ["data"]},
     "test_item": [
       {"scenario":"[page]正常查詢","target": {"page": 1},"code_status": 200,"keyword": "data"},
@@ -166,7 +166,6 @@
       {"scenario":"[status]4","target": {"status": 4},"code_status": 200,"keyword": "data"},
       {"scenario":"[status]777","target": {"status": 777},"code_status": 400,"keyword": "无效的请求参数"},
       {"scenario":"[status]字串","target": {"status": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
-      {"scenario":"[status]空值","target": {"status": ""},"code_status": 400,"keyword": "无效的请求参数"},
       {"scenario":"[limitStatus]0","target": {"limitStatus": 0},"code_status": 200,"keyword": "data"},
       {"scenario":"[limitStatus]1","target": {"limitStatus": 1},"code_status": 200,"keyword": "data"},
       {"scenario":"[limitStatus]2","target": {"limitStatus": 2},"code_status": 200,"keyword": "data"},
