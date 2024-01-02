@@ -8,8 +8,9 @@
         "test_item": [
             {"scenario":"[currency]USD","params":{"currency": "USD"},"code_status": 200,"keyword": "\"currency\":\"USD\""},
             {"scenario":"[currency]CNY","params":{"currency": "CNY"},"code_status": 200,"keyword": "\"currency\":\"CNY\""},
-            {"scenario":"[currency]USDT_TRC20","params":{"currency": "USDT_TRC20"},"code_status": 200,"keyword": "\"currency\":\"USDT_TRC20\""},
-            {"scenario":"[currency]USDT_ERC20","params":{"currency": "USDT_ERC20"},"code_status": 200,"keyword": "\"currency\":\"USDT_ERC20\""}
+            // 目前僅支持USD遊戲
+            // {"scenario":"[currency]USDT_TRC20","params":{"currency": "USDT_TRC20"},"code_status": 200,"keyword": "\"currency\":\"USDT_TRC20\""},
+            // {"scenario":"[currency]USDT_ERC20","params":{"currency": "USDT_ERC20"},"code_status": 200,"keyword": "\"currency\":\"USDT_ERC20\""}
         ]
     },
     {
