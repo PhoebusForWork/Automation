@@ -2,6 +2,7 @@ import pytest
 import allure
 from utils.data_utils import TestDataReader, ResponseVerification
 from utils.api_utils import API_Controller
+from utils.generate_utils import Make
 from pylib.platform.platApiBase import PlatformAPI
 from pylib.platform.game import Game
 from pylib.client_side.webApiBase import WebAPI
@@ -112,6 +113,9 @@ class TestGameOrder:
     @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_game_order'))
     def test_get_game_order(test):
+        startime = Make.generate_custom_date(months=-3)
+        endtime = Make.generate_custom_date(days=1)
+        test['param'].update({'from':startime, 'to':endtime})
         web_api = WebAPI()
         resp = web_api.login(username='generic001')
         token = resp.json()['data']['token']
@@ -132,6 +136,9 @@ class TestGameOrder:
     @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_game_order_summary'))
     def test_get_game_order_summary(test):
+        startime = Make.generate_custom_date(months=-3)
+        endtime = Make.generate_custom_date(days=1)
+        test['param'].update({'from':startime, 'to':endtime})
         web_api = WebAPI()
         resp = web_api.login(username='generic001')
         token = resp.json()['data']['token']
