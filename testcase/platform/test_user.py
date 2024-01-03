@@ -5,6 +5,7 @@ from pylib.platform.user import UserVip, User, UserManage , UserVipPointRatio
 from pylib.platform.proxy import ProxyManage, Proxy
 from utils.data_utils import TestDataReader, ResponseVerification,GetClassData
 from utils.api_utils import API_Controller
+from utils.generate_utils import Make
 from utils.json_verification import validate_json
 
 test_data = TestDataReader()
@@ -233,6 +234,9 @@ class TestUser:
     @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_login_info'))
     def test_get_login_info(test, get_platform_token):
+        start_time=Make.date("start")
+        end_time=Make.date("end")
+        test['params'].update({'from':start_time, 'to':end_time})
         params_replace = test_data.replace_json(test['params'], test['target'])
         api = API_Controller()
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
