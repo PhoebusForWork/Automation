@@ -432,7 +432,7 @@ class UserManage(PlatformAPI):
     # 查詢審批列表
     def get_user_manage_list(
             self, plat_token=None, approveTimeType=0,
-            From="2023-01-01T00:00:00Z", to="2023-12-31T23:59:59Z",
+            From=Make.generate_custom_date(months=-1), to=Make.date('end'),
             username=None, userType=None, optType=None, creator=None,
             firstApprover=None, secondApprover=None, status=None, page=None, size=None
     ):

@@ -6,6 +6,7 @@ import string
 from ..platform.platApiBase import PlatformAPI
 from utils.api_utils import KeywordArgument
 from utils.data_utils import EnvReader
+from utils.generate_utils import Make
 
 
 env = EnvReader()
@@ -387,7 +388,7 @@ class Proxy(PlatformAPI):
     # 獲取代理列表
     def get_proxy(
             self, plat_token=None,
-            From="2023-01-01T00:00:00Z", to="2023-12-31T00:00:00Z",
+            From=Make.generate_custom_date(months=-1), to=Make.date('end'),
             minBalance=None, maxBalance=None,
             creditStatus=None, queryType=None,
             input=None, groupName=None,
