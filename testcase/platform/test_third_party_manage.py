@@ -27,7 +27,7 @@ def check_customer_group(get_platform_token):
     ret = jsonpath.jsonpath(target, "$..groupName")
     if ret is False:
         add_user_group = UserGroup(get_platform_token)
-        add_user_group.save(groupName='客服測試-群組類型測試-客服群組名稱測試')
+        add_user_group.save(groupName='客服測試-群組類型測試-客服群組名稱測試',proxyGroupId=1)
 
 @pytest.fixture(scope="class")
 def make_vaild_code(get_platform_token):

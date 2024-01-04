@@ -67,7 +67,7 @@ class Validation(WebAPI):
         no_phone_type = [1, 2, 3, 4, 5, 6, 7, 8]
         self.valid_sms(mobile='18198977777', requestType=2, countryCode=86, uuid=123)
         for Type in no_phone_type:
-            self.valid_sms(mobile='987654321', requestType=Type, countryCode=66, uuid=123)
+            self.valid_sms(mobile='18198977777', requestType=Type, countryCode=86, uuid=123)
         if self.request_session.headers['telephone'] is None:
             bind = Security(token=self.request_session.headers['token'])
-            bind.mobile_binding(countryCode=66, mobile='987654321', code='000000')
+            bind.mobile_binding(countryCode=86, mobile='18198977777', code='000000')

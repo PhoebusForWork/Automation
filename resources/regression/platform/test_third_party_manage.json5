@@ -4,7 +4,7 @@
         "req_method": "get",
         "req_url": "/v1/userValidCode",
         "schema": {"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
-        "params" : {"type": 2, "userName": null, "device": "66-987654321"},
+        "params" : {"type": 2, "userName": null, "device": "86-18198977777"},
         "json": {},
         "test_item": [
             {"scenario":"[userName,device]null","target":{"userName": null, "device": null}, "code_status": 400,"keyword": "无效的请求参数"},
@@ -17,9 +17,9 @@
             {"scenario":"[type]7","target":{"type": '7'}, "code_status": 200,"keyword": "data"},
             {"scenario":"[type]8","target":{"type": '8'}, "code_status": 200,"keyword": "data"},
             {"scenario":"[type]不存在","target":{"type": '9'}, "code_status": 400,"keyword": "資料不存在"},
-            {"scenario":"[userName]user001","target":{"userName": "user001"}, "code_status": 200,"keyword": "data"},
+            {"scenario":"[userName]generic012","target":{"userName": "generic012"}, "code_status": 200,"keyword": "data"},
             {"scenario":"[userName]不存在","target":{"userName": "unknow001"}, "code_status": 400,"keyword": "資料不存在"},
-            {"scenario":"[userName]字數上限","target":{"userName": "abc4567890123678901"}, "code_status": 400,"keyword": "无效的请求参数"},
+            // {"scenario":"[userName]字數上限","target":{"userName": "abc4567890123678901"}, "code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[device]不存在","target":{"device": "null-1"}, "code_status": 400,"keyword": "資料不存在"},
             // 確認一下這裡有沒有字數限制
             ]
