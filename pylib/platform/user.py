@@ -403,11 +403,15 @@ class UserGroup(PlatformAPI):
 
     # 新增群組
     def save(self, groupName=None, groupType=2,
-             beginRegisterTime=Make.generate_custom_date(days=-30), endRegisterTime=Make.generate_custom_date(days=30),
              withdrawType=0, isRebate: bool=True,
-             isUsdtRestricted=None, reason=None, proxyGroupId=None,
-             weight=None, lockUser=None,
-             tagList: list = [{"tagId": 0, "tagName": "string", "tagLevel": 0}]):
+             isUsdtRestricted=None, weight=None, 
+             lockUser=None,
+             countryCode=None,
+             proxyGroupId=None,
+             vipIds=[],
+             tagIds=[],
+             remark=None,
+             ):
         request_body = {
             "method": "post",
             "url": "/v1/user/group/save",
