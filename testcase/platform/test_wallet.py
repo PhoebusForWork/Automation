@@ -130,7 +130,7 @@ class TestUserTransfer:
     @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_game_transfer'))
     def test_get_game_transfer(test, get_platform_token):
-
+        test['params'].update({'startTime':Make.generate_custom_date(days=-30), 'endTime':Make.date('end')})
         params_replace = test_data.replace_json(test['params'], test['target'])
 
         api = API_Controller()

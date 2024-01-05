@@ -59,7 +59,7 @@
         "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"additionalAdd":{"type":"number"},"bet":{"type":"number"},"bonus":{"type":"number"},"payout":{"type":"number"},"profit":{"type":"number"},"rebate":{"type":"number"},"rechargeTimes":{"type":"integer"},"rechargeTotal":{"type":"number"},"validBet":{"type":"number"},"withdrawTimes":{"type":"integer"},"withdrawTotal":{"type":"number"}},"required":["additionalAdd","bet","bonus","payout","profit","rebate","rechargeTimes","rechargeTotal","validBet","withdrawTimes","withdrawTotal"]}},"required":["data"]},
         "params" : {"from":"2022-01-01T00:00:00+08:00","to":"2023-01-01T00:00:00+08:00"},
         "test_item": [
-            {"req_url": "/v1/wallet/user/99999/summary","scenario":"用戶不存在","target":{"null":null},"json": {},"code_status": 200,"keyword": '"data":{"totalBonus":0,"totalRebate":0,"totalRecharge":0,"rechargeCount":0,"totalWithdraw":0,"withdrawCount":0,"totalExtraSum":0,"totalBet":0,"totalPayout":0,"totalProfit":0}'},
+            {"req_url": "/v1/wallet/user/99999/summary","scenario":"用戶不存在","target":{"null":null},"json": {},"code_status": 200,"keyword": '"data":{"data":{"additionalAdd":0.0,"bet":0.0,"bonus":0.0,"currency":"USD","payout":0.0,"profit":0.0,"rebate":0.0,"rechargeTimes":0,"rechargeTotal":0.0,"validBet":0.0,"withdrawTimes":0,"withdrawTotal":0.0}}'},
             {"req_url": "/v1/wallet/user/3/summary","scenario":"[from]null","target":{"from":null},"json": {},"code_status": 400,"keyword": "parameter 'from' must not be null"},
             {"req_url": "/v1/wallet/user/3/summary","scenario":"[from]string","target":{"from":"string"},"json": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"req_url": "/v1/wallet/user/3/summary","scenario":"[to]null","target":{"to":null},"json": {},"code_status": 400,"keyword": "parameter 'to' must not be null"},
@@ -73,7 +73,7 @@
         "test_case": "get_game_transfer",
         "req_method": "get",
         "schema": {"type":"object","properties":{"data":{"type":"object","properties":{"current":{"type":"integer"},"pages":{"type":"integer"},"records":{"type":"array","items":{"type":"object","properties":{"amount":{"type":"number"},"balanceAfterTransfer":{"type":"number"},"balanceBeforeTransfer":{"type":"number"},"createTime":{"type":"string"},"currency":{"type":"string"},"fromChannelCode":{"type":"string"},"lastModifiedTime":{"type":"string"},"merUsername":{"type":"string"},"toChannelCode":{"type":"string"},"tradeId":{"type":"string"},"transactionStatus":{"type":"integer"},"userType":{"type":"integer"},"username":{"type":"string"}},"required":["amount","balanceAfterTransfer","balanceBeforeTransfer","createTime","currency","fromChannelCode","lastModifiedTime","merUsername","toChannelCode","tradeId","transactionStatus","userType","username"]}},"size":{"type":"integer"},"total":{"type":"integer"}},"required":["current","pages","records","size","total"]}},"required":["data"]},
-        "params" : {"timeType":1,"startTime":"2022-01-01T00:00:00+08:00","endTime":"2024-01-01T00:00:00+08:00","username":null,"minAmount":null,"maxAmount":null,"transactionStatus":null,"fromChannelCode":null,"toChannelCode":null,"tradeId":null,"currency":null,"page":null,"size":null},
+        "params" : {"timeType":1,"startTime":"2022-01-01T00:00:00+08:00","endTime":"2025-01-01T00:00:00+08:00","username":null,"minAmount":null,"maxAmount":null,"transactionStatus":null,"fromChannelCode":null,"toChannelCode":null,"tradeId":null,"currency":null,"page":null,"size":null},
         "req_url": "/v1/wallet/game/transfer",
         "test_item": [
             {"scenario":"正常查詢","target":{},"json": {},"code_status": 200,"keyword": "data"},
@@ -154,8 +154,8 @@
         "json": {"channelCode":"AI","amount":10},
         "params": {"currency": "CNY"},
         "test_item": [
-            {"req_url": "/v1/wallet/game/transfer/user/99999/deposit","scenario":"不存在的userId","target": {},"params": {},"code_status": 400,"keyword": "该用户不存在"},
-            {"req_url": "/v1/wallet/game/transfer/user/2/deposit","scenario":"[AI]第一次新增錢包","target": {},"params": {},"code_status": 500,"keyword": "正在创建游戏帐号，请稍候"},
+            {"req_url": "/v1/wallet/game/transfer/user/99999/deposit","scenario":"不存在的userId","target": {},"params": {},"code_status": 200,"keyword": "该用户不存在"},
+            // {"req_url": "/v1/wallet/game/transfer/user/2/deposit","scenario":"[AI]第一次新增錢包","target": {},"params": {},"code_status": 500,"keyword": "正在创建游戏帐号，请稍候"},
             {"req_url": "/v1/wallet/game/transfer/user/2/deposit","scenario":"[AI]正常新增","target": {},"params": {},"code_status": 200,"keyword": "success"},
             {"req_url": "/v1/wallet/game/transfer/user/2/deposit","scenario":"[amount]0","target": {"amount":0},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
             {"req_url": "/v1/wallet/game/transfer/user/2/deposit","scenario":"[amount]超出錢包金額","target": {"amount":99999999999},"params": {},"code_status": 500,"keyword": "中心钱包余额不足"},

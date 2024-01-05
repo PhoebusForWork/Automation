@@ -1,6 +1,7 @@
 import pytest
 import allure
 import jsonpath
+import time
 
 from pylib.platform.thirdPartyManage import ThirdPartyManage
 from pylib.platform.config import CountryCodeRelation
@@ -117,6 +118,9 @@ class TestThirdPartyManage:
     @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case('get_customer_group'))
     def test_get_customer_group(test, get_platform_token):
+        if test['scenario'] == "正常查詢":
+            # 等待資料同步
+            time.sleep(2)
         parmas_replace = test_data.replace_json(test["params"], test["target"])
         api = API_Controller()
         resp = api.send_request(test['req_method'], test['req_url'], test['json'],
