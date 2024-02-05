@@ -153,6 +153,7 @@ def edit_the_default_platform():
     edit_the_default_platform = Postgresql(database='plt_basics')
     edit_the_default_platform.run_sql('''
         UPDATE plt_basics.platform SET domains = 'api30-auto.prj300.xyz,admin-auto.prj300.xyz'::varchar(128) WHERE id = 1::integer;
+        INSERT INTO plt_basics.platform (code, name, timezone, comment, sort, last_modified_id, last_modified_name, last_modified_time, creator_id, creator_name, created_time, domains, secret, status) VALUES ('mx', 'mx', 8, null, 2, null, null, '2024-01-30 10:04:00.244448 +00:00', 1, 'admin', '2024-01-16 04:05:08.386090 +00:00', 'localhost,mx-admin-auto.prj300.xyz', '63877936A85B094781B67E8992C97E10324696B8EDA4925AA872E81368366DC2', 'ENABLED');
         UPDATE plt_basics.platform_currency SET status = 'ENABLE'::varchar(16);
         UPDATE plt_basics.platform_currency SET is_default = false;
         UPDATE plt_basics.platform_currency SET is_default = true WHERE code = 'USD';
