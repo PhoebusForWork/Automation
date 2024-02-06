@@ -15,9 +15,9 @@ xxl = XxlJobs()
 postgres_scripts.edit_the_default_platform()
 # 這邊要進行plt-basic的sync
 xxl.sync_plt_basics_data()
-xxl.sync_plt_basics_data(pltCode='mx')
 wait_for_sync = 5
 time.sleep(wait_for_sync)
+xxl.sync_plt_basics_data(pltCode='mx')
 
 # #############
 #  API 預處理  #
