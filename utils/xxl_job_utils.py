@@ -10,7 +10,7 @@ class XxlJobs(API_Controller):
         if token:
             self.request_session.headers.update({"token": token})
         self.send_request(method='post', url='/xxl-job-admin/login',
-                          json={}, params={"userName": "admin", "password": "123456"})
+                          json={}, params={"userName": "admin", "password": "abc123456"})
 
     def game_transfer_executor(self):
         # """
