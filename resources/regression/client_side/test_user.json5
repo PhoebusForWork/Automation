@@ -272,7 +272,7 @@
         "req_method": "post",
         "req_url": "/v1/user/register",
         "schema": {"type": "object", "properties": {"data": {"type": "object", "properties": {"userId": {"type": "integer"}, "username": {"type": "string"}, "userType": {"type": "integer"}, "status": {"type": "object", "properties": {"loginStatus": {"type": "boolean"}, "rechargeStatus": {"type": "boolean"}, "withdrawStatus": {"type": "boolean"}, "transferStatus": {"type": "boolean"}, "bonusStatus": {"type": "boolean"}}, "required": ["bonusStatus", "loginStatus", "rechargeStatus", "transferStatus", "withdrawStatus"]}, "avatar": {"type": ["string", "null"]}, "nickname": {"type": "string"}, "reallyName": {"type": ["string", "null"]}, "countryCode": {"type": ["string", "null"]}, "telephone": {"type": ["string", "null"]}, "language": {"type": "string"}, "currency": {"type": "string"}, "balance": {"type": "integer"}, "token": {"type": "string"}, "credentialStuffing": {"type": "boolean"}}, "required": ["avatar", "balance", "countryCode", "credentialStuffing", "currency", "language", "nickname", "reallyName", "status", "telephone", "token", "userId", "userType", "username"]}}, "required": ["data"]},
-        "json": {"username": "不重複用戶名", "password": "abc123456", "confirmPassword": "abc123456", "captchaValidation": {"channelName": "test", "imgToken": "test"}, "countryCode": null, "telephone": null, "uuid": null, "proxyCode": null},
+        "json": {"username": "不重複用戶名", "password": "abc123456", "confirmPassword": "abc123456", "captchaValidation": {"channelName": "test", "imgToken": "000000"}, "countryCode": null, "telephone": null, "uuid": null, "proxyCode": null},
         "test_item": [
             {"scenario": "用戶註冊[username]null", "target": {"username": null}, "params": {}, "code_status": 400, "keyword": "无效的请求参数"},
             // 這邊註解不適合用在qa環境，可能只用在auto比較適合
@@ -333,7 +333,7 @@
             "username": "generic001",
             "pwd": "abc123456",
             "captchaValidation":
-                {"channelName": "string", "imgToken": "string"},
+                {"channelName": "string", "imgToken": "000000"},
             "code": ""
         },
         "test_item": [
@@ -391,7 +391,7 @@
             "telephone": "14547549549",
             "captchaValidation": {
                 "channelName": "string",
-                "imgToken": "string"
+                "imgToken": "000000"
             }
         },
         "test_item": [

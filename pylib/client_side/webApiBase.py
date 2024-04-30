@@ -60,7 +60,7 @@ class WebAPI(API_Controller):
             username='tester001', password="",
             confirmPassword=None, proxyCode=None,
             countryCode=None, telephone=None, uuid=None,
-            captchaValidation={"channelName": "string", "imgToken": "string"}
+            captchaValidation={"channelName": "string", "imgToken": "000000"}
     ):
         self.request_session.headers.update({"device-id": deviceId})
         self.request_session.headers.update({"os-type": osType})
@@ -91,7 +91,7 @@ class WebAPI(API_Controller):
                 "captchaValidation":
                     {
                         "channelName": "string",
-                        "imgToken": "string"
+                        "imgToken": "000000"
                     }
             }
         }
@@ -113,7 +113,7 @@ class WebAPI(API_Controller):
                 "telephone": telephone,
                 "captchaValidation": {
                     "channelName": "string",
-                    "imgToken": "string"
+                    "imgToken": "000000"
                 }
             }
         }
@@ -154,7 +154,7 @@ class WebAPI(API_Controller):
                 "captchaValidation":
                     {
                         "channelName": "string",
-                        "imgToken": "string"
+                        "imgToken": "000000"
                     }
             }
         }
