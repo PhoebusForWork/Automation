@@ -44,7 +44,7 @@ class Validation(WebAPI):
                       "uuid": uuid,
                       "captchaValidation": {
                           "channelName": "string",
-                          "imgToken": "string"
+                          "imgToken": "000000"
                       }
             }
         }
