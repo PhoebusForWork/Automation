@@ -154,7 +154,12 @@ def edit_the_default_platform():
     edit_the_default_platform.run_sql('''
         UPDATE plt_basics.platform SET domains = 'api30-auto.prj300.xyz,admin-auto.prj300.xyz'::varchar(128) WHERE id = 1::integer;
         INSERT INTO plt_basics.platform (code, name, timezone, comment, sort, last_modified_id, last_modified_name, last_modified_time, creator_id, creator_name, created_time, domains, secret, status) VALUES ('mx', 'mx', 8, null, 2, null, null, '2024-01-30 10:04:00.244448 +00:00', 1, 'admin', '2024-01-16 04:05:08.386090 +00:00', 'localhost,mx-admin-auto.prj300.xyz', '63877936A85B094781B67E8992C97E10324696B8EDA4925AA872E81368366DC2', 'ENABLED');
+        INSERT INTO plt_basics.platform (code, name, timezone, comment, sort, last_modified_id, last_modified_name, last_modified_time, creator_id, creator_name, created_time, domains, secret, status) VALUES ('vt999', 'vt999', 7, null, 3, null, null, '2024-04-29 02:49:17.770890 +00:00', 1, 'admin', '2024-04-24 06:14:48.166732 +00:00', 'localhost,vt999-admin-qa.prj300.xyz', '4E414FDDB0741F2184F1E183D8E5CC5354BB7D18AC7425DD53AB49F548475E1B', 'ENABLED');
+        INSERT INTO plt_basics.platform_currency (id, plt_code, code, name, currency_type, icon, central_exchange_rate, last_modified_time, status, is_default, sort, recharge_rate, withdraw_rate) VALUES (52, 'vt999', 'VNDK', '越南盾', 'FIAT', '/static/img/avatar/5ac314f59d/4f30eabea29a47d3.png', 3.28000000, '2024-05-13 03:38:32.648372 +00:00', 'ENABLE', true, 1, 1.00000000, 1.00000000);
         UPDATE plt_basics.platform_currency SET status = 'ENABLE'::varchar(16);
         UPDATE plt_basics.platform_currency SET is_default = false;
-        UPDATE plt_basics.platform_currency SET is_default = true WHERE code = 'USD';
+        UPDATE plt_basics.platform_currency SET is_default = true WHERE (plt_code='ldpro' and code='CNY') or (plt_code='mx' and code='VNDK') or (plt_code='vt999' and code='VNDK');
+        INSERT INTO plt_basics.platform_language (plt_code, code, name, last_modified_time, status, is_default) VALUES ('vt999', 'EN', 'English', '2024-04-24 06:14:49.111150 +00:00', 'ENABLE', false);
+        INSERT INTO plt_basics.platform_language (plt_code, code, name, last_modified_time, status, is_default) VALUES ('vt999', 'ZH', '简体中文', '2024-04-24 06:14:49.415245 +00:00', 'ENABLE', false);
+        INSERT INTO plt_basics.platform_language (plt_code, code, name, last_modified_time, status, is_default) VALUES ('vt999', 'VI', 'Tiếng Việt', '2024-04-24 06:34:17.676726 +00:00', 'ENABLE', true);
         ''')
