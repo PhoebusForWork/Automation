@@ -383,7 +383,7 @@ class TestProxyCommission:
     @allure.title("{test[scenario]}")
     @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case("proxy_get_settlement_shares"))
-    def test_proxy_get_commission(test, get_platform_token):
+    def test_proxy_get_settlement_shares(test, get_platform_token):
         api = API_Controller()
         resp = api.send_request(
             test["req_method"],
@@ -400,7 +400,7 @@ class TestProxyCommission:
     @allure.title("{test[scenario]}")
     @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case("proxy_edit_settlement_shares"))
-    def test_proxy_edit_commission(test, get_platform_token):
+    def test_proxy_edit_settlement_shares(test, get_platform_token):
         json_replace = test_data.replace_json(test["json"], test["target"])
         api = API_Controller()
         resp = api.send_request(
@@ -420,7 +420,7 @@ class TestProxyCommission:
     @pytest.mark.parametrize(
         "test", test_data.get_case("proxy_get_platform_fee_shares")
     )
-    def test_proxy_get_settlementShares(test, get_platform_token):
+    def test_proxy_get_platform_fee_shares(test, get_platform_token):
         api = API_Controller()
         resp = api.send_request(
             test["req_method"],
@@ -458,7 +458,7 @@ class TestProxyCommission:
     @pytest.mark.parametrize(
         "test", test_data.get_case("proxy_get_commission_conditions")
     )
-    def test_proxy_get_commissionConfig(test, get_platform_token):
+    def test_proxy_get_commission_conditions(test, get_platform_token):
         api = API_Controller()
         resp = api.send_request(
             test["req_method"],
@@ -477,7 +477,7 @@ class TestProxyCommission:
     @pytest.mark.parametrize(
         "test", test_data.get_case("proxy_edit_commission_conditions")
     )
-    def test_proxy_edit_commissionConfig(test, get_platform_token):
+    def test_proxy_edit_commission_conditions(test, get_platform_token):
         api = API_Controller()
         resp = api.send_request(
             test["req_method"],
@@ -503,6 +503,9 @@ class TestProxy:
 
         if json_replace["telephone"] == "不重複手機號":
             json_replace["telephone"] = Make.mobile()
+
+        if json_replace["email"] == "不重複Email":
+            json_replace["email"] = "proxyEmail" + str(random.randrange(99999)) + "@testgmail.com"
 
         api = API_Controller()
         resp = api.send_request(

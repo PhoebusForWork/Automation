@@ -302,7 +302,7 @@ class ProxyCommissionTemplate(PlatformAPI):
         return response.json()
 
     # 獲取平台費分攤
-    def get_plat_settlement_shares(self, plat_token=None, id=None):
+    def get_platform_fee_shares(self, plat_token=None, id=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
@@ -315,7 +315,7 @@ class ProxyCommissionTemplate(PlatformAPI):
         return response.json()
 
     # 編輯平台費分攤
-    def edit_plat_settlement_shares(
+    def edit_platform_fee_shares(
             self, plat_token=None, id=None, channelCode=None,
             gameType=None, fee=None, platformFeeLimit=None, data=None
     ):
@@ -344,7 +344,7 @@ class ProxyCommissionTemplate(PlatformAPI):
         return response.json()
 
     # 獲取設置返佣
-    def get_commission_config(self, plat_token=None, id=None):
+    def get_commission_conditions(self, plat_token=None, id=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
@@ -356,8 +356,8 @@ class ProxyCommissionTemplate(PlatformAPI):
         response = self.send_request(**request_body)
         return response.json()
 
-    # 獲取設置返佣
-    def edit_commission_config(
+    # 編輯設置返佣
+    def edit_commission_conditions(
             self, plat_token=None, id=None, profit=None,
             commissionLimit=None, commission=None,
             validUserCount=None, json=None
@@ -390,7 +390,7 @@ class Proxy(PlatformAPI):
             self, plat_token=None,
             From=Make.generate_custom_date(months=-1), to=Make.date('end'),
             minBalance=None, maxBalance=None,
-            creditStatus=None, queryType=None,
+            commissionId=None, queryType=None,
             input=None, groupName=None,
             channel=None, page=None, size=None,
     ):
@@ -423,9 +423,9 @@ class Proxy(PlatformAPI):
     # 創建代理
     def add_proxy(
             self, plat_token=None,
-            proxyAccount=None, proxyName=None, password=None,
+            proxyAccount=None, pwd=None, email=None,
             countryCode=None, telephone=None, proxyChannelId=None,
-            commissionId=None, registerIp=None,
+            commissionId=None,
     ):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
