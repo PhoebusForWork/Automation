@@ -495,24 +495,6 @@
             ]
     },
     {
-        "test_case" : "proxy_get_edit_detail",
-        "req_method" : "get",
-        "schema":{"type":"object","properties":{"data":{"type":"object","properties":{"birthday":{"type":["null","string"]},"email":{"type":["null","string"]},"lastLoginTime":{"type":"string"},"lockStatus":{"type":"array","items":{"type":"object","properties":{"lock":{"type":"boolean"},"type":{"type":"integer"}},"required":["lock","type"]}},"parentProxyAccount":{"type":"string"},"reallyName":{"type":["null","string"]},"registerIp":{"type":"string"},"registerTime":{"type":"string"},"sex":{"type":["null","string"]},"telephone":{"type":"string"},"userId":{"type":"integer"},"username":{"type":"string"}},"required":["birthday","email","lastLoginTime","lockStatus","parentProxyAccount","reallyName","registerIp","registerTime","sex","telephone","userId","username"]}},"required":["data"]},
-        "test_item" : [
-            {"req_url" : "/v1/proxy/67/detail/edit","scenario":"存在的id","json":{},"params": {},"code_status": 200,"keyword": "proxy001"},
-            {"req_url" : "/v1/proxy/1/detail/edit","scenario":"不存在的id","json":{},"params": {},"code_status": 400,"keyword": "資料不存在"}
-            ]
-    },
-    {
-        "test_case" : "proxy_get_edit_display",
-        "req_method" : "get",
-        "schema":{"type":"object","properties":{"data":{"type":"object","properties":{"birthday":{"type":["null","string"]},"email":{"type":["null","string"]},"lastLoginTime":{"type":"string"},"lockStatus":{"type":"array","items":{"type":"object","properties":{"lock":{"type":"boolean"},"type":{"type":"integer"}},"required":["lock","type"]}},"parentProxyAccount":{"type":"string"},"reallyName":{"type":["null","string"]},"registerIp":{"type":"string"},"registerTime":{"type":"string"},"sex":{"type":"integer"},"telephone":{"type":"string"},"userId":{"type":"integer"},"username":{"type":"string"}},"required":["birthday","email","lastLoginTime","lockStatus","parentProxyAccount","reallyName","registerIp","registerTime","sex","telephone","userId","username"]}},"required":["data"]},
-        "test_item" : [
-            {"req_url" : "/v1/proxy/67/detail/display","scenario":"存在的id","json":{},"params": {},"code_status": 200,"keyword": "proxy001"},
-            {"req_url" : "/v1/proxy/1/detail/display","scenario":"不存在的id","json":{},"params": {},"code_status": 400,"keyword": "資料不存在"}
-            ]
-    },
-    {
         "test_case" : "proxy_get_commission_avg",
         "req_method" : "get",
         "schema":{"type":"object","properties":{"data":{"type":"object","properties":{"avgCommission":{"type":"number"},"proxyId":{"type":"integer"},"status":{"type":"boolean"}},"required":["avgCommission","proxyId","status"]}},"required":["data"]},
@@ -535,7 +517,7 @@
             {"scenario":"[tradeTypes]2","target": {"tradeTypes":2},"code_status": 200,"keyword": "data"},
             {"scenario":"[tradeTypes]3","target": {"tradeTypes":3},"code_status": 200,"keyword": "data"},
             {"scenario":"[tradeTypes]4","target": {"tradeTypes":4},"code_status": 200,"keyword": "data"},
-            {"scenario":"[tradeTypes]5","target": {"tradeTypes":5},"code_status": 200,"keyword": "data"},
+            {"scenario":"[tradeTypes]5","target": {"tradeTypes":5},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[tradeTypes]6","target": {"tradeTypes":6},"code_status": 200,"keyword": "data"},
             {"scenario":"[tradeTypes]7","target": {"tradeTypes":7},"code_status": 200,"keyword": "data"},
             {"scenario":"[tradeTypes]8","target": {"tradeTypes":8},"code_status": 200,"keyword": "data"},
@@ -547,7 +529,7 @@
             {"scenario":"[tradeTypes]14","target": {"tradeTypes":14},"code_status": 200,"keyword": "data"},
             {"scenario":"[tradeTypes]15","target": {"tradeTypes":15},"code_status": 200,"keyword": "data"},
             {"scenario":"[tradeTypes]16","target": {"tradeTypes":16},"code_status": 200,"keyword": "data"},
-            {"scenario":"[tradeTypes]17","target": {"tradeTypes":17},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[tradeTypes]17","target": {"tradeTypes":17},"code_status": 200,"keyword": "data"},
             {"scenario":"[from]null","target": {"from":null},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[from]格式不符","target": {"from":"格式不符"},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[to]null","target": {"to":null},"code_status": 400,"keyword": "无效的请求参数"},
@@ -559,26 +541,82 @@
         "test_case" : "get_proxy_domain_query",
         "req_method" : "get",
         "req_url" : "/v1/proxy/domain/query",
-        "schema":{"type":"object","properties":{"data":{"type":"object","properties":{"total":{"type":"integer"},"size":{"type":"integer"},"current":{"type":"integer"},"pages":{"type":"integer"},"records":{"type":"array","items":{"type":"object","properties":{"proxyId":{"type":"integer"},"proxyAccount":{"type":"string"},"proxyName":{"type":["string","null"]},"commissionType":{"type":"string"},"defaultDomain":{"type":"string"},"additionalProperties":{"type":"object","patternProperties":{"^domain.*$":{"type":["string","null"]}}}},"required":["proxyId","proxyAccount","proxyName","commissionType","defaultDomain"]}}},"required":["total","size","current","pages","records"]}},"required":["data"]},
+        "schema":{"type":"object","properties":{"data":{"type":"object","properties":{"total":{"type":"integer"},"size":{"type":"integer"},"current":{"type":"integer"},"pages":{"type":"integer"},"records":{"type":"array","items":{"type":"object","properties":{"proxyId":{"type":"integer"},"proxyAccount":{"type":"string"},"commissionType":{"type":"string"},"defaultDomain":{"type":"string"},"additionalProperties":{"type":"object","patternProperties":{"^domain.*$":{"type":["string","null"]}}}},"required":["proxyId","proxyAccount","commissionType","defaultDomain"]}}},"required":["total","size","current","pages","records"]}},"required":["data"]},
         "json":{},
-        "params": {"type":null, "accountOrName":null, "commissionId":null, "page":null, "size":null},
+        "params": {"queryType":null, "input":null, "commissionId":null, "page":null, "size":null},
         "test_item" : [
             {"scenario":"正常查詢","target": {},"code_status": 200,"keyword": "data"},
-            {"scenario":"[type]不存在","target": {"type":99},"code_status": 400,"keyword": "无效的请求参数"},
-            {"scenario":"[type]代理帳號","target": {"type":0},"code_status": 200,"keyword": "data"},
-            {"scenario":"[type]代理姓名","target": {"type":1},"code_status": 200,"keyword": "data"},
-            {"scenario":"[accountOrName]account_存在","target": {"type":0, "accountOrName":"proxy001"},"code_status": 200,"keyword": "proxy001"},
-            {"scenario":"[accountOrName]account_不存在","target": {"type":0, "accountOrName":"notexit001"},"code_status": 200,"keyword": "\"records\":[]"},
-            {"scenario":"[accountOrName]account_空字串","target": {"type":0, "accountOrName":""},"code_status": 200,"keyword": "proxy001"},
-            {"scenario":"[accountOrName]Name_存在","target": {"type":1, "accountOrName":"proxy001"},"code_status": 200,"keyword": "data"}, //還沒有創建
-            {"scenario":"[accountOrName]Name_不存在","target": {"type":1, "accountOrName":"notexit001"},"code_status": 200,"keyword": "\"records\":[]"},
-            {"scenario":"[accountOrName]Name_空字串","target": {"type":1, "accountOrName":""},"code_status": 200,"keyword": "proxy001"},
+            {"scenario":"[type]不存在","target": {"queryType":99},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[type]代理帳號","target": {"queryType":0},"code_status": 200,"keyword": "data"},
+            {"scenario":"[type]代理姓名","target": {"queryType":1},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[input]account_存在","target": {"queryType":0, "input":"proxy001"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[input]account_不存在","target": {"queryType":0, "input":"notexit001"},"code_status": 200,"keyword": "\"records\":[]"},
+            {"scenario":"[input]account_空字串","target": {"queryType":0, "input":""},"code_status": 200,"keyword": "proxy001"},
             {"scenario":"[commissionId]存在id","target": {"commissionId":1},"code_status": 200,"keyword": "自主注册默认佣金模式"},
             {"scenario":"[commissionId]不存在id","target": {"commissionId":9999},"code_status": 200,"keyword": "\"records\":[]"},
             {"scenario":"[page]null","target": {"page":null},"code_status": 200,"keyword": "\"current\":1"},
             {"scenario":"[page]2","target": {"page":2},"code_status": 200,"keyword": '"current":2'},
             {"scenario":"[size]null","target": {"size":null},"code_status": 200,"keyword": '"size":10'},
-            {"scenario":"[size]null","target": {"size":2},"code_status": 200,"keyword": '"size":2'}
+            {"scenario":"[size]2","target": {"size":2},"code_status": 200,"keyword": '"size":2'}
+            ]
+    },
+    {
+        "test_case" : "proxy_proxy_remark",
+        "req_method" : "put",
+        "schema":{"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
+        "test_item" : [
+            {"req_url" : "/v1/proxy/1/remark","scenario":"編輯備註","json":{"remark": "test"},"params": {},"code_status": 200,"keyword": "success"},
+            {"req_url" : "/v1/proxy/1/remark","scenario":"備註500字以上","json":{"remark": "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901"},
+                "params": {},"code_status": 400,"keyword": "parameter 'remark' size must be between 0 and 500"},
+            {"req_url" : "/v1/proxy/99999/remark","scenario":"編輯備註_不存在的id","json":{"remark": 1},"params": {},"code_status": 400,"keyword": "資料不存在"},
+            ]
+    },
+    {
+        "test_case" : "proxy_get_bank_cards",
+        "req_method" : "get",
+        "schema":{"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"cardId":{"type":["string", "null"]},"username":{"type":["string","null"]}, "proxyAccount":{"type":"string"},"realName":{"type":["string","null"]},"cpf":{"type":["string","null"]},"isSelf":{"type":"boolean"},"cardOwnerName":{"type":["string","null"]},"bankName":{"type":["string","null"]},"bankAddress":{"type":["string","null"]},"cardNo":{"type":["string","null"]},"status":{"type":"integer"}, "createTime":{"type":["string","null"]},"lastModifiedTime":{"type":["string","null"]},"currency":{"type":"string"}},"required":["cardId", "username","proxyAccount", "realName","cpf", "isSelf","cardOwnerName", "bankName","bankAddress","cardNo","status","createTime", "lastModifiedTime", "currency"]}}},"required":["data"]},
+        "json":{},"params": {},
+        "test_item" : [
+            {"req_url" : "/v1/proxy/18/bankcards","scenario":"存在的id","json":{},"params": {},"code_status": 200,"keyword": "cardId"},
+            {"req_url" : "/v1/proxy/9999999/bankcards","scenario":"不存在的id","json":{},"params": {},"code_status": 200,"keyword": "data"}
+            ]
+    },
+    {
+        "test_case" : "proxy_bankcard_unbind",
+        "req_method" : "post",
+        "schema":{"type":"object","properties":{"data":{"type":"string"}},"required":["data"]},
+        "json":{"cardId": "銀行卡", "remark": "test"},
+        "test_item" : [
+            {"req_url" : "/v1/proxy/9999/bankcard-unbind/apply", "scenario":"[proxyId]不存在的id","target":{},"params": {},"code_status": 400,"keyword": "提款银行卡信息错误"},
+            {"req_url" : "/v1/proxy/18/bankcard-unbind/apply", "scenario":"[cardId]不存在的cardId","target":{"cardId": "test123"},"params": {},"code_status": 400,"keyword": "提款银行卡信息错误"},
+            {"req_url" : "/v1/proxy/18/bankcard-unbind/apply", "scenario":"[cardId]null","target":{"cardId": null},"params": {},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url" : "/v1/proxy/18/bankcard-unbind/apply", "scenario":"[remark]大於500字","target":{"remark": "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901"},"params": {},"code_status": 200,"keyword": "success"},
+            {"req_url" : "/v1/proxy/18/bankcard-unbind/apply", "scenario":"[cardId]存在的cardId","target":{},"params": {},"code_status": 200,"keyword": "success"}
+            ]
+    },
+    {
+        "test_case" : "proxy_get_risk_same_ip",
+        "req_method" : "get",
+        "schema":{"type":"object","properties":{"data":{"type":"object","properties":{"total":{"type":"integer"},"size":{"type":"integer"},"current":{"type":"integer"},"pages":{"type":"integer"},"records":{"type":"array","items":{"type":"object","properties":{"proxyAccount":{"type":"string"},"ip":{"type":"string"},"ipLocation":{"type":"string"},"loginTime":{"type":"string"}},"required":["proxyAccount","ip","ipLocation", "loginTime"]}}},"required":["total","size","current","pages","records"]}},"required":["data"]},
+        "json":{},
+        "params": {"page":null, "size":null},
+        "test_item" : [
+            {"req_url" : "/v1/proxy/1/risk/analysis/same/ip","scenario":"[proxyId]存在的id","json":{},"params": {},"code_status": 200,"keyword": "data"},
+            {"req_url" : "/v1/proxy/999999/risk/analysis/same/ip","scenario":"[proxyId]不存在的id","json":{},"params": {},"code_status": 400,"keyword": "資料不存在"},
+            {"req_url" : "/v1/proxy/1/risk/analysis/same/ip","scenario":"[page]0","target": {"page":0},"code_status": 200,"keyword": "data"},
+            {"req_url" : "/v1/proxy/1/risk/analysis/same/ip","scenario":"[page]-1","target": {"page":-1},"code_status": 200,"keyword": "data"},
+            {"req_url" : "/v1/proxy/1/risk/analysis/same/ip","scenario":"[size]0","target": {"size":0},"code_status": 200,"keyword": "data"},
+            {"req_url" : "/v1/proxy/1/risk/analysis/same/ip","scenario":"[size]-1","target": {"size":-1},"code_status": 200,"keyword": "data"}
+            ]
+    },
+    {
+        "test_case" : "proxy_get_login_info",
+        "req_method" : "get",
+        "schema":{"type":"object","properties":{"data":{"type":"object","properties":{"total":{"type":"integer"},"size":{"type":"integer"},"current":{"type":"integer"},"pages":{"type":"integer"},"records":{"type":"array","items":{"type":"object","properties":{"ip":{"type":"string"},"ipLocation":{"type":"string"},"loginUrl":{"type":"string"},"osType":{"type":"integer"},"deviceId":{"type":"string"},"loginTime":{"type":"string"}},"required":["ip","ipLocation","loginUrl","osType","deviceId","loginTime"]}}},"required":["total","size","current","pages","records"]}},"required":["data"]},
+        "json":{},
+        "params": {"from":"2023-01-01T00:00:00+08:00", "to":"2024-07-01T00:00:00+08:00"},
+        "test_item" : [
+            {"req_url" : "/v1/proxy/1/login/info","scenario":"[proxyId]存在的id","json":{},"code_status": 200,"keyword": "data"}
             ]
     },
     {

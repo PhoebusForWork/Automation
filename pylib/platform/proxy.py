@@ -481,32 +481,6 @@ class Proxy(PlatformAPI):
         response = self.send_request(**request_body)
         return response.json()
 
-    # 查詢代理列表編輯資訊
-    def get_detail_edit(self, plat_token=None, userId=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
-        request_body = {
-            "method": "get",
-            "url": f"/v1/proxy/{userId}/detail/edit"
-        }
-
-        response = self.send_request(**request_body)
-        return response.json()
-
-    # 查詢代理列表顯示資訊
-    def get_detail_display(self, plat_token=None, userId=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
-        request_body = {
-            "method": "get",
-            "url": f"/v1/proxy/{userId}/detail/display"
-        }
-
-        response = self.send_request(**request_body)
-        return response.json()
-
     # 查詢三個月平均佣金
     def get_commission_avg(self, plat_token=None, proxyId=None):
         if plat_token is not None:
@@ -541,7 +515,9 @@ class Proxy(PlatformAPI):
         return response.json()
 
     # 搜尋代理域名
-    def get_domain_query(self, plat_token=None, type=None, accountOrName=None, commissionId=None, page=None, size=None):
+    def get_domain_query(self, plat_token=None, 
+                         queryType=None, input=None, 
+                         commissionId=None, page=None, size=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
@@ -549,6 +525,75 @@ class Proxy(PlatformAPI):
             "method": "get",
             "url": "/v1/proxy/domain/query",
             "params": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+    
+    # 更新代理備註
+    def edit_remark(self, plat_token=None, proxyId=None, remark=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "put",
+            "url": f"/v1/proxy/{proxyId}/remark",
+            "json": {"remark": remark}
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+    
+    # 查詢代理銀行卡
+    def get_bankcards(self, plat_token=None, proxyId=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "get",
+            "url": f"/v1/proxy/{proxyId}/bankcards"
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+    
+    # 申請刪除代理提款銀行卡
+    def unbind_bankcard(self, plat_token=None, proxyId=None, cardId=None, remark=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "post",
+            "url": f"/v1/proxy/{proxyId}/bankcard-unbind/apply",
+            "json": {"cardId": cardId, "remark": remark}
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+    
+    # 風險分析重複IP
+    def get_risk_same_ip(self, plat_token=None, proxyId=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "get",
+            "url": f"/v1/proxy/{proxyId}/risk/analysis/same/ip"
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+    
+    # 代理登入日誌
+    def get_login_info(self, plat_token=None, proxyId=None,
+                       From=None, to=None, type=None,
+                       keyword=None, osType=None, page=None, size=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "get",
+            "url": f"/v1/proxy/{proxyId}/login/info"
         }
 
         response = self.send_request(**request_body)
