@@ -656,6 +656,23 @@
             ]
     },
     {
+        "test_case" : "proxy_get_operation_log",
+        "req_method" : "get",
+        "schema":{"type":"object","properties":{"data":{"type":"object","properties":{"total":{"type":"integer"},"size":{"type":"integer"},"current":{"type":"integer"},"pages":{"type":"integer"},"records":{"type":"array","items":{"type":"object","properties":{"clientAccount":{"type":["string", "null"]},"optType":{"type":["string", "null"]},"optData":{"type":["string", "null"]},"originalOptData":{"type":["string", "null"]},"ip":{"type":["string", "null"]},"createTime":{"type":["string", "null"]}},"required":["clientAccount","optType","optData","originalOptData","ip","createTime"]}}},"required":["total","size","current","pages","records"]}},"required":["data"]},
+        "json":{},
+        "params": {"page": null, "size": null},
+        "test_item" : [
+            {"req_url" : "/v1/proxy/operation/log/18","scenario":"[proxyId]存在的id","json":{},"target":{},"code_status": 200,"keyword": "data"},
+            {"req_url" : "/v1/proxy/operation/log/99999","scenario":"[proxyId]不存在的id","json":{},"target":{},"code_status": 200,"keyword": "data"},
+            {"req_url" : "/v1/proxy/operation/log/18","scenario":"[page]0","json":{},"target":{"page":0},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url" : "/v1/proxy/operation/log/18","scenario":"[page]-1","json":{},"target":{"page":-1},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url" : "/v1/proxy/operation/log/18","scenario":"[page]abc","json":{},"target":{"page":"abc"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url" : "/v1/proxy/operation/log/18","scenario":"[size]0","json":{},"target":{"size":0},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url" : "/v1/proxy/operation/log/18","scenario":"[size]-1","json":{},"target":{"size":-1},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url" : "/v1/proxy/operation/log/18","scenario":"[size]abc","json":{},"target":{"size":"abc"},"code_status": 400,"keyword": "无效的请求参数"}
+            ]
+    },
+    {
         "test_case" : "proxy_get_manage_list",
         "req_method" : "get",
         "req_url" : "/v1/proxy/user/manage/list",

@@ -3,7 +3,7 @@ import allure
 import random
 import jsonpath
 from pylib.platform.user import UserManage
-from pylib.platform.proxy import Proxy, ProxyChannel, ProxyGroup, ProxyManage
+from pylib.platform.proxy import Proxy, ProxyChannel, ProxyGroup, ProxyManage, ProxyOperation
 from utils.data_utils import TestDataReader, ResponseVerification
 from utils.api_utils import API_Controller
 from utils.generate_utils import Make
@@ -788,6 +788,25 @@ class TestProxy:
             test["req_url"],
             test["json"],
             test["params"],
+            token=get_platform_token,
+        )
+        ResponseVerification.basic_assert(resp, test)
+
+class TestProxyOperation:
+    @staticmethod
+    @allure.feature("操作記錄")
+    @allure.story("代理用戶操作記錄")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("proxy_get_operation_log"))
+    def test_get_operation_log(test, get_platform_token):
+        params_replace = test_data.replace_json(test['params'], test['target'])
+        api = API_Controller()
+        resp = api.send_request(
+            test["req_method"],
+            test["req_url"],
+            test["json"],
+            params_replace,
             token=get_platform_token,
         )
         ResponseVerification.basic_assert(resp, test)

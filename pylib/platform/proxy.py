@@ -612,6 +612,19 @@ class Proxy(PlatformAPI):
         response = self.send_request(**request_body)
         return response.json()
 
+class ProxyOperation(PlatformAPI):
+    # 代理用戶操作記錄
+    def get_operation_log(self, plat_token=None, proxyId=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "get",
+            "url": f"/v1/proxy/operation/log/{proxyId}"
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
 
 class ProxyManage(PlatformAPI):
     # 獲取代理審核列表
