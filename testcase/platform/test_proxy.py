@@ -721,11 +721,36 @@ class TestProxy:
     @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case("proxy_get_risk_same_ip"))
     def test_get_proxy_risk_same_ip(test, get_platform_token):
+        params_replace = test_data.replace_json(test['params'], test['target'])
         api = API_Controller()
         resp = api.send_request(
             test["req_method"],
             test["req_url"],
             test["json"],
+            params_replace,
+            token=get_platform_token,
+        )
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("代理列表")
+    @allure.story("申請刪除代理提款銀行卡")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("proxy_bankcard_unbind"))
+    def test_proxy_unbind_bankcard(test, get_platform_token):
+        json_replace = test_data.replace_json(test["json"], test["target"])
+        if "銀行卡" == test["json"]['cardId']:
+            proxy = Proxy()
+            ret = proxy.get_bankcards(plat_token=get_platform_token, proxyId=18)
+            card_id = jsonpath.jsonpath(ret, "$.data[0].cardId")
+            test["json"]['cardId'] = card_id[0]
+
+        api = API_Controller()
+        resp = api.send_request(
+            test["req_method"],
+            test["req_url"],
+            json_replace,
             test["params"],
             token=get_platform_token,
         )
@@ -738,6 +763,25 @@ class TestProxy:
     @pytest.mark.regression
     @pytest.mark.parametrize("test", test_data.get_case("proxy_get_login_info"))
     def test_get_proxy_login_info(test, get_platform_token):
+        params_replace = test_data.replace_json(test['params'], test['target'])
+        api = API_Controller()
+        print(test["params"])
+        resp = api.send_request(
+            test["req_method"],
+            test["req_url"],
+            test["json"],
+            params_replace,
+            token=get_platform_token,
+        )
+        ResponseVerification.basic_assert(resp, test)
+
+    @staticmethod
+    @allure.feature("代理列表")
+    @allure.story("查詢代理列表顯示資訊")
+    @allure.title("{test[scenario]}")
+    @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("proxy_get_detail_display"))
+    def test_get_proxy_detail_display(test, get_platform_token):
         api = API_Controller()
         resp = api.send_request(
             test["req_method"],

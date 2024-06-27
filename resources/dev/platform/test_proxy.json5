@@ -601,12 +601,12 @@
         "json":{},
         "params": {"page":null, "size":null},
         "test_item" : [
-            {"req_url" : "/v1/proxy/1/risk/analysis/same/ip","scenario":"[proxyId]存在的id","json":{},"params": {},"code_status": 200,"keyword": "data"},
-            {"req_url" : "/v1/proxy/999999/risk/analysis/same/ip","scenario":"[proxyId]不存在的id","json":{},"params": {},"code_status": 400,"keyword": "資料不存在"},
-            {"req_url" : "/v1/proxy/1/risk/analysis/same/ip","scenario":"[page]0","target": {"page":0},"code_status": 200,"keyword": "data"},
-            {"req_url" : "/v1/proxy/1/risk/analysis/same/ip","scenario":"[page]-1","target": {"page":-1},"code_status": 200,"keyword": "data"},
-            {"req_url" : "/v1/proxy/1/risk/analysis/same/ip","scenario":"[size]0","target": {"size":0},"code_status": 200,"keyword": "data"},
-            {"req_url" : "/v1/proxy/1/risk/analysis/same/ip","scenario":"[size]-1","target": {"size":-1},"code_status": 200,"keyword": "data"}
+            {"req_url" : "/v1/proxy/1/risk/analysis/same/ip","scenario":"[proxyId]存在的id","json":{},"target": {},"code_status": 200,"keyword": "data"},
+            {"req_url" : "/v1/proxy/999999/risk/analysis/same/ip","scenario":"[proxyId]不存在的id","json":{},"target": {},"code_status": 400,"keyword": "資料不存在"},
+            {"req_url" : "/v1/proxy/1/risk/analysis/same/ip","scenario":"[page]0","target": {"page":0},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url" : "/v1/proxy/1/risk/analysis/same/ip","scenario":"[page]-1","target": {"page":-1},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url" : "/v1/proxy/1/risk/analysis/same/ip","scenario":"[size]0","target": {"size":0},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url" : "/v1/proxy/1/risk/analysis/same/ip","scenario":"[size]-1","target": {"size":-1},"code_status": 400,"keyword": "无效的请求参数"}
             ]
     },
     {
@@ -614,9 +614,45 @@
         "req_method" : "get",
         "schema":{"type":"object","properties":{"data":{"type":"object","properties":{"total":{"type":"integer"},"size":{"type":"integer"},"current":{"type":"integer"},"pages":{"type":"integer"},"records":{"type":"array","items":{"type":"object","properties":{"ip":{"type":"string"},"ipLocation":{"type":"string"},"loginUrl":{"type":"string"},"osType":{"type":"integer"},"deviceId":{"type":"string"},"loginTime":{"type":"string"}},"required":["ip","ipLocation","loginUrl","osType","deviceId","loginTime"]}}},"required":["total","size","current","pages","records"]}},"required":["data"]},
         "json":{},
-        "params": {"from":"2023-01-01T00:00:00+08:00", "to":"2024-07-01T00:00:00+08:00"},
+        "params": {"from":"2023-01-01T00:00:00+08:00", "to":"2024-07-01T00:00:00+08:00", "type": null, "keyword": null, "osType": null, "page": null, "size": null},
         "test_item" : [
-            {"req_url" : "/v1/proxy/1/login/info","scenario":"[proxyId]存在的id","json":{},"code_status": 200,"keyword": "data"}
+            {"req_url" : "/v1/proxy/1/login/info","scenario":"[proxyId]存在的id","json":{},"target":{},"code_status": 200,"keyword": "data"},
+            {"req_url" : "/v1/proxy/9999999/login/info","scenario":"[proxyId]不存在的id","json":{},"target":{},"code_status": 200,"keyword": "data"},
+            {"req_url" : "/v1/proxy/1/login/info","scenario":"[fromTo]From_null","json":{},"target":{"from":null},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url" : "/v1/proxy/1/login/info","scenario":"[fromTo]To_null","json":{},"target":{"to":null},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url" : "/v1/proxy/1/login/info","scenario":"[fromTo]From_參數有誤","json":{},"target":{"from":"abc"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url" : "/v1/proxy/1/login/info","scenario":"[fromTo]To_參數有誤","json":{},"target":{"to":"abc"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url" : "/v1/proxy/1/login/info","scenario":"[fromTo]開始不可大於結束","json":{},"target":{"from":"2024-07-01T00:00:00+08:00","to":"2023-01-01T00:00:00+08:00"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url" : "/v1/proxy/1/login/info","scenario":"[type]0","json":{},"target":{"type":0},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url" : "/v1/proxy/1/login/info","scenario":"[type]1","json":{},"target":{"type":1},"code_status": 200,"keyword": "data"},
+            {"req_url" : "/v1/proxy/1/login/info","scenario":"[type]2","json":{},"target":{"type":2},"code_status": 200,"keyword": "data"},
+            {"req_url" : "/v1/proxy/1/login/info","scenario":"[type]3","json":{},"target":{"type":3},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url" : "/v1/proxy/1/login/info","scenario":"[typeKeyword]type_1 keyword_非ip格式","json":{},"target":{"type":1, "keyword": "abc"},"code_status": 200,"keyword": "data"},
+            {"req_url" : "/v1/proxy/1/login/info","scenario":"[typeKeyword]type_1 keyword_ip格式","json":{},"target":{"type":1, "keyword": "34.92.215.121"},"code_status": 200,"keyword": "data"},
+            {"req_url" : "/v1/proxy/1/login/info","scenario":"[typeKeyword]type_2 keyword_非url格式","json":{},"target":{"type":2, "keyword": "abc"},"code_status": 200,"keyword": "data"},
+            {"req_url" : "/v1/proxy/1/login/info","scenario":"[typeKeyword]type_2 keyword_url格式","json":{},"target":{"type":2, "keyword": "https://cs-qa-proxy.prj300.xyz/login"},"code_status": 200,"keyword": "data"},
+            {"req_url" : "/v1/proxy/1/login/info","scenario":"[osType]-1","json":{},"target":{"osType":-1},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url" : "/v1/proxy/1/login/info","scenario":"[osType]0","json":{},"target":{"osType":0},"code_status": 200,"keyword": "data"},
+            {"req_url" : "/v1/proxy/1/login/info","scenario":"[osType]1","json":{},"target":{"osType":1},"code_status": 200,"keyword": "data"},
+            {"req_url" : "/v1/proxy/1/login/info","scenario":"[osType]2","json":{},"target":{"osType":2},"code_status": 200,"keyword": "data"},
+            {"req_url" : "/v1/proxy/1/login/info","scenario":"[osType]3","json":{},"target":{"osType":3},"code_status": 200,"keyword": "data"},
+            {"req_url" : "/v1/proxy/1/login/info","scenario":"[osType]4","json":{},"target":{"osType":4},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url" : "/v1/proxy/1/login/info","scenario":"[page]0","json":{},"target":{"page":0},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url" : "/v1/proxy/1/login/info","scenario":"[page]-1","json":{},"target":{"page":-1},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url" : "/v1/proxy/1/login/info","scenario":"[page]abc","json":{},"target":{"page":"abc"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url" : "/v1/proxy/1/login/info","scenario":"[size]0","json":{},"target":{"size":0},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url" : "/v1/proxy/1/login/info","scenario":"[size]-1","json":{},"target":{"size":-1},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url" : "/v1/proxy/1/login/info","scenario":"[size]abc","json":{},"target":{"size":"abc"},"code_status": 400,"keyword": "无效的请求参数"}
+            ]
+    },
+    {
+        "test_case" : "proxy_get_detail_display",
+        "req_method" : "get",
+        "schema":{"type":"object","properties":{"data":{"type":"object","properties":{"proxyAccount":{"type":"string"},"cpf":{"type":["string", "null"]},"proxyCode":{"type":"string"},"parentProxyAccount":{"type":["string", "null"]},"countryCode":{"type":["string", "null"]},"telephone":{"type":["string", "null"]},"email":{"type":["string", "null"]},"registerTime":{"type":"string"},"registerIp":{"type":"string"},"lastLoginTime":{"type":["string", "null"]}},"required":["proxyAccount","cpf","proxyCode","parentProxyAccount","countryCode", "telephone","email","registerTime","registerIp","lastLoginTime"]}},"required":["data"]},
+        "json":{},"params": {},
+        "test_item" : [
+            {"req_url" : "/v1/proxy/1/detail/display","scenario":"存在的id","json":{},"params": {},"code_status": 200,"keyword": "data"},
+            {"req_url" : "/v1/proxy/9999999/detail/display","scenario":"不存在的id","json":{},"params": {},"code_status": 400,"keyword": "資料不存在"}
             ]
     },
     {

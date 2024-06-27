@@ -598,6 +598,19 @@ class Proxy(PlatformAPI):
 
         response = self.send_request(**request_body)
         return response.json()
+    
+    # 查詢代理列表顯示資訊
+    def get_risk_same_ip(self, plat_token=None, proxyId=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "get",
+            "url": f"/v1/proxy/{proxyId}/detail/display"
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
 
 
 class ProxyManage(PlatformAPI):
