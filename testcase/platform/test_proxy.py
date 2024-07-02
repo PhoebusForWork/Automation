@@ -1060,6 +1060,90 @@ class TestCommission:
                                 token=get_platform_token)
         ResponseVerification.basic_assert(resp, test)
 
+    # 佣金結算歷史查詢
+    @staticmethod
+    @allure.feature("佣金結算")
+    @allure.story("佣金結算歷史查詢")
+    @allure.title("{test[scenario]}")
+    # @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("get_proxy_commission_history"))
+    def test_get_proxy_commission_history(test, get_platform_token):
+        params_replace = test_data.replace_json(test["params"], test["target"])
+        api = API_Controller()
+        resp = api.send_request(test["req_method"],
+                                test["req_url"],
+                                test["json"],
+                                params_replace,
+                                token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    # 結算狀態列表
+    @staticmethod
+    @allure.feature("佣金結算")
+    @allure.story("結算狀態列表")
+    @allure.title("{test[scenario]}")
+    # @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("get_proxy_commission_grant_status"))
+    def test_get_proxy_commission_grant_status(test, get_platform_token):
+        api = API_Controller()
+        resp = api.send_request(test["req_method"],
+                                test["req_url"],
+                                test["json"],
+                                test["params"],
+                                token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    # 查詢成本分攤
+    @staticmethod
+    @allure.feature("佣金結算")
+    @allure.story("查詢成本分攤")
+    @allure.title("{test[scenario]}")
+    # @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("get_proxy_commission_cost_share"))
+    def test_get_proxy_commission_cost_share(test, get_platform_token):
+        params_replace = test_data.replace_json(test["params"], test["target"])
+        api = API_Controller()
+        resp = api.send_request(test["req_method"],
+                                test["req_url"],
+                                test["json"],
+                                params_replace,
+                                token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    # 佣金發放一審
+    @staticmethod
+    @allure.feature("佣金結算")
+    @allure.story("佣金發放一審")
+    @allure.title("{test[scenario]}")
+    # @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("proxy_commission_firstApprove"))
+    def test_put_proxy_commission_firstApprove(test, get_platform_token):
+        json_replace = test_data.replace_json(test["json"], test["target"])
+        api = API_Controller()
+        resp = api.send_request(test["req_method"],
+                                test["req_url"],
+                                json_replace,
+                                test["params"],
+                                token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
+    # 佣金發放二審
+    @staticmethod
+    @allure.feature("佣金結算")
+    @allure.story("佣金發放二審")
+    @allure.title("{test[scenario]}")
+    # @pytest.mark.regression
+    @pytest.mark.parametrize("test", test_data.get_case("proxy_commission_secondApprove"))
+    def test_put_proxy_commission_secondApprove(test, get_platform_token):
+        json_replace = test_data.replace_json(test["json"], test["target"])
+        api = API_Controller()
+        resp = api.send_request(test["req_method"],
+                                test["req_url"],
+                                json_replace,
+                                test["params"],
+                                token=get_platform_token)
+        ResponseVerification.basic_assert(resp, test)
+
 class TestCommissionAdjust:
     @staticmethod
     @allure.feature("佣金調整審核")

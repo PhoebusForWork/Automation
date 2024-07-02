@@ -908,13 +908,116 @@
         "test_case" : "get_proxy_subProxy_commission",
         "req_method" : "get",
         "req_url": "/v1/proxy/commission/subProxyCommission",
-        "schema":{"type":"object","properties": {"data": {"type": "object", "properties": {"proxyAccount":{"type":"string"},"settleDate":{"type":"string"},"activeProxies":{"type":"integer"},"totalProxies":{"type":"integer"},"proxyCommission":{"type":"number"},"innerSubProxyCommissionVoList": {"type": "array", "items": {"type": "object", "properties": {"levelType":{"type":"integer"},"subProxyId":{"type":"integer"},"subProxyAccount":{"type":"string"},"subActiveProxies":{"type":"integer"},"subTotalProxies":{"type":"integer"},"subPlatformCommission":{"type":"number"},"subProxyCommission":{"type":"number"}}, "required": ["levelType","subProxyId","subProxyAccount","subActiveProxies","subTotalProxies","subPlatformCommission","subProxyCommission"]}}}, "required": ["proxyAccount", "settleDate", "activeProxies", "totalProxies", "proxyCommission", "innerSubProxyCommissionVoList"]}}, "required": ["data"]},"params": {},
+        "schema":{"type":"object","properties": {"data": {"type": "object", "properties": {"proxyAccount":{"type":"string"},"settleDate":{"type":"string"},"activeProxies":{"type":"integer"},"totalProxies":{"type":"integer"},"proxyCommission":{"type":"number"},"innerSubProxyCommissionVoList": {"type": "array", "items": {"type": "object", "properties": {"levelType":{"type":"integer"},"subProxyId":{"type":"integer"},"subProxyAccount":{"type":"string"},"subActiveProxies":{"type":"integer"},"subTotalProxies":{"type":"integer"},"subPlatformCommission":{"type":"number"},"subProxyCommission":{"type":"number"}}, "required": ["levelType","subProxyId","subProxyAccount","subActiveProxies","subTotalProxies","subPlatformCommission","subProxyCommission"]}}}, "required": ["proxyAccount", "settleDate", "activeProxies", "totalProxies", "proxyCommission", "innerSubProxyCommissionVoList"]}}, "required": ["data"]},
+        "params": {},
         "json":{},
         "test_item" : [
             {"scenario":"[detailId]正常查詢","target":{"detailId":67},"code_status": 200,"keyword": "data"},
             {"scenario":"[detailId]-1","target":{"detailId":-1},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[detailId]0","target":{"detailId":0},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[detailId]abc","target":{"detailId":"abc"},"code_status": 400,"keyword": "无效的请求参数"}
+        ]
+    },
+    {
+        "test_case" : "get_proxy_commission_history",
+        "req_method" : "get",
+        "req_url" : "/v1/proxy/commission/history",
+        "schema":{"type":"object","properties":{"data":{"type":"object","properties":{"total":{"type":"integer"},"size":{"type":"integer"},"current":{"type":"integer"},"pages":{"type":"integer"},"records":{"type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"settleDate":{"type":"string"},"proxyId":{"type":"integer"},"proxyAccount":{"type":"string"},"commissionTemplateName":{"type":"string"},"currency":{"type":"string"},"activeUsers":{"type":"integer"},"platformCommission":{"type":"number"},"cost":{"type":"number"},"showLastMonthAmount":{"type":"number"},"modifyCommission":{"type":"number"},"totalCommission":{"type":"number"},"proxyCommission":{"type":"number"},"validTotalCommission":{"type":"number"},"grantStatus":{"type":"integer"},"approveStatus":{"type":"integer"},"firstApprover":{"type":["string","null"]},"firstRemark":{"type":["string","null"]},"secondApprover":{"type":["string","null"]},"secondRemark":{"type":["string","null"]}},"required":["id","settleDate","proxyId","proxyAccount","commissionTemplateName","currency","activeUsers","cost","platformCommission","showLastMonthAmount","proxyCommission","totalCommission","modifyCommission","validTotalCommission","grantStatus","approveStatus","firstApprover","firstRemark","secondApprover","secondRemark"]}}},"required":["current","pages","records","size","total"]}},"required":["data"]},
+        "json":{},
+        "params": {},
+        "test_item" : [
+            {"scenario":"不帶任何參數","target": {},"code_status": 200,"keyword": "data"},
+            {"scenario":"[settleDate]正確格式","target": {"settleDate":"2024-06"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[settleDate]不正確格式","target": {"settleDate":"202406"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[minAmount]1.1","target": {"minAmount":1.1},"code_status": 200,"keyword": "data"},
+            {"scenario":"[minAmount]-1","target": {"minAmount":-1},"code_status": 200,"keyword": "data"},
+            {"scenario":"[minAmount]0","target": {"minAmount":0},"code_status": 200,"keyword": "data"},
+            {"scenario":"[minAmount]abc","target": {"minAmount":"abc"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[maxAmount]1.1","target": {"maxAmount":1.1},"code_status": 200,"keyword": "data"},
+            {"scenario":"[maxAmount]-1","target": {"maxAmount":-1},"code_status": 200,"keyword": "data"},
+            {"scenario":"[maxAmount]0","target": {"maxAmount":0},"code_status": 200,"keyword": "data"},
+            {"scenario":"[maxAmount]abc","target": {"maxAmount":"abc"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[minAmount/maxAmount]minAmount小於maxAmount","target": {"minAmount": 1,"maxAmount":10000},"code_status": 200,"keyword": "data"},
+            {"scenario":"[minAmount/maxAmount]minAmount大於maxAmount","target": {"minAmount": 100000,"maxAmount":1},"code_status": 200,"keyword": "data"},
+            {"scenario":"[minAmount/maxAmount]minAmount大於maxAmount","target": {"minAmount": 100000,"maxAmount":1},"code_status": 200,"keyword": "data"},
+            {"scenario":"[proxyAccount]正確格式","target": {"proxyAccount":"annproxy003"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[proxyAccount]不正確格式","target": {"proxyAccount":"abc"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[commissionTemplateId]存在的ID","target": {"commissionTemplateId":1},"code_status": 200,"keyword": "data"},
+            {"scenario":"[commissionTemplateId]不存在的ID","target": {"commissionTemplateId":9999999},"code_status": 200,"keyword": "data"},
+            {"scenario":"[commissionTemplateId]0","target": {"commissionTemplateId":"0"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[commissionTemplateId]-1","target": {"commissionTemplateId":"-1"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[commissionTemplateId]abc","target": {"commissionTemplateId":"abc"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[currency]中心幣種","target": {"currency":"CNY"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]其他幣種","target": {"currency":"BRL"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[currency]abc","target": {"currency":"abc"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[proxyManageStatus]-1","target": {"proxyManageStatus": -1},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[proxyManageStatus]0","target": {"proxyManageStatus": 0},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[proxyManageStatus]1","target": {"proxyManageStatus": 1},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[proxyManageStatus]2","target": {"proxyManageStatus": 2},"code_status": 200,"keyword": "data"},
+            {"scenario":"[proxyManageStatus]3","target": {"proxyManageStatus": 3},"code_status": 200,"keyword": "data"},
+            {"scenario":"[proxyManageStatus]4","target": {"proxyManageStatus": 4},"code_status": 200,"keyword": "data"},
+            {"scenario":"[proxyManageStatus]5","target": {"proxyManageStatus": 5},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[proxyManageStatus]abc","target": {"proxyManageStatus": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[approver]存在的名稱","target": {"approver":"annko"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[approver]不存在的名稱","target": {"approver":"abc"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[page]-1","target": {"page": -1},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[page]0","target": {"page": 0},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[page]abc","target": {"page": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[size]-1","target": {"size": -1},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[size]0","target": {"size": 0},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[size]abc","target": {"size": "abc"},"code_status": 400,"keyword": "无效的请求参数"}
+        ]
+    },
+    {
+        "test_case" : "get_proxy_commission_grant_status",
+        "req_method" : "get",
+        "req_url": "/v1/proxy/commission/grantStatus",
+        "schema":{"type":"object","properties":  {"data": {"type": "array", "items": {"type": "integer"}}}, "required": ["data"]},
+        "json":{},
+        "params": {},
+        "test_item" : [
+            {"scenario":"正常查詢","params": {},"code_status": 200,"keyword": "data"},
+        ]
+    },
+    {
+        "test_case" : "get_proxy_commission_cost_share",
+        "req_method" : "get",
+        "req_url": "/v1/proxy/commission/costShare",
+        "schema":{"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"type":{"type":"integer"},"gameCode":{"type":["string","null"]},"gameName":{"type":["string","null"]},"gameType":{"type":["integer","null"]},"totalAmount":{"type":"number"},"ratio":{"type":"number"},"shareAmount":{"type":"number"}},"required":["type","gameCode","gameName","gameType","totalAmount","ratio","shareAmount"]}}},"required":["data"]},
+        "json":{},
+        "params": {},
+        "test_item" : [
+            {"scenario":"[detailId]存在的ID","target": {"detailId": 15},"code_status": 200,"keyword": "data"},
+            {"scenario":"[detailId]不存在的ID","target": {"detailId": 999999},"code_status": 200,"keyword": "data"},
+            {"scenario":"[detailId]abc","target": {"detailId": "abc"},"code_status": 400,"keyword": "无效的请求参数"}
+        ]
+    },
+    {
+        "test_case" : "proxy_commission_firstApprove",
+        "req_method" : "put",
+        "schema":{"type": "object", "properties": {"data": {"type": "object"}}, "required": ["data"]},
+        "params": {},
+        "req_url": "/v1/proxy/commission/67/firstApprove",
+        "json":{"remark": "test", "isPass": true},
+        "test_item" : [
+            {"scenario":"remark[201字]","target":{"remark": "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"isPass[數字]","target":{"isPass": 123},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"isPass[字串]","target":{"isPass": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"isPass[空值]","target":{"isPass": ""},"code_status": 400,"keyword": "无效的请求参数"}
+        ]
+    },
+    {
+        "test_case" : "proxy_commission_secondApprove",
+        "req_method" : "put",
+        "schema":{"type": "object", "properties": {"data": {"type": "object"}}, "required": ["data"]},
+        "params": {},
+        "req_url": "/v1/proxy/commission/67/secondApprove",
+        "json":{"remark": "test", "isPass": true},
+        "test_item" : [
+            {"scenario":"remark[201字]","target":{"remark": "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"isPass[數字]","target":{"isPass": 123},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"isPass[字串]","target":{"isPass": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"isPass[空值]","target":{"isPass": ""},"code_status": 400,"keyword": "无效的请求参数"}
         ]
     },
     {

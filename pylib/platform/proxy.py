@@ -801,7 +801,7 @@ class ProxyCommission(PlatformAPI):
 
         request_body = {
             "method": "get",
-            "url": f"/v1/proxy/commission",
+            "url": "/v1/proxy/commission",
             "params": KeywordArgument.body_data()
         }
 
@@ -815,7 +815,7 @@ class ProxyCommission(PlatformAPI):
 
         request_body = {
             "method": "get",
-            "url": f"/v1/proxy/commission/winTotal",
+            "url": "/v1/proxy/commission/winTotal",
             "params": KeywordArgument.body_data()
         }
 
@@ -829,7 +829,7 @@ class ProxyCommission(PlatformAPI):
 
         request_body = {
             "method": "get",
-            "url": f"/v1/proxy/commission/subUserCommission",
+            "url": "/v1/proxy/commission/subUserCommission",
             "params": KeywordArgument.body_data()
         }
 
@@ -843,7 +843,7 @@ class ProxyCommission(PlatformAPI):
 
         request_body = {
             "method": "get",
-            "url": f"/v1/proxy/commission/subProxyCommission",
+            "url": "/v1/proxy/commission/subProxyCommission",
             "params": KeywordArgument.body_data()
         }
 
@@ -882,7 +882,7 @@ class ProxyCommission(PlatformAPI):
         return response.json()
 
     # 查詢成本分攤
-    def get_cost_share(self, plat_token=None, proxyId=None, settleDate=None):
+    def get_cost_share(self, plat_token=None, detailId=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
