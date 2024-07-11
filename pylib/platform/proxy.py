@@ -7,6 +7,7 @@ from ..platform.platApiBase import PlatformAPI
 from utils.api_utils import KeywordArgument
 from utils.data_utils import EnvReader
 from utils.generate_utils import Make
+from datetime import datetime, timedelta
 
 
 env = EnvReader()
@@ -245,26 +246,26 @@ class ProxyCommissionTemplate(PlatformAPI):
         return response.json()
 
     # 獲取下級代理佣金設置
-    def get_sub_config(self, plat_token=None, id=None):
+    def get_sub_condiction(self, plat_token=None, id=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
         request_body = {
             "method": "get",
-            "url": f"/v1/proxy/commission/template/{id}/subCommissionConfig"
+            "url": f"/v1/proxy/commission/template/{id}/subCommissionConditions"
         }
 
         response = self.send_request(**request_body)
         return response.json()
 
     # 編輯下級代理佣金設置
-    def edit_sub_config(self, plat_token=None, id=None, subCommissionConfigList=None, subSubCommissionConfigList=None):
+    def edit_sub_condiction(self, plat_token=None, id=None, subCommissionConditions=None, subSubCommissionConditions=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
         request_body = {
             "method": "put",
-            "url": f"/v1/proxy/commission/template/{id}/subCommissionConfig",
+            "url": f"/v1/proxy/commission/template/{id}/subCommissionConditions",
             "json": KeywordArgument.body_data()
         }
 
@@ -350,7 +351,7 @@ class ProxyCommissionTemplate(PlatformAPI):
 
         request_body = {
             "method": "get",
-            "url": f"/v1/proxy/commission/template/{id}/commissionConfig"
+            "url": f"/v1/proxy/commission/template/{id}/commissionConditions"
         }
 
         response = self.send_request(**request_body)
@@ -358,9 +359,7 @@ class ProxyCommissionTemplate(PlatformAPI):
 
     # 編輯設置返佣
     def edit_commission_conditions(
-            self, plat_token=None, id=None, profit=None,
-            commissionLimit=None, commission=None,
-            validUserCount=None, json=None
+            self, plat_token=None, id=None, json=None
     ):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
@@ -425,7 +424,7 @@ class Proxy(PlatformAPI):
             self, plat_token=None,
             proxyAccount=None, pwd=None, email=None,
             countryCode=None, telephone=None, proxyChannelId=None,
-            commissionId=None,
+            commissionId=None
     ):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
@@ -476,19 +475,6 @@ class Proxy(PlatformAPI):
             "method": "put",
             "url": f"/v1/proxy/{proxyId}/channel",
             "json": {"channelId": channelId}
-        }
-
-        response = self.send_request(**request_body)
-        return response.json()
-
-    # 查詢三個月平均佣金
-    def get_commission_avg(self, plat_token=None, proxyId=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
-        request_body = {
-            "method": "get",
-            "url": f"/v1/proxy/{proxyId}/commission/avg"
         }
 
         response = self.send_request(**request_body)
@@ -630,7 +616,7 @@ class ProxyManage(PlatformAPI):
     # 獲取代理審核列表
     def get_manage_list(
             self, plat_token=None,
-            registerStartTime="2023-01-01T00:00:00Z", registerEndTime="2023-12-31T23:59:59Z",
+            registerStartTime="2023-01-01T00:00:00Z", registerEndTime="2026-12-31T23:59:59Z",
             proxyAccount=None, proxyName=None,
             # 代理狀態 0:待審核|1:一審通過|2:一審不通過|3:二審通過|4:二審不通過
             approver=None, proxyManageStatus=None, page=None, size=None
@@ -689,9 +675,9 @@ class ProxyManage(PlatformAPI):
         return response.json()
 
     # 批量駁回待審核訂單
-    def clean_proxy_approval(self, token=None, size=100):
-        jsdata = self.get_manage_list(plat_token=token, size=size, proxyManageStatus=0)
-        jsdata2 = self.get_manage_list(plat_token=token, size=size, proxyManageStatus=1)
+    def clean_proxy_approval(self, token=None, size=100, account=None):
+        jsdata = self.get_manage_list(plat_token=token, size=size, proxyManageStatus=0, proxyAccount=account)
+        jsdata2 = self.get_manage_list(plat_token=token, size=size, proxyManageStatus=1, proxyAccount=account)
         ret = jsonpath.jsonpath(jsdata, "$..id")
         ret2 = jsonpath.jsonpath(jsdata2, "$..id")
         try:
@@ -710,7 +696,8 @@ class ProxyManage(PlatformAPI):
         if ret is False:
             add = Proxy()
             add.add_proxy(plat_token=token, proxyAccount="AutoTestProxy" + str(random.randrange(99999)),
-                          password="abc123456", countryCode='+886', telephone=str(random.randrange(10000000000, 19999999999)), commissionId=1)
+                          pwd="abc123456",email="AutoTestProxy@gmailtest.com", countryCode='86', telephone=str(random.randrange(10000000000, 19999999999)), 
+                          proxyChannelId=1,commissionId=1)
             jsdata = self.get_manage_list(plat_token=token, proxyManageStatus=0)
             ret = jsonpath.jsonpath(jsdata, "$..id")
         return str(ret[0])
@@ -721,7 +708,8 @@ class ProxyManage(PlatformAPI):
         if ret is False:
             add = Proxy()
             add.add_proxy(plat_token=token, proxyAccount="AutoTestProxy" + str(random.randrange(99999)),
-                          password="abc123456", countryCode='+886', telephone=str(random.randrange(10000000000, 19999999999)), commissionId=1)
+                          pwd="abc123456",email="AutoTestProxy@gmailtest.com", countryCode='86', telephone=str(random.randrange(10000000000, 19999999999)), 
+                          proxyChannelId=1,commissionId=1)
 
             jsdata = self.get_manage_list(plat_token=token, proxyManageStatus=0)  # 獲取待一審訂單
             ret = jsonpath.jsonpath(jsdata, "$..id")
@@ -737,7 +725,8 @@ class ProxyManage(PlatformAPI):
         if ret is False:
             add = Proxy()
             add.add_proxy(plat_token=token, proxyAccount="AutoTestProxy" + str(random.randrange(99999)),
-                          password="abc123456", countryCode='+886', telephone=str(random.randrange(10000000000, 19999999999)), commissionId=1)
+                          pwd="abc123456",email="AutoTestProxy@gmailtest.com", countryCode='86', telephone=str(random.randrange(10000000000, 19999999999)), 
+                          proxyChannelId=1,commissionId=1)
 
             jsdata = self.get_manage_list(plat_token=token, proxyManageStatus=0)  # 獲取待一審訂單
             ret = jsonpath.jsonpath(jsdata, "$..id")

@@ -1,8 +1,9 @@
 from pylib.platform.account import AccountAdmin, AccountDept, AccountRole
-from pylib.platform.proxy import Proxy
+from pylib.platform.proxy import Proxy, ProxyChannel, ProxyGroup, ProxyCommissionTemplate, ProxyManage
 from pylib.platform.game import Game
 from pylib.platform.config import CountryCodeRelation
 from utils.generate_utils import Make
+import random
 
 
 def super_admin_initialize():
@@ -76,14 +77,59 @@ def turn_on_the_game_to_test():
     trun_on_the_game.game_sync(game_code='AI_SPORT_AI')
 
 def create_initialize_proxy_account():
-    create_proxy = Proxy()
-    code = create_proxy.imgcode()
-    create_proxy.login(username="superAdmin",
-                       password="abc123456",
-                       imgCode=code)
-    create_proxy.add_proxy(proxyAccount="", proxyName="",
-                           password="", proxyChannelId="",
-                           commissionId=None)
+    accountAdmin = AccountAdmin()
+    code = accountAdmin.imgcode()
+    token = accountAdmin.login(username="superAdmin",
+                               password="abc123456",
+                               imgCode=code).json()['data']['token']
+    
+    create_proxy = Proxy(token=token)
+    apprival = ProxyManage(token)
+    account_list = ['proxy01', 'proxy02', 'proxy03']
+    telephone_list = ['13645609354', '13645604382', '13645604399']
+    i=1
+    for account_name in account_list:
+        create_proxy.add_proxy(proxyAccount=account_name,
+                               pwd="abc123456",
+                               email=account_name + "@gmailtest.com",
+                               countryCode='86',
+                               telephone=telephone_list[i-1],
+                               proxyChannelId=1,
+                               commissionId=1)
+        
+        apprival.approval_first(id=i, isApprove=True, remark="test")
+        apprival.approval_second(id=i, isApprove=True, remark="test")
+        i = i + 1
+
+def create_proxy_channel_Group():
+    accountAdmin = AccountAdmin()
+    code = accountAdmin.imgcode()
+    token = accountAdmin.login(username="superAdmin",
+                               password="abc123456",
+                               imgCode=code).json()['data']['token']
+
+    proxyChannel = ProxyChannel(token=token)
+    proxyChannel.add_channel(channel="代理渠道")
+    proxyGroup = ProxyGroup(token=token)
+    proxyGroup.add_group(groupName="代理團隊", channelIds=[1])
+
+
+def create_proxy_commissionTemplate():
+    template = ProxyCommissionTemplate()
+    code = template.imgcode()
+    template.login(username="superAdmin",password="abc123456",imgCode=code)
+    template.add_template(name="佣金模板", isEnabled=True, isNeedToVerify=False, platformFeeShare=100)
+
+    #設定下級代理佣金配置
+    subConditions=[{"commissionLimit": 0,"commission": 100,"proxyCount": 1}]
+    subSubConditions=[{"commissionLimit": 0,"commission": 100,"proxyCount": 1}]
+    json={subConditions, subSubConditions}
+    template.edit_commission_conditions(id=1, json=json)
+
+    #設定反佣 
+    condiction=[{ "profit": 1, "commissionLimit": 0, "commission": 100, "validUserCount": 1}]
+    template.edit_commission_conditions(id=1, json=condiction)
+    
 
 def sync_relation_manage():
     sync_relation = CountryCodeRelation()
