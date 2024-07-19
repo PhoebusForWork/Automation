@@ -28,7 +28,7 @@ def create_dept_and_role():
     dept = AccountDept(token=token)
     dept.add_dept(department='測試組')
     role = AccountRole(token=token)
-    role.add_role(role='測試員', departmentIds=[1], authorityIds=[])
+    role.add_role(role='測試員', departmentIds=[1], authorityIds=[619, 625])
 
 
 def create_account():

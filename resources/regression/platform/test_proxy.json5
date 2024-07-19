@@ -1012,7 +1012,7 @@
     {
         "test_case" : "proxy_commission_firstApprove",
         "req_method" : "put",
-        "schema":{"type": "object", "properties": {"data": {"type": "object"}}, "required": ["data"]},
+        "schema":{"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "params": {},
         "json":{"remark": "test", "isPass": true},
         "test_item" : [
@@ -1022,15 +1022,15 @@
             {"req_url": "/v1/proxy/commission/1/firstApprove","scenario":"isPass[空值]","target":{"isPass": ""},"code_status": 400,"keyword": "无效的请求参数"},
             {"req_url": "/v1/proxy/commission/1/firstApprove","scenario":"審核成功","target":{},"code_status": 200,"keyword": "success"},
             {"req_url": "/v1/proxy/commission/2/firstApprove","scenario":"isPass[false]","target":{"isPass": false},"code_status": 200,"keyword": "success"},
-            {"req_url": "/v1/proxy/commission/1/firstApprove","scenario":"已通過一審審核","target":{"isPass": false},"code_status": 200,"keyword": "success"},
-            {"req_url": "/v1/proxy/commission/3/firstApprove","scenario":"一審已拒絕","target":{},"code_status": 400,"keyword": "该审批目前状态不符合流程"},
-            {"req_url": "/v1/proxy/commission/6/firstApprove","scenario":"二審已拒絕","target":{},"code_status": 400,"keyword": "该审批目前状态不符合流程"}
+            {"req_url": "/v1/proxy/commission/1/firstApprove","scenario":"已通過一審審核","target":{"isPass": false},"code_status": 400,"keyword": "该审批目前状态不符合流程"},
+            {"req_url": "/v1/proxy/commission/3/firstApprove","scenario":"一審已拒絕","target":{},"code_status": 400,"keyword": "只能針對未审核且已結算的佣金进行审核"},
+            {"req_url": "/v1/proxy/commission/6/firstApprove","scenario":"二審已拒絕","target":{},"code_status": 400,"keyword": "只能針對未审核且已結算的佣金进行审核"}
         ]
     },
     {
         "test_case" : "proxy_commission_secondApprove",
         "req_method" : "put",
-        "schema":{"type": "object", "properties": {"data": {"type": "object"}}, "required": ["data"]},
+        "schema":{"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "params": {},
         "json":{"remark": "test", "isPass": true},
         "test_item" : [
@@ -1040,9 +1040,9 @@
             {"req_url": "/v1/proxy/commission/1/secondApprove","scenario":"isPass[空值]","target":{"isPass": ""},"code_status": 400,"keyword": "无效的请求参数"},
             {"req_url": "/v1/proxy/commission/1/secondApprove","scenario":"審核成功","target":{},"code_status": 200,"keyword": "success"},
             {"req_url": "/v1/proxy/commission/4/secondApprove","scenario":"isPass[false]","target":{"isPass": false},"code_status": 200,"keyword": "success"},
-            {"req_url": "/v1/proxy/commission/1/secondApprove","scenario":"已通過二審審核","target":{"isPass": false},"code_status": 200,"keyword": "success"},
-            {"req_url": "/v1/proxy/commission/3/secondApprove","scenario":"一審已拒絕","target":{},"code_status": 400,"keyword": "该审批目前状态不符合流程"},
-            {"req_url": "/v1/proxy/commission/6/secondApprove","scenario":"二審已拒絕","target":{},"code_status": 400,"keyword": "该审批目前状态不符合流程"}
+            {"req_url": "/v1/proxy/commission/1/secondApprove","scenario":"已通過二審審核","target":{"isPass": false},"code_status": 400,"keyword": "只能針對未审核且已結算的佣金进行审核"},
+            {"req_url": "/v1/proxy/commission/3/secondApprove","scenario":"一審已拒絕","target":{},"code_status": 400,"keyword": "只能針對未审核且已結算的佣金进行审核"},
+            {"req_url": "/v1/proxy/commission/6/secondApprove","scenario":"二審已拒絕","target":{},"code_status": 400,"keyword": "只能針對未审核且已結算的佣金进行审核"}
         ]
     },
     {
@@ -1124,31 +1124,31 @@
     {
         "test_case" : "commission_adjust_first_approve",
         "req_method" : "put",
-        "schema":{"type": "object", "properties": {"data": {"type": "object"}}, "required": ["data"]},
+        "schema":{"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "params": {},
-        "json":{"remark": "test", "isPass": true},
+        "json":{"remark": "test1", "isPass": true},
         "test_item" : [
             {"req_url": "/v1/commission/adjust/7777/firstApprove","scenario":"Id[不存在的ID]","target":{},"code_status": 400,"keyword": "資料不存在"},
             {"req_url": "/v1/commission/adjust/1/firstApprove","scenario":"remark[201字]","target":{"remark": "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901"},"code_status": 400,"keyword": "无效的请求参数"},
-            {"req_url": "/v1/commission/adjust/1/firstApprove","scenario":"isPass[數字]","target":{"isPass": 123},"code_status": 400,"keyword": "資料不存在"},
+            {"req_url": "/v1/commission/adjust/1/firstApprove","scenario":"isPass[數字]","target":{"isPass": 123},"code_status": 400,"keyword": "无效的请求参数"},
             {"req_url": "/v1/commission/adjust/1/firstApprove","scenario":"isPass[字串]","target":{"isPass": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
-            {"req_url": "/v1/commission/adjust/1/firstApprove","scenario":"isPass[Ture]","target":{"isPass": true},"code_status": 200,"keyword": "success"},
+            {"req_url": "/v1/commission/adjust/1/firstApprove","scenario":"isPass[True]","target":{"isPass": true},"code_status": 200,"keyword": "success"},
             {"req_url": "/v1/commission/adjust/2/firstApprove","scenario":"isPass[False]","target":{"isPass": false},"code_status": 200,"keyword": "success"}
         ]
     },
     {
         "test_case" : "commission_adjust_second_approve",
         "req_method" : "put",
-        "schema":{"type": "object", "properties": {"data": {"type": "object"}}, "required": ["data"]},
+        "schema":{"type": "object", "properties": {"data": {"type": "string"}}, "required": ["data"]},
         "params": {},
-        "json":{"remark": "string", "isPass": true},
+        "json":{"remark": "test2", "isPass": true},
         "test_item" : [
             {"req_url": "/v1/commission/adjust/7777/secondApprove","scenario":"Id[不存在的ID]","target":{"remark": 1},"code_status": 400,"keyword": "資料不存在"},
-            {"req_url": "/v1/commission/adjust/1/secondApprove","scenario":"remark[201字]","target":{"remark": "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901"},"code_status": 400,"keyword": "資料不存在"},
-            {"req_url": "/v1/commission/adjust/1/secondApprove","scenario":"isPass[數字]","target":{"isPass": 123},"code_status": 400,"keyword": "資料不存在"},
+            {"req_url": "/v1/commission/adjust/1/secondApprove","scenario":"remark[201字]","target":{"remark": "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"req_url": "/v1/commission/adjust/1/secondApprove","scenario":"isPass[數字]","target":{"isPass": 123},"code_status": 400,"keyword": "无效的请求参数"},
             {"req_url": "/v1/commission/adjust/1/secondApprove","scenario":"isPass[字串]","target":{"isPass": "abc"},"code_status": 400,"keyword": "无效的请求参数"},
             {"req_url": "/v1/commission/adjust/1/secondApprove","scenario":"isPass[true]","target":{"isPass": true},"code_status": 200,"keyword": "success"},
-            {"req_url": "/v1/commission/adjust/3/secondApprove","scenario":"isPass[false]","target":{"isPass": false},"code_status": 200,"keyword": "success"}
+            {"req_url": "/v1/commission/adjust/待審ID/secondApprove","scenario":"isPass[false]","target":{"isPass": false},"code_status": 200,"keyword": "success"}
         ]
     }
 ]

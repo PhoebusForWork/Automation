@@ -946,7 +946,8 @@ class CommissionAdjust(PlatformAPI):
             self.request_session.headers.update({"token": str(plat_token)})
         request_body = {
             "method": "get",
-            "url": f"/v1/proxy/commission/adjust"
+            "url": f"/v1/commission/adjust",
+            "params": KeywordArgument.body_data()
         }
 
         response = self.send_request(**request_body)
