@@ -7,6 +7,7 @@ from ..platform.platApiBase import PlatformAPI
 from utils.api_utils import KeywordArgument
 from utils.data_utils import EnvReader
 from utils.generate_utils import Make
+from datetime import datetime, timedelta
 
 
 env = EnvReader()
@@ -245,26 +246,26 @@ class ProxyCommissionTemplate(PlatformAPI):
         return response.json()
 
     # 獲取下級代理佣金設置
-    def get_sub_config(self, plat_token=None, id=None):
+    def get_sub_condiction(self, plat_token=None, id=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
         request_body = {
             "method": "get",
-            "url": f"/v1/proxy/commission/template/{id}/subCommissionConfig"
+            "url": f"/v1/proxy/commission/template/{id}/subCommissionConditions"
         }
 
         response = self.send_request(**request_body)
         return response.json()
 
     # 編輯下級代理佣金設置
-    def edit_sub_config(self, plat_token=None, id=None, subCommissionConfigList=None, subSubCommissionConfigList=None):
+    def edit_sub_condiction(self, plat_token=None, id=None, subCommissionConditions=None, subSubCommissionConditions=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
         request_body = {
             "method": "put",
-            "url": f"/v1/proxy/commission/template/{id}/subCommissionConfig",
+            "url": f"/v1/proxy/commission/template/{id}/subCommissionConditions",
             "json": KeywordArgument.body_data()
         }
 
@@ -302,7 +303,7 @@ class ProxyCommissionTemplate(PlatformAPI):
         return response.json()
 
     # 獲取平台費分攤
-    def get_plat_settlement_shares(self, plat_token=None, id=None):
+    def get_platform_fee_shares(self, plat_token=None, id=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
@@ -315,7 +316,7 @@ class ProxyCommissionTemplate(PlatformAPI):
         return response.json()
 
     # 編輯平台費分攤
-    def edit_plat_settlement_shares(
+    def edit_platform_fee_shares(
             self, plat_token=None, id=None, channelCode=None,
             gameType=None, fee=None, platformFeeLimit=None, data=None
     ):
@@ -344,23 +345,21 @@ class ProxyCommissionTemplate(PlatformAPI):
         return response.json()
 
     # 獲取設置返佣
-    def get_commission_config(self, plat_token=None, id=None):
+    def get_commission_conditions(self, plat_token=None, id=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
         request_body = {
             "method": "get",
-            "url": f"/v1/proxy/commission/template/{id}/commissionConfig"
+            "url": f"/v1/proxy/commission/template/{id}/commissionConditions"
         }
 
         response = self.send_request(**request_body)
         return response.json()
 
-    # 獲取設置返佣
-    def edit_commission_config(
-            self, plat_token=None, id=None, profit=None,
-            commissionLimit=None, commission=None,
-            validUserCount=None, json=None
+    # 編輯設置返佣
+    def edit_commission_conditions(
+            self, plat_token=None, id=None, json=None
     ):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
@@ -390,7 +389,7 @@ class Proxy(PlatformAPI):
             self, plat_token=None,
             From=Make.generate_custom_date(months=-1), to=Make.date('end'),
             minBalance=None, maxBalance=None,
-            creditStatus=None, queryType=None,
+            commissionId=None, queryType=None,
             input=None, groupName=None,
             channel=None, page=None, size=None,
     ):
@@ -423,9 +422,9 @@ class Proxy(PlatformAPI):
     # 創建代理
     def add_proxy(
             self, plat_token=None,
-            proxyAccount=None, proxyName=None, password=None,
+            proxyAccount=None, pwd=None, email=None,
             countryCode=None, telephone=None, proxyChannelId=None,
-            commissionId=None, registerIp=None,
+            commissionId=None
     ):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
@@ -481,45 +480,6 @@ class Proxy(PlatformAPI):
         response = self.send_request(**request_body)
         return response.json()
 
-    # 查詢代理列表編輯資訊
-    def get_detail_edit(self, plat_token=None, userId=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
-        request_body = {
-            "method": "get",
-            "url": f"/v1/proxy/{userId}/detail/edit"
-        }
-
-        response = self.send_request(**request_body)
-        return response.json()
-
-    # 查詢代理列表顯示資訊
-    def get_detail_display(self, plat_token=None, userId=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
-        request_body = {
-            "method": "get",
-            "url": f"/v1/proxy/{userId}/detail/display"
-        }
-
-        response = self.send_request(**request_body)
-        return response.json()
-
-    # 查詢三個月平均佣金
-    def get_commission_avg(self, plat_token=None, proxyId=None):
-        if plat_token is not None:
-            self.request_session.headers.update({"token": str(plat_token)})
-
-        request_body = {
-            "method": "get",
-            "url": f"/v1/proxy/{proxyId}/commission/avg"
-        }
-
-        response = self.send_request(**request_body)
-        return response.json()
-
     # 查詢交易信息
     def get_trade_info(
             self, plat_token=None, userId=None,
@@ -541,7 +501,9 @@ class Proxy(PlatformAPI):
         return response.json()
 
     # 搜尋代理域名
-    def get_domain_query(self, plat_token=None, type=None, accountOrName=None, commissionId=None, page=None, size=None):
+    def get_domain_query(self, plat_token=None, 
+                         queryType=None, input=None, 
+                         commissionId=None, page=None, size=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
@@ -553,13 +515,108 @@ class Proxy(PlatformAPI):
 
         response = self.send_request(**request_body)
         return response.json()
+    
+    # 更新代理備註
+    def edit_remark(self, plat_token=None, proxyId=None, remark=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
 
+        request_body = {
+            "method": "put",
+            "url": f"/v1/proxy/{proxyId}/remark",
+            "json": {"remark": remark}
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+    
+    # 查詢代理銀行卡
+    def get_bankcards(self, plat_token=None, proxyId=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "get",
+            "url": f"/v1/proxy/{proxyId}/bankcards"
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+    
+    # 申請刪除代理提款銀行卡
+    def unbind_bankcard(self, plat_token=None, proxyId=None, cardId=None, remark=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "post",
+            "url": f"/v1/proxy/{proxyId}/bankcard-unbind/apply",
+            "json": {"cardId": cardId, "remark": remark}
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+    
+    # 風險分析重複IP
+    def get_risk_same_ip(self, plat_token=None, proxyId=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "get",
+            "url": f"/v1/proxy/{proxyId}/risk/analysis/same/ip"
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+    
+    # 代理登入日誌
+    def get_login_info(self, plat_token=None, proxyId=None,
+                       From=None, to=None, type=None,
+                       keyword=None, osType=None, page=None, size=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "get",
+            "url": f"/v1/proxy/{proxyId}/login/info"
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+    
+    # 查詢代理列表顯示資訊
+    def get_risk_same_ip(self, plat_token=None, proxyId=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "get",
+            "url": f"/v1/proxy/{proxyId}/detail/display"
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
+
+class ProxyOperation(PlatformAPI):
+    # 代理用戶操作記錄
+    def get_operation_log(self, plat_token=None, proxyId=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+
+        request_body = {
+            "method": "get",
+            "url": f"/v1/proxy/operation/log/{proxyId}"
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()
 
 class ProxyManage(PlatformAPI):
     # 獲取代理審核列表
     def get_manage_list(
             self, plat_token=None,
-            registerStartTime="2023-01-01T00:00:00Z", registerEndTime="2023-12-31T23:59:59Z",
+            registerStartTime="2023-01-01T00:00:00Z", registerEndTime="2026-12-31T23:59:59Z",
             proxyAccount=None, proxyName=None,
             # 代理狀態 0:待審核|1:一審通過|2:一審不通過|3:二審通過|4:二審不通過
             approver=None, proxyManageStatus=None, page=None, size=None
@@ -618,9 +675,9 @@ class ProxyManage(PlatformAPI):
         return response.json()
 
     # 批量駁回待審核訂單
-    def clean_proxy_approval(self, token=None, size=100):
-        jsdata = self.get_manage_list(plat_token=token, size=size, proxyManageStatus=0)
-        jsdata2 = self.get_manage_list(plat_token=token, size=size, proxyManageStatus=1)
+    def clean_proxy_approval(self, token=None, size=100, account=None):
+        jsdata = self.get_manage_list(plat_token=token, size=size, proxyManageStatus=0, proxyAccount=account)
+        jsdata2 = self.get_manage_list(plat_token=token, size=size, proxyManageStatus=1, proxyAccount=account)
         ret = jsonpath.jsonpath(jsdata, "$..id")
         ret2 = jsonpath.jsonpath(jsdata2, "$..id")
         try:
@@ -639,7 +696,8 @@ class ProxyManage(PlatformAPI):
         if ret is False:
             add = Proxy()
             add.add_proxy(plat_token=token, proxyAccount="AutoTestProxy" + str(random.randrange(99999)),
-                          password="abc123456", countryCode='+886', telephone=str(random.randrange(10000000000, 19999999999)), commissionId=1)
+                          pwd="abc123456",email="AutoTestProxy@gmailtest.com", countryCode='86', telephone=str(random.randrange(10000000000, 19999999999)), 
+                          proxyChannelId=1,commissionId=1)
             jsdata = self.get_manage_list(plat_token=token, proxyManageStatus=0)
             ret = jsonpath.jsonpath(jsdata, "$..id")
         return str(ret[0])
@@ -650,7 +708,8 @@ class ProxyManage(PlatformAPI):
         if ret is False:
             add = Proxy()
             add.add_proxy(plat_token=token, proxyAccount="AutoTestProxy" + str(random.randrange(99999)),
-                          password="abc123456", countryCode='+886', telephone=str(random.randrange(10000000000, 19999999999)), commissionId=1)
+                          pwd="abc123456",email="AutoTestProxy@gmailtest.com", countryCode='86', telephone=str(random.randrange(10000000000, 19999999999)), 
+                          proxyChannelId=1,commissionId=1)
 
             jsdata = self.get_manage_list(plat_token=token, proxyManageStatus=0)  # 獲取待一審訂單
             ret = jsonpath.jsonpath(jsdata, "$..id")
@@ -666,7 +725,8 @@ class ProxyManage(PlatformAPI):
         if ret is False:
             add = Proxy()
             add.add_proxy(plat_token=token, proxyAccount="AutoTestProxy" + str(random.randrange(99999)),
-                          password="abc123456", countryCode='+886', telephone=str(random.randrange(10000000000, 19999999999)), commissionId=1)
+                          pwd="abc123456",email="AutoTestProxy@gmailtest.com", countryCode='86', telephone=str(random.randrange(10000000000, 19999999999)), 
+                          proxyChannelId=1,commissionId=1)
 
             jsdata = self.get_manage_list(plat_token=token, proxyManageStatus=0)  # 獲取待一審訂單
             ret = jsonpath.jsonpath(jsdata, "$..id")
@@ -738,7 +798,7 @@ class ProxyCommission(PlatformAPI):
         return response.json()
 
     # 查詢公司總輸贏
-    def get_win_total(self, plat_token=None, proxyId=None, settleDate=None):
+    def get_win_total(self, plat_token=None, detailId=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
@@ -752,7 +812,7 @@ class ProxyCommission(PlatformAPI):
         return response.json()
 
     # 查詢下級會員佣金
-    def get_sub_user_commission(self, plat_token=None, proxyId=None, settleDate=None):
+    def get_sub_user_commission(self, plat_token=None, detailId=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
@@ -766,7 +826,7 @@ class ProxyCommission(PlatformAPI):
         return response.json()
 
     # 查詢下級代理佣金
-    def get_sub_proxy_commission(self, plat_token=None, proxyId=None, settleDate=None):
+    def get_sub_proxy_commission(self, plat_token=None, detailId=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
@@ -811,7 +871,7 @@ class ProxyCommission(PlatformAPI):
         return response.json()
 
     # 查詢成本分攤
-    def get_cost_share(self, plat_token=None, proxyId=None, settleDate=None):
+    def get_cost_share(self, plat_token=None, detailId=None):
         if plat_token is not None:
             self.request_session.headers.update({"token": str(plat_token)})
 
@@ -875,3 +935,83 @@ class ProxyDomain(PlatformAPI):
 
         response = self.send_request(**request_body)
         return response.json()
+    
+ # 佣金調整審核
+class CommissionAdjust(PlatformAPI):
+    # 查詢列表
+    def get_proxy_commission_adjust(self, plat_token=None,
+                From=None, to=None, proxyAccount=None, 
+                applicant=None, approver=None, status=None, page=None, size=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+        request_body = {
+            "method": "get",
+            "url": f"/v1/commission/adjust",
+            "params": KeywordArgument.body_data()
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()   
+    
+    # 審核狀態
+    def get_proxy_commission_adjust_proxyManageStatus(self, plat_token=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+        request_body = {
+            "method": "get",
+            "url": f"/v1/commission/adjust/proxyManageStatus"
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()   
+    
+    # 佣金結算審批人列表
+    def get_proxy_commission_adjust_approverList(self, plat_token=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+        request_body = {
+            "method": "get",
+            "url": f"/v1/commission/adjust/approverList"
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()   
+    
+    # 佣金調整申請
+    def post_commission_adjust(self, plat_token=None, detailId=None, reason=None, amount=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+        request_body = {
+            "method": "post",
+            "url": f"/v1/commission/adjust/{detailId}",
+            "json": {"reason": reason, "amount": amount}
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()   
+    
+    # 佣金調整一審
+    def edit_commission_adjust_first_approve(self, plat_token=None, id=None, remark=None, isPass=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+        request_body = {
+            "method": "put",
+            "url": f"/v1/commission/adjust/{id}/firstApprove",
+            "json": {"remark": remark, "isPass": isPass}
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()   
+
+    # 佣金調整二審
+    def edit_commission_adjust_second_approve(self, plat_token=None, id=None, remark=None, isPass=None):
+        if plat_token is not None:
+            self.request_session.headers.update({"token": str(plat_token)})
+        request_body = {
+            "method": "put",
+            "url": f"/v1/commission/adjust/{id}/secondApprove",
+            "json": {"remark": remark, "isPass": isPass}
+        }
+
+        response = self.send_request(**request_body)
+        return response.json()   
