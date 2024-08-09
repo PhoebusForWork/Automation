@@ -6,6 +6,6 @@ variables:
 include:
   - project: nld/devops/3.0/cicd/pipeline-yaml
     ref: main
-    file: scripts/ci/qa-team/${FILE_NAME}
+    file: ${FILE_NAME}
     rules:
       - if: $CI_COMMIT_REF_NAME =~ "refs/heads/master"
