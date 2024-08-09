@@ -4,8 +4,8 @@ variables:
   FILE_NAME: 'qa-automaion-pipeline.yml'
 
 include:
-  - project: bbc/devops/gitlab-pipeline/cicd-pipeline
-    ref: master
-    file: ${FILE_NAME}
+  - project: nld/devops/3.0/cicd/pipeline-yaml
+    ref: main
+    file: scripts/ci/qa-team/${FILE_NAME}
     rules:
       - if: $CI_COMMIT_REF_NAME =~ "refs/heads/master"
