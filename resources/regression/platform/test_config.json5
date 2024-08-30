@@ -116,7 +116,7 @@
         "test_case": "get_platform_currency",
         "req_method": "get",
         "req_url": "/v1/platform/currency",
-        "schema": {"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"cnyExchangeRate":{"type":"number"},"code":{"type":"string"},"currencyType":{"type":"string"},"icon":{"type":"string"},"lastModifiedTime":{"type":"string"},"name":{"type":"string"},"status":{"type":"integer"}},"required":["cnyExchangeRate","code","currencyType","icon","lastModifiedTime","name","status"]}}},"required":["data"]},
+        "schema": {"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"centralExchangeRate":{"type":"number"},"code":{"type":"string"},"currencyType":{"type":"string"},"icon":{"type":"string"},"isDefault":{"type":"boolean"},"lastModifiedTime":{"type":"string"},"name":{"type":"string"},"rechargeRate":{"type":"number"},"status":{"type":"integer"},"withdrawRate":{"type":"number"}},"required":["centralExchangeRate","code","currencyType","icon","isDefault","lastModifiedTime","name","rechargeRate","status","withdrawRate"]}}},"required":["data"]},
         "json" : {},
         "test_item": [
             {"scenario":"普通查詢","params": {},"code_status": 200,"keyword": "data"}
@@ -126,14 +126,14 @@
         "test_case": "get_drop_down",
         "req_method": "get",
         "req_url": "/v1/platform/currency/dropDown",
-        "schema": {"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"code":{"type":"string"},"name":{"type":"string"},"currencyType":{"type":"string"},"icon":{"type":"string"},"cnyExchangeRate":{"type":"number"},"status":{"type":"integer"}},"required":["cnyExchangeRate","code","currencyType","icon","name","status"]}}},"required":["data"]},
+        "schema": {"type":"object","properties":{"data":{"type":"array","items":{"type":"object","properties":{"centralExchangeRate":{"type":"number"},"code":{"type":"string"},"currencyType":{"type":"string"},"icon":{"type":"string"},"isDefault":{"type":"boolean"},"lastModifiedTime":{"type":"string"},"name":{"type":"string"},"rechargeRate":{"type":"number"},"status":{"type":"integer"},"withdrawRate":{"type":"number"}},"required":["centralExchangeRate","code","currencyType","icon","isDefault","lastModifiedTime","name","rechargeRate","status","withdrawRate"]}}},"required":["data"]},
         "json" : {},
         "params": {"currency":null},
         "test_item": [
-            {"scenario":"[currency]USD","target": {"currency":"USD"},"code_status": 200,"keyword": "data"},
-            {"scenario":"[currency]THB","target": {"currency":"THB"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]USD","target": {"currency":"USD"},"code_status": 400,"keyword": "无效的请求参数"},
+            {"scenario":"[currency]THB","target": {"currency":"THB"},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[currency]CNY","target": {"currency":"CNY"},"code_status": 200,"keyword": "data"},
-            {"scenario":"[currency]USDT_ERC20","target": {"currency":"USDT_ERC20"},"code_status": 200,"keyword": "data"},
+            {"scenario":"[currency]USDT_ERC20","target": {"currency":"USDT_ERC20"},"code_status": 400,"keyword": "无效的请求参数"},
             {"scenario":"[currency]USDT_TRC20","target": {"currency":"USDT_TRC20"},"code_status": 200,"keyword": "data"},
             {"scenario":"[currency]不存在","target": {"currency":"unknow"},"code_status": 400,"keyword": "无效的请求参数"},
             ]
